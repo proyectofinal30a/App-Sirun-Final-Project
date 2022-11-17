@@ -51,6 +51,17 @@ export interface Ierror {
 
 
 
+declare module "next-auth" {
+    interface Session {
+        user: {
+            name: string
+            email: string
+            image: string
+        }
+    }
+}
+
+
 // const status_typee: Status_type = "pending"
 
 // export type orderr = {
