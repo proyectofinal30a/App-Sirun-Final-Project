@@ -8,6 +8,7 @@ import Image from "next/image";
 import styles from "../../styles/ProductDetail.module.css";
 import { readFileSync } from "fs";
 
+
 const ProductDetail = () => {
   // const router = useRouter()
   // const id = router.query.id as string

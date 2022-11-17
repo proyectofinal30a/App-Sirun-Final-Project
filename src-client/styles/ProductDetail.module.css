@@ -44,6 +44,8 @@
 
 .image__main {
   object-fit: cover;
+  display: flex;
+  justify-content: flex-start;
 }
 
 
