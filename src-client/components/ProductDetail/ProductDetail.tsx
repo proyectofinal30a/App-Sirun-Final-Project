@@ -86,7 +86,7 @@ const ProductDetail = () => {
 
   // Images switch
   const [activeImage, setActiveImage] = useState("");
-  const detail = product?.image?.[0] ? product?.image?.[0] : "https://izzycooking.com/wp-content/uploads/2021/05/Tres-Leches-Cake-683x1024.jpg";
+  const detail = product?.image?.[0] ? product?.image?.[0] : "https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif";
 
   const handleMouseOver = (url: string, index: number) => {
     setActiveImage(url);
@@ -121,7 +121,6 @@ const ProductDetail = () => {
 
             <div className={styles.image_main__container}>
               <Image
-                //activeImage ? activeImage : detail
                 src={url2}
                 width={500}
                 alt="Product main image"
