@@ -1,11 +1,6 @@
-import { StatusType } from "@prisma/client";
-
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios"
-// import { isArray } from "util";
 import userVerification from '../../../controllers/userVerification-controller'
-import { Iproduct } from "../../../../lib/types";
-
 
 
 export interface IactionPayload2 {
@@ -51,7 +46,6 @@ export const reducerCart = createSlice({
             const { id, price } = action.payload
             const itemInCart: any = state.products.find((item) => item.product.id === id);
 
-
             if (itemInCart) {
                 itemInCart.quantity++;
                 itemInCart.subTotal += price
@@ -70,9 +64,7 @@ export const reducerCart = createSlice({
         },
         actionRemoveOne: (state: Iproducts, action) => {
             const { id, price } = action.payload
-            // parseInt(price)
             const itemInCart: any = state.products.find((item) => item.product.id === id);
-            // parseInt(itemInCart.subTotal)
 
             if (itemInCart.quantity === 1) {
                 itemInCart.quantity = 0
@@ -83,8 +75,7 @@ export const reducerCart = createSlice({
             }
         },
         actionTrashItem: (state: Iproducts, action) => {
-            const { id } = action.payload
-            state.products = state.products.filter((elem) => elem.product.id !== id)
+            state.products = state.products.filter((elem) => elem.product.id !== action.payload)
         }
     }
 })
