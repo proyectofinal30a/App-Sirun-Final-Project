@@ -1,16 +1,20 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "../../styles/FormCheckout.module.css";
 import { useSelector, useDispatch } from 'react-redux'
 import Image from 'next/image';
 import Modal from 'react-modal';
-import { sendOrderDetail } from "../../redux/slice/cart-redux/cart";
+import { sendOrderDetail, resetCart } from "../../redux/slice/cart-redux/cart";
 import validate from '../../controllers/validateFormCheckout';
-// import { symlink } from 'fs';
+
+ import { symlink } from 'fs';
+
 /// PARA DATOS DE ENTREGA
 
 const FormCheckout = (): JSX.Element => {
+    const dispatch = useDispatch()
     const productsInCart = useSelector((state: any) => state.reducerCart.products)
-
+    const confirmedCart = useSelector((state:any) => state.reducerCart.confirmed)
+    const payLink = useSelector((state:any) => state.reducerCart.payLink)
     const personInfo = {
         name: '',
         email: '',
@@ -20,6 +24,7 @@ const FormCheckout = (): JSX.Element => {
         streetName: '',
         streetNumber: '',
     }
+    useEffect(()=>{}, [confirmedCart])
     const [inputUser, setInputUser] = useState(personInfo);
     const [errors, setErrors] = useState(personInfo)
     const handleInputChange = (e: any) => {
@@ -47,11 +52,15 @@ const FormCheckout = (): JSX.Element => {
     //submitea cuando se cliquea el boton del modal (el form esta dentro del modal)
     async function handleSubmit(e: Event) {
         e.preventDefault();
+        console.log('estoy aca', confirmedCart, payLink);
+        
         const info = {
             products: productsInCart,
             infoBuyer: inputUser
         }
-        sendOrderDetail(info)
+        console.log(info);
+        
+        dispatch(sendOrderDetail(info))
     }
 
     let total = 0;
@@ -98,32 +107,31 @@ const FormCheckout = (): JSX.Element => {
                 </fieldset>
 
                 <button className={styles.form__input_btn} disabled={Object.values(errors).length !== 0} onClick={(e: any) => openCheckModal(e, inputUser)} >Continue</button>
-                <div className={styles.modal__container}>
-                    <Modal
-                        ariaHideApp={false}
-                        isOpen={modalIsOpen}
-                        onRequestClose={closeModal}
-                        className={styles.modal}
-                        contentLabel="Example Modal"
-                    >
-                        <div className={styles.right}>
-                            <button className={styles.button__close} onClick={closeModal}>x</button>
-                        </div>
-                        <h2>confirm your information</h2>
 
-                        <p>{inputUser.name}</p>
-                        <p>{inputUser.email}</p>
-                        <p>{inputUser.phone}</p>
-                        <p>{inputUser.areaCode}</p>
-                        <p>{inputUser.zipCode}</p>
-                        <p>{inputUser.streetName}</p>
-                        <p>{inputUser.streetNumber}</p>
 
-                        <form className={styles.first__column} onSubmit={(e: any) => handleSubmit(e)}>
-                            <button className={styles.form__input_btn} type="submit">Confirmar Datos</button>
-                        </form>
-                    </Modal>
-                </div>
+                <Modal
+                    isOpen={modalIsOpen}
+                    onRequestClose={closeModal}
+                    className={styles.modal}
+                    contentLabel="Example Modal"
+                >
+                    <h2>confirm your information</h2>
+                    <button onClick={closeModal}>x</button>
+
+                    <p>{inputUser.name}</p>
+                    <p>{inputUser.email}</p>
+                    <p>{inputUser.phone}</p>
+                    <p>{inputUser.areaCode}</p>
+                    <p>{inputUser.zipCode}</p>
+                    <p>{inputUser.streetName}</p>
+                    <p>{inputUser.streetNumber}</p>
+
+                    <button className={styles.form__input_btn} onClick={(e: any) => handleSubmit(e)} type="submit">Confirmar Datos</button>
+                        {confirmedCart && payLink && <button onClick={() => resetCart()}><a href={payLink}>Pagar</a></button>}
+                   
+                </Modal>
+
+
             </div>
 
             <div className={styles.second__column}>

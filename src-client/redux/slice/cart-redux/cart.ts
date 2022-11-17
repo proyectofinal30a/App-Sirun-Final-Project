@@ -1,6 +1,14 @@
-import { createSlice } from "@reduxjs/toolkit";
+
+import { StatusType } from "@prisma/client";
+
+import { AnyAction, createSlice } from "@reduxjs/toolkit";
+
 import axios from "axios"
 import userVerification from '../../../controllers/userVerification-controller'
+
+import { Iproduct } from "../../../../lib/types";
+import { createPayment } from "../../../components/mercadopago/controllerMP";
+
 
 
 export interface IactionPayload2 {
@@ -25,12 +33,16 @@ type quantityy = {
     infoUser: any
 }
 interface Iproducts {
-    products: quantityy[]
+    products: quantityy[],
+    confirmed: Boolean,
+    payLink: string
 }
 
 const initialState: Iproducts = {
     //products: [{objeto completo 1}, quantity:2, subtotal: 600}, {{obejto completo 2 }, quantity:1, subtotal: 900}]
-    products: []
+    products: [],
+    confirmed: false,
+    payLink:''
 }
 
 
@@ -75,7 +87,19 @@ export const reducerCart = createSlice({
             }
         },
         actionTrashItem: (state: Iproducts, action) => {
-            state.products = state.products.filter((elem) => elem.product.id !== action.payload)
+
+            const { id } = action.payload
+            state.products = state.products.filter((elem) => elem.product.id !== id)
+        },
+        actionConfirmedCart: (state: any, action) => {
+            console.log(action);
+            
+            state.confirmed = action.payload.state;
+            state.payLink = action.payload.info
+        },
+        actionResetCart: (state: any, action) => {
+            state.confirmed = action.payload
+
         }
     }
 })
@@ -96,13 +120,16 @@ export const trashItem = (id: string) => (dispatch: Function) => {
     return dispatch(reducerCart.actions.actionTrashItem(id));
 }
 
-export const sendOrderDetail = async (infoProductsAndBuyer: any) => {
-    console.log(infoProductsAndBuyer)
-    // const info = await axios({
-    //     method: "post",
-    //     url: '/api/adminScope/post/productPostAdm',
-    //     data: infoProductsAndBuyer,
-    // })
+export const sendOrderDetail = (infoProductsAndBuyer: any): any=> async (dispatch: Function) => {
+    try {
+        const info = await createPayment(infoProductsAndBuyer)
+        return dispatch(reducerCart.actions.actionConfirmedCart(info))
+    } catch (error) {
+        return dispatch(reducerCart.actions.actionConfirmedCart(false))
+    }
+}
+export const resetCart = () => (dispatch:Function) => {
+    return dispatch(reducerCart.actions.actionResetCart(false))
 }
 
 
