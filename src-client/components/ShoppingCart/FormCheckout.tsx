@@ -1,14 +1,17 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styles from "../../styles/FormCheckout.module.css";
 import { useSelector, useDispatch } from 'react-redux'
 import Image from 'next/image';
 import Modal from 'react-modal';
-import { sendOrderDetail } from "../../redux/slice/cart-redux/cart";
+import { sendOrderDetail, resetCart } from "../../redux/slice/cart-redux/cart";
 import validate from '../../controllers/validateFormCheckout';
+import { link } from 'fs';
 /// PARA DATOS DE ENTREGA
 const FormCheckout = (): JSX.Element => {
+    const dispatch = useDispatch()
     const productsInCart = useSelector((state: any) => state.reducerCart.products)
-
+    const confirmedCart = useSelector((state:any) => state.reducerCart.confirmed)
+    const payLink = useSelector((state:any) => state.reducerCart.payLink)
     const personInfo = {
         name: '',
         email: '',
@@ -18,6 +21,7 @@ const FormCheckout = (): JSX.Element => {
         streetName: '',
         streetNumber: '',
     }
+    useEffect(()=>{}, [confirmedCart])
     const [inputUser, setInputUser] = useState(personInfo);
     const [errors, setErrors] = useState(personInfo)
     const handleInputChange = (e: any) => {
@@ -46,11 +50,15 @@ const FormCheckout = (): JSX.Element => {
     //submitea cuando se cliquea el boton del modal
     async function handleSubmit(e: Event) {
         e.preventDefault();
+        console.log('estoy aca', confirmedCart, payLink);
+        
         const info = {
             products: productsInCart,
             infoBuyer: inputUser
         }
-        sendOrderDetail(info)
+        console.log(info);
+        
+        dispatch(sendOrderDetail(info))
     }
 
     let total = 0;
@@ -115,9 +123,9 @@ const FormCheckout = (): JSX.Element => {
                     <p>{inputUser.streetName}</p>
                     <p>{inputUser.streetNumber}</p>
 
-                    <form className={styles.first__column} onSubmit={(e: any) => handleSubmit(e)}>
-                        <button className={styles.form__input_btn} type="submit">Confirmar Datos</button>
-                    </form>
+                    <button className={styles.form__input_btn} onClick={(e: any) => handleSubmit(e)} type="submit">Confirmar Datos</button>
+                        {confirmedCart && payLink && <button onClick={() => resetCart()}><a href={payLink}>Pagar</a></button>}
+                   
                 </Modal>
             </div>
 
