@@ -100,7 +100,7 @@ const ProductDetail = () => {
     <div>
       {product && (
         <div className={styles.detail__container}>
-          {/* Zona izquierda */}
+ 
           <div className={styles.detail__container__images}>
             <div className={styles.image__secondary__container}>
               {product.image?.map((url: string, index: number) => {
@@ -130,7 +130,7 @@ const ProductDetail = () => {
             </div>
           </div>
 
-          {/* Zona derecha */}
+    
           <div className={styles.detail__info}>
             <h1 className={styles.detail__info_title}>{product.name}</h1>
             <p className={styles.detail__info_price}>$ {product.price}</p>
@@ -167,6 +167,7 @@ const ProductDetail = () => {
           <div className={styles.modal__btn_right_container}>
             <button className={styles.modal__close_modal_btn} onClick={closeModal}>x</button>
           </div>
+
           <h2>Shopping Cart</h2>
 
           {cart?.map((elem: any, index: number) => {

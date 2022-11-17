@@ -55,7 +55,7 @@
   object-fit: cover;
 }
 
-/* ZONA DE INFO */
+/* INFO */
 
 .detail__info {
   margin-left: 4em;
@@ -256,7 +256,7 @@
   cursor: pointer;
 }
 
-/* End of modal css `*/
+/* End of modal css */
 
 
 @media (max-width: 1540px) {
