@@ -149,10 +149,9 @@
 }
 
 
-@media (max-width: 1495px) {
+@media (max-width: 1540px) {
   .creation_container {
-    padding-top: 10em;
-
+    padding-top: 11em;
   }
 }
 

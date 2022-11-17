@@ -3,17 +3,13 @@ import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 import { Iproduct, Ireducers } from "../../../lib/types";
-import {
-  addToCart,
-  addOne,
-  removeOne,
-  trashItem,
-} from "../../redux/slice/cart-redux/cart";
+import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart";
 import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
 import styles from "../../styles/AllProductsCards.module.css";
 import Modal from "react-modal";
 import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import { BsFillTrashFill } from "react-icons/bs";
+
 
 const AllProductsCards = () => {
   // GET ALL PRODUCTS
@@ -27,6 +23,8 @@ const AllProductsCards = () => {
     (state) => state.reducerCart.products
   );
 
+
+
   // FILTERS
   const filterProducts: any = useSelector<Ireducers>(
     (state) => state.reducerFilters.productsToFilter
@@ -37,6 +35,8 @@ const AllProductsCards = () => {
     currentProducts = filterProducts;
   }
 
+
+
   // SHOPPING CART
   const handlerAdd = (e: Event, product: Iproduct) => {
     e.preventDefault();
@@ -45,7 +45,7 @@ const AllProductsCards = () => {
     alert(`Product: ${name} added to cart`);
   };
 
-  // modal y carrito
+  // Shopping cart modal
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -102,9 +102,11 @@ const AllProductsCards = () => {
     return (total += elem.subTotal);
   });
 
+
+
   // PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(4);
+  const [productsPerPage] = useState(16);
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const paginatedProducts = currentProducts.slice(
@@ -113,11 +115,7 @@ const AllProductsCards = () => {
   );
 
   let pageNumbers = [];
-  for (
-    let i = 1;
-    i <= Math.ceil(currentProducts.length / productsPerPage);
-    i++
-  ) {
+  for (let i = 1; i <= Math.ceil(currentProducts.length / productsPerPage); i++) {
     pageNumbers.push(i);
   }
 
@@ -147,6 +145,8 @@ const AllProductsCards = () => {
     dispatch(getAllProducts());
   }, [dispatch, filterProducts]);
 
+
+
   return (
     <div className={styles.general__container}>
       <div className={styles.products__container}>
@@ -162,7 +162,7 @@ const AllProductsCards = () => {
                     href={`/productDetail/${product.id}`}
                     className={styles.product_card__title}
                   >
-                    <h1>{product.name}</h1>
+                    <h1>{product.name.toLowerCase()}</h1>
                   </Link>
                   <Image
                     key={product.image[0]}
@@ -190,8 +190,8 @@ const AllProductsCards = () => {
               )
             })}
 
-            <ShoppingCart />
 
+            {/* Shopping cart */}
             <Modal
               isOpen={modalIsOpen}
               onRequestClose={closeModal}
@@ -253,6 +253,7 @@ const AllProductsCards = () => {
           </div>
         )}
       </div>
+      
 
       {/* Pagination */}
       {paginatedProducts[0] && pageNumbers.length > 1 && (
