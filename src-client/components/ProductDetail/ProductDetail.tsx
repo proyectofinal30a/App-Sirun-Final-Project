@@ -53,7 +53,7 @@ const ProductDetail = () => {
                       src={url}
                       width={300}
                       alt={product.name}
-                      height={150}
+                      height={156}
                       onMouseOver={() => handleMouseOver(url, index)}
                       className={styles.image_individual__img}
                     />

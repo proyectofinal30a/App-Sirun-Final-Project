@@ -12,12 +12,14 @@
 .detail__container__images {
   display: flex;
   justify-content: center;
+  /* background-color: bisque; */
 }
 
 .image__secondary__container {
   padding: 0 1em;
   height: 100%;
   width: 15em;
+  /* background-color: brown; */
 }
 
 .image_individual__container {
@@ -34,6 +36,7 @@
 }
 
 .image_individual__container:hover {
+  padding: 0;
   border: 2px solid var(--color-dark-blue);
   cursor: pointer;
   opacity: 0.5;
@@ -45,6 +48,7 @@
 
 .image_main__img {
   width: 100%;
+  height: 100%;
   object-fit: cover;
 }
 
@@ -186,6 +190,20 @@
   .detail__container {
     padding-top: 12em;
     max-width: 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .detail__container__images {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .image__secondary__container {
+    display: flex;
+    width: 100%;
+    margin: 0;
+    padding: 0;
   }
 }
 
