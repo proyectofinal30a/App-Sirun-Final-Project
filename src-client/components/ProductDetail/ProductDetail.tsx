@@ -1,78 +1,79 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useSelector, useDispatch} from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { getProductDetail, cleanProductDetail } from "../../redux/slice/products-client/Product-detail";
 import { addToCart } from "../../redux/slice/cart-redux/cart";
-import { Iproduct, IallProducts, Ireducers } from "../../../lib/types";
+import { Iproduct, Ireducers } from "../../../lib/types";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import styles from "../../styles/ProductDetail.module.css";
-import { readFileSync } from "fs";
+
 
 const ProductDetail = () => {
-  // const router = useRouter()
-  // const id = router.query.id as string
   const { query } = useRouter();
   const id = query.id;
 
   const dispatch: Function = useDispatch();
-  const product: any = useSelector<Ireducers>(
-    (state) => state.reducerProductDetail.productDetail
-  );
+  const product: any = useSelector<Ireducers>((state) => state.reducerProductDetail.productDetail);
 
   useEffect(() => {
     dispatch(getProductDetail(id));
-    return () => {
-      dispatch(cleanProductDetail());
-    };
+    return () => dispatch(cleanProductDetail());
   }, [dispatch, id]);
 
+
+  // Shopping cart
   const handlerAdd = (e: Event, product: Iproduct) => {
     e.preventDefault();
     const { id, name }: any = product;
     dispatch(addToCart(id));
-    alert(`Se agrego el producto ${name} asu carrito`);
+    alert(`Product ${name} added to shopping cart.`);
   };
 
 
- const [activeImage, setActiveImage] = useState("");
-   const handleMouseOver = (url: string, index: number) => {
-     setActiveImage(url)
-  }
+  // Images switch
+  const [activeImage, setActiveImage] = useState("");
+  const detail = product?.image?.[0];
 
- 
+  const handleMouseOver = (url: string, index: number) => {
+    setActiveImage(url);
+  };
 
 
   return (
     <div>
       {product && (
         <div className={styles.detail__container}>
-
-          {/*//zona izquierda// */}
-          <div className={styles.detail__container__image}>
-            <div className={styles.image__secondary }>
-            {product.image?.map((url: string, index: number) => {
-              return (
-                <div key ={url} className={styles.individuals__image}> 
-                  <Image
-                  key ={url}
-                  src={url}
-                  width={250}
-                  alt={product.name}
-                  height={250}
-                  onMouseOver ={()=>handleMouseOver(url, index)}
-                  />
+          {/* Zona izquierda */}
+          <div className={styles.detail__container__images}>
+            <div className={styles.image__secondary__container}>
+              {product.image?.map((url: string, index: number) => {
+                return (
+                  <div key={index} className={styles.image_individual__container}>
+                    <Image
+                      src={url}
+                      width={300}
+                      alt={product.name}
+                      height={156}
+                      onMouseOver={() => handleMouseOver(url, index)}
+                      className={styles.image_individual__img}
+                    />
                   </div>
-              );})}
+                );
+              })}
             </div>
 
-            <div className={styles.image__main}>
-              <Image src={activeImage}  width={500} alt={product.name} height={500} />
+            <div className={styles.image_main__container}>
+              <Image
+                src={activeImage ? activeImage : detail}
+                width={500}
+                alt="Product main image"
+                height={500}
+                className={styles.image_main__img}
+              />
             </div>
           </div>
-       
-  
 
-          {/* //zona derecha// */}
+          {/* Zona derecha */}
           <div className={styles.detail__info}>
             <h1 className={styles.detail__info_title}>{product.name}</h1>
             <p className={styles.detail__info_price}>$ {product.price}</p>
@@ -82,10 +83,17 @@ const ProductDetail = () => {
               <p className={styles.detail__info_extras}>{product.category}</p>
             </div>
 
-            <p className={styles.detail_info_description}>Description:<br></br>{product.description}</p>
-            <button className={styles.add_to_cart__btn} onClick={(e: any) => handlerAdd(e, product)}>Add to cart</button>
+            <div className={styles.detail_info_description}>
+              <p className={styles.detail_info_description_title}>Product description</p>
+              <p>{product.description}</p>
+            </div>
+            <button
+              className={styles.add_to_cart__btn}
+              onClick={(e: any) => handlerAdd(e, product)}
+            >
+              Add to cart
+            </button>
           </div>
-
         </div>
       )}
     </div>
