@@ -1,0 +1,130 @@
+.home_info__container {
+  margin: 2em 0;
+  margin-bottom: 4em;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-family: var(--font-paragraph);
+  background-color: rgb(243, 227, 222);
+}
+
+.home_info__content_container {
+  height: 30em;
+  display: flex;
+  flex-direction: row;
+}
+
+.home_info__reverse {
+  flex-direction: row-reverse;
+}
+
+.home_info__image_container {
+  max-width: 50%;
+}
+
+.home_info__image {
+  height: 30em;
+  width: 50em;
+  object-fit: cover;
+  object-position: center;
+}
+
+.home_info__text_container {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.home_info__text_container > h3 {
+  max-width: 80%;
+  color: var(--color-dark-blue);
+  font-family: var(--font-title);
+  font-weight: bold;
+  font-size: 3em;
+  padding-bottom: 0.5em;
+  letter-spacing: 0.5px;
+}
+
+.home_info__text_container > p {
+  max-width: 80%;
+  letter-spacing: 0.5px;
+  text-align: justify;
+}
+
+.home_info__span,
+.home_info__a {
+  color: var(--color-dark-blue);
+  text-decoration: underline;
+}
+
+.home_info__span:hover,
+.home_info__a:hover {
+  color: rgb(244, 105, 128);
+  cursor: pointer;
+}
+
+/* Media queries - responsive layout */
+
+@media (min-width: 1100px) {
+  .home_info__text_container > p {
+    line-height: 1.7em;
+  }
+}
+
+@media (max-width: 1000px) {
+  .home_info__text_container > h3 {
+    font-size: 2.5em;
+  }
+}
+
+@media (max-width: 810px) {
+  .home_info__text_container {
+    font-size: 0.9em;
+  }
+}
+
+@media (max-width: 750px) {
+  .home_info__content_container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .home_info__content_container:last-child {
+    padding-bottom: 3em;
+  }
+
+  .home_info__image_container {
+    max-width: 100%;
+    margin-top: 3em;
+  }
+
+  .home_info__first_img {
+    margin-top: 0;
+  }
+
+  .home_info__image {
+    height: 20em;
+    width: 50em;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .home_info__text_container {
+    width: 100%;
+    padding: 1em 0;
+    font-size: 0.9em;
+  }
+
+  .home_info__text_container > h3 {
+    width: 100%;
+  }
+
+  .home_info__text_container > p {
+    width: 100%;
+  }
+}

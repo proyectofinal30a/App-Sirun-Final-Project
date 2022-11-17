@@ -1,0 +1,86 @@
+.filter__container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  font-family: var(--font-paragraph) !important;
+  font-size: .9em;
+  padding: 0 4em;
+  width: 100%;
+}
+
+.filter__select {
+  height: 3em;
+  padding: 0.5em;
+  margin-bottom: 1em;
+  width: 20%;
+  border: none;
+  border-right: .5em solid transparent;
+  border-radius: .3em;
+  box-shadow: 0 0 1px black;
+}
+
+.filter__select:hover {
+  cursor: pointer;
+}
+
+.filter__btn {
+  height: 3em;
+  border: 1px solid var(--color-dark-blue);
+  border-radius: .3em;
+  padding: 0 .7em;
+  color: var(--color-dark-blue);
+  background-color: var(--color-light-pink);
+}
+
+.filter__btn:hover,
+.filter__btn:focus,
+.filter__link:hover,
+.filter__link:focus {
+  background-color: var(--color-light-blue);
+  color: var(--color-light-pink);
+  cursor: pointer;
+}
+
+
+/* Media query para padding-top en todos los sizes */
+@media (min-width: 1541px) {
+  .filter__container {
+    padding-top: 8em;
+  }
+}
+
+@media (max-width: 1540px) {
+  .filter__container {
+    padding-top: 11em;
+  }
+}
+
+@media (max-width: 1175px) {
+  .filter__container {
+    padding-top: 10em;
+  }
+}
+
+@media (max-width: 916px) {
+  .filter__container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    max-width: 80%;
+  }
+
+  .filter__select {
+    width: 100%;
+  }
+
+  .filter__btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 780px) {
+  .filter__container {
+    padding-top: 12em;
+  }
+}

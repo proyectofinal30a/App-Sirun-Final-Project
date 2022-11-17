@@ -1,0 +1,21 @@
+.account__container {
+  min-height: 100vh;
+}
+
+@media (max-width: 1540px) {
+  .account__container {
+    padding-top: 11em;
+  }
+}
+
+@media (max-width: 1175px) {
+  .account__container {
+    padding-top: 10em;
+  }
+}
+
+@media (max-width: 780px) {
+  .account__container {
+    padding-top: 11em;
+  }
+}

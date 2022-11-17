@@ -1,0 +1,21 @@
+.wishlist__container {
+  min-height: 100vh;
+}
+
+@media (max-width: 1540px) {
+  .wishlist__container {
+    padding-top: 11em;
+  }
+}
+
+@media (max-width: 1175px) {
+  .wishlist__container {
+    padding-top: 10em;
+  }
+}
+
+@media (max-width: 780px) {
+  .wishlist__container {
+    padding-top: 11em;
+  }
+}

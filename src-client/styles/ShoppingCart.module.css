@@ -1,0 +1,21 @@
+.cart__container {
+  min-height: 100vh;
+}
+
+@media (max-width: 1540px) {
+  .cart__container {
+    padding-top: 11em;
+  }
+}
+
+@media (max-width: 1175px) {
+  .cart__container {
+    padding-top: 10em;
+  }
+}
+
+@media (max-width: 780px) {
+  .cart__container {
+    padding-top: 11em;
+  }
+}

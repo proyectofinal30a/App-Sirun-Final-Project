@@ -1,0 +1,126 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Account {
+  id String @id @unique @default(uuid())
+
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model User {
+  id                    String       @id @unique @default(uuid())
+  name                  String?
+  email                 String?      @unique
+  emailVerified         DateTime?
+  image                 String?
+  role                  String       @default("user")
+  accounts              Account[]
+  sessions              Session[]
+  favorites_products_id Int[]
+  direcciones           Direccion[]
+  orders                Order[]
+  evaluations           Evaluation[]
+}
+
+model Direccion {
+  id String @id @unique @default(uuid())
+
+  id_user String @unique
+  user    User   @relation(fields: [id_user], references: [id])
+  dir     String //dos personas que viven juntas y usan diferente mail.
+}
+
+model Evaluation {
+  id         String  @id @unique @default(uuid())
+  id_product String  @unique
+  id_user    String  @unique
+  review     String
+  rating     Int
+  product    Product @relation(fields: [id_product], references: [id])
+  user       User    @relation(fields: [id_user], references: [id])
+}
+
+enum StatusType {
+  pending
+  in_progress
+  canceled
+  fullfiled
+}
+
+model Order {
+  id            String     @id @unique @default(uuid())
+  id_user       String
+  description   String
+  products_id   Int[]
+  total         Int
+  status        StatusType
+  date          DateTime   @default(now())
+  user          User       @relation(fields: [id_user], references: [id])
+  delivery_time String
+}
+
+enum TypeDiet {
+  vegan
+  celiac
+  vegan_celiac
+  none
+}
+
+enum CategoryPro {
+  cakes
+  muffins
+  cookies
+  bakery
+  desserts
+  pies
+  others
+}
+
+model Product {
+  id          String       @id @unique @default(uuid())
+  name        String
+  price       Int
+  dimension   Int
+  available   Boolean
+  type        TypeDiet
+  category    CategoryPro
+  image       Json[]
+  description String
+  evaluation  Evaluation[]
+}

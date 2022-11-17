@@ -1,0 +1,28 @@
+.about__container {
+  min-height: 100vh;
+}
+
+.about__title {
+  font-family: var(--font-paragraph);
+  font-size: 2em;
+  color: var(--color-dark-blue);
+  text-align: center;
+}
+
+@media (max-width: 1540px) {
+  .about__container {
+    padding-top: 11em;
+  }
+}
+
+@media (max-width: 1175px) {
+  .about__container {
+    padding-top: 10em;
+  }
+}
+
+@media (max-width: 780px) {
+  .about__container {
+    padding-top: 11em;
+  }
+}

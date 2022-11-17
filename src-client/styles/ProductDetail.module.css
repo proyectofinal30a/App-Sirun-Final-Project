@@ -1,0 +1,165 @@
+.detail__container {
+  padding-top: 12em;
+  padding-bottom: 2em;
+  margin: 0 2em;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.detail__container__image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.image__secondary{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0;
+  padding: 0 1em;
+  width: 40%;
+  
+}
+
+.individuals__image{
+  width: 100%;
+  height: 100%;
+}
+
+.individuals__image{
+  width: 100%;
+  height: 100%;
+  margin-bottom: 1em;
+  object-fit: cover;
+
+}
+
+.individuals__image:hover {
+  border: 2px solid var(--color-dark-blue);
+  cursor: pointer;
+  opacity: 0.5;
+}
+
+.image__main {
+  object-fit: cover;
+}
+
+
+
+
+
+/* ZONA DE INFO */
+.detail__info {
+  width: 100%;
+  padding: 0 2em;
+}
+
+.detail__info_extra {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.detail__info_title {
+  font-family: var(--font-paragraph);
+  color: var(--color-primary);
+  font-size: 2.5em;
+  font-weight: 600;
+}
+
+.detail__info_price {
+  font-family: var(--font-paragraph);
+  color: var(--color-primary);
+  font-size: 1.5em;
+}
+
+.detail__info_extra {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.detail__info_extras {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.detail_info_description {
+  font-family: var(--font-formal);
+  color: var(--color-primary);
+  font-size: 1em;
+  margin: 1em 0;
+  padding: 3em 0;
+  background-color: var(--color-secondary);
+  border-radius: 5px;
+}
+
+.add_to_cart__btn {
+  font-family: var(--font-paragraph);
+  padding: 0.3em;
+  background-color: var(--color-dark-pink);
+  border: none;
+  border: 1px solid var(--color-dark-blue);
+  border-radius: 5px;
+  color: var(--color-dark-blue);
+  font-size: 0.9em;
+  width: 100%;
+}
+
+.add_to_cart__btn:focus,
+.add_to_cart__btn:hover {
+  background-color: rgb(246, 226, 226);
+  cursor: pointer;
+}
+
+
+
+
+
+
+
+
+@media(max-width: 810px) {
+  .detail__container{
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr;
+    height: fit-content;
+  }
+  
+  .detail__container__image {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .image__main{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .image__main::after{
+    content: ""; 
+    display: block; 
+    clear: both;
+  } 
+
+  .image__secondary{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+  }
+
+  .detail__info {
+    width: 100%;
+    height: fit-content;
+    float: left;
+    padding: 0 2em;
+  }
+
+}
+
+/* //para que .image__secondary este despues de .image__main y poder cambiarlo en la mediaquery de arriba
+// deberia usar ::after asi: .image__main::after{content: ""; display: block; clear: both;}  */

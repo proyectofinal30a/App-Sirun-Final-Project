@@ -1,0 +1,6 @@
+.products_container {
+  margin-top: 10em;
+  /* display: flex; */
+  height: 10em;
+  background-color: black;
+}
