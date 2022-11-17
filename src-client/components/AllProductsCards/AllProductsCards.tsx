@@ -7,7 +7,6 @@ import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-
 import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
 import styles from "../../styles/AllProductsCards.module.css";
 import Modal from "react-modal";
-import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import { BsFillTrashFill } from "react-icons/bs";
 
 

@@ -1,59 +1,57 @@
 .detail__container {
   padding-top: 12em;
   padding-bottom: 2em;
-  margin: 0 2em;
+  margin: 0 3em;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
+  font-family: var(--font-paragraph);
 }
 
-.detail__container__image {
+.detail__container__images {
   display: flex;
   justify-content: center;
-  align-items: center;
 }
 
-.image__secondary{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  margin: 0;
+.image__secondary__container {
   padding: 0 1em;
-  width: 40%;
-  
+  height: 100%;
+  width: 15em;
 }
 
-.individuals__image{
+.image_individual__container {
   width: 100%;
-  height: 100%;
-}
-
-.individuals__image{
-  width: 100%;
-  height: 100%;
-  margin-bottom: 1em;
+  margin-bottom: .5em;
+  max-height: 10em;
   object-fit: cover;
-
+  border: 2px solid white;
 }
 
-.individuals__image:hover {
+.image_individual__img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.image_individual__container:hover {
   border: 2px solid var(--color-dark-blue);
   cursor: pointer;
   opacity: 0.5;
 }
 
-.image__main {
+.image_main__container {
+  width: 100%;
+}
+
+.image_main__img {
+  width: 100%;
   object-fit: cover;
 }
 
-
-
-
-
 /* ZONA DE INFO */
+
 .detail__info {
-  width: 100%;
+  /* background-color: bisque; */
   padding: 0 2em;
+  margin-left: 2em;
 }
 
 .detail__info_extra {
@@ -64,15 +62,17 @@
 
 .detail__info_title {
   font-family: var(--font-paragraph);
-  color: var(--color-primary);
-  font-size: 2.5em;
+  color: var(--color-dark-blue);
+  letter-spacing: 1px;
+  font-size: 2em;
   font-weight: 600;
+  padding-bottom: .5em;
 }
 
 .detail__info_price {
   font-family: var(--font-paragraph);
   color: var(--color-primary);
-  font-size: 1.5em;
+  font-size: 1.4em;
 }
 
 .detail__info_extra {
@@ -89,11 +89,15 @@
 .detail_info_description {
   font-family: var(--font-formal);
   color: var(--color-primary);
-  font-size: 1em;
-  margin: 1em 0;
-  padding: 3em 0;
+  font-size: .95em;
   background-color: var(--color-secondary);
   border-radius: 5px;
+  margin: 2em 0;
+}
+
+.detail_info_description_title {
+  font-weight: bold;
+  padding-bottom: .5em;
 }
 
 .add_to_cart__btn {
@@ -102,7 +106,7 @@
   background-color: var(--color-dark-pink);
   border: none;
   border: 1px solid var(--color-dark-blue);
-  border-radius: 5px;
+  border-radius: 3px;
   color: var(--color-dark-blue);
   font-size: 0.9em;
   width: 100%;
@@ -114,42 +118,34 @@
   cursor: pointer;
 }
 
-
-
-
-
-
-
-
-@media(max-width: 810px) {
-  .detail__container{
+@media (max-width: 810px) {
+  .detail__container {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     height: fit-content;
   }
-  
+
   .detail__container__image {
     display: flex;
     flex-direction: column;
   }
 
-  .image__main{
+  .image__main {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .image__main::after{
-    content: ""; 
-    display: block; 
+  .image__main::after {
+    content: "";
+    display: block;
     clear: both;
-  } 
+  }
 
-  .image__secondary{
+  .image__secondary {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-
   }
 
   .detail__info {
@@ -158,8 +154,7 @@
     float: left;
     padding: 0 2em;
   }
-
 }
 
-/* //para que .image__secondary este despues de .image__main y poder cambiarlo en la mediaquery de arriba
-// deberia usar ::after asi: .image__main::after{content: ""; display: block; clear: both;}  */
+/* para que .image__secondary este despues de .image__main y poder cambiarlo en la mediaquery de arriba
+deberia usar ::after asi: .image__main::after{content: ""; display: block; clear: both;}  */
