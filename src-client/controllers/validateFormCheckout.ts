@@ -8,10 +8,10 @@ const validate = (input: any) => {
         case !input.email || !/\S+@\S+\.\S+/.test(input.email):
             errors.email = 'Email is required and must be valid';
             break;
-        case !input.phone || !/^[0-9]+$/.test(input.phone) || input.phone.length < 8:
+        case !input.phone || !/^[0-9]+$/.test(input.phone) || input.phone.length < 8 || input.phone.length > 9:
             errors.phone = 'Phone is required and must be numeric';
             break;
-        case !input.areaCode || !/^[0-9]+$/.test(input.areaCode) || input.areaCode.length < 2:
+        case !input.areaCode || !/^[0-9]+$/.test(input.areaCode) || input.areaCode.length < 2 || input.areaCode.length > 5:
             errors.areaCode = 'Area Code is required and must be numeric';
             break;
         case !input.zipCode || !/^[0-9]+$/.test(input.zipCode) || input.zipCode.length < 4:

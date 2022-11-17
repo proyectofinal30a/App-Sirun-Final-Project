@@ -34,14 +34,11 @@ const ProductDetail = () => {
     alert(`Se agrego el producto ${name} asu carrito`);
   };
 
-
- const [activeImage, setActiveImage] = useState("");
+  const [activeImage, setActiveImage] = useState("");
+  const detail = product?.image?.[0]
    const handleMouseOver = (url: string, index: number) => {
      setActiveImage(url)
   }
-
- 
-
 
   return (
     <div>
@@ -67,7 +64,7 @@ const ProductDetail = () => {
             </div>
 
             <div className={styles.image__main}>
-              <Image src={activeImage}  width={500} alt={product.name} height={500} />
+              <Image src={activeImage ? activeImage : detail}  width={500} alt={product.name} height={500} />
             </div>
           </div>
        
