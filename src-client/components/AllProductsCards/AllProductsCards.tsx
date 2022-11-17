@@ -35,8 +35,7 @@ const AllProductsCards = () => {
   }
 
 
-
-  // Shopping cart modal
+  // SHOPPING CART
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -66,7 +65,7 @@ const AllProductsCards = () => {
       price: price,
       image: image,
     };
-    //console.log(productToAdd, "objeto creado y asignado con los valores")
+
     dispatch(addOne(productToAdd));
   };
 
@@ -171,7 +170,6 @@ const AllProductsCards = () => {
 
                     <button
                       className={styles.add_to_cart__btn}
-                      // onClick={(e: any) => handlerAdd(e, product)}
                       onClick={(e: any) => addProductOpenModal(e, product)}
                     >
                       Add to cart
