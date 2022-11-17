@@ -108,9 +108,9 @@ const ProductDetail = () => {
                   <div key={index} className={styles.image_individual__container}>
                     <Image
                       src={url}
-                      width={300}
+                      width={250}
                       alt={product.name}
-                      height={156}
+                      height={130}
                       onMouseOver={() => handleMouseOver(url, index)}
                       className={styles.image_individual__img}
                     />
@@ -136,8 +136,8 @@ const ProductDetail = () => {
             <p className={styles.detail__info_price}>$ {product.price}</p>
 
             <div className={styles.detail__info_extra}>
-              <p className={styles.detail__info_extras}>{product.type}</p>
               <p className={styles.detail__info_extras}>{product.category}</p>
+              <p className={styles.detail__info_extras}>{product.type}</p>
             </div>
 
             <div className={styles.detail_info_description}>

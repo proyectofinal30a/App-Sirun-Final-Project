@@ -1,7 +1,5 @@
 .detail__container {
-  padding-top: 8em;
-  padding-bottom: 4em;
-  margin: 0 3em;
+  padding: 8em 0 4em 0;
   display: grid;
   margin: auto;
   grid-template-columns: repeat(2, 1fr);
@@ -12,41 +10,46 @@
 .detail__container__images {
   display: flex;
   justify-content: center;
-  /* background-color: bisque; */
+  height: 35em;
 }
 
 .image__secondary__container {
-  padding: 0 1em;
+  margin-right: 1em;
   height: 100%;
-  width: 15em;
-  /* background-color: brown; */
 }
 
 .image_individual__container {
   width: 100%;
   margin-bottom: .5em;
-  height: 10em;
   object-fit: cover;
-  border: 2px solid white;
+}
+
+.image_individual__container:last-child {
+  margin-bottom: 0;
 }
 
 .image_individual__img {
   width: 100%;
   object-fit: cover;
+  border: 2px solid white;
 }
 
 .image_individual__container:hover {
   padding: 0;
-  border: 2px solid var(--color-dark-blue);
   cursor: pointer;
   opacity: 0.5;
 }
 
+.image_individual__img:hover {
+  border: 2px solid var(--color-dark-blue);
+}
+
 .image_main__container {
-  width: 100%;
+  width: 45em;
 }
 
 .image_main__img {
+  border: 2px solid white;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -55,8 +58,7 @@
 /* ZONA DE INFO */
 
 .detail__info {
-  padding: 0 2em;
-  margin-left: 2em;
+  margin-left: 4em;
 }
 
 .detail__info_extra {
@@ -82,22 +84,31 @@
 }
 
 .detail__info_extra {
+  margin-top: 2em;
   display: flex;
   flex-direction: row;
-  justify-content: space-around;
+  justify-content: flex-start;
+  font-size: 1em;
 }
 
 .detail__info_extras {
-  background-color: var(--color-primary);
-  /* color: white; */
+  background-color: var(--color-light-pink);
+  padding: .5em;
+  border-radius: .2em;
+  text-transform: capitalize;
+}
+
+.detail__info_extras:first-child {
+  margin-right: 1em;
 }
 
 .detail_info_description {
-  font-family: var(--font-formal);
-  color: var(--color-primary);
+  font-family: var(--font-paragraph);
   font-size: .95em;
-  background-color: var(--color-secondary);
+  background-color: rgb(249, 245, 245);
+  padding: .5em;
   margin: 3em 0 2em 0;
+  border-radius: .2em;
 }
 
 .detail_info_description_title {
@@ -149,24 +160,24 @@
   }
 }
 
-@media (max-width: 1175px) {
+@media (max-width: 1300px) {
+  .image_main__container {
+    width: 40em;
+  }
+}
+
+@media (max-width: 1100px) {
   .detail__container {
+    margin: auto;
     padding-top: 10em;
-    max-width: 95%;
-  }
-
-  .detail__info {
-    margin-left: 1em;
-  }
-
-  .image__secondary__container {
-    height: 90%;
-    width: 13em;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
   }
 
   .image_individual__container {
     width: 100%;
-    margin-bottom: .3em;
+    margin-bottom: .5em;
     max-height: 9em;
   }
 
@@ -175,56 +186,93 @@
     max-height: 100%;
     object-fit: cover;
   }
-}
-
-@media (max-width: 900px) {
-  .detail__container {
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr;
-    height: fit-content;
-    margin: 0 2em 0 2em;
-    padding-bottom: 0;
-  }
-
-  .detail__container__images {
-    display: flex;
-    padding: 0;
-    padding-right: 1em;
-  }
-
-  .image_individual__container {
-    margin-bottom: .5em;
-  }
 
   .detail__info {
-    margin: 0;
-    padding: 0;
     margin: auto;
-    margin-top: 3em;
-    width: 85%;
+    margin-top: 4em;
+    padding: 1em;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
   }
 }
 
 @media (max-width: 780px) {
   .detail__container {
-    padding-top: 12em;
-    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    padding-top: 18em;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+  }
+
+  .detail__container__images {
+    padding: 0;
+    margin: 0;
+    margin-bottom: 5em;
+    width: 100%;
+    height: 31em;
+    display: flex;
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .image_main__container {
+    margin: 0;
+    padding: 0;
+    height: 35em;
+    width: 100%;
+  }
+
+  .image_main__img {
+    width: 100%;
+    height: 35em;
+  }
+
+  .image__secondary__container {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+  }
+
+  .image_individual__container {
+    margin: 0;
+    padding: 0;
+    border: none;
+    width: 100%;
+  }
+
+  .image_individual__img {
+    padding: 0;
+    margin: 0;
+    margin: auto;
+    border: 2px solid white;
+    width: 11em;
+    height: 10em;
+  }
+
+  .detail__info {
+    width: 100%;
+    margin-top: 0%;
+    padding-top: 10%;
+    margin-bottom: 4em;
   }
 }
 
 @media (max-width: 600px) {
-  .detail__container__images {
-    display: flex;
-    flex-direction: column-reverse;
-  }
-
-  .image__secondary__container {
-    display: flex;
+  .detail__info {
     width: 100%;
-    margin: 0;
-    padding: 0;
+    padding-top: 15%;
   }
 }
 
-/* para que .image__secondary este despues de .image__main y poder cambiarlo en la mediaquery de arriba
-deberia usar ::after asi: .image__main::after{content: ""; display: block; clear: both;}  */
+@media (max-width: 500px) {
+  .detail__info {
+    width: 100%;
+    margin-top: 1em;
+  }
+}
