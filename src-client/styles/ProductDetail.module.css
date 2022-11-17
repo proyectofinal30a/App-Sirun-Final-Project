@@ -134,6 +134,25 @@
   cursor: pointer;
 }
 
+
+/*MODAL - ale, no me mates con mi css jhaja*/
+.modal {
+  margin: 20%;
+  background-color: aquamarine;
+}
+
+.button__close {
+  background-color: red;
+  color: black;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/* end modal*/
+
 @media (max-width: 1540px) {
   .detail__container {
     padding-top: 11em;

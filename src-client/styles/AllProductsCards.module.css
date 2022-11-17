@@ -141,3 +141,22 @@
   background-color: var(--color-light-blue);
   color: white;
 }
+
+
+/*MODAL*/
+.modal {
+  margin-top: 10%;
+  background-color: aquamarine;
+}
+
+.button__close {
+  background-color: red;
+  color: black;
+}
+
+.right {
+  display: flex;
+  justify-content: flex-end;
+}
+
+/*END MODAL*/
