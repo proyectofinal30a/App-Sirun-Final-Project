@@ -189,31 +189,33 @@ const ProductDetail = () => {
                     />
                   </div>
 
-                  <div className={styles.modal__product_info}>
-                    <p className={styles.modal__product_data}>Quantity: {elem.quantity}</p>
-                    <p className={styles.modal__product_data}>Price: {elem.product.price}</p>
-                    <p className={styles.modal__product_data}>Subtotal: {elem.subTotal}</p>
-                  </div>
-
-                  <div className={styles.modal__product_btns_container}>
-                    <button 
-                      className={styles.modal__product_btn}
-                      onClick={(e: any) => handlerAddOne(e, elem.product)}
-                    >
-                      {" "}+{" "}
-                    </button>
-                    <button 
-                      className={styles.modal__product_btn}
-                      onClick={(e: any) => handlerRemoveOne(e, elem.product)}
-                    >
-                      {" "}-{" "}
-                    </button>
-                    <button
-                      className={[styles.modal__product_btn, styles.modal__product_btn_trash].join(" ")}
-                      onClick={(e: any) => handlerTrash(e, elem.product)}
-                    >
-                      <BsFillTrashFill />
-                    </button>
+                  <div className={styles.modal__product_mobile_separator}>
+                    <div className={styles.modal__product_info}>
+                      <p className={styles.modal__product_data}>Quantity: {elem.quantity}</p>
+                      <p className={styles.modal__product_data}>Price: {elem.product.price}</p>
+                      <p className={styles.modal__product_data}>Subtotal: {elem.subTotal}</p>
+                    </div>
+                    
+                    <div className={styles.modal__product_btns_container}>
+                      <button 
+                        className={styles.modal__product_btn}
+                        onClick={(e: any) => handlerAddOne(e, elem.product)}
+                      >
+                        {" "}+{" "}
+                      </button>
+                      <button 
+                        className={styles.modal__product_btn}
+                        onClick={(e: any) => handlerRemoveOne(e, elem.product)}
+                      >
+                        {" "}-{" "}
+                      </button>
+                      <button
+                        className={[styles.modal__product_btn, styles.modal__product_btn_trash].join(" ")}
+                        onClick={(e: any) => handlerTrash(e, elem.product)}
+                      >
+                        <BsFillTrashFill />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
