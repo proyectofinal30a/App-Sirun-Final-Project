@@ -43,6 +43,8 @@ const nextConfig = {
       "cdn2.cocinadelirante.com",
       "gastronomiaycia.republica.com",
       "resizer.glanacion.com",
+      "media0.giphy.com",
+      "hackernoon.com",
       "**"
     ],
     async redirects() {

@@ -5,8 +5,11 @@ import Image from 'next/image';
 import Modal from 'react-modal';
 import { sendOrderDetail, resetCart } from "../../redux/slice/cart-redux/cart";
 import validate from '../../controllers/validateFormCheckout';
-import { link } from 'fs';
+
+ import { symlink } from 'fs';
+
 /// PARA DATOS DE ENTREGA
+
 const FormCheckout = (): JSX.Element => {
     const dispatch = useDispatch()
     const productsInCart = useSelector((state: any) => state.reducerCart.products)
@@ -36,7 +39,6 @@ const FormCheckout = (): JSX.Element => {
         setIsOpen(false);
     }
 
-    //modal 
     const openCheckModal = (e: Event, person: any) => {
         e.preventDefault();
         setIsOpen(true);
@@ -47,7 +49,7 @@ const FormCheckout = (): JSX.Element => {
         }
     }
 
-    //submitea cuando se cliquea el boton del modal
+    //submitea cuando se cliquea el boton del modal (el form esta dentro del modal)
     async function handleSubmit(e: Event) {
         e.preventDefault();
         console.log('estoy aca', confirmedCart, payLink);
@@ -106,6 +108,7 @@ const FormCheckout = (): JSX.Element => {
 
                 <button className={styles.form__input_btn} disabled={Object.values(errors).length !== 0} onClick={(e: any) => openCheckModal(e, inputUser)} >Continue</button>
 
+
                 <Modal
                     isOpen={modalIsOpen}
                     onRequestClose={closeModal}
@@ -127,6 +130,8 @@ const FormCheckout = (): JSX.Element => {
                         {confirmedCart && payLink && <button onClick={() => resetCart()}><a href={payLink}>Pagar</a></button>}
                    
                 </Modal>
+
+
             </div>
 
             <div className={styles.second__column}>
@@ -166,7 +171,3 @@ const FormCheckout = (): JSX.Element => {
 
 export default FormCheckout;
 
-// fata agregar:
-//-subtotal
-//-costo de envio
-//-total

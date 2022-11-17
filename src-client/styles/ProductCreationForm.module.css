@@ -149,10 +149,9 @@
 }
 
 
-@media (max-width: 1495px) {
-  .creation_container {
-    padding-top: 10em;
-
+@media (max-width: 1540px) {
+  .creation_form__container {
+    padding-top: 11em;
   }
 }
 

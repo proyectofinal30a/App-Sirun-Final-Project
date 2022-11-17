@@ -3,17 +3,12 @@ import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 import { Iproduct, Ireducers } from "../../../lib/types";
-import {
-  addToCart,
-  addOne,
-  removeOne,
-  trashItem,
-} from "../../redux/slice/cart-redux/cart";
+import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart";
 import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
 import styles from "../../styles/AllProductsCards.module.css";
 import Modal from "react-modal";
-import ShoppingCart from "../ShoppingCart/ShoppingCart";
 import { BsFillTrashFill } from "react-icons/bs";
+
 
 const AllProductsCards = () => {
   // GET ALL PRODUCTS
@@ -27,6 +22,8 @@ const AllProductsCards = () => {
     (state) => state.reducerCart.products
   );
 
+
+
   // FILTERS
   const filterProducts: any = useSelector<Ireducers>(
     (state) => state.reducerFilters.productsToFilter
@@ -37,15 +34,8 @@ const AllProductsCards = () => {
     currentProducts = filterProducts;
   }
 
-  // SHOPPING CART
-  const handlerAdd = (e: Event, product: Iproduct) => {
-    e.preventDefault();
-    const { id, name }: any = product;
-    dispatch(addToCart(id));
-    alert(`Product: ${name} added to cart`);
-  };
 
-  // modal y carrito
+  // SHOPPING CART
   const [modalIsOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -75,7 +65,7 @@ const AllProductsCards = () => {
       price: price,
       image: image,
     };
-    //console.log(productToAdd, "objeto creado y asignado con los valores")
+
     dispatch(addOne(productToAdd));
   };
 
@@ -102,9 +92,11 @@ const AllProductsCards = () => {
     return (total += elem.subTotal);
   });
 
+
+
   // PAGINATION
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(4);
+  const [productsPerPage] = useState(16);
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const paginatedProducts = currentProducts.slice(
@@ -113,11 +105,7 @@ const AllProductsCards = () => {
   );
 
   let pageNumbers = [];
-  for (
-    let i = 1;
-    i <= Math.ceil(currentProducts.length / productsPerPage);
-    i++
-  ) {
+  for (let i = 1; i <= Math.ceil(currentProducts.length / productsPerPage); i++) {
     pageNumbers.push(i);
   }
 
@@ -147,25 +135,27 @@ const AllProductsCards = () => {
     dispatch(getAllProducts());
   }, [dispatch, filterProducts]);
 
+
+
   return (
     <div className={styles.general__container}>
       <div className={styles.products__container}>
         {paginatedProducts[0] ? (
           <>
-            {paginatedProducts.map((product: any) => {
+            {paginatedProducts.map((product: any, index: number) => {
               return (
                 <div
-                  key={product.id}
+                  key={index}
                   className={styles.product_card__container}
                 >
                   <Link
                     href={`/productDetail/${product.id}`}
                     className={styles.product_card__title}
                   >
-                    <h1>{product.name}</h1>
+                    <h1>{product.name.toLowerCase()}</h1>
                   </Link>
                   <Image
-                    key={product.image[0]}
+                    key={index}
                     src={product.image[0]}
                     width={250}
                     alt={product.name}
@@ -180,7 +170,6 @@ const AllProductsCards = () => {
 
                     <button
                       className={styles.add_to_cart__btn}
-                      // onClick={(e: any) => handlerAdd(e, product)}
                       onClick={(e: any) => addProductOpenModal(e, product)}
                     >
                       Add to cart
@@ -190,60 +179,84 @@ const AllProductsCards = () => {
               )
             })}
 
-            <ShoppingCart />
 
+            {/* Shopping cart */}
             <Modal
+              ariaHideApp={false}
               isOpen={modalIsOpen}
               onRequestClose={closeModal}
               className={styles.modal}
               contentLabel="Example Modal"
             >
-              <form>
-                <h2>Shopping Cart</h2>
-                <button onClick={closeModal}>x</button>
-                {cart?.map((elem: any) => {
-                  return (
-                    <div key={elem.product.id}>
-                      <p>Product Name: {elem.product.name}</p>
-                      <Image
-                        key={elem.product.image[0]}
-                        src={elem.product.image[0]}
-                        width={100}
-                        alt={elem.product.name}
-                        height={100}
-                        priority
-                        className={styles.modal_product_card__img}
-                      />
-                      <p>Quantity: {elem.quantity}</p>
-                      <p>Price: {elem.product.price}</p>
-                      <p>subTotal: {elem.subTotal}</p>
+              <form className={styles.modal__container}>
+                <div className={styles.modal__btn_right_container}>
+                  <button className={styles.modal__close_modal_btn} onClick={closeModal}>x</button>
+                </div>
 
-                      <button
-                        onClick={(e: any) => handlerAddOne(e, elem.product)}
-                      >
-                        {" "}
-                        +{" "}
-                      </button>
-                      <button
-                        onClick={(e: any) => handlerRemoveOne(e, elem.product)}
-                      >
-                        {" "}
-                        -{" "}
-                      </button>
-                      <button
-                        onClick={(e: any) => handlerTrash(e, elem.product)}
-                      >
-                        <BsFillTrashFill />
-                      </button>
+                <h2>Shopping Cart</h2>
+
+                {cart?.map((elem: any, index: number) => {
+                  return (
+                    <div key={index} className={styles.modal__product_container}>
+                      <p className={styles.modal__product_name}>
+                        {elem.product.name.toLowerCase()}
+                      </p>
+
+                      <div className={styles.modal_info_container}>
+                        <div className={styles.modal__product_img_container}>
+                          <Image
+                            key={index}
+                            src={elem?.product?.image?.[0]}
+                            width={400}
+                            alt={elem.product.name}
+                            height={400}
+                            priority
+                            className={styles.modal__product_img}
+                          />
+                        </div>
+
+                        <div className={styles.modal__product_mobile_separator}>
+                          <div className={styles.modal__product_info}>
+                            <p className={styles.modal__product_data}>Quantity: {elem.quantity}</p>
+                            <p className={styles.modal__product_data}>Price: {elem.product.price}</p>
+                            <p className={styles.modal__product_data}>Subtotal: {elem.subTotal}</p>
+                          </div>
+
+                          <div className={styles.modal__product_btns_container}>
+                            <button 
+                              className={styles.modal__product_btn}
+                              onClick={(e: any) => handlerAddOne(e, elem.product)}
+                            >
+                              {" "}+{" "}
+                            </button>
+                            <button 
+                              className={styles.modal__product_btn}
+                              onClick={(e: any) => handlerRemoveOne(e, elem.product)}
+                            >
+                              {" "}-{" "}
+                            </button>
+                            <button
+                              className={[styles.modal__product_btn, styles.modal__product_btn_trash].join(" ")}
+                              onClick={(e: any) => handlerTrash(e, elem.product)}
+                            >
+                              <BsFillTrashFill />
+                            </button>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   );
                 })}
 
-                <p>TOTAL: ${total}</p>
-                <Link className="button" href="/checkout">
-                  <button>Iniciar compra</button>
+                <div className={styles.modal__total_container}>
+                  <p className={styles.modal__total}>TOTAL: </p>
+                  <p className={styles.modal__total}>${total}</p>
+                </div>
+
+                <Link href="/checkout" className={styles.modal__purchase_btn_container}>
+                  <button className={styles.modal__start_purchase_btn}>Iniciar compra</button>
                 </Link>
-                
+
               </form>
             </Modal>
           </>
@@ -253,6 +266,7 @@ const AllProductsCards = () => {
           </div>
         )}
       </div>
+
 
       {/* Pagination */}
       {paginatedProducts[0] && pageNumbers.length > 1 && (
