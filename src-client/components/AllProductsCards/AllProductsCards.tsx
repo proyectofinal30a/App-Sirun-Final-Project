@@ -36,14 +36,6 @@ const AllProductsCards = () => {
 
 
 
-  // SHOPPING CART
-  const handlerAdd = (e: Event, product: Iproduct) => {
-    e.preventDefault();
-    const { id, name }: any = product;
-    dispatch(addToCart(id));
-    alert(`Product: ${name} added to cart`);
-  };
-
   // Shopping cart modal
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -151,10 +143,10 @@ const AllProductsCards = () => {
       <div className={styles.products__container}>
         {paginatedProducts[0] ? (
           <>
-            {paginatedProducts.map((product: any) => {
+            {paginatedProducts.map((product: any, index: number) => {
               return (
                 <div
-                  key={product.id}
+                  key={index}
                   className={styles.product_card__container}
                 >
                   <Link
@@ -164,7 +156,7 @@ const AllProductsCards = () => {
                     <h1>{product.name.toLowerCase()}</h1>
                   </Link>
                   <Image
-                    key={product.image[0]}
+                    key={index}
                     src={product.image[0]}
                     width={250}
                     alt={product.name}
@@ -192,21 +184,25 @@ const AllProductsCards = () => {
 
             {/* Shopping cart */}
             <Modal
+              ariaHideApp={false}
               isOpen={modalIsOpen}
               onRequestClose={closeModal}
               className={styles.modal}
               contentLabel="Example Modal"
             >
               <form>
+                <div className={styles.right}>
+                  <button className={styles.button__close} onClick={closeModal}>x</button>
+                </div>
                 <h2>Shopping Cart</h2>
-                <button onClick={closeModal}>x</button>
-                {cart?.map((elem: any) => {
+                {cart?.map((elem: any, index: number) => {
                   return (
-                    <div key={elem.product.id}>
+                    <div key={index}>
                       <p>Product Name: {elem.product.name}</p>
+
                       <Image
-                        key={elem.product.image[0]}
-                        src={elem.product.image[0]}
+                        key={index}
+                        src={elem?.product?.image?.[0]}
                         width={100}
                         alt={elem.product.name}
                         height={100}
@@ -242,7 +238,7 @@ const AllProductsCards = () => {
                 <Link className="button" href="/checkout">
                   <button>Iniciar compra</button>
                 </Link>
-                
+
               </form>
             </Modal>
           </>
@@ -252,7 +248,7 @@ const AllProductsCards = () => {
           </div>
         )}
       </div>
-      
+
 
       {/* Pagination */}
       {paginatedProducts[0] && pageNumbers.length > 1 && (
