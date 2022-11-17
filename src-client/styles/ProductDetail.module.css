@@ -1,10 +1,12 @@
 .detail__container {
-  padding-top: 12em;
-  padding-bottom: 2em;
+  padding-top: 8em;
+  padding-bottom: 4em;
   margin: 0 3em;
   display: grid;
+  margin: auto;
   grid-template-columns: repeat(2, 1fr);
   font-family: var(--font-paragraph);
+  max-width: 1400px;
 }
 
 .detail__container__images {
@@ -21,7 +23,7 @@
 .image_individual__container {
   width: 100%;
   margin-bottom: .5em;
-  max-height: 10em;
+  height: 10em;
   object-fit: cover;
   border: 2px solid white;
 }
@@ -49,7 +51,6 @@
 /* ZONA DE INFO */
 
 .detail__info {
-  /* background-color: bisque; */
   padding: 0 2em;
   margin-left: 2em;
 }
@@ -73,6 +74,7 @@
   font-family: var(--font-paragraph);
   color: var(--color-primary);
   font-size: 1.4em;
+  margin-bottom: .7em;
 }
 
 .detail__info_extra {
@@ -83,7 +85,7 @@
 
 .detail__info_extras {
   background-color: var(--color-primary);
-  color: white;
+  /* color: white; */
 }
 
 .detail_info_description {
@@ -91,8 +93,7 @@
   color: var(--color-primary);
   font-size: .95em;
   background-color: var(--color-secondary);
-  border-radius: 5px;
-  margin: 2em 0;
+  margin: 3em 0 2em 0;
 }
 
 .detail_info_description_title {
@@ -118,41 +119,73 @@
   cursor: pointer;
 }
 
-@media (max-width: 810px) {
+@media (max-width: 1540px) {
+  .detail__container {
+    padding-top: 11em;
+    max-width: 90%;
+  }
+}
+
+@media (max-width: 1175px) {
+  .detail__container {
+    padding-top: 10em;
+    max-width: 95%;
+  }
+
+  .detail__info {
+    margin-left: 1em;
+  }
+
+  .image__secondary__container {
+    height: 90%;
+    width: 13em;
+  }
+  
+  .image_individual__container {
+    width: 100%;
+    margin-bottom: .3em;
+    max-height: 9em;
+  }
+
+  .image_individual__img {
+    width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+  }
+}
+
+@media (max-width: 900px) {
   .detail__container {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr 1fr;
     height: fit-content;
+    margin: 0 2em 0 2em;
+    padding-bottom: 0;
   }
 
-  .detail__container__image {
+  .detail__container__images {
     display: flex;
-    flex-direction: column;
+    padding: 0;
+    padding-right: 1em;
   }
 
-  .image__main {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-
-  .image__main::after {
-    content: "";
-    display: block;
-    clear: both;
-  }
-
-  .image__secondary {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+  .image_individual__container {
+    margin-bottom: .5em;
   }
 
   .detail__info {
-    width: 100%;
-    height: fit-content;
-    float: left;
-    padding: 0 2em;
+    margin: 0;
+    padding: 0;
+    margin: auto;
+    margin-top: 3em;
+    width: 85%;
+  }
+}
+
+@media (max-width: 780px) {
+  .detail__container {
+    padding-top: 12em;
+    max-width: 100%;
   }
 }
 

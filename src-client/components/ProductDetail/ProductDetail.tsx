@@ -9,51 +9,47 @@ import styles from "../../styles/ProductDetail.module.css";
 
 
 const ProductDetail = () => {
-  // const router = useRouter()
-  // const id = router.query.id as string
   const { query } = useRouter();
   const id = query.id;
 
   const dispatch: Function = useDispatch();
   const product: any = useSelector<Ireducers>((state) => state.reducerProductDetail.productDetail);
 
-
   useEffect(() => {
     dispatch(getProductDetail(id));
-    return () => {
-      dispatch(cleanProductDetail());
-    };
+    return () => dispatch(cleanProductDetail());
   }, [dispatch, id]);
 
 
+  // Shopping cart
   const handlerAdd = (e: Event, product: Iproduct) => {
     e.preventDefault();
     const { id, name }: any = product;
     dispatch(addToCart(id));
-    alert(`Se agrego el producto ${name} asu carrito`);
+    alert(`Product ${name} added to shopping cart.`);
   };
 
 
+  // Images switch
   const [activeImage, setActiveImage] = useState("");
+  const detail = product?.image?.[0];
 
   const handleMouseOver = (url: string, index: number) => {
     setActiveImage(url);
   };
 
 
-
   return (
     <div>
       {product && (
         <div className={styles.detail__container}>
-          {/* zona izquierda */}
+          {/* Zona izquierda */}
           <div className={styles.detail__container__images}>
             <div className={styles.image__secondary__container}>
               {product.image?.map((url: string, index: number) => {
                 return (
-                  <div key={url} className={styles.image_individual__container}>
+                  <div key={index} className={styles.image_individual__container}>
                     <Image
-                      key={url}
                       src={url}
                       width={300}
                       alt={product.name}
@@ -68,16 +64,16 @@ const ProductDetail = () => {
 
             <div className={styles.image_main__container}>
               <Image
-                src={activeImage}
+                src={activeImage ? activeImage : detail}
                 width={500}
-                alt={product.name}
+                alt="Product main image"
                 height={500}
                 className={styles.image_main__img}
               />
             </div>
           </div>
 
-          {/* zona derecha */}
+          {/* Zona derecha */}
           <div className={styles.detail__info}>
             <h1 className={styles.detail__info_title}>{product.name}</h1>
             <p className={styles.detail__info_price}>$ {product.price}</p>
