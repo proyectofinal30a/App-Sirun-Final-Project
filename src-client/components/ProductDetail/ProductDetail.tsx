@@ -98,7 +98,7 @@ const ProductDetail = () => {
 
   return (
     <div>
-      {product && (
+      {product && 
         <div className={styles.detail__container}>
  
           <div className={styles.detail__container__images}>
@@ -132,7 +132,7 @@ const ProductDetail = () => {
 
     
           <div className={styles.detail__info}>
-            <h1 className={styles.detail__info_title}>{product.name}</h1>
+            <h1 className={styles.detail__info_title}>{product.name && product.name.toLowerCase()}</h1>
             <p className={styles.detail__info_price}>$ {product.price}</p>
 
             <div className={styles.detail__info_extra}>
@@ -152,8 +152,7 @@ const ProductDetail = () => {
             </button>
           </div>
         </div>
-
-      )}
+      }
 
       {/* Shopping cart */}
       <Modal

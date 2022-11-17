@@ -73,6 +73,7 @@
   letter-spacing: 1px;
   font-size: 2em;
   font-weight: 600;
+  text-transform: capitalize;
   padding-bottom: .5em;
 }
 
@@ -135,19 +136,23 @@
 }
 
 
-/* MODAL */
+/* Shopping modal */
+
 
 .modal {
   width: 40%;
   margin: auto;
-  margin-top: 5em;
+  margin-top: 7em;
+  margin-bottom: 7em;
+  max-height: 79%;
+  overflow-y: auto;
+  border: 2px solid rgb(211, 210, 210);
 }
 
 .modal__container {
-  background-color: rgb(237, 237, 246);
+  background-color: rgb(238, 238, 240);
   font-family: var(--font-paragraph);
   padding: 2em 3em;
-  padding-top: 5em;
 }
 
 .modal__container > h2 {
@@ -170,10 +175,15 @@
   font-weight: bold;
 }
 
+.modal__close_modal_btn:hover {
+  background-color: rgb(251, 77, 77);
+  cursor: pointer;
+}
+
 .modal__product_container {
   margin-bottom: 1em;
   padding-bottom: 1.5em;
-  border-bottom: 1px solid rgb(186, 183, 183);
+  border-bottom: 1px solid rgb(211, 210, 210);
 }
 
 .modal__product_name {
@@ -252,9 +262,10 @@
 
 .modal__start_purchase_btn:hover,
 .modal__start_purchase_btn:focus {
-  background-color: rgb(246, 226, 226);
+  background-color: rgb(231, 229, 229);
   cursor: pointer;
 }
+
 
 /* End of modal css */
 
