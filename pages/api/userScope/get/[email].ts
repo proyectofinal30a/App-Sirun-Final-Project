@@ -14,7 +14,14 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                     email: true,
                     image: true,
                     id: true,
-                    favorites: true,
+                    favorites: {
+                        select: {
+                            id: true,
+                            name: true,
+                            image: true,
+
+                        }
+                    },
                     orders: true,
                     evaluations: true,
                     direcciones: true

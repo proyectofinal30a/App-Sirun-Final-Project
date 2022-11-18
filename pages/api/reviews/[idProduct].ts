@@ -19,7 +19,8 @@ export default async function getAllReviews(req: NextApiRequest, res: NextApiRes
                                 }
                             },
                             rating: true,
-                            review: true
+                            review: true,
+                            id: true
                         }
                     }
                 },
@@ -29,6 +30,8 @@ export default async function getAllReviews(req: NextApiRequest, res: NextApiRes
         }
 
     } catch (error) {
+        console.log(error);
+
         res.status(404).json({ msg: "no se ha encontrado el Producto" })
     }
 

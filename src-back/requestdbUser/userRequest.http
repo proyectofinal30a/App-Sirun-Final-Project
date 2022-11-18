@@ -9,7 +9,7 @@ POST http://localhost:3000/api/userScope/post/productAddFav
 Content-Type: application/json
 
 {
-    "idUser":"c7617145-1376-4ef9-8cf0-74ba99f7fbc6", 
+    "idUser":"7be88830-6282-4c1a-aebc-1353eefdf3be", 
     "idProduct":"8bcca193-7380-4c68-bdd2-9ea5eafcf6a6" 
 }
 ###
@@ -19,15 +19,19 @@ POST http://localhost:3000/api/userScope/post/reviewRating
 Content-Type: application/json
 
 {
-    "idUser":"c7617145-1376-4ef9-8cf0-74ba99f7fbc6", 
-    "idProduct":"8bcca193-7380-4c68-bdd2-9ea5eafcf6a6",
-    "review":"ESTA MALA",
-    "rating":1 
+    "idUser":"f4690285-1572-447c-b9ad-de26c3672e3b", 
+    "idProduct":"2539ccfe-60ef-4ba3-b22c-cd3d32139dad",
+    "review":"ESTA MALISIMA",
+    "rating":1
 }
 ###
 
 ###ORDER
-POST http://localhost:3000/api/userScope/post/order
+POST http://localhost:3000/
+####
+POST http://localhost:3000/api/reviews/2539ccfe-60ef-4ba3-b22c-cd3d32139dad
+
+###
 Content-Type: application/json
 
 {
@@ -49,5 +53,15 @@ Content-Type: application/json
 }
 ###
 
+####
+POST http://localhost:3000/api/reviews/2539ccfe-60ef-4ba3-b22c-cd3d32139dad
+
 ###
+
+
+####
+DELETE  http://localhost:3000/api/userScope/delete/54a717a4-53fb-4833-b64b-ff5688b534f4
+
+###
+
 ###

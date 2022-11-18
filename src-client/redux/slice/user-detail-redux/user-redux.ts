@@ -4,60 +4,57 @@ import axios from "axios";
 
 interface IIdProductFavo {
     id: string
+    name: string
+    image: string
 }
 
 type userData = {
     id?: number
-    name: string
-    email: string
-    image: string
-    favorites_products_id: IIdProductFavo[]
-    direcciones?: JSON
-    orders?: JSON
-    evaluations?: JSON
+    name?: string
+    email?: string
+    image?: string
+    favorites?: IIdProductFavo[]
+    direcciones?: []
+    orders?: []
+    evaluations?: []
 
-} | null
+}
 
 interface IPayload {
     payload: userData
 }
 
-type user = {
+interface Iuser {
     user: userData
 }
 
-const template: user = {
-    user: null
+const template: Iuser = {
+    user: {}
 }
 
 export const reducerUser = createSlice({
     name: 'reducerUser',
     initialState: template,
     reducers: {
-        getProducts: (state: user, action: IPayload) => { state.user = action.payload }
+        getProducts: (state: Iuser, action: any) => { return state.user = action.payload }
     }
 })
 
 
+export const getProducts = (email: string) => async (dispatch: Function) => {
 
-//FUNCIONES ACA ABAJO!!!!!!!!!!!
-export const getProducts = () => async (dispatch: Function) => {
-    const { data } = await axios({
+    const { data }: any = await axios({
         method: 'get',
-        url: 'https://ruta-apiiii/1/posts',
+        url: `/api/get/${email}`,
     });
+
+    console.log(data);
+
 
     dispatch(reducerUser.actions.getProducts(data));
 }
 
-// export const findOrCreateUser = (email:string, full_name:string) => async(dispatch:Function) => {
-//     try {       
-//         const user:any = await axios.post('/api/users/posts/verifyOrCreate', {email})
-//         dispatch(rootReducer.actions.findOrCreateUser(user))
-//     } catch (error:any) {
-//         alert(error.message)
-//     }
-// }
+
 
 
 
