@@ -51,6 +51,23 @@ export interface Ierror {
 
 
 
+declare module "next-auth" {
+    interface Session {
+        user: {
+            name: string
+            email: string
+            image: string
+            role: string
+        }
+    }
+}
+
+// declare module "next" {
+//     interface NextApiRequest {
+//         query: Partial<{ [key: string]: string | string[] }>
+//     }
+// }
+
 // const status_typee: Status_type = "pending"
 
 // export type orderr = {

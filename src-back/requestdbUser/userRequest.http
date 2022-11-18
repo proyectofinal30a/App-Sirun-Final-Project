@@ -1,0 +1,53 @@
+
+
+### USER DETAIL
+GET http://localhost:3000/api/userScope/get/ezequiel.ignacio.sosa@gmail.com
+###
+
+### FAVORITE PRODUCT
+POST http://localhost:3000/api/userScope/post/productAddFav
+Content-Type: application/json
+
+{
+    "idUser":"c7617145-1376-4ef9-8cf0-74ba99f7fbc6", 
+    "idProduct":"8bcca193-7380-4c68-bdd2-9ea5eafcf6a6" 
+}
+###
+
+###REVIEW ADD RATING
+POST http://localhost:3000/api/userScope/post/reviewRating
+Content-Type: application/json
+
+{
+    "idUser":"c7617145-1376-4ef9-8cf0-74ba99f7fbc6", 
+    "idProduct":"8bcca193-7380-4c68-bdd2-9ea5eafcf6a6",
+    "review":"ESTA MALA",
+    "rating":1 
+}
+###
+
+###ORDER
+POST http://localhost:3000/api/userScope/post/order
+Content-Type: application/json
+
+{
+    "idUser":"c7617145-1376-4ef9-8cf0-74ba99f7fbc6", 
+    "idArrayProduct":[{
+            "id":"05d97afa-bc17-4838-8ae5-d27d46e18530"
+            },        {
+            "id":"0cd6c821-334e-4202-80e1-ea46eab13fb0"
+            },        {
+            "id":"14c4096a-4f19-4481-985e-dbc705f8fb01"
+            },{
+            "id":"2bfa1911-0769-4136-b6c3-efa94c2eac0a"
+            },{
+            "id":"37106465-a3ad-4dbf-9796-1e3ce9eb3015"
+            }],
+    "description":"VaMOSSSSSSS",
+    "status":"pending",
+    "delivery_time":"4 dias aprox" 
+}
+###
+
+###
+###

@@ -44,18 +44,18 @@ model Account {
 }
 
 model User {
-  id                    String       @id @unique @default(uuid())
-  name                  String?
-  email                 String?      @unique
-  emailVerified         DateTime?
-  image                 String?
-  role                  String       @default("user")
-  accounts              Account[]
-  sessions              Session[]
-  favorites_products_id Int[]
-  direcciones           Direccion[]
-  orders                Order[]
-  evaluations           Evaluation[]
+  id            String       @id @unique @default(uuid())
+  name          String?
+  email         String?      @unique
+  emailVerified DateTime?
+  image         String?
+  role          String       @default("user")
+  accounts      Account[]
+  sessions      Session[]
+  favorites     Product[]
+  direcciones   Direccion[]
+  orders        Order[]
+  evaluations   Evaluation[]
 }
 
 model Direccion {
@@ -87,7 +87,7 @@ model Order {
   id            String     @id @unique @default(uuid())
   id_user       String
   description   String
-  products_id   Int[]
+  product       Product[]
   total         Int
   status        StatusType
   date          DateTime   @default(now())
@@ -123,4 +123,6 @@ model Product {
   image       Json[]
   description String
   evaluation  Evaluation[]
+  user        User[]
+  order       Order[]
 }

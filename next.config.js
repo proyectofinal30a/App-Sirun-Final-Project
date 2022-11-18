@@ -44,6 +44,7 @@ const nextConfig = {
       "gastronomiaycia.republica.com",
       "resizer.glanacion.com",
       "media0.giphy.com",
+      "s.gravatar.com",
       "hackernoon.com",
       "**"
     ],
