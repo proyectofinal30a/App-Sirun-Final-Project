@@ -3,7 +3,7 @@ import Nav from "../../src-client/components/NavBar/Nav";
 import Footer from "../../src-client/components/Footer/Footer";
 import styles from "../../src-client/styles/AdminSideBar.module.css";
 import UserSideBar from "../../src-client/components/User/UserSideBar";
-
+import ProductFavorite from "../../src-client/components/User/ProductFav";
 export default function AdminProfilePage() {
   return (
     <div>
@@ -15,7 +15,7 @@ export default function AdminProfilePage() {
           <UserSideBar />
         </div>
         <div className={styles.general__container_second_col}>
-          {/* Falta crear componente AdminProfile */}
+          < ProductFavorite />
         </div>
       </main>
 

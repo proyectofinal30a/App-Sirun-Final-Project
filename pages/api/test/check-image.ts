@@ -5,16 +5,18 @@ import { unstable_getServerSession } from "next-auth/next"
 
 const createProduct: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const myPRod: any = req.body
-        myPRod.forEach(async (element: any) => {
-            element.evaluation = { create: [] }
-            await prisma.product.create({
-                data: element
-            })
+        const myCheck = await prisma.product.findMany({
+            include: {
+                image: {
+                    select: {
+                        image: true
+                    }
+                }
+            }
+        })
 
-        });
 
-        return res.status(200).json({ msg: `Se creo el producto con nombre:` })
+        return res.status(200).json(myCheck)
 
     } catch (error) {
         console.log(error);

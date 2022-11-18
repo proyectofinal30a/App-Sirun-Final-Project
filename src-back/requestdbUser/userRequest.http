@@ -9,8 +9,8 @@ POST http://localhost:3000/api/userScope/post/productAddFav
 Content-Type: application/json
 
 {
-    "idUser":"c7617145-1376-4ef9-8cf0-74ba99f7fbc6", 
-    "idProduct":"8bcca193-7380-4c68-bdd2-9ea5eafcf6a6" 
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
+    "idProduct":"08453028-6204-4b7d-8502-07c4e3113966" 
 }
 ###
 
@@ -19,35 +19,92 @@ POST http://localhost:3000/api/userScope/post/reviewRating
 Content-Type: application/json
 
 {
-    "idUser":"c7617145-1376-4ef9-8cf0-74ba99f7fbc6", 
-    "idProduct":"8bcca193-7380-4c68-bdd2-9ea5eafcf6a6",
-    "review":"ESTA MALA",
-    "rating":1 
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
+    "idProduct":"09d22c20-995f-4303-9409-7f6ce24a57cb",
+    "review":"el producto me vino quemado!!! mas que pasteleria deberia ser centro de quemados!!!!",
+    "rating":1
+}
+###
+###REVIEW ADD RATING
+POST http://localhost:3000/api/userScope/post/reviewRating
+Content-Type: application/json
+
+{
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
+    "idProduct":"0fb98465-a04e-4dd5-bc8a-d338dfccb1cf",
+    "review":"me parecio una Delicia pero bajale el precio!!!!",
+    "rating":2
+}
+###
+###REVIEW ADD RATING
+POST http://localhost:3000/api/userScope/post/reviewRating
+Content-Type: application/json
+
+{
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
+    "idProduct":"12a01873-be22-40ef-819e-2b3836e53100",
+    "review":"che todo bien con el producto pero mi amigo me cobra mas barato!!!!",
+    "rating":2
+}
+###
+###REVIEW ADD RATING
+POST http://localhost:3000/api/userScope/post/reviewRating
+Content-Type: application/json
+
+{
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
+    "idProduct":"1465ae3f-e91d-4287-a760-0a3116858b35",
+    "review":"ESTE COMENTARIO HA SIDO BORRADO POR INCITAR LA VIOLENCIA CONTRA LOS PASTELES",
+    "rating":1
 }
 ###
 
 ###ORDER
+POST http://localhost:3000/
+####
+POST http://localhost:3000/api/reviews/2539ccfe-60ef-4ba3-b22c-cd3d32139dad
+
+###
 POST http://localhost:3000/api/userScope/post/order
 Content-Type: application/json
 
 {
-    "idUser":"c7617145-1376-4ef9-8cf0-74ba99f7fbc6", 
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
     "idArrayProduct":[{
-            "id":"05d97afa-bc17-4838-8ae5-d27d46e18530"
+            "id":"1465ae3f-e91d-4287-a760-0a3116858b35"
             },        {
-            "id":"0cd6c821-334e-4202-80e1-ea46eab13fb0"
+            "id":"25ee0fc4-8f48-4891-a2e5-faf73e71b863"
             },        {
-            "id":"14c4096a-4f19-4481-985e-dbc705f8fb01"
+            "id":"2b15bf3d-28de-4bf9-8017-2f6ccef70ac6"
             },{
-            "id":"2bfa1911-0769-4136-b6c3-efa94c2eac0a"
+            "id":"3797cc78-6efe-4a5a-bc14-02db5c3cbc5f"
             },{
-            "id":"37106465-a3ad-4dbf-9796-1e3ce9eb3015"
+            "id":"3797cc78-6efe-4a5a-bc14-02db5c3cbc5f"
             }],
     "description":"VaMOSSSSSSS",
     "status":"pending",
-    "delivery_time":"4 dias aprox" 
+    "delivery_time":"4 dias aprox",
+    "total":100
 }
 ###
 
+####
+POST http://localhost:3000/api/reviews/2539ccfe-60ef-4ba3-b22c-cd3d32139dad
+
 ###
+
+
+####
+DELETE  http://localhost:3000/api/userScope/delete/54a717a4-53fb-4833-b64b-ff5688b534f4
+
+###
+
+###
+POST http://localhost:3000/api/userScope/post/addDirection
+Content-Type: application/json
+
+{
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
+    "dir":"mendoza dtaadaa asdasd "
+}
 ###

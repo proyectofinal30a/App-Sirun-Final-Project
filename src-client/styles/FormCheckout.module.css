@@ -71,10 +71,10 @@
 }
 
 .btn__align {
-  width: 82%;
+  width: 100%;
   display: flex;
   justify-content: flex-end;
-  margin: 0 3em;
+  padding: 0 1em;
 }
 
 .form__input_btn,
@@ -105,6 +105,8 @@
   width: 100%;
   margin-bottom: 1em;
   background-color: rgb(248, 246, 248);
+  max-height: 22.15em;
+  overflow-y: scroll;
 }
 
 .product__img_container {
@@ -123,7 +125,7 @@
   flex-direction: row;
   justify-content: space-between;
   margin: 0.5em;
-  box-shadow: 0 0 0 1px grey;
+  box-shadow: 0 0 1px grey;
   border-radius: 0.2em;
   padding: 0.5em;
   width: 95%;
@@ -160,7 +162,7 @@
 .total__container {
   display: flex;
   flex-direction: column;
-  margin-bottom: 3em;
+  margin-bottom: 1em;
   width: 100%;
   padding: .5em 1em;
 }
@@ -209,7 +211,6 @@
 }
 
 .modal__container > h2 {
-  text-transform: uppercase;
   letter-spacing: 1px;
   font-size: 1.2em;
   padding-bottom: 1em;
@@ -233,85 +234,41 @@
   cursor: pointer;
 }
 
-.modal__product_container {
-  margin-bottom: 1em;
-  padding-bottom: 1.5em;
-  border-bottom: 1px solid rgb(211, 210, 210);
-}
-
-.modal__product_name {
-  text-transform: capitalize;
-  margin-bottom: .7em;
-}
-
-.modal_info_container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.modal__product_img_container {
-  width: 8em;
-  height: 8em;
-}
-
-.modal__product_img {
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-}
-
-.modal__product_mobile_separator {
-  width: 70%;
-  display: flex;
-  justify-content: space-between;
-  margin-left: 1em;
-}
-
-.modal__product_info {
-  width: 9em;
-}
-
-.modal__product_data {
-  font-size: .9em;
-}
-
-.modal__product_btns_container {
+.modal__client_container {
+  margin: 1em 0 2em 0;
   display: flex;
   flex-direction: column;
 }
 
-.modal__product_btn {
-  margin-bottom: .7em;
-}
-
-.modal__product_btn_trash {
+.client__display {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: .3em;
+  flex-direction: column;
 }
 
-.modal__product_btn_trash:hover,
-.modal__product_btn:hover {
-  cursor: pointer;
-}
-
-.modal__total_container {
-  display: flex;
-  justify-content: space-between;
-}
-
-.modal__total {
-  font-size: 1.1em;
+.client_info_span {
   font-weight: bold;
 }
 
-.modal__purchase_btn_container {
+.modal__client_phone {
+  display: flex;
+}
+
+.modal__client_name {
+  text-transform: capitalize;
+}
+
+.modal__client_address_container {
+  display: flex;
+  text-transform: capitalize;
+}
+
+.modal__confirm_btn_container {
   display: flex;
   justify-content: flex-end;
 }
 
-.modal__start_purchase_btn {
+.modal__confirm_btn {
+  color: black;
   margin-top: 1em;
   padding: .3em .7em;
   border: none;
@@ -320,11 +277,35 @@
   font-size: .9em;
 }
 
-.modal__start_purchase_btn:hover,
-.modal__start_purchase_btn:focus {
+.modal__confirm_btn:hover,
+.modal__confirm_btn:focus {
   background-color: rgb(231, 229, 229);
   cursor: pointer;
 }
+
+.modal__pay_btn_container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal__pay_btn {
+  color: white;
+  background-color: rgb(10, 176, 10);
+  margin-top: 1em;
+  padding: .3em .7em;
+  border: none;
+  border: 1px solid grey;
+  border-radius: .2em;
+  font-size: .9em;
+}
+
+.modal__pay_btn:hover {
+  cursor: pointer;
+  background-color: rgb(13, 199, 13);
+}
+
+
+
 
 @media (max-width: 1540px) {
   .modal {
@@ -355,6 +336,10 @@
 }
 
 @media (max-width: 490px) {
+  .modal__container {
+    padding: 1.5em;
+  }
+
   .modal_info_container {
     display: flex;
     flex-direction: column;
@@ -380,9 +365,9 @@
   }
 }
 
-@media (max-width: 490px) {
-  .modal__container {
-    padding: 1.5em;
+@media (max-width: 415px) {
+  .modal__client_container {
+    font-size: .9em;
   }
 }
 
@@ -423,8 +408,7 @@
 
   .first__column {
     width: 90%;
-    margin: 0em 1.5em;
-    margin-bottom: 2em;
+    margin: 0em 1.5em 2em 2.5em;
   }
 
   .fieldset__conteiner {
@@ -446,6 +430,13 @@
   .product_card__img {
     object-fit: cover;
     width: 100%;
+  }
+}
+
+
+@media (max-width: 700px) {
+  .first__column {
+    margin: 0em 1.5em 2em 2em;
   }
 }
 
@@ -473,6 +464,19 @@
     object-fit: cover;
   }
 }
+
+@media (max-width: 500px) {
+  .first__column {
+    margin: 0em 1.5em 2em 1.5em;
+  }
+}
+
+@media (max-width: 400px) {
+  .first__column {
+    margin: 0em 1.5em 2em 1em;
+  }
+}
+
 
 @media (max-width: 375px) {
   .item {

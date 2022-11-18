@@ -12,7 +12,7 @@ const createProduct: Function = async (req: NextApiRequest, res: NextApiResponse
         if (myToken === authorization) {
 
             const N = Number
-            const { name, price, available, dimension, type, image, category, description } = req.body
+            const { name, price, available, dimension, image, type, category, description, id } = req.body
             const myPriceNumber = N(price)
             const myDimension = N(dimension)
             const typeDiet: TypeDiet = type
@@ -21,21 +21,29 @@ const createProduct: Function = async (req: NextApiRequest, res: NextApiResponse
                 data: {
                     name,
                     price: myPriceNumber,
-                    dimension: myDimension,
+                    available,
                     type: typeDiet,
-                    category: typeCategory,
-                    image: JSON.stringify(image),
                     description,
-                    evaluation: { create: [] },
-                    available
+                    dimension: myDimension,
+                    category: typeCategory,
+                    image: {
+                        create: image
+                    },
+                    evaluation: {
+                        create: []
+                    }
+                },
 
-                }
             })
+
             return res.status(200).json({ msg: `Se creo el producto con nombre: ${name}` })
         }
         res.status(200).json({ msg: 'NO ESTAs AUTORIZADO' })
     } catch (error) {
-        res.status(404).json({ msg: `se ha producido un error` })
+        console.log(error);
+
+
+        res.status(404).json(error)
     }
 }
 

@@ -96,7 +96,6 @@
 .footer__icons:hover {
   color: var(--color-light-blue);
   text-decoration: underline;
-  transform: scale(1.05);
 }
 
 /* ZONA DERECHA */

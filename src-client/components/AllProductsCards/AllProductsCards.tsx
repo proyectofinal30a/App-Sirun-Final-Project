@@ -133,8 +133,7 @@ const AllProductsCards = () => {
   useEffect(() => {
     if (filterProducts[0]) setCurrentPage(1);
     dispatch(getAllProducts());
-  }, [dispatch, filterProducts]);
-
+  }, [filterProducts]);
 
 
   return (
@@ -153,10 +152,10 @@ const AllProductsCards = () => {
                     className={styles.product_card__link}
                   >
                     <h1 className={styles.product_card__title}>{product.name.toLowerCase()}</h1>
-                  
+
                     <Image
                       key={index}
-                      src={product.image[0]}
+                      src={product.image?.[0]?.image}
                       width={250}
                       alt={product.name}
                       height={250}
@@ -164,6 +163,8 @@ const AllProductsCards = () => {
                       className={styles.product_card__img}
                     />
                   </Link>
+
+
 
                   <div className={styles.product_card__info_container}>
                     <p>$ {product.price}</p>
@@ -197,6 +198,7 @@ const AllProductsCards = () => {
                 <h2>Shopping Cart</h2>
 
                 {cart?.map((elem: any, index: number) => {
+                  const myUrl = elem.product?.image?.[0]?.image
                   return (
                     <div key={index} className={styles.modal__product_container}>
                       <p className={styles.modal__product_name}>
@@ -207,7 +209,7 @@ const AllProductsCards = () => {
                         <div className={styles.modal__product_img_container}>
                           <Image
                             key={index}
-                            src={elem?.product?.image?.[0]}
+                            src={myUrl}
                             width={400}
                             alt={elem.product.name}
                             height={400}
@@ -224,13 +226,13 @@ const AllProductsCards = () => {
                           </div>
 
                           <div className={styles.modal__product_btns_container}>
-                            <button 
+                            <button
                               className={styles.modal__product_btn}
                               onClick={(e: any) => handlerAddOne(e, elem.product)}
                             >
                               {" "}+{" "}
                             </button>
-                            <button 
+                            <button
                               className={styles.modal__product_btn}
                               onClick={(e: any) => handlerRemoveOne(e, elem.product)}
                             >

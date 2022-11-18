@@ -8,7 +8,6 @@ export default async function productAddFav(req: NextApiRequest, res: NextApiRes
             dir: string
         }
 
-
         const { idUser, dir }: direccion = req.body
 
         await prisma.direccion.create({
@@ -26,6 +25,7 @@ export default async function productAddFav(req: NextApiRequest, res: NextApiRes
 
 
     } catch (error) {
+        console.log(error);
 
         res.status(404).json({ msg: "No se ha podido subir la direccion" })
     }

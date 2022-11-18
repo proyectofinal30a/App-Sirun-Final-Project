@@ -34,10 +34,12 @@ export default async function Order(req: NextApiRequest, res: NextApiResponse) {
                 }
             }
         })
-        console.log(myOrder);
+
         res.status(200).json({ msg: "Order se ha creado" })
 
     } catch (error) {
+        console.log(error);
+
         res.status(404).json({ msg: "hay un error en Order" })
     }
 

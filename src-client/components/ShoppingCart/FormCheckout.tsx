@@ -27,7 +27,7 @@ const FormCheckout = (): JSX.Element => {
     streetNumber: "",
   };
 
-  useEffect(() => {}, [confirmedCart]);
+  useEffect(() => { }, [confirmedCart]);
 
 
   const [inputUser, setInputUser] = useState(personInfo);
@@ -39,7 +39,7 @@ const FormCheckout = (): JSX.Element => {
     setErrors(validate({ ...inputUser, [name]: value }));
   };
 
-  
+
   // MODAL
   const [modalIsOpen, setIsOpen] = useState(false);
   function closeModal() {
@@ -55,6 +55,8 @@ const FormCheckout = (): JSX.Element => {
       alert("Please complete the form correctly");
     }
   };
+
+
 
   // Submitea cuando se cliquea el botón del modal (el form esta dentro del modal)
   async function handleSubmit(e: Event) {
@@ -212,15 +214,6 @@ const FormCheckout = (): JSX.Element => {
           </div>
         </fieldset>
 
-        <div className={styles.btn__align}>
-          <button
-            className={styles.form__input_btn}
-            disabled={Object.values(errors).length !== 0}
-            onClick={(e: any) => openCheckModal(e, inputUser)}
-          >
-            Continue to payment
-          </button>
-        </div>
 
         <Modal
           isOpen={modalIsOpen}
@@ -228,30 +221,62 @@ const FormCheckout = (): JSX.Element => {
           className={styles.modal}
           contentLabel="Example Modal"
         >
-          <h2>Confirm your information</h2>
-          <button onClick={closeModal}>x</button>
+          <div className={styles.modal__container}>
+            <div className={styles.modal__btn_right_container}>
+              <button className={styles.modal__close_modal_btn} onClick={closeModal}>x</button>
+            </div>
 
-          <p>{inputUser.name}</p>
-          <p>{inputUser.email}</p>
-          <p>{inputUser.phone}</p>
-          <p>{inputUser.areaCode}</p>
-          <p>{inputUser.zipCode}</p>
-          <p>{inputUser.streetName}</p>
-          <p>{inputUser.streetNumber}</p>
+            <h2>Confirm your information</h2>
 
-          <button
-            className={styles.form__input_btn}
-            onClick={(e: any) => handleSubmit(e)}
-            type="submit"
-          >
-            Confirm information
-          </button>
-          
-          {confirmedCart && payLink && (
-            <button onClick={() => resetCart()}>
-              <a href={payLink}>Pay</a>
-            </button>
-          )}
+            <div className={styles.modal__client_container}>
+              <p className={styles.modal__client_name}>
+                <span className={styles.client_info_span}>Name: </span>{inputUser.name.toLowerCase()}
+              </p>
+              <p>
+                <span className={styles.client_info_span}>E-mail: </span>{inputUser.email}
+              </p>
+              <div className={styles.modal__client_phone}>
+                <p>
+                  <span className={styles.client_info_span}>Phone number: </span>
+                  {inputUser.areaCode}
+                </p>
+                <p>{inputUser.phone}</p>
+              </div>
+
+              <p>
+                <span className={styles.client_info_span}>Zip code: </span>{inputUser.zipCode}
+              </p>
+              <div className={styles.modal__client_address_container}>
+                <p className={styles.modal__client_street}>
+                  <span className={styles.client_info_span}>Address: </span>{inputUser.streetName.toLowerCase()}
+                </p>
+                <p>, {inputUser.streetNumber}</p>
+              </div>
+            </div>
+
+            {!confirmedCart && !payLink &&
+              <div className={styles.modal__confirm_btn_container}>
+                <button
+                  type="submit"
+                  onClick={(e: any) => handleSubmit(e)}
+                  className={styles.modal__confirm_btn}
+                >
+                  Confirm information
+                </button>
+              </div>
+            }
+
+            {confirmedCart && payLink && (
+              <div className={styles.modal__pay_btn_container}>
+                <button
+                  className={styles.modal__pay_btn}
+                  onClick={() => resetCart()}
+                >
+                  <a href={payLink}>Continue to MercadoPago</a>
+                </button>
+              </div>
+            )}
+          </div>
         </Modal>
       </div>
 
@@ -259,12 +284,13 @@ const FormCheckout = (): JSX.Element => {
         <h2 className={styles.column__title}>Order Summary</h2>
         <div className={styles.item__container}>
           {productsInCart?.map((elem: any) => {
+            const myUrl = elem?.product?.image?.[0]?.image
             return (
               <div className={styles.item} key={elem.product.id}>
                 <div className={styles.product__img_container}>
                   <Image
-                    key={elem.product.image[0]}
-                    src={elem.product.image[0]}
+                    key={myUrl}
+                    src={myUrl}
                     width={100}
                     alt={elem.product.name.toLowerCase()}
                     height={100}
@@ -280,7 +306,7 @@ const FormCheckout = (): JSX.Element => {
                 </div>
 
                 <h2 className={styles.item__subtotal}>
-                  Subtotal: <br/> ${elem.subTotal}
+                  Subtotal: <br /> ${elem.subTotal}
                 </h2>
               </div>
             );
@@ -289,13 +315,23 @@ const FormCheckout = (): JSX.Element => {
 
         <div className={styles.total__container}>
           <div className={styles.__shipping_line}>
-            <p className={styles.__shipping}>Shipping </p>  
+            <p className={styles.__shipping}>Shipping </p>
             <p className={styles.__shipping}>$...</p>
           </div>
           <div className={styles.__total_line}>
             <h2 className={styles.__total}>TOTAL </h2>
             <h2 className={styles.__total}>${total}</h2>
           </div>
+        </div>
+
+        <div className={styles.btn__align}>
+          <button
+            className={styles.form__input_btn}
+            disabled={Object.values(errors).length !== 0}
+            onClick={(e: any) => openCheckModal(e, inputUser)}
+          >
+            Continue to payment
+          </button>
         </div>
       </div>
     </div>

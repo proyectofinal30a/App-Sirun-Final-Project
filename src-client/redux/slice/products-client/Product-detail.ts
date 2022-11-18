@@ -41,7 +41,7 @@ export const reducerProductDetail = createSlice({
     cleanProductDetail: (state: any) => {
       state.productDetail = {};
     },
-   
+
   },
 });
 
@@ -56,9 +56,9 @@ export const getProductDetail = (id: string | string[] | undefined) => async (di
       "Authorization": myToken
     }
   });
-  if(data){
-    const lessJson = fromJsonToArray([data])[0]
-    dispatch(reducerProductDetail.actions.getProductDetail(lessJson));
+  if (data) {
+
+    dispatch(reducerProductDetail.actions.getProductDetail(data));
   }
 
 };

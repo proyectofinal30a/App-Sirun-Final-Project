@@ -30,6 +30,8 @@ export default async function reviewRating(req: NextApiRequest, res: NextApiResp
         })
         res.status(200).json({ msg: "la review se ha cargado correctamente" })
     } catch (error) {
+        console.log(error);
+
         res.status(404).json({ msg: "no de ha podido subir el la review" })
     }
 

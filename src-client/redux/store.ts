@@ -14,7 +14,7 @@ import reducerCart from "./slice/cart-redux/cart";
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ["reducerCart", "reducerProducts"]  //es una lista de reducers, sirve para elegir CUALES reducers van a persistir.
+  whitelist: []
 }
 
 const myReducers = combineReducers({

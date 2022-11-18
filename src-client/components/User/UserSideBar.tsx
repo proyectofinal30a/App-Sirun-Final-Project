@@ -1,7 +1,30 @@
 import Link from "next/link";
 import styles from "../../styles/AdminSideBar.module.css";
-
+import { useSession } from "next-auth/react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { Ireducers } from "../../../lib/types";
+import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 const UserSideBar = () => {
+
+  const { data, status }: any = useSession<boolean>()
+  const dispatch: Function = useDispatch()
+
+  const myNuEmail = data?.user?.email
+
+  useEffect(() => {
+    dispatch(getUserDetail(myNuEmail))
+  }, [dispatch, data])
+
+  const myInfUser = useSelector((state: Ireducers) => state.reducerUser)
+
+
+  console.log(myInfUser);
+
+
+
+
+
 
   return (
     <div className={styles.nav__container}>
