@@ -219,30 +219,62 @@ const FormCheckout = (): JSX.Element => {
           className={styles.modal}
           contentLabel="Example Modal"
         >
-          <h2>Confirm your information</h2>
-          <button onClick={closeModal}>x</button>
+          <div className={styles.modal__container}>
+            <div className={styles.modal__btn_right_container}>
+              <button className={styles.modal__close_modal_btn} onClick={closeModal}>x</button>
+            </div>
+            
+            <h2>Confirm your information</h2>
 
-          <p>{inputUser.name}</p>
-          <p>{inputUser.email}</p>
-          <p>{inputUser.phone}</p>
-          <p>{inputUser.areaCode}</p>
-          <p>{inputUser.zipCode}</p>
-          <p>{inputUser.streetName}</p>
-          <p>{inputUser.streetNumber}</p>
+            <div className={styles.modal__client_container}>
+              <p className={styles.modal__client_name}>
+                <span className={styles.client_info_span}>Name: </span>{inputUser.name.toLowerCase()}
+              </p>
+              <p>
+                <span className={styles.client_info_span}>E-mail: </span>{inputUser.email}
+              </p>
+              <div className={styles.modal__client_phone}>
+                <p>
+                  <span className={styles.client_info_span}>Phone number: </span>
+                  {inputUser.areaCode}
+                </p>
+                <p>{inputUser.phone}</p>
+              </div>
+      
+              <p>
+                <span className={styles.client_info_span}>Zip code: </span>{inputUser.zipCode}
+              </p>
+              <div className={styles.modal__client_address_container}>
+                <p className={styles.modal__client_street}>
+                  <span className={styles.client_info_span}>Address: </span>{inputUser.streetName.toLowerCase()}
+                </p>
+                <p>, {inputUser.streetNumber}</p>
+              </div>
+            </div>
 
-          <button
-            className={styles.form__input_btn}
-            onClick={(e: any) => handleSubmit(e)}
-            type="submit"
-          >
-            Confirm information
-          </button>
-          
-          {confirmedCart && payLink && (
-            <button onClick={() => resetCart()}>
-              <a href={payLink}>Pay</a>
-            </button>
-          )}
+            {!confirmedCart && !payLink && 
+              <div className={styles.modal__confirm_btn_container}>
+                <button 
+                type="submit"
+                onClick={(e: any) => handleSubmit(e)} 
+                className={styles.modal__confirm_btn}
+                >
+                  Confirm information
+                </button>
+              </div>
+            }
+            
+            {confirmedCart && payLink && (
+              <div className={styles.modal__pay_btn_container}>
+                <button 
+                  className={styles.modal__pay_btn}
+                  onClick={() => resetCart()}
+                >
+                  <a href={payLink}>Continue to MercadoPago</a>
+                </button>
+              </div>
+            )}
+          </div>
         </Modal>
       </div>
 
