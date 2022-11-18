@@ -8,7 +8,7 @@ import validate from "../../controllers/validateFormCheckout";
 
 import { symlink } from "fs";
 
-/// PARA DATOS DE ENTREGA
+// PARA DATOS DE ENTREGA
 
 const FormCheckout = (): JSX.Element => {
   const dispatch = useDispatch();
@@ -246,6 +246,7 @@ const FormCheckout = (): JSX.Element => {
           >
             Confirm information
           </button>
+          
           {confirmedCart && payLink && (
             <button onClick={() => resetCart()}>
               <a href={payLink}>Pay</a>
