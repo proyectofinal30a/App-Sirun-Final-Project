@@ -155,23 +155,25 @@ const FormCheckout = (): JSX.Element => {
                         return (
                             <div className={styles.item} key={elem.product.id}>
 
-                            <div className={styles.product__img_container}>
-                                <Image
-                                    key={elem.product.image[0]}
-                                    src={elem.product.image[0]}
-                                    width={100}
-                                    alt={elem.product.name}
-                                    height={100}
-                                    priority
-                                    className={styles.product_card__img}
-                                />
-                            </div>
+                                <div className={styles.product__img_container}>
+                                    <Image
+                                        key={elem.product.image[0]}
+                                        src={elem.product.image[0]}
+                                        width={100}
+                                        alt={elem.product.name}
+                                        height={100}
+                                        priority
+                                        className={styles.product_card__img}
+                                    />
+                                </div>
 
                       
                                 <div className={styles.item__info}>
+
                                     <h3>{elem.product.name}</h3>
                                     <p>Quantity: {elem.quantity}</p>
                                     <p>Price x 1: ${elem.product.price}</p>
+                                    
                                 </div>
 
                                 <h2 className={styles.item__subtotal}>Subtotal: <br/> ${elem.subTotal}</h2>
