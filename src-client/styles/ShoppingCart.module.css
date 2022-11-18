@@ -1,5 +1,6 @@
 .cart__container {
   min-height: 90vh;
+  padding-top: 8em;
   font-family: var(--font-paragraph);
   width: 80%;
   margin: auto;
