@@ -53,7 +53,7 @@ Content-Type: application/json
 
 {
     "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
-    "idProduct":"cac575eb-d1ba-4263-a85a-fa58ac8949d6",
+    "idProduct":"1465ae3f-e91d-4287-a760-0a3116858b35",
     "review":"ESTE COMENTARIO HA SIDO BORRADO POR INCITAR LA VIOLENCIA CONTRA LOS PASTELES",
     "rating":1
 }
@@ -71,15 +71,15 @@ Content-Type: application/json
 {
     "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
     "idArrayProduct":[{
-            "id":"08857cde-1c55-4e7a-86be-12bf437fbb1e"
+            "id":"1465ae3f-e91d-4287-a760-0a3116858b35"
             },        {
-            "id":"b396657b-944d-4a1f-8639-997e909301e5"
+            "id":"25ee0fc4-8f48-4891-a2e5-faf73e71b863"
             },        {
-            "id":"b396657b-944d-4a1f-8639-997e909301e5"
+            "id":"2b15bf3d-28de-4bf9-8017-2f6ccef70ac6"
             },{
-            "id":"b396657b-944d-4a1f-8639-997e909301e5"
+            "id":"3797cc78-6efe-4a5a-bc14-02db5c3cbc5f"
             },{
-            "id":"cac575eb-d1ba-4263-a85a-fa58ac8949d6"
+            "id":"3797cc78-6efe-4a5a-bc14-02db5c3cbc5f"
             }],
     "description":"VaMOSSSSSSS",
     "status":"pending",
