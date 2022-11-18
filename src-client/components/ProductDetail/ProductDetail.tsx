@@ -9,7 +9,7 @@ import styles from "../../styles/ProductDetail.module.css";
 import Modal from "react-modal";
 import { BsFillTrashFill } from "react-icons/bs";
 import Link from "next/link";
-
+import {UserReview} from "./UserReview"
 
 const ProductDetail = () => {
   const { query } = useRouter();
@@ -150,6 +150,8 @@ const ProductDetail = () => {
             >
               Add to cart
             </button>
+
+            <UserReview id={product.id}/>
           </div>
         </div>
       }
