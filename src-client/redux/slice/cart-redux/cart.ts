@@ -25,6 +25,7 @@ export interface Iuser {
     streetName: string,
     streetNumber: string,
 }
+
 type quantityy = {
     product: IactionPayload2,
     quantity: number,
@@ -38,7 +39,6 @@ interface Iproducts {
 }
 
 const initialState: Iproducts = {
-    //products: [{objeto completo 1}, quantity:2, subtotal: 600}, {{obejto completo 2 }, quantity:1, subtotal: 900}]
     products: [],
     confirmed: false,
     payLink: ''

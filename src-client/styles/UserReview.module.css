@@ -36,6 +36,36 @@
   padding: 1em 1em;
 }
 
+.rating__container{
+  display: flex;
+  flex-direction: row; 
+}
+
+.rating__stars_container{
+  margin-left: auto;
+  display: flex;
+  justify-content: space-around;
+}
+
+.rating__star_input{
+  display: none;
+}
+
+.rating__star{
+  color: var(--color-light-pink);
+  cursor: pointer;
+  size: 12;
+  margin-right: .2em;
+ 
+}
+
+.rating__star_hover{
+  color: var(--color-light-grey);
+  size: 12;
+  cursor: pointer;
+  margin-right: .2em;
+}
+
 .review__description {
   resize: none;
   width: 100%;

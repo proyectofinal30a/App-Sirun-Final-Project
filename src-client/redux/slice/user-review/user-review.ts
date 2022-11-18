@@ -1,26 +1,130 @@
 import { createSlice } from "@reduxjs/toolkit";
+import userVerification from '../../../controllers/userVerification-controller'
 import axios from "axios";
 
 
-const reviews = {
 
+
+
+export interface IReview {
+    idUser: string
+    idProduct : string
+    description: string
+    rating : number
 }
+
+ interface Ireviews {
+         allReviews: IReview[],
+         reviewDetail : {},
+   }
+  
+   const reviews: Ireviews = {
+     allReviews : [],
+    reviewDetail : {},
+  }
+
 
 export const reducerUserReview = createSlice({
     name: 'reducerUserReview',
     initialState: reviews,
     reducers: {
-    
+        getAllReviews : (state, action) => {
+            state.allReviews = action.payload
+        },
+        getOneReview : (state, action) => {
+            state.reviewDetail = action.payload
+        },
+        deleteOneReview  : (state, action) => {
+            state.allReviews = state.allReviews.filter((elem : any)=> elem.id !== action.payload)
+        }
     }
 })
 
 
+export const getReviews = () => async (dispatch: Function) => {
+    try{
+      const myToken: any = await userVerification('client')
+    const allReviews = await axios({
+      method: 'get',
+      url: '/api/userScope/reviewRatingLess/',
+      headers: {
+        "Authorization": myToken
+      }
+    });
+    //console.log(allReviews.data);
+    
+         dispatch(reducerUserReview.actions.getAllReviews(allReviews));
+    }catch(error){
+    console.log(error)
+    }
+  };
 
-// api/userScope/reviewRatingLess/${id}
-// api/reviews/${id}
-// ruta para el post por query
-//   {data} data.evaluation
-//   /api/userScope/delete/reviewRatingLess/${id}
+
+
+
+  export const getReviewDetail = (id : string) => async (dispatch: Function) => {
+    try{
+      const myToken: any = await userVerification('client')
+    const oneReview = await axios({
+      method: 'get',
+      url: `/api/reviews/${id}`,
+      headers: {
+        "Authorization": myToken
+      }
+    });
+    //console.log(oneReview.data);
+    
+         dispatch(reducerUserReview.actions.getOneReview(oneReview));
+    }catch(error){
+    console.log(error)
+    }
+  };
+
+
+  export const addReview = async (objectReview : any) => {
+    console.log(objectReview);
+    try {
+        const myToken: any = await userVerification("client");
+         const reviewData= await axios({
+            method: "post",
+            url: "/api/userScope/post/reviewRaiting",
+            data: objectReview,
+            headers: {
+            Authorization: myToken,
+    },
+  });
+
+    } catch (error) {
+        console.log(error);
+        
+    }
+  } 
+
+
+
+
+//   export const deleteReview = (id : string) => async (dispatch: Function) => {
+//     try{
+//       const myToken: any = await userVerification('client')
+//     const deletedReview = await axios({
+//       method: 'post',
+//       url: `/api/userScope/reviewRaitinfLess/${id}`,
+//       headers: {
+//         "Authorization": myToken
+//       }
+//     });
+
+//          dispatch(reducerUserReview.actions.deleteOneReview(id));
+//     }catch(error){
+//     console.log(error)
+//     }
+//   };
+
+
+
+
+
+
 
 
 // {

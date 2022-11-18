@@ -242,7 +242,7 @@ const ProductDetail = () => {
       </Modal>
 
       <div className={styles.reviews__container}>
-        <UserReview id={product.id} />
+        <UserReview/>
       </div>
     </div>
   );
