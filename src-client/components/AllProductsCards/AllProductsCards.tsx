@@ -135,8 +135,6 @@ const AllProductsCards = () => {
     dispatch(getAllProducts());
   }, [dispatch, filterProducts]);
 
-
-
   return (
     <div className={styles.general__container}>
       <div className={styles.products__container}>
@@ -156,7 +154,7 @@ const AllProductsCards = () => {
                   </Link>
                   <Image
                     key={index}
-                    src={product.image[0]}
+                    src={product.image?.[0]?.image}
                     width={250}
                     alt={product.name}
                     height={250}
@@ -223,13 +221,13 @@ const AllProductsCards = () => {
                           </div>
 
                           <div className={styles.modal__product_btns_container}>
-                            <button 
+                            <button
                               className={styles.modal__product_btn}
                               onClick={(e: any) => handlerAddOne(e, elem.product)}
                             >
                               {" "}+{" "}
                             </button>
-                            <button 
+                            <button
                               className={styles.modal__product_btn}
                               onClick={(e: any) => handlerRemoveOne(e, elem.product)}
                             >

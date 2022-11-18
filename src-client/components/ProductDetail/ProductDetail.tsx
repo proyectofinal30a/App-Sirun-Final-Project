@@ -9,7 +9,7 @@ import styles from "../../styles/ProductDetail.module.css";
 import Modal from "react-modal";
 import { BsFillTrashFill } from "react-icons/bs";
 import Link from "next/link";
-import {UserReview} from "./UserReview"
+import { UserReview } from "./UserReview"
 
 const ProductDetail = () => {
   const { query } = useRouter();
@@ -84,34 +84,34 @@ const ProductDetail = () => {
     return (total += elem.subTotal);
   });
 
-  // Images switch
+
   const [activeImage, setActiveImage] = useState("");
-  const detail = product?.image?.[0] ? product?.image?.[0] : "https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif";
+  const detail = product.image?.[0].image ? product.image?.[0].image : "https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif";
 
   const handleMouseOver = (url: string, index: number) => {
     setActiveImage(url);
   };
 
-  let url2 = ""
-  activeImage ? url2 = activeImage : url2 = detail
+  const url2 = activeImage ? activeImage : detail
 
 
   return (
     <div>
-      {product && 
+      {product &&
         <div className={styles.detail__container}>
- 
+
           <div className={styles.detail__container__images}>
             <div className={styles.image__secondary__container}>
-              {product.image?.map((url: string, index: number) => {
+              {product.image?.map((url: any, index: number) => {
+                const myUrl = url?.image
                 return (
                   <div key={index} className={styles.image_individual__container}>
                     <Image
-                      src={url}
+                      src={myUrl}
                       width={250}
                       alt={product.name}
                       height={130}
-                      onMouseOver={() => handleMouseOver(url, index)}
+                      onMouseOver={() => handleMouseOver(myUrl, index)}
                       className={styles.image_individual__img}
                     />
                   </div>
@@ -130,7 +130,7 @@ const ProductDetail = () => {
             </div>
           </div>
 
-    
+
           <div className={styles.detail__info}>
             <h1 className={styles.detail__info_title}>{product.name && product.name.toLowerCase()}</h1>
             <p className={styles.detail__info_price}>$ {product.price}</p>
@@ -151,7 +151,7 @@ const ProductDetail = () => {
               Add to cart
             </button>
 
-            <UserReview id={product.id}/>
+            <UserReview id={product.id} />
           </div>
         </div>
       }
@@ -197,15 +197,15 @@ const ProductDetail = () => {
                       <p className={styles.modal__product_data}>Price: {elem.product.price}</p>
                       <p className={styles.modal__product_data}>Subtotal: {elem.subTotal}</p>
                     </div>
-                    
+
                     <div className={styles.modal__product_btns_container}>
-                      <button 
+                      <button
                         className={styles.modal__product_btn}
                         onClick={(e: any) => handlerAddOne(e, elem.product)}
                       >
                         {" "}+{" "}
                       </button>
-                      <button 
+                      <button
                         className={styles.modal__product_btn}
                         onClick={(e: any) => handlerRemoveOne(e, elem.product)}
                       >

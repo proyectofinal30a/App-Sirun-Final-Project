@@ -119,9 +119,16 @@ model Product {
   available   Boolean
   type        TypeDiet
   category    CategoryPro
-  image       Json[]
+  image       ImageProdu[]
   description String
   evaluation  Evaluation[]
   user        User[]
   order       Order[]
+}
+
+model ImageProdu {
+  id         String  @id @default(uuid())
+  image      String
+  id_product String
+  product    Product @relation(fields: [id_product], references: [id])
 }

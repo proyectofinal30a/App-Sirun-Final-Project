@@ -28,14 +28,16 @@ export const reducerProducts = createSlice({
 export const getAllProducts = () => async (dispatch: Function) => {
   try {
     const myToken: any = await userVerification('client')
-    const products = await axios({
+    const { data } = await axios({
       method: 'get',
       url: '/api/product/gets/products',
       headers: {
         "Authorization": myToken
       }
     });
-    const allProducts = fromJsonToArray(isAvailable(products.data))
+
+    const allProducts = isAvailable(data)
+
     dispatch(reducerProducts.actions.getAllProducts(allProducts));
   } catch (error) {
     console.log(error)

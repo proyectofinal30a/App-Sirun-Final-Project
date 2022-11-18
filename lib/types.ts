@@ -1,5 +1,8 @@
 import { TypeDiet, CategoryPro } from '@prisma/client'
 
+export interface Iimage {
+    image: string[]
+}
 
 export interface Iproduct {
     id?: string;
@@ -9,7 +12,7 @@ export interface Iproduct {
     available: boolean;
     type: TypeDiet;
     category: CategoryPro;
-    image: any;
+    image?: Iimage[];
     description: string;
 }
 
@@ -27,7 +30,7 @@ export interface IDetail {
 
 
 export interface IproductsByName {
-    products: Iproduct[] | []
+    products: Iproduct[]
 }
 
 

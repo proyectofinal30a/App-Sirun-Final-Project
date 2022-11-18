@@ -9,8 +9,8 @@ POST http://localhost:3000/api/userScope/post/productAddFav
 Content-Type: application/json
 
 {
-    "idUser":"0b0d02da-b19d-4f01-8bda-76e937567848", 
-    "idProduct":"3e48e408-ebfb-495a-935b-2340a30d592b" 
+    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
+    "idProduct":"08857cde-1c55-4e7a-86be-12bf437fbb1e" 
 }
 ###
 
@@ -19,9 +19,42 @@ POST http://localhost:3000/api/userScope/post/reviewRating
 Content-Type: application/json
 
 {
-    "idUser":"0b0d02da-b19d-4f01-8bda-76e937567848", 
-    "idProduct":"81127eca-c975-4438-a822-09da3b5ae018",
-    "review":"ESTA MALL!!!!",
+    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
+    "idProduct":"08857cde-1c55-4e7a-86be-12bf437fbb1e",
+    "review":"el producto me vino quemado!!! mas que pasteleria deberia ser centro de quemados!!!!",
+    "rating":1
+}
+###
+###REVIEW ADD RATING
+POST http://localhost:3000/api/userScope/post/reviewRating
+Content-Type: application/json
+
+{
+    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
+    "idProduct":"b396657b-944d-4a1f-8639-997e909301e5",
+    "review":"me parecio una Delicia pero bajale el precio!!!!",
+    "rating":2
+}
+###
+###REVIEW ADD RATING
+POST http://localhost:3000/api/userScope/post/reviewRating
+Content-Type: application/json
+
+{
+    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
+    "idProduct":"b396657b-944d-4a1f-8639-997e909301e5",
+    "review":"che todo bien con el producto pero mi amigo me cobra mas barato!!!!",
+    "rating":2
+}
+###
+###REVIEW ADD RATING
+POST http://localhost:3000/api/userScope/post/reviewRating
+Content-Type: application/json
+
+{
+    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
+    "idProduct":"cac575eb-d1ba-4263-a85a-fa58ac8949d6",
+    "review":"ESTE COMENTARIO HA SIDO BORRADO POR INCITAR LA VIOLENCIA CONTRA LOS PASTELES",
     "rating":1
 }
 ###
@@ -36,17 +69,17 @@ POST http://localhost:3000/api/userScope/post/order
 Content-Type: application/json
 
 {
-    "idUser":"0b0d02da-b19d-4f01-8bda-76e937567848", 
+    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
     "idArrayProduct":[{
-            "id":"106f1130-f58d-4603-b2d8-eb26cb70726a"
+            "id":"08857cde-1c55-4e7a-86be-12bf437fbb1e"
             },        {
-            "id":"81127eca-c975-4438-a822-09da3b5ae018"
+            "id":"b396657b-944d-4a1f-8639-997e909301e5"
             },        {
-            "id":"9f253753-0478-479d-b2c4-a0a2ce1538ba"
+            "id":"b396657b-944d-4a1f-8639-997e909301e5"
             },{
-            "id":"9f253753-0478-479d-b2c4-a0a2ce1538ba"
+            "id":"b396657b-944d-4a1f-8639-997e909301e5"
             },{
-            "id":"70753a12-8c2d-4047-872c-1b17106739b9"
+            "id":"cac575eb-d1ba-4263-a85a-fa58ac8949d6"
             }],
     "description":"VaMOSSSSSSS",
     "status":"pending",
@@ -71,7 +104,7 @@ POST http://localhost:3000/api/userScope/post/addDirection
 Content-Type: application/json
 
 {
-    "idUser":"0b0d02da-b19d-4f01-8bda-76e937567848", 
-    "dir":"Mendoza clo 123 - mendoza Argentina"
+    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
+    "dir":"calle 123 barrio abc y casa undefined ahah"
 }
 ###

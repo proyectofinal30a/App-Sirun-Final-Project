@@ -24,10 +24,6 @@ export const getUserDetail = (email: any) => async (dispatch: Function) => {
         url: `/api/userScope/get/${email}`,
     });
 
-    console.log(data);
-
-    const myImage = { ...data, image: pars }
-
 
     dispatch(reducerUser.actions.getProducts(data));
 }
