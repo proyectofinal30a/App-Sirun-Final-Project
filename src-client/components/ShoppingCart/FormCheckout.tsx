@@ -212,15 +212,6 @@ const FormCheckout = (): JSX.Element => {
           </div>
         </fieldset>
 
-        <div className={styles.btn__align}>
-          <button
-            className={styles.form__input_btn}
-            disabled={Object.values(errors).length !== 0}
-            onClick={(e: any) => openCheckModal(e, inputUser)}
-          >
-            Continue to payment
-          </button>
-        </div>
 
         <Modal
           isOpen={modalIsOpen}
@@ -296,6 +287,16 @@ const FormCheckout = (): JSX.Element => {
             <h2 className={styles.__total}>TOTAL </h2>
             <h2 className={styles.__total}>${total}</h2>
           </div>
+        </div>
+
+        <div className={styles.btn__align}>
+          <button
+            className={styles.form__input_btn}
+            disabled={Object.values(errors).length !== 0}
+            onClick={(e: any) => openCheckModal(e, inputUser)}
+          >
+            Continue to payment
+          </button>
         </div>
       </div>
     </div>
