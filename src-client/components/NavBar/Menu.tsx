@@ -6,8 +6,7 @@ import styles from "../../styles/Menu.module.css";
 
 const Menu = () => {
   const [isActive, setIsActive] = useState(false);
-  const { data: session } = useSession<boolean>();
-  session
+  const { data: session, status } : any = useSession<boolean>();
   const handleNavToggle = () => {
     setIsActive((current) => !current);
   };
