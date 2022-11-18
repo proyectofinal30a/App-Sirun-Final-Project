@@ -180,7 +180,7 @@ const ProductDetail = () => {
             return (
               <div key={index} className={styles.modal__product_container}>
                 <p className={styles.modal__product_name}>
-                  {elem.product.name.toLowerCase()}
+                  {elem.product.name}
                 </p>
 
                 <div className={styles.modal_info_container}>
@@ -230,7 +230,7 @@ const ProductDetail = () => {
           })}
 
           <div className={styles.modal__total_container}>
-            <p className={styles.modal__total}>TOTAL: </p>
+            <p className={styles.modal__total}>TOTAL </p>
             <p className={styles.modal__total}>${total}</p>
           </div>
 

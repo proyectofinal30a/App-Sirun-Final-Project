@@ -250,7 +250,7 @@ const AllProductsCards = () => {
                 })}
 
                 <div className={styles.modal__total_container}>
-                  <p className={styles.modal__total}>TOTAL: </p>
+                  <p className={styles.modal__total}>TOTAL </p>
                   <p className={styles.modal__total}>${total}</p>
                 </div>
 

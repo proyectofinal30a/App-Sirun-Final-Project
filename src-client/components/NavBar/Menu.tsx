@@ -14,18 +14,22 @@ const Menu = () => {
     setIsActive((current) => !current);
   };
 
-  const { data: session, status } : any = useSession<boolean>();
+  const { data: session, status }: any = useSession<boolean>();
 
   const signOrNoSing: any = session ? (
-    <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })} className={styles.nav_sign_btn}>Sign Out</button>
+    <button
+      onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
+      className={styles.nav_sign_btn}
+    >
+      Sign Out
+    </button>
   ) : (
-    <button onClick={() => signIn("auth0")} className={styles.nav_sign_btn}>Sign In</button>
+    <button onClick={() => signIn("auth0")} className={styles.nav_sign_btn}>
+      Sign In
+    </button>
   );
 
-  const handleClick = () => {
-    if (!session?.user?.role) router.push("/api/auth/signin")
-  }
-
+  const handleClick = () => signIn("auth0");
 
   return (
     <>
@@ -56,9 +60,7 @@ const Menu = () => {
         }
       >
         <ul className={styles.nav__list}>
-          <li className={styles.nav__item}>
-            {signOrNoSing}
-          </li>
+          <li className={styles.nav__item}>{signOrNoSing}</li>
           <li className={styles.nav__item}>
             <Link href="/" className={styles.nav__link}>
               <span className={styles.nav_span}>Home</span>
@@ -74,15 +76,21 @@ const Menu = () => {
               <span className={styles.nav_span}>About</span>
             </Link>
           </li>
-          {/* {session?.user?.role && */}
-            <li className={styles.nav__item}>
-              <Link href={`/user/${session?.user?.name}`} className={styles.nav__link} onClick={handleClick}>
-                <span className={styles.nav_span}>Account</span>
-              </Link>
-            </li>
-            {/* } */}
           <li className={styles.nav__item}>
-            <Link href="/wishlist" className={styles.nav__link} onClick={handleClick}>
+            <Link
+              href={`/user/${session?.user?.name}`}
+              className={styles.nav__link}
+              onClick={handleClick}
+            >
+              <span className={styles.nav_span}>Account</span>
+            </Link>
+          </li>
+          <li className={styles.nav__item}>
+            <Link
+              href="/wishlist"
+              className={styles.nav__link}
+              onClick={handleClick}
+            >
               <span className={styles.nav_span}>Wishlist</span>
             </Link>
           </li>
@@ -91,12 +99,13 @@ const Menu = () => {
               <span className={styles.nav_span}>Shopping Cart</span>
             </Link>
           </li>
-          {session?.user?.role === "admin" &&
+          {session?.user?.role === "admin" && (
             <li className={styles.nav__item}>
               <Link href="/administration" className={styles.nav__link}>
                 <span className={styles.nav_span}>Administration</span>
               </Link>
-            </li>}
+            </li>
+          )}
         </ul>
       </nav>
     </>
