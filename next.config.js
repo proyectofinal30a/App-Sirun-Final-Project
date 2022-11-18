@@ -45,7 +45,8 @@ const nextConfig = {
       "resizer.glanacion.com",
       "media0.giphy.com",
       "s.gravatar.com",
-
+      "hackernoon.com",
+      "**"
     ],
     async redirects() {
       return [
