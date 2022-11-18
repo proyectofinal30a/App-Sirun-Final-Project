@@ -140,7 +140,7 @@ const ShoppingCart = () => {
       </form>
       :
         <div className={styles.empty_cart__container}>
-          <p className={styles.empty_cart__message}>Shopping cart is empty.</p>
+          <p className={styles.empty_cart__message}>Your shopping cart is empty.</p>
           <button 
             onClick={() => router.push("/products")}
             className={styles.empty_cart__btn}
