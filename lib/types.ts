@@ -57,10 +57,16 @@ declare module "next-auth" {
             name: string
             email: string
             image: string
+            role: string
         }
     }
 }
 
+// declare module "next" {
+//     interface NextApiRequest {
+//         query: Partial<{ [key: string]: string | string[] }>
+//     }
+// }
 
 // const status_typee: Status_type = "pending"
 

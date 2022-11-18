@@ -6,8 +6,8 @@ import styles from "../../styles/Menu.module.css";
 
 const Menu = () => {
   const [isActive, setIsActive] = useState(false);
-  const { data: session, status }: any = useSession<boolean>();
-
+  const { data: session } = useSession<boolean>();
+  session
   const handleNavToggle = () => {
     setIsActive((current) => !current);
   };
@@ -66,11 +66,12 @@ const Menu = () => {
               <span className={styles.nav_span}>About</span>
             </Link>
           </li>
-          <li className={styles.nav__item}>
-            <Link href="/userAccount" className={styles.nav__link}>
-              <span className={styles.nav_span}>Account</span>
-            </Link>
-          </li>
+          {session?.user?.role &&
+            <li className={styles.nav__item}>
+              <Link href={`/user/${session?.user?.name}`} className={styles.nav__link}>
+                <span className={styles.nav_span}>Account</span>
+              </Link>
+            </li>}
           <li className={styles.nav__item}>
             <Link href="/wishlist" className={styles.nav__link}>
               <span className={styles.nav_span}>Wishlist</span>
@@ -82,11 +83,11 @@ const Menu = () => {
             </Link>
           </li>
           {session?.user?.role === 'admin' &&
-          <li className={styles.nav__item}>
-            <Link href="/administration" className={styles.nav__link}>
-              <span className={styles.nav_span}>Administration</span>
-            </Link>
-          </li>}
+            <li className={styles.nav__item}>
+              <Link href="/administration" className={styles.nav__link}>
+                <span className={styles.nav_span}>Administration</span>
+              </Link>
+            </li>}
         </ul>
       </nav>
     </>

@@ -1,12 +1,7 @@
-import React, { useState } from "react";
 import Link from "next/link";
 import styles from "../../styles/AdminSideBar.module.css";
 
-interface IId {
-  name: string | string[]
-}
-
-const UserSideBar = ({ name }: IId) => {
+const UserSideBar = () => {
 
   return (
     <div className={styles.nav__container}>
@@ -14,7 +9,7 @@ const UserSideBar = ({ name }: IId) => {
       {/* Fullscreen admin side bar */}
       <nav className={styles.nav}>
         <ul className={styles.nav__list}>
-          <Link href={`/user/${name}`} className={styles.nav__link}>
+          <Link href={`/`} className={styles.nav__link}>
             <li className={styles.nav__item}>
               <span className={styles.nav_span}>back</span>
             </li>

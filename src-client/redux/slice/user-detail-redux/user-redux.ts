@@ -16,25 +16,25 @@ type userData = {
     orders?: JSON
     evaluations?: JSON
 
-}
+} | null
 
 interface IPayload {
-    payload: userData[]
+    payload: userData
 }
 
 type user = {
-    users: userData[]
+    user: userData
 }
 
 const template: user = {
-    users: []
+    user: null
 }
 
 export const reducerUser = createSlice({
     name: 'reducerUser',
     initialState: template,
     reducers: {
-        getProducts: (state: user, action: IPayload) => { state.users = action.payload }
+        getProducts: (state: user, action: IPayload) => { state.user = action.payload }
     }
 })
 

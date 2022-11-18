@@ -1,8 +1,8 @@
 import HEAD from "../../src-client/components/HEAD";
 import Nav from "../../src-client/components/NavBar/Nav";
 import Footer from "../../src-client/components/Footer/Footer";
-import AdminSideBar from "../../src-client/components/Administration/AdminSideBar"; // estilos generales de layout de user administrador
 import styles from "../../src-client/styles/AdminSideBar.module.css";
+import UserSideBar from "../../src-client/components/User/UserSideBar";
 
 export default function AdminProfilePage() {
   return (
@@ -12,7 +12,7 @@ export default function AdminProfilePage() {
 
       <main className={styles.general__container}>
         <div className={styles.general__container_first_col}>
-          <AdminSideBar />
+          <UserSideBar />
         </div>
         <div className={styles.general__container_second_col}>
           {/* Falta crear componente AdminProfile */}
