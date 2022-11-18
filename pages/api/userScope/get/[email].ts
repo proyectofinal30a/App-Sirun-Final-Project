@@ -14,9 +14,58 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                     email: true,
                     image: true,
                     id: true,
-                    favorites: true,
-                    orders: true,
-                    evaluations: true,
+                    favorites: {
+                        select: {
+                            id: true,
+                            name: true,
+                            image: {
+                                select: {
+                                    image: true
+                                }
+                            },
+
+                        }
+                    },
+                    orders: {
+                        select: {
+                            total: true,
+                            description: true,
+                            delivery_time: true,
+                            date: true,
+                            status: true,
+                            product: {
+                                select: {
+                                    id: true,
+                                    name: true,
+                                    image: {
+                                        select: {
+                                            image: true
+                                        }
+                                    },
+
+                                }
+                            }
+                        }
+                    },
+                    evaluations: {
+                        select: {
+                            id: true,
+                            product: {
+                                select: {
+                                    id: true,
+                                    image: {
+                                        select: {
+                                            image: true
+                                        }
+                                    },
+                                    name: true
+                                }
+
+                            },
+                            review: true,
+                            rating: true
+                        }
+                    },
                     direcciones: true
                 },
             })

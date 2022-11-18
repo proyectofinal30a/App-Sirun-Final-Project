@@ -25,20 +25,22 @@ export const reducerProducts = createSlice({
 });
 
 
-export const getAllProducts = () => async (dispatch: Function) => {
-  try{
+export const getAllProducts: any = () => async (dispatch: Function) => {
+  try {
     const myToken: any = await userVerification('client')
-  const products = await axios({
-    method: 'get',
-    url: '/api/product/gets/products',
-    headers: {
-      "Authorization": myToken
-    }
-  });
-  const allProducts = fromJsonToArray(isAvailable(products.data))
-  dispatch(reducerProducts.actions.getAllProducts(allProducts));
-  }catch(error){
-  console.log(error)
+    const { data } = await axios({
+      method: 'get',
+      url: '/api/product/gets/products',
+      headers: {
+        "Authorization": myToken
+      }
+    });
+
+    const allProducts = isAvailable(data)
+
+    dispatch(reducerProducts.actions.getAllProducts(allProducts));
+  } catch (error) {
+    console.log(error)
   }
 };
 

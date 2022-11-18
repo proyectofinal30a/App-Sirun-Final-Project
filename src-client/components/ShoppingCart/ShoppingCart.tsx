@@ -62,91 +62,92 @@ const ShoppingCart = () => {
   return (
     <div className={styles.cart__container}>
       {cart[0] ?
-      <form className={styles.modal__container}>
-        <h2>Shopping Cart</h2>
+        <form className={styles.modal__container}>
+          <h2>Shopping Cart</h2>
 
-        {cart?.map((elem: any, index: number) => {
-          return (
-            <div key={index} className={styles.modal__product_container}>
-              <p className={styles.modal__product_name}>
-                {elem.product.name.toLowerCase()}
-              </p>
+          {cart?.map((elem: any, index: number) => {
+            const myUrl = elem.product?.image?.[0]?.image
+            return (
+              <div key={index} className={styles.modal__product_container}>
+                <p className={styles.modal__product_name}>
+                  {elem.product.name.toLowerCase()}
+                </p>
 
-              <div className={styles.modal_info_container}>
-                <div className={styles.modal__product_img_container}>
-                  <Image
-                    key={index}
-                    src={elem?.product?.image?.[0]}
-                    width={400}
-                    alt={elem.product.name}
-                    height={400}
-                    priority
-                    className={styles.modal__product_img}
-                  />
-                </div>
-
-                <div className={styles.modal__product_mobile_separator}>
-                  <div className={styles.modal__product_info}>
-                    <p className={styles.modal__product_data}>
-                      Quantity: {elem.quantity}
-                    </p>
-                    <p className={styles.modal__product_data}>
-                      Price: {elem.product.price}
-                    </p>
-                    <p className={styles.modal__product_data}>
-                      Subtotal: {elem.subTotal}
-                    </p>
+                <div className={styles.modal_info_container}>
+                  <div className={styles.modal__product_img_container}>
+                    <Image
+                      key={index}
+                      src={myUrl}
+                      width={400}
+                      alt={elem.product.name}
+                      height={400}
+                      priority
+                      className={styles.modal__product_img}
+                    />
                   </div>
 
-                  <div className={styles.modal__product_btns_container}>
-                    <button
-                      className={styles.modal__product_btn}
-                      onClick={(e: any) => handlerAddOne(e, elem.product)}
-                    >
-                      {" "}
-                      +{" "}
-                    </button>
-                    <button
-                      className={styles.modal__product_btn}
-                      onClick={(e: any) => handlerRemoveOne(e, elem.product)}
-                    >
-                      {" "}
-                      -{" "}
-                    </button>
-                    <button
-                      className={[
-                        styles.modal__product_btn,
-                        styles.modal__product_btn_trash,
-                      ].join(" ")}
-                      onClick={(e: any) => handlerTrash(e, elem.product)}
-                    >
-                      <BsFillTrashFill />
-                    </button>
+                  <div className={styles.modal__product_mobile_separator}>
+                    <div className={styles.modal__product_info}>
+                      <p className={styles.modal__product_data}>
+                        Quantity: {elem.quantity}
+                      </p>
+                      <p className={styles.modal__product_data}>
+                        Price: {elem.product.price}
+                      </p>
+                      <p className={styles.modal__product_data}>
+                        Subtotal: {elem.subTotal}
+                      </p>
+                    </div>
+
+                    <div className={styles.modal__product_btns_container}>
+                      <button
+                        className={styles.modal__product_btn}
+                        onClick={(e: any) => handlerAddOne(e, elem.product)}
+                      >
+                        {" "}
+                        +{" "}
+                      </button>
+                      <button
+                        className={styles.modal__product_btn}
+                        onClick={(e: any) => handlerRemoveOne(e, elem.product)}
+                      >
+                        {" "}
+                        -{" "}
+                      </button>
+                      <button
+                        className={[
+                          styles.modal__product_btn,
+                          styles.modal__product_btn_trash,
+                        ].join(" ")}
+                        onClick={(e: any) => handlerTrash(e, elem.product)}
+                      >
+                        <BsFillTrashFill />
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
 
-        <div className={styles.modal__total_container}>
-          <p className={styles.modal__total}>TOTAL </p>
-          <p className={styles.modal__total}>${total}</p>
-        </div>
+          <div className={styles.modal__total_container}>
+            <p className={styles.modal__total}>TOTAL </p>
+            <p className={styles.modal__total}>${total}</p>
+          </div>
 
-        <Link href="/checkout" className={styles.modal__purchase_btn_container}>
-          <button className={styles.modal__start_purchase_btn}>Checkout</button>
-        </Link>
-      </form>
-      :
+          <Link href="/checkout" className={styles.modal__purchase_btn_container}>
+            <button className={styles.modal__start_purchase_btn}>Checkout</button>
+          </Link>
+        </form>
+        :
         <div className={styles.empty_cart__container}>
           <p className={styles.empty_cart__message}>Your shopping cart is empty.</p>
-          <button 
+          <button
             onClick={() => router.push("/products")}
             className={styles.empty_cart__btn}
-           >
+          >
             View products
-           </button>
+          </button>
         </div>
       }
     </div>

@@ -27,7 +27,7 @@ const FormCheckout = (): JSX.Element => {
     streetNumber: "",
   };
 
-  useEffect(() => {}, [confirmedCart]);
+  useEffect(() => { }, [confirmedCart]);
 
 
   const [inputUser, setInputUser] = useState(personInfo);
@@ -39,7 +39,7 @@ const FormCheckout = (): JSX.Element => {
     setErrors(validate({ ...inputUser, [name]: value }));
   };
 
-  
+
   // MODAL
   const [modalIsOpen, setIsOpen] = useState(false);
   function closeModal() {
@@ -55,6 +55,8 @@ const FormCheckout = (): JSX.Element => {
       alert("Please complete the form correctly");
     }
   };
+
+
 
   // Submitea cuando se cliquea el botón del modal (el form esta dentro del modal)
   async function handleSubmit(e: Event) {
@@ -223,7 +225,7 @@ const FormCheckout = (): JSX.Element => {
             <div className={styles.modal__btn_right_container}>
               <button className={styles.modal__close_modal_btn} onClick={closeModal}>x</button>
             </div>
-            
+
             <h2>Confirm your information</h2>
 
             <div className={styles.modal__client_container}>
@@ -240,7 +242,7 @@ const FormCheckout = (): JSX.Element => {
                 </p>
                 <p>{inputUser.phone}</p>
               </div>
-      
+
               <p>
                 <span className={styles.client_info_span}>Zip code: </span>{inputUser.zipCode}
               </p>
@@ -252,21 +254,21 @@ const FormCheckout = (): JSX.Element => {
               </div>
             </div>
 
-            {!confirmedCart && !payLink && 
+            {!confirmedCart && !payLink &&
               <div className={styles.modal__confirm_btn_container}>
-                <button 
-                type="submit"
-                onClick={(e: any) => handleSubmit(e)} 
-                className={styles.modal__confirm_btn}
+                <button
+                  type="submit"
+                  onClick={(e: any) => handleSubmit(e)}
+                  className={styles.modal__confirm_btn}
                 >
                   Confirm information
                 </button>
               </div>
             }
-            
+
             {confirmedCart && payLink && (
               <div className={styles.modal__pay_btn_container}>
-                <button 
+                <button
                   className={styles.modal__pay_btn}
                   onClick={() => resetCart()}
                 >
@@ -282,12 +284,13 @@ const FormCheckout = (): JSX.Element => {
         <h2 className={styles.column__title}>Order Summary</h2>
         <div className={styles.item__container}>
           {productsInCart?.map((elem: any) => {
+            const myUrl = elem?.product?.image?.[0]?.image
             return (
               <div className={styles.item} key={elem.product.id}>
                 <div className={styles.product__img_container}>
                   <Image
-                    key={elem.product.image[0]}
-                    src={elem.product.image[0]}
+                    key={myUrl}
+                    src={myUrl}
                     width={100}
                     alt={elem.product.name.toLowerCase()}
                     height={100}
@@ -303,7 +306,7 @@ const FormCheckout = (): JSX.Element => {
                 </div>
 
                 <h2 className={styles.item__subtotal}>
-                  Subtotal: <br/> ${elem.subTotal}
+                  Subtotal: <br /> ${elem.subTotal}
                 </h2>
               </div>
             );
@@ -312,7 +315,7 @@ const FormCheckout = (): JSX.Element => {
 
         <div className={styles.total__container}>
           <div className={styles.__shipping_line}>
-            <p className={styles.__shipping}>Shipping </p>  
+            <p className={styles.__shipping}>Shipping </p>
             <p className={styles.__shipping}>$...</p>
           </div>
           <div className={styles.__total_line}>

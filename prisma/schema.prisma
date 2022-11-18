@@ -59,9 +59,8 @@ model User {
 }
 
 model Direccion {
-  id String @id @unique @default(uuid())
-
-  id_user String @unique
+  id      String @id @unique @default(uuid())
+  id_user String
   user    User   @relation(fields: [id_user], references: [id])
   dir     String //dos personas que viven juntas y usan diferente mail.
 }
@@ -69,7 +68,7 @@ model Direccion {
 model Evaluation {
   id         String  @id @unique @default(uuid())
   id_product String
-  id_user    String  @unique
+  id_user    String
   review     String
   rating     Int
   product    Product @relation(fields: [id_product], references: [id])
@@ -120,9 +119,16 @@ model Product {
   available   Boolean
   type        TypeDiet
   category    CategoryPro
-  image       Json[]
+  image       ImageProdu[]
   description String
   evaluation  Evaluation[]
   user        User[]
   order       Order[]
+}
+
+model ImageProdu {
+  id         String  @id @default(uuid())
+  image      String
+  id_product String
+  product    Product @relation(fields: [id_product], references: [id])
 }
