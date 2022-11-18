@@ -9,8 +9,8 @@ POST http://localhost:3000/api/userScope/post/productAddFav
 Content-Type: application/json
 
 {
-    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
-    "idProduct":"08857cde-1c55-4e7a-86be-12bf437fbb1e" 
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
+    "idProduct":"08453028-6204-4b7d-8502-07c4e3113966" 
 }
 ###
 
@@ -19,8 +19,8 @@ POST http://localhost:3000/api/userScope/post/reviewRating
 Content-Type: application/json
 
 {
-    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
-    "idProduct":"08857cde-1c55-4e7a-86be-12bf437fbb1e",
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
+    "idProduct":"09d22c20-995f-4303-9409-7f6ce24a57cb",
     "review":"el producto me vino quemado!!! mas que pasteleria deberia ser centro de quemados!!!!",
     "rating":1
 }
@@ -30,8 +30,8 @@ POST http://localhost:3000/api/userScope/post/reviewRating
 Content-Type: application/json
 
 {
-    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
-    "idProduct":"b396657b-944d-4a1f-8639-997e909301e5",
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
+    "idProduct":"0fb98465-a04e-4dd5-bc8a-d338dfccb1cf",
     "review":"me parecio una Delicia pero bajale el precio!!!!",
     "rating":2
 }
@@ -41,8 +41,8 @@ POST http://localhost:3000/api/userScope/post/reviewRating
 Content-Type: application/json
 
 {
-    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
-    "idProduct":"b396657b-944d-4a1f-8639-997e909301e5",
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
+    "idProduct":"12a01873-be22-40ef-819e-2b3836e53100",
     "review":"che todo bien con el producto pero mi amigo me cobra mas barato!!!!",
     "rating":2
 }
@@ -52,7 +52,7 @@ POST http://localhost:3000/api/userScope/post/reviewRating
 Content-Type: application/json
 
 {
-    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
     "idProduct":"cac575eb-d1ba-4263-a85a-fa58ac8949d6",
     "review":"ESTE COMENTARIO HA SIDO BORRADO POR INCITAR LA VIOLENCIA CONTRA LOS PASTELES",
     "rating":1
@@ -69,7 +69,7 @@ POST http://localhost:3000/api/userScope/post/order
 Content-Type: application/json
 
 {
-    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
     "idArrayProduct":[{
             "id":"08857cde-1c55-4e7a-86be-12bf437fbb1e"
             },        {
@@ -104,7 +104,7 @@ POST http://localhost:3000/api/userScope/post/addDirection
 Content-Type: application/json
 
 {
-    "idUser":"2aa1befa-b03b-4c89-94cc-8eebe22594d6", 
-    "dir":"calle 123 barrio abc y casa undefined ahah"
+    "idUser":"f80bb49f-8e5e-453a-af8d-526f44975b9a", 
+    "dir":"mendoza dtaadaa asdasd "
 }
 ###

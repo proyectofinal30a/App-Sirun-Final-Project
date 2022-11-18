@@ -25,7 +25,7 @@ export const reducerProducts = createSlice({
 });
 
 
-export const getAllProducts = () => async (dispatch: Function) => {
+export const getAllProducts: any = () => async (dispatch: Function) => {
   try {
     const myToken: any = await userVerification('client')
     const { data } = await axios({

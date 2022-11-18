@@ -133,7 +133,8 @@ const AllProductsCards = () => {
   useEffect(() => {
     if (filterProducts[0]) setCurrentPage(1);
     dispatch(getAllProducts());
-  }, [dispatch, filterProducts]);
+  }, [filterProducts]);
+
 
   return (
     <div className={styles.general__container}>
@@ -154,7 +155,7 @@ const AllProductsCards = () => {
 
                     <Image
                       key={index}
-                      src={product.image[0]}
+                      src={product.image?.[0]?.image}
                       width={250}
                       alt={product.name}
                       height={250}
@@ -163,15 +164,7 @@ const AllProductsCards = () => {
                     />
                   </Link>
 
-                  <Image
-                    key={index}
-                    src={product.image?.[0]?.image}
-                    width={250}
-                    alt={product.name}
-                    height={250}
-                    priority
-                    className={styles.product_card__img}
-                  />
+
 
                   <div className={styles.product_card__info_container}>
                     <p>$ {product.price}</p>
@@ -205,6 +198,7 @@ const AllProductsCards = () => {
                 <h2>Shopping Cart</h2>
 
                 {cart?.map((elem: any, index: number) => {
+                  const myUrl = elem.product?.image?.[0]?.image
                   return (
                     <div key={index} className={styles.modal__product_container}>
                       <p className={styles.modal__product_name}>
@@ -215,7 +209,7 @@ const AllProductsCards = () => {
                         <div className={styles.modal__product_img_container}>
                           <Image
                             key={index}
-                            src={elem?.product?.image?.[0]}
+                            src={myUrl}
                             width={400}
                             alt={elem.product.name}
                             height={400}

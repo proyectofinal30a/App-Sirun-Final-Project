@@ -18,7 +18,11 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                         select: {
                             id: true,
                             name: true,
-                            image: true,
+                            image: {
+                                select: {
+                                    image: true
+                                }
+                            },
 
                         }
                     },
@@ -33,7 +37,11 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                                 select: {
                                     id: true,
                                     name: true,
-                                    image: true,
+                                    image: {
+                                        select: {
+                                            image: true
+                                        }
+                                    },
 
                                 }
                             }
@@ -45,7 +53,11 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                             product: {
                                 select: {
                                     id: true,
-                                    image: true,
+                                    image: {
+                                        select: {
+                                            image: true
+                                        }
+                                    },
                                     name: true
                                 }
 

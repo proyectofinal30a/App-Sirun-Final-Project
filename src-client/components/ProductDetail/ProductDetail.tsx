@@ -87,7 +87,6 @@ const ProductDetail = () => {
   const [activeImage, setActiveImage] = useState("");
 
   const detail = product.image?.[0].image ? product.image?.[0].image : "https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif";
-  develop
 
   const handleMouseOver = (url: string, index: number) => {
     setActiveImage(url);
@@ -177,6 +176,7 @@ const ProductDetail = () => {
           <h2>Shopping Cart</h2>
 
           {cart?.map((elem: any, index: number) => {
+            const myUrl = elem?.product?.image?.[0]?.image
             return (
               <div key={index} className={styles.modal__product_container}>
                 <p className={styles.modal__product_name}>
@@ -187,7 +187,7 @@ const ProductDetail = () => {
                   <div className={styles.modal__product_img_container}>
                     <Image
                       key={index}
-                      src={elem?.product?.image?.[0]}
+                      src={myUrl}
                       width={400}
                       alt={elem.product.name}
                       height={400}
