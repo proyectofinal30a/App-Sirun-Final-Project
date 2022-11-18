@@ -1,3 +1,87 @@
+/* Loaders */
+
+.loader {
+  margin: auto;
+  margin-top: 5em;
+  height: 100vh;
+  color: var(--color-dark-blue);
+  font-family: var(--font-paragraph);
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.image_main__loader_container {
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center; 
+  margin-right: 10em;
+  width: 30em;
+  height: 100%;
+}
+
+.image_main__loader_img {
+  width: 5em;
+  height: 5em;
+  object-fit: cover;
+}
+
+@media (max-width: 1100px) {
+  .image_main__loader_container {
+    display: flex;
+    justify-self: center;
+    width: 45em;
+    margin-right: 10em;
+    height: 100%;
+  }
+}
+
+@media (max-width: 1000px) {
+  .image_main__loader_container {
+    display: flex;
+    justify-self: center;
+    width: 40em;
+    height: 100%;
+  }
+}
+
+@media (max-width: 780px) {
+  .image_main__loader_container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 30em;
+    height: 100%;
+  }
+}
+
+@media (max-width: 500px) {
+  .image_main__loader_container {
+    width: 25em;
+  }
+}
+
+@media (max-width: 400px) {
+  .image_main__loader_container {
+    width: 15em;
+  }
+}
+
+
+/* General detail container */
+
+
+.detail {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* Product detail section */
+
+
 .detail__container {
   padding: 8em 0 4em 0;
   display: grid;
@@ -16,6 +100,7 @@
 .image__secondary__container {
   margin-right: 1em;
   height: 100%;
+  width: 11em;
 }
 
 .image_individual__container {
@@ -45,7 +130,7 @@
 }
 
 .image_main__container {
-  width: 45em;
+  width: 35em;
 }
 
 .image_main__img {
@@ -140,12 +225,13 @@
 
 /* Shopping modal */
 
+
 .modal {
   width: 40%;
   margin: auto;
   margin-top: 7em;
   margin-bottom: 7em;
-  max-height: 79%;
+  max-height: 75%;
   overflow-y: auto;
   border: 2px solid rgb(211, 210, 210);
 }
@@ -334,7 +420,23 @@
   }
 }
 
-/* End of modal css */
+
+/* Reviews */
+
+
+.reviews__container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+.reviews__container:first-child {
+  margin: 0 3em;
+}
+
+
+/* Responsive layout */
 
 
 @media (max-width: 1540px) {
@@ -346,7 +448,7 @@
 
 @media (max-width: 1300px) {
   .image_main__container {
-    width: 40em;
+    width: 30em;
   }
 }
 
@@ -357,6 +459,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+  }
+
+  .image_main__container {
+    width: 35em;
   }
 
   .image_individual__container {
@@ -383,6 +489,7 @@
 
 @media (max-width: 780px) {
   .detail__container {
+    overflow-x: hidden;
     margin: 0;
     padding: 0;
     padding-top: 18em;

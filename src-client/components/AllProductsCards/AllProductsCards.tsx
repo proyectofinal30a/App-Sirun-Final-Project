@@ -148,10 +148,21 @@ const AllProductsCards = () => {
                 >
                   <Link
                     href={`/productDetail/${product.id}`}
-                    className={styles.product_card__title}
+                    className={styles.product_card__link}
                   >
-                    <h1>{product.name.toLowerCase()}</h1>
+                    <h1 className={styles.product_card__title}>{product.name.toLowerCase()}</h1>
+
+                    <Image
+                      key={index}
+                      src={product.image[0]}
+                      width={250}
+                      alt={product.name}
+                      height={250}
+                      priority
+                      className={styles.product_card__img}
+                    />
                   </Link>
+
                   <Image
                     key={index}
                     src={product.image?.[0]?.image}
@@ -247,12 +258,12 @@ const AllProductsCards = () => {
                 })}
 
                 <div className={styles.modal__total_container}>
-                  <p className={styles.modal__total}>TOTAL: </p>
+                  <p className={styles.modal__total}>TOTAL </p>
                   <p className={styles.modal__total}>${total}</p>
                 </div>
 
                 <Link href="/checkout" className={styles.modal__purchase_btn_container}>
-                  <button className={styles.modal__start_purchase_btn}>Iniciar compra</button>
+                  <button className={styles.modal__start_purchase_btn}>Checkout</button>
                 </Link>
 
               </form>
