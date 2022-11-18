@@ -1,21 +1,30 @@
 import React, { useState } from "react";
+import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import styles from "../../styles/Menu.module.css";
 
 const Menu = () => {
+  const router = useRouter();
+
   const [isActive, setIsActive] = useState(false);
-  const { data: session, status } : any = useSession<boolean>();
+
   const handleNavToggle = () => {
     setIsActive((current) => !current);
   };
+
+  const { data: session, status } : any = useSession<boolean>();
 
   const signOrNoSing: any = session ? (
     <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })} className={styles.nav_sign_btn}>Sign Out</button>
   ) : (
     <button onClick={() => signIn("auth0")} className={styles.nav_sign_btn}>Sign In</button>
   );
+
+  const handleClick = () => {
+    if (!session?.user?.role) router.push("/api/auth/signin")
+  }
 
 
   return (
@@ -65,14 +74,15 @@ const Menu = () => {
               <span className={styles.nav_span}>About</span>
             </Link>
           </li>
-          {session?.user?.role &&
+          {/* {session?.user?.role && */}
             <li className={styles.nav__item}>
-              <Link href={`/user/${session?.user?.name}`} className={styles.nav__link}>
+              <Link href={`/user/${session?.user?.name}`} className={styles.nav__link} onClick={handleClick}>
                 <span className={styles.nav_span}>Account</span>
               </Link>
-            </li>}
+            </li>
+            {/* } */}
           <li className={styles.nav__item}>
-            <Link href="/wishlist" className={styles.nav__link}>
+            <Link href="/wishlist" className={styles.nav__link} onClick={handleClick}>
               <span className={styles.nav_span}>Wishlist</span>
             </Link>
           </li>
@@ -81,7 +91,7 @@ const Menu = () => {
               <span className={styles.nav_span}>Shopping Cart</span>
             </Link>
           </li>
-          {session?.user?.role === 'admin' &&
+          {session?.user?.role === "admin" &&
             <li className={styles.nav__item}>
               <Link href="/administration" className={styles.nav__link}>
                 <span className={styles.nav_span}>Administration</span>

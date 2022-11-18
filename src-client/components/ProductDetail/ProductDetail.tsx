@@ -1,15 +1,16 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductDetail, cleanProductDetail } from "../../redux/slice/products-client/Product-detail";
 import { Iproduct, Ireducers } from "../../../lib/types";
 import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import styles from "../../styles/ProductDetail.module.css";
+import Link from "next/link";
 import Modal from "react-modal";
 import { BsFillTrashFill } from "react-icons/bs";
-import Link from "next/link";
-import {UserReview} from "./UserReview"
+import { UserReview } from "./UserReview";
+import styles from "../../styles/ProductDetail.module.css";
+
 
 const ProductDetail = () => {
   const { query } = useRouter();
@@ -86,7 +87,7 @@ const ProductDetail = () => {
 
   // Images switch
   const [activeImage, setActiveImage] = useState("");
-  const detail = product?.image?.[0] ? product?.image?.[0] : "https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif";
+  const detail = product?.image?.[0] ? product?.image?.[0] : "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
 
   const handleMouseOver = (url: string, index: number) => {
     setActiveImage(url);
@@ -97,8 +98,8 @@ const ProductDetail = () => {
 
 
   return (
-    <div>
-      {product && 
+    <div className={styles.detail}>
+      {product ? 
         <div className={styles.detail__container}>
  
           <div className={styles.detail__container__images}>
@@ -119,13 +120,13 @@ const ProductDetail = () => {
               })}
             </div>
 
-            <div className={styles.image_main__container}>
+            <div className={url2 === "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" ? styles.image_main__loader_container : styles.image_main__container}>
               <Image
                 src={url2}
                 width={500}
                 alt="Product main image"
                 height={500}
-                className={styles.image_main__img}
+                className={url2 === "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" ? styles.image_main__loader_img : styles.image_main__img}
               />
             </div>
           </div>
@@ -151,8 +152,12 @@ const ProductDetail = () => {
               Add to cart
             </button>
 
-            <UserReview id={product.id}/>
+            
           </div>
+        </div>
+      : 
+        <div>
+          <p className={styles.loader}>Loading...</p>
         </div>
       }
 
@@ -230,11 +235,15 @@ const ProductDetail = () => {
           </div>
 
           <Link href="/checkout" className={styles.modal__purchase_btn_container}>
-            <button className={styles.modal__start_purchase_btn}>Iniciar compra</button>
+            <button className={styles.modal__start_purchase_btn}>Checkout</button>
           </Link>
 
         </form>
       </Modal>
+
+      <div className={styles.reviews__container}>
+        <UserReview id={product.id} />
+      </div>
     </div>
   );
 };

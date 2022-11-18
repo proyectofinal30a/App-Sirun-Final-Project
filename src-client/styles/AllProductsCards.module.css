@@ -79,14 +79,71 @@
 }
 
 
+/* Pagination */
+
+
+.pagination__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+  padding-bottom: 3em;
+  font-family: var(--font-paragraph);
+}
+
+.pagination__item {
+  list-style: none;
+  box-shadow: 0 0 1px black;
+  width: 3em;
+  padding: .5em;
+  text-align: center;
+}
+
+.pagination__prev_next {
+  border: none;
+  background-color: transparent;
+  box-shadow: 0 0 1px black;
+  width: 3em;
+  padding: .5em;
+  text-align: center;
+}
+
+.pagination__prev_next_hidden {
+  visibility: hidden;
+}
+
+.pagination__link {
+  margin: 0 .3em;
+}
+
+.pagination__link:hover,
+.pagination__item:hover,
+.pagination__prev_next:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.pagination__active {
+  box-shadow: 0 0 1px black;
+  width: 3em;
+  padding: .5em;
+  text-align: center;
+  background-color: var(--color-light-blue);
+  color: white;
+}
+
+
 /* Shopping modal */
+
 
 .modal {
   width: 40%;
   margin: auto;
   margin-top: 7em;
   margin-bottom: 7em;
-  max-height: 79%;
+  max-height: 75%;
   overflow-y: auto;
   border: 2px solid rgb(211, 210, 210);
 }
@@ -237,6 +294,10 @@
 }
 
 @media (max-width: 780px) {
+  .general {
+    overflow-x: hidden;
+  }
+  
   .modal {
     margin-top: 11em;
     width: 80%;
@@ -273,62 +334,4 @@
   .modal__container {
     padding: 1.5em;
   }
-}
-
-/* End of modal css */
-
-
-/* Pagination */
-
-
-.pagination__container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin: 0;
-  padding: 0;
-  padding-bottom: 3em;
-  font-family: var(--font-paragraph);
-}
-
-.pagination__item {
-  list-style: none;
-  box-shadow: 0 0 1px black;
-  width: 3em;
-  padding: .5em;
-  text-align: center;
-}
-
-.pagination__prev_next {
-  border: none;
-  background-color: transparent;
-  box-shadow: 0 0 1px black;
-  width: 3em;
-  padding: .5em;
-  text-align: center;
-}
-
-.pagination__prev_next_hidden {
-  visibility: hidden;
-}
-
-.pagination__link {
-  margin: 0 .3em;
-}
-
-.pagination__link:hover,
-.pagination__item:hover,
-.pagination__prev_next:hover {
-  text-decoration: underline;
-  cursor: pointer;
-}
-
-.pagination__active {
-  box-shadow: 0 0 1px black;
-  width: 3em;
-  padding: .5em;
-  text-align: center;
-  background-color: var(--color-light-blue);
-  color: white;
 }

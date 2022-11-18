@@ -254,7 +254,7 @@ const AllProductsCards = () => {
                 </div>
 
                 <Link href="/checkout" className={styles.modal__purchase_btn_container}>
-                  <button className={styles.modal__start_purchase_btn}>Iniciar compra</button>
+                  <button className={styles.modal__start_purchase_btn}>Checkout</button>
                 </Link>
 
               </form>

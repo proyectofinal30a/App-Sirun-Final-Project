@@ -46,6 +46,9 @@ const nextConfig = {
       "media0.giphy.com",
       "s.gravatar.com",
       "hackernoon.com",
+      "acegif.com",
+      "thumbs.gfycat.com",
+      "media.tenor.com",
       "**"
     ],
     async redirects() {
