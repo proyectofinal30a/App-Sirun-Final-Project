@@ -95,7 +95,7 @@ const Menu = () => {
             </Link>
           </li>
           <li className={styles.nav__item}>
-            <Link href="/cart" className={styles.nav__link}>
+            <Link href="/checkout" className={styles.nav__link}>
               <span className={styles.nav_span}>Shopping Cart</span>
             </Link>
           </li>
