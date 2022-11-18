@@ -96,6 +96,7 @@ export const reducerCart = createSlice({
         },
         actionResetCart: (state: any, action) => {
             state.confirmed = action.payload
+            state.payLink = ''
         }
     }
 })

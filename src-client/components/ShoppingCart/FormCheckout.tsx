@@ -11,7 +11,7 @@ import { symlink } from "fs";
 // PARA DATOS DE ENTREGA
 
 const FormCheckout = (): JSX.Element => {
-  const dispatch = useDispatch();
+  const dispatch: Function = useDispatch();
 
   const productsInCart = useSelector((state: any) => state.reducerCart.products);
   const confirmedCart = useSelector((state: any) => state.reducerCart.confirmed);
@@ -27,7 +27,9 @@ const FormCheckout = (): JSX.Element => {
     streetNumber: "",
   };
 
-  useEffect(() => {}, [confirmedCart]);
+
+  useEffect(() => {
+  }, [confirmedCart]);
 
 
   const [inputUser, setInputUser] = useState(personInfo);
@@ -39,7 +41,7 @@ const FormCheckout = (): JSX.Element => {
     setErrors(validate({ ...inputUser, [name]: value }));
   };
 
-  
+
   // MODAL
   const [modalIsOpen, setIsOpen] = useState(false);
   function closeModal() {
@@ -49,6 +51,7 @@ const FormCheckout = (): JSX.Element => {
   const openCheckModal = (e: Event, person: any) => {
     e.preventDefault();
     setIsOpen(true);
+    dispatch(resetCart())
     const errorSave = validate(person);
 
     if (Object.values(errorSave).length !== 0) {
@@ -59,13 +62,13 @@ const FormCheckout = (): JSX.Element => {
   // Submitea cuando se cliquea el botón del modal (el form esta dentro del modal)
   async function handleSubmit(e: Event) {
     e.preventDefault();
-    console.log("estoy aca", confirmedCart, payLink);
+    //console.log("estoy aca", confirmedCart, payLink);
 
     const info = {
       products: productsInCart,
       infoBuyer: inputUser,
     };
-    console.log(info);
+    //console.log(info);
 
     dispatch(sendOrderDetail(info));
   }
@@ -214,6 +217,7 @@ const FormCheckout = (): JSX.Element => {
 
 
         <Modal
+          ariaHideApp={false}
           isOpen={modalIsOpen}
           onRequestClose={closeModal}
           className={styles.modal}
@@ -223,7 +227,7 @@ const FormCheckout = (): JSX.Element => {
             <div className={styles.modal__btn_right_container}>
               <button className={styles.modal__close_modal_btn} onClick={closeModal}>x</button>
             </div>
-            
+
             <h2>Confirm your information</h2>
 
             <div className={styles.modal__client_container}>
@@ -240,7 +244,7 @@ const FormCheckout = (): JSX.Element => {
                 </p>
                 <p>{inputUser.phone}</p>
               </div>
-      
+
               <p>
                 <span className={styles.client_info_span}>Zip code: </span>{inputUser.zipCode}
               </p>
@@ -252,21 +256,21 @@ const FormCheckout = (): JSX.Element => {
               </div>
             </div>
 
-            {!confirmedCart && !payLink && 
+            {!confirmedCart && !payLink &&
               <div className={styles.modal__confirm_btn_container}>
-                <button 
-                type="submit"
-                onClick={(e: any) => handleSubmit(e)} 
-                className={styles.modal__confirm_btn}
+                <button
+                  type="submit"
+                  onClick={(e: any) => handleSubmit(e)}
+                  className={styles.modal__confirm_btn}
                 >
                   Confirm information
                 </button>
               </div>
             }
-            
+
             {confirmedCart && payLink && (
               <div className={styles.modal__pay_btn_container}>
-                <button 
+                <button
                   className={styles.modal__pay_btn}
                   onClick={() => resetCart()}
                 >
@@ -303,7 +307,7 @@ const FormCheckout = (): JSX.Element => {
                 </div>
 
                 <h2 className={styles.item__subtotal}>
-                  Subtotal: <br/> ${elem.subTotal}
+                  Subtotal: <br /> ${elem.subTotal}
                 </h2>
               </div>
             );
@@ -312,7 +316,7 @@ const FormCheckout = (): JSX.Element => {
 
         <div className={styles.total__container}>
           <div className={styles.__shipping_line}>
-            <p className={styles.__shipping}>Shipping </p>  
+            <p className={styles.__shipping}>Shipping </p>
             <p className={styles.__shipping}>$...</p>
           </div>
           <div className={styles.__total_line}>
