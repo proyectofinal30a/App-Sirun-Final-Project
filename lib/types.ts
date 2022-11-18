@@ -34,7 +34,7 @@ export interface IproductsByName {
 export interface Ireducers {
     reducerProduct?: null
     reducerProducts: IallProducts
-    reducerUser?: null
+    reducerUser?: Iuser
     reducerProductDetail: IDetail
     reducerProductsByName: IproductsByName
     reducerCart: any
@@ -62,6 +62,37 @@ declare module "next-auth" {
     }
 }
 
+
+
+
+
+
+
+interface IIdProductFavo {
+    id: string
+    name: string
+    image: string
+}
+
+type userData = {
+    id?: number
+    name?: string
+    email?: string
+    image?: string
+    favorites?: any
+    direcciones?: any
+    orders?: any
+    evaluations?: any
+
+}
+
+interface IPayload {
+    payload: userData
+}
+
+export interface Iuser {
+    user: userData
+}
 // declare module "next" {
 //     interface NextApiRequest {
 //         query: Partial<{ [key: string]: string | string[] }>

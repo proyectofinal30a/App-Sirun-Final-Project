@@ -14,7 +14,7 @@ import reducerCart from "./slice/cart-redux/cart";
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ["reducerCart", "reducerProducts", "reducerUser"]
+  whitelist: []
 }
 
 const myReducers = combineReducers({

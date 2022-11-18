@@ -9,8 +9,8 @@ POST http://localhost:3000/api/userScope/post/productAddFav
 Content-Type: application/json
 
 {
-    "idUser":"7be88830-6282-4c1a-aebc-1353eefdf3be", 
-    "idProduct":"8bcca193-7380-4c68-bdd2-9ea5eafcf6a6" 
+    "idUser":"0b0d02da-b19d-4f01-8bda-76e937567848", 
+    "idProduct":"3e48e408-ebfb-495a-935b-2340a30d592b" 
 }
 ###
 
@@ -19,9 +19,9 @@ POST http://localhost:3000/api/userScope/post/reviewRating
 Content-Type: application/json
 
 {
-    "idUser":"f4690285-1572-447c-b9ad-de26c3672e3b", 
-    "idProduct":"2539ccfe-60ef-4ba3-b22c-cd3d32139dad",
-    "review":"ESTA MALISIMA",
+    "idUser":"0b0d02da-b19d-4f01-8bda-76e937567848", 
+    "idProduct":"81127eca-c975-4438-a822-09da3b5ae018",
+    "review":"ESTA MALL!!!!",
     "rating":1
 }
 ###
@@ -32,24 +32,26 @@ POST http://localhost:3000/
 POST http://localhost:3000/api/reviews/2539ccfe-60ef-4ba3-b22c-cd3d32139dad
 
 ###
+POST http://localhost:3000/api/userScope/post/order
 Content-Type: application/json
 
 {
-    "idUser":"c7617145-1376-4ef9-8cf0-74ba99f7fbc6", 
+    "idUser":"0b0d02da-b19d-4f01-8bda-76e937567848", 
     "idArrayProduct":[{
-            "id":"05d97afa-bc17-4838-8ae5-d27d46e18530"
+            "id":"106f1130-f58d-4603-b2d8-eb26cb70726a"
             },        {
-            "id":"0cd6c821-334e-4202-80e1-ea46eab13fb0"
+            "id":"81127eca-c975-4438-a822-09da3b5ae018"
             },        {
-            "id":"14c4096a-4f19-4481-985e-dbc705f8fb01"
+            "id":"9f253753-0478-479d-b2c4-a0a2ce1538ba"
             },{
-            "id":"2bfa1911-0769-4136-b6c3-efa94c2eac0a"
+            "id":"9f253753-0478-479d-b2c4-a0a2ce1538ba"
             },{
-            "id":"37106465-a3ad-4dbf-9796-1e3ce9eb3015"
+            "id":"70753a12-8c2d-4047-872c-1b17106739b9"
             }],
     "description":"VaMOSSSSSSS",
     "status":"pending",
-    "delivery_time":"4 dias aprox" 
+    "delivery_time":"4 dias aprox",
+    "total":100
 }
 ###
 
@@ -64,4 +66,12 @@ DELETE  http://localhost:3000/api/userScope/delete/54a717a4-53fb-4833-b64b-ff568
 
 ###
 
+###
+POST http://localhost:3000/api/userScope/post/addDirection
+Content-Type: application/json
+
+{
+    "idUser":"0b0d02da-b19d-4f01-8bda-76e937567848", 
+    "dir":"Mendoza clo 123 - mendoza Argentina"
+}
 ###

@@ -1,33 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-
-
-interface IIdProductFavo {
-    id: string
-    name: string
-    image: string
-}
-
-type userData = {
-    id?: number
-    name?: string
-    email?: string
-    image?: string
-    favorites?: IIdProductFavo[]
-    direcciones?: []
-    orders?: []
-    evaluations?: []
-
-}
-
-interface IPayload {
-    payload: userData
-}
-
-interface Iuser {
-    user: userData
-}
-
+import { Iuser } from "../../../../lib/types";
 const template: Iuser = {
     user: {}
 }
@@ -36,19 +9,24 @@ export const reducerUser = createSlice({
     name: 'reducerUser',
     initialState: template,
     reducers: {
-        getProducts: (state: Iuser, action: any) => { return state.user = action.payload }
+        getProducts: (state: Iuser, action: any) => {
+
+            state.user = action.payload
+            return
+        }
     }
 })
 
 
-export const getProducts = (email: string) => async (dispatch: Function) => {
-
+export const getUserDetail = (email: any) => async (dispatch: Function) => {
     const { data }: any = await axios({
         method: 'get',
-        url: `/api/get/${email}`,
+        url: `/api/userScope/get/${email}`,
     });
 
     console.log(data);
+
+    const myImage = { ...data, image: pars }
 
 
     dispatch(reducerUser.actions.getProducts(data));
