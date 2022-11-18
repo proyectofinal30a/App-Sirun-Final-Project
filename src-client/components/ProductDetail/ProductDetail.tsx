@@ -18,9 +18,7 @@ const ProductDetail = () => {
 
   const dispatch: Function = useDispatch();
   const product: any = useSelector<Ireducers>((state) => state.reducerProductDetail.productDetail);
-  const cart: any = useSelector<Ireducers>(
-    (state) => state.reducerCart.products
-  );
+  const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
 
   useEffect(() => {
     dispatch(getProductDetail(id));
@@ -180,7 +178,7 @@ const ProductDetail = () => {
             return (
               <div key={index} className={styles.modal__product_container}>
                 <p className={styles.modal__product_name}>
-                  {elem.product.name}
+                  {elem.product.name.toLowerCase()}
                 </p>
 
                 <div className={styles.modal_info_container}>

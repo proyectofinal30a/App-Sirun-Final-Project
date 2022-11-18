@@ -1,5 +1,6 @@
 .about__container {
   min-height: 100vh;
+  padding-top: 8em;
 }
 
 .about__title {
