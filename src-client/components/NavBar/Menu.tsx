@@ -14,7 +14,7 @@ const Menu = () => {
     setIsActive((current) => !current);
   };
 
-  const { data: session, status }: any = useSession<boolean>();
+  const { data: session, status } = useSession<boolean>();
 
   const signOrNoSing: any = session ? (
     <button
@@ -29,7 +29,9 @@ const Menu = () => {
     </button>
   );
 
-  const handleClick = () => signIn("auth0");
+  const handleClick = () => {
+    if (status === "unauthenticated") signIn("auth0");
+  }
 
   return (
     <>
