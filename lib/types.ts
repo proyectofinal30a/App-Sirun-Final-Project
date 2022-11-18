@@ -1,5 +1,8 @@
 import { TypeDiet, CategoryPro } from '@prisma/client'
 
+export interface Iimage {
+    image: string[]
+}
 
 export interface Iproduct {
     id?: string;
@@ -9,7 +12,7 @@ export interface Iproduct {
     available: boolean;
     type: TypeDiet;
     category: CategoryPro;
-    image: any;
+    image?: Iimage[];
     description: string;
 }
 
@@ -27,14 +30,14 @@ export interface IDetail {
 
 
 export interface IproductsByName {
-    products: Iproduct[] | []
+    products: Iproduct[]
 }
 
 
 export interface Ireducers {
     reducerProduct?: null
     reducerProducts: IallProducts
-    reducerUser?: null
+    reducerUser?: Iuser
     reducerProductDetail: IDetail
     reducerProductsByName: IproductsByName
     reducerCart: any
@@ -62,6 +65,37 @@ declare module "next-auth" {
     }
 }
 
+
+
+
+
+
+
+interface IIdProductFavo {
+    id: string
+    name: string
+    image: string
+}
+
+type userData = {
+    id?: number
+    name?: string
+    email?: string
+    image?: string
+    favorites?: any
+    direcciones?: any
+    orders?: any
+    evaluations?: any
+
+}
+
+interface IPayload {
+    payload: userData
+}
+
+export interface Iuser {
+    user: userData
+}
 // declare module "next" {
 //     interface NextApiRequest {
 //         query: Partial<{ [key: string]: string | string[] }>
