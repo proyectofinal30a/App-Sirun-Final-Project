@@ -1,13 +1,12 @@
 
 import { StatusType } from "@prisma/client";
-
-import { AnyAction, createSlice } from "@reduxjs/toolkit";
-
 import axios from "axios"
 import userVerification from '../../../controllers/userVerification-controller'
 
 import { Iproduct } from "../../../../lib/types";
-import { createPayment } from "../../../components/mercadopago/controllerMP";
+
+import { AnyAction, createSlice } from "@reduxjs/toolkit";
+import { createPayment } from "../../../controllers/controllerMP";
 
 
 
@@ -128,6 +127,7 @@ export const sendOrderDetail = (infoProductsAndBuyer: any): any=> async (dispatc
         return dispatch(reducerCart.actions.actionConfirmedCart(false))
     }
 }
+
 export const resetCart = () => (dispatch:Function) => {
     return dispatch(reducerCart.actions.actionResetCart(false))
 }

@@ -68,7 +68,7 @@ model Direccion {
 
 model Evaluation {
   id         String  @id @unique @default(uuid())
-  id_product String  @unique
+  id_product String
   id_user    String  @unique
   review     String
   rating     Int
