@@ -84,10 +84,10 @@ export const getReviews = () => async (dispatch: Function) => {
   export const addReview = async (objectReview : any) => {
     console.log(objectReview);
     try {
-        const myToken: any = await userVerification("client");
+        const myToken: any = userVerification("client");
          const reviewData= await axios({
             method: "post",
-            url: "/api/userScope/post/reviewRaiting",
+            url: "/api/userScope/post/reviewRating",
             data: objectReview,
             headers: {
             Authorization: myToken,

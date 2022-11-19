@@ -52,7 +52,7 @@
 }
 
 .rating__star{
-  color: var(--color-light-pink);
+  color: var(--color-dark-pink);
   cursor: pointer;
   size: 12;
   margin-right: .2em;
