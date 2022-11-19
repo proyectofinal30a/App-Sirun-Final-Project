@@ -1,25 +1,32 @@
 import styles from "../../styles/Account.module.css";
 import Image from 'next/image'
-import { useSession } from "next-auth/react";
-export default function Profile() {
-    const { data } = useSession()
+import { useSelector } from "react-redux";
+import { Ireducers } from "../../../lib/types";
+export default function Profile(): JSX.Element {
 
-    if (data) {
-        const { name, email, image } = data.user
-        return (
-            <div className={styles.account__container}>
-                <div>
-                    <h1>{name}</h1>
-                    <h3>{email}</h3>
-                    <Image
-                        src={image}
-                        width='100'
-                        height='100'
-                        alt={name}
-                    />
-                </div>
+    const myProfide = useSelector((state: Ireducers) => state.reducerUser.user)
+    if (!myProfide) return <div>Loading</div>
+    const { name, email, image, direcciones } = myProfide
+
+    const myAdress = direcciones?.map((ele) => (
+        <div>
+            {ele.dir}
+        </div>
+    ))
+    return (
+        <div className={styles.account__container}>
+            <div>
+                <h1>{name}</h1>
+                <h3>{email}</h3>
+                <Image
+                    src={image}
+                    width='100'
+                    height='100'
+                    alt={name}
+                />
+                {myAdress}
             </div>
-        );
-    }
-    return <div>NO ESTAS LOOGEADO</div>
-};
+        </div>
+    );
+}
+

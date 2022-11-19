@@ -1,28 +1,35 @@
 import styles from "../../styles/Account.module.css";
-import Image from 'next/image'
 import { useSelector } from "react-redux";
 import { Ireducers } from "../../../lib/types";
-export default function ProductFavorite() {
+import Link from "next/link";
+import Image from "next/image";
+export default function FavoriteProduct(): JSX.Element {
 
-    const myProductFav = useSelector((state: Ireducers) => state.reducerUser?.user?.favorites)
-
-    console.log(myProductFav, '================');
-
-
+    const myProfide = useSelector((state: Ireducers) => state.reducerUser.user)
+    if (!myProfide) return <div>Loading</div>
+    const { favorites } = myProfide
+    const myFavotite = favorites.map((elem) => {
+        const myImage: string = typeof elem?.image?.[0].image === "string" ?
+            elem.image[0].image : 'loading'
+        return (
+            <div>
+                <Link href={`/productDetail/${elem.id}`}>details</Link>
+                <h3>{elem.name}</h3>
+                <Image
+                    src={myImage}
+                    width='100'
+                    height='100'
+                    alt={elem.name}
+                />
+            </div>
+        )
+    })
 
     return (
         <div className={styles.account__container}>
             <div>
-                <h1>hols</h1>
-                <h3>la</h3>
-                {/* <Image
-                        src={image}
-                        width='100'
-                        height='100'
-                        alt={name}
-                    /> */}
+                {myFavotite}
             </div>
         </div>
     );
-
-};
+}
