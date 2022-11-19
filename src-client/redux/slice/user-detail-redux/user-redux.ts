@@ -21,7 +21,7 @@ export const reducerUser = createSlice({
 export const getUserDetail = (email: any) => async (dispatch: Function) => {
     const { data }: any = await axios({
         method: 'get',
-        url: `/api/userScope/get/${email}`,
+        url: `/api/userScope/get/userAll/${email}`,
     });
 
 

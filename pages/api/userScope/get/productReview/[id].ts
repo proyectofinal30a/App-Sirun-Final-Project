@@ -15,11 +15,7 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                             user : {
                                 select:{
                                     name: true,
-                                    image: {
-                                        select:{
-                                            image:true,
-                                        }
-                                    }
+                                    image: true,
                                 }
                             },
                             review : true,
