@@ -151,9 +151,8 @@ const signOrAddReview: any =
      { listOfReviews?.evaluation && listOfReviews.evaluation?.map((elem : any, index : number) => {
         return (
           <div key ={index}>
-            <div className={styles.avatar__img_container}>
-              <Image src={elem.user.image} alt="" width={200} height={200}/>
-            </div>
+              <Image src={elem.user.image} className={styles.avatar__img_container} alt="" width={200} height={200}/>
+  
             <div className={styles.review__info}>
               <p>{elem.user.name}</p>
               <p>{elem.review}</p>

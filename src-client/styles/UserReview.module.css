@@ -101,7 +101,15 @@
   cursor: pointer;
 }
 
+.avatar__img_container{
+  border-radius: 3em;
+}
 
+
+.review__info{
+  display: flex;
+  flex-direction: row;
+}
 
 /* Responsive layout */
 
