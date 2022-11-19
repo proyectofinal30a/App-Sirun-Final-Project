@@ -2,7 +2,15 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { Iuser } from "../../../../lib/types";
 const template: Iuser = {
-    user: {}
+    user: {
+        name: '',
+        image: '',
+        email: '',
+        evaluations: [],
+        orders: [],
+        favorites: [],
+        direcciones: [],
+    }
 }
 
 export const reducerUser = createSlice({
@@ -24,6 +32,7 @@ export const getUserDetail = (email: any) => async (dispatch: Function) => {
         url: `/api/userScope/get/userAll/${email}`,
     });
 
+    console.log(data);
 
     dispatch(reducerUser.actions.getProducts(data));
 }

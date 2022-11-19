@@ -3,7 +3,7 @@
 
 ###AGREGAR TODO AUTOMATICAMENTE
 
-GET http://localhost:3000/api/test/sembradodeUser
+GET http://localhost:3000/api/test/ezequiel.ignacio.sosa@gmail.com
 
 ###
 
