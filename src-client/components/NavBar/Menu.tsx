@@ -90,7 +90,7 @@ const Menu = () => {
           </li>
           <li className={styles.nav__item}>
             <Link
-              href="/wishlist"
+              href="/user/wishlist"
               className={styles.nav__link}
               onClick={handleClick}
             >
