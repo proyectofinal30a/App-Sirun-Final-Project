@@ -4,34 +4,33 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaUserTimes, FaUserCheck, FaStar } from "react-icons/fa";
-import {getReviews, addReview, IReview} from '../../redux/slice/user-review/user-review'
+import {getAllReviews, addReview, IReview} from '../../redux/slice/user-review/user-review'
 import styles from "../../styles/UserReview.module.css";
-
+import Image from "next/image"
 
 export const UserReview = () => {
-    const { query } = useRouter();
-    const producId = query.id;
     
-    const { data, status }: any = useSession<boolean>();
-    console.log(data, status);
-
-
     const myReview : any  = {
       description : "",
       rating : 0,
-      }
+    }
 
+    const { query } = useRouter();
+    const productId : any = query.id;    
+    const { data, status }: any = useSession<boolean>();
     const [review, setReview] = useState<IReview>(myReview);
-    // const [currentValue, setCurrentValue] = useState(0)
     const [hoverValue, setHoverValue] = useState(null)
-    
-    console.log(review);
-    
-    // const listOfReviews : any = useSelector((state : any) => state.reducerUserReview.allreviews)
-    // console.log(listOfReviews);
+    const listOfReviews : any = useSelector((state : any) => state.reducerUserReview.allReviews)
+    console.log(listOfReviews)
+console.log(Array.isArray(listOfReviews));
+
+
     const dispatch: Function = useDispatch();
     const stars = [1, 2, 3, 4, 5]
 
+    useEffect(()=>{
+      dispatch(getAllReviews(productId))
+    },[dispatch, productId])
 
 
     
@@ -46,27 +45,26 @@ export const UserReview = () => {
     }
 
 
-const handleOnChangeText = (e: any) => {
-  const {value, name} = e.target
-  setReview({...review, [name] : value})
-}
-
-
-const handleOnSubmit = async(e: any) => {
-    e.preventDefault()
-    const userId = data?.user.email;
-
-    const allData = {
-      idUser : userId,
-      idProduct : producId,
-      review: review.description,
-      rating : review.rating,
+    const handleOnChangeText = (e: any) => {
+       const {value, name} = e.target
+      setReview({...review, [name] : value})
     }
 
-    console.log(allData);
-    await addReview(allData)
-    setReview(myReview)
-};
+
+    const handleOnSubmit = async(e: any) => {
+        e.preventDefault()
+        const userId = data?.user.email;
+
+        const allData = {
+          idUser : userId,
+          idProduct : productId,
+          review: review.description,
+          rating : review.rating,
+        }
+       await addReview(allData)
+       dispatch(getAllReviews(productId))
+      setReview(myReview)
+    };
 
 const signOrAddReview: any =
     status === "unauthenticated" ? (
@@ -115,7 +113,7 @@ const signOrAddReview: any =
             return(
               <>
                 <input 
-                 key ={star}
+                  key ={index}
                   type="radio" 
                   name="rating" 
                   value={ratingValue} 
@@ -134,8 +132,6 @@ const signOrAddReview: any =
           })
         }
     
-         
-
           </div>
         </div>
       <div className={styles.review__container_text}>
@@ -151,17 +147,23 @@ const signOrAddReview: any =
         </div>    
         {signOrAddReview}
    
-
-      {/* ZONA PARA RENDERIZAR CADA REVIEW */}
-      {/* { listOfReviews && (listOfReviews.map((elem : any) => {
+    
+     { listOfReviews?.evaluation && listOfReviews.evaluation?.map((elem : any, index : number) => {
         return (
-          <div key ={elem.id}>
-          <p>{elem.review}</p>
-          <p>{elem.raiting}</p>
-          </div>
+          <div key ={index}>
+            <div className={styles.avatar__img_container}>
+              <Image src={elem.user.image} alt="" width={200} height={200}/>
+            </div>
+            <div className={styles.review__info}>
+              <p>{elem.user.name}</p>
+              <p>{elem.review}</p>
+            </div>
+              <p>Rating: {elem.rating}</p>
+            </div>
+        )})}
 
-        )
-      }) : (<p>No reviews for this product </p>)} */}
+      
+    
 
     </div>
   );

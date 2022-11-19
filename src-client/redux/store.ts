@@ -9,6 +9,7 @@ import reducerProductDetail from "./slice/products-client/Product-detail";
 import reducerFilters from "./slice/filter-product-client/filters-redux";
 import reducerProductsByName from "./slice/products-client/ProductByName-redux";
 import reducerCart from "./slice/cart-redux/cart";
+import reducerUserReview from "../redux/slice/user-review/user-review"
 
 
 const persistConfig = {
@@ -25,6 +26,7 @@ const myReducers = combineReducers({
   reducerProductsByName,
   reducerCart,
   reducerFilters,
+  reducerUserReview,
 })
 
 
