@@ -62,8 +62,6 @@ export const addToFavorites = async (idUser: string, idProduct: string) => {
       headers: { Authorization: myToken },
     });
     
-    // console.log({ userId: idUser, productId: idProduct });
-    console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -80,8 +78,6 @@ export const removeFromFavorites = async (idUser: string, idProduct: string) => 
       headers: { Authorization: myToken },
     });
 
-    // console.log({ userId: idUser, productId: idProduct });
-    console.log(data);
   } catch (error) {
     console.log(error);
   }

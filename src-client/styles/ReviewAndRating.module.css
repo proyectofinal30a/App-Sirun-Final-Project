@@ -1,0 +1,135 @@
+.reviews__container {
+  padding-top: 8em;
+  font-family: var(--font-paragraph);
+  width: 90%;
+  margin-bottom: 6em;
+}
+
+.reviews__title {
+  font-size: 2em;
+  color: var(--color-dark-blue);
+  margin-bottom: 0.5em;
+}
+
+.reviews__review_container {
+  background-color: rgb(248, 246, 246);
+  padding: 1.5em 1em 1em 1em;
+  margin-bottom: 1em;
+  border-radius: 0.5em;
+  display: flex;
+  align-items: center;
+}
+
+.reviews__img_container {
+  width: 12em !important;
+  height: 12em !important;
+  margin-right: 1em;
+}
+
+.reviews__img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.reviews__info_container {
+  margin-bottom: 1em;
+  width: 90%;
+}
+
+.reviews__info {
+  margin-bottom: 1em;
+}
+
+.reviews__name {
+  font-weight: bold;
+  font-size: 1.2em;
+  text-transform: capitalize;
+  margin-bottom: 0.5em;
+}
+
+.reviews__details {
+  text-decoration: underline;
+  color: var(--color-dark-blue);
+}
+
+.reviews__details:hover {
+  cursor: pointer;
+}
+
+.reviews__review_message_container {
+  display: flex;
+}
+
+.reviews__review_message {
+  text-transform: lowercase;
+  padding-right: 1em;
+  margin-bottom: .5em;
+}
+
+.reviews__span {
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.reviews__rating_container {
+  display: flex;
+}
+
+.reviews__rating_value_container {
+  display: flex;
+}
+
+.reviews__rating {
+  margin-left: 0.5em;
+  margin-right: 0.1em;
+}
+
+.reviews_rating_star_icon {
+  padding-top: 0.15em;
+}
+
+/* Loader */
+
+.loading {
+  height: 100vh;
+  margin: auto;
+  padding-top: 10em;
+  font-family: var(--font-paragraph);
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--color-dark-blue);
+}
+
+/* Responsive layout */
+
+@media (max-width: 1540px) {
+  .reviews__container {
+    padding-top: 10em;
+  }
+}
+
+@media (max-width: 1175px) {
+  .reviews__container {
+    padding-top: 9em;
+  }
+}
+
+@media (max-width: 880px) {
+  .reviews__container {
+    padding-top: 2em;
+  }
+}
+
+@media (max-width: 780px) {
+  .reviews__container {
+    padding-top: 4em;
+  }
+}
+
+@media (max-width: 660px) {
+  .reviews__container {
+    padding-top: 2em;
+    font-size: .9em;
+  }
+}

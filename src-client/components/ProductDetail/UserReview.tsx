@@ -21,8 +21,8 @@ export const UserReview = () => {
     const [review, setReview] = useState<IReview>(myReview);
     const [hoverValue, setHoverValue] = useState(null)
     const listOfReviews : any = useSelector((state : any) => state.reducerUserReview.allReviews)
-    console.log(listOfReviews)
-console.log(Array.isArray(listOfReviews));
+    // console.log(listOfReviews)
+// console.log(Array.isArray(listOfReviews));
 
 
     const dispatch: Function = useDispatch();
@@ -40,7 +40,7 @@ console.log(Array.isArray(listOfReviews));
     
     
     const handleOnClick = (value: number) =>{ 
-      console.log(value);
+      // console.log(value);
       setReview({... review, rating : value})
     }
 

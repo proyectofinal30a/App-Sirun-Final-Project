@@ -1,0 +1,146 @@
+.order__container {
+  min-height: 100vh;
+  padding-top: 7em;
+  font-family: var(--font-paragraph);
+  width: 80%;
+}
+
+.order__info_container {
+  background-color: rgb(248, 246, 246);
+  padding: 1.5em 1em 1em 1em;
+  margin-bottom: 2em;
+  border-radius: 0.5em;
+}
+
+.order__title {
+  font-size: 2em;
+  color: var(--color-dark-blue);
+  margin-bottom: 0.5em;
+}
+
+.order__description {
+  text-transform: capitalize;
+  font-size: 1.2em;
+  margin-bottom: 1em;
+}
+
+.order__status {
+  text-transform: capitalize;
+}
+
+.order__span {
+  font-weight: bold;
+}
+
+.order__total {
+  margin-bottom: 1em;
+}
+
+.order__product_center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.order__product_container {
+  display: flex;
+  box-shadow: 0 0 1px grey;
+  margin: 0.5em 0;
+  width: 50%;
+}
+
+.order__img_container {
+  margin-right: 1em;
+  width: 6em;
+  height: 6em;
+}
+
+.order__img {
+  width: 6em;
+  height: 6em;
+  object-fit: cover;
+}
+
+.order__product_name {
+  padding: 0.5em 0;
+  padding-right: 0.5em;
+  text-transform: capitalize;
+}
+
+.order__product_details {
+  text-decoration: underline;
+  color: var(--color-dark-blue);
+}
+
+.order__product_details:hover {
+  cursor: pointer;
+}
+
+.order__product_info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Loader */
+
+.order__loading {
+  height: 100vh;
+  margin: auto;
+  padding-top: 10em;
+  font-family: var(--font-paragraph);
+  font-size: 1.5em;
+  font-weight: bold;
+  color: var(--color-dark-blue);
+}
+
+/* Responsive layout */
+
+@media (max-width: 1540px) {
+  .order__container {
+    padding-top: 10em;
+  }
+  .order__product_container {
+    width: 60%;
+  }
+}
+
+@media (max-width: 1350px) {
+  .order__product_container {
+    width: 70%;
+  }
+}
+
+@media (max-width: 1200px) {
+  .order__product_container {
+    width: 80%;
+  }
+}
+
+@media (max-width: 1100px) {
+  .order__product_container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 880px) {
+  .order__container {
+    padding-top: 2em;
+  }
+}
+
+@media (max-width: 780px) {
+  .order__container {
+    padding-top: 4em;
+  }
+}
+
+@media (max-width: 600px) {
+  .order__container {
+    font-size: 0.9em;
+    padding-top: 2em;
+  }
+
+  .order__product_container {
+    width: 100%;
+  }
+}
