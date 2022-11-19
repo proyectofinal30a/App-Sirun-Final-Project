@@ -3,8 +3,10 @@ import Nav from "../../src-client/components/NavBar/Nav";
 import Footer from "../../src-client/components/Footer/Footer";
 import styles from "../../src-client/styles/AdminSideBar.module.css";
 import UserSideBar from "../../src-client/components/User/UserSideBar";
-import ProductFavorite from "../../src-client/components/User/ProductFav";
-export default function AdminProfilePage() {
+import Wishlist from "../../src-client/components/User/Wishlist";
+
+
+export default function WishlistPage() {
   return (
     <div>
       <HEAD />
@@ -15,7 +17,7 @@ export default function AdminProfilePage() {
           <UserSideBar />
         </div>
         <div className={styles.general__container_second_col}>
-          < ProductFavorite />
+          <Wishlist />
         </div>
       </main>
 
