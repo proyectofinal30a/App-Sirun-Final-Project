@@ -24,6 +24,7 @@ const updateProduct: Function = async (req: NextApiRequest, res: NextApiResponse
                 description: description,
             }
         })
+        prisma.$disconnect()
         res.status(200).json(product)
     } catch (error) {
         res.status(404).json({ msg: `Error al actualizar el producto con id: ${id}` })
