@@ -1,4 +1,4 @@
-import { TypeDiet, CategoryPro } from '@prisma/client'
+import { TypeDiet, CategoryPro, StatusType } from '@prisma/client'
 
 export interface Iimage {
     image: string[]
@@ -88,12 +88,13 @@ interface IproductOrde {
 
 
 interface Iorder {
+    id: number
     total: number
     description: string
     delivery_time: string
     date: string
-    products: IobjProduct[]
-
+    product: IobjProduct[]
+    status: StatusType
 }
 
 
