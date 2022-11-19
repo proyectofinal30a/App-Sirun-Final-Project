@@ -64,7 +64,6 @@ export const addToFavorites = async (idUser: string, idProduct: string) => {
 
     console.log(data)
 
-    // dispatch(reducerUser.actions.addToFavorites(data));
   } catch (error) {
     console.log(error);
   }
@@ -83,7 +82,6 @@ export const removeFromFavorites = async (idUser: string, idProduct: string) => 
     });
 
     console.log(data) 
-    // dispatch(reducerUser.actions.removeFromFavorites(data));
   } catch (error) {
     console.log(error);
   }

@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
 import { removeFromFavorites } from "../../redux/slice/user-detail-redux/user-redux";
+import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { Ireducers } from "../../../lib/types";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
@@ -11,9 +12,14 @@ import styles from "../../styles/Wishlist.module.css";
 
 
 export default function Wishlist(): JSX.Element {
-  const dispatch = useDispatch();
+  const dispatch: Function = useDispatch();
 
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+
+  useEffect(() => {
+    if (myProfile) dispatch(getUserDetail(myProfile.email));
+  }, [dispatch, myProfile])
+
 
   if (!myProfile) return (<div className={styles.wishlist__loading}>Loading...</div>);
 
@@ -25,6 +31,7 @@ export default function Wishlist(): JSX.Element {
       // console.log({ userId: userId, productId: productId });
 
       removeFromFavorites(userId, productId);
+
     }
   }
 
