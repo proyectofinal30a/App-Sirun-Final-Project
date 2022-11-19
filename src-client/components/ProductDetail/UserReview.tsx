@@ -150,14 +150,28 @@ const signOrAddReview: any =
     
      { listOfReviews?.evaluation && listOfReviews.evaluation?.map((elem : any, index : number) => {
         return (
-          <div key ={index}>
-              <Image src={elem.user.image} className={styles.avatar__img_container} alt="" width={200} height={200}/>
+          <div key ={index} className={styles.listReviews__container}>
+              <Image src={elem.user.image} className={styles.listReviews__avatar} alt="" width={200} height={200}/>
   
-            <div className={styles.review__info}>
-              <p>{elem.user.name}</p>
+            <div className={styles.listReview__info}>
+              <p>{elem.user.name.toUpperCase()}</p>
               <p>{elem.review}</p>
             </div>
-              <p>Rating: {elem.rating}</p>
+            
+            <div className={styles.listReviews__rating_container}>
+            {stars.map((star : number, index : number)=>{
+            const ratingValue = index + 1
+            return(
+              <>
+                <FaStar
+                />
+
+            </>
+            )
+          })
+        }
+        </div>
+
             </div>
         )})}
 

@@ -101,14 +101,38 @@
   cursor: pointer;
 }
 
-.avatar__img_container{
-  border-radius: 3em;
+.listReviews__container{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: fit-content;
+  margin-top: 2em;
+  padding: 1em ;
+  border-radius: 0.2em;
+  background-color: rgb(249, 245, 245);
 }
 
+.listReviews__avatar{
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: center;
+  width: 3em;
+  height: 3em;
+}
+
+.listReview__info{
+  margin-left: 1em;
+  width: 70%;
+  word-wrap: break-word;
+}
 
 .review__info{
   display: flex;
   flex-direction: row;
+}
+
+.listReviews__rating_container{
+  margin-left: auto;
 }
 
 /* Responsive layout */
