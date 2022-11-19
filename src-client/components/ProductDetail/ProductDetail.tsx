@@ -8,6 +8,10 @@ import Image from "next/image";
 import Link from "next/link";
 import Modal from "react-modal";
 import { BsFillTrashFill } from "react-icons/bs";
+import { FaHeart } from "react-icons/fa";
+import { FiHeart } from "react-icons/fi";
+import { IconContext } from "react-icons";
+import { removeFromFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
 import { UserReview } from "./UserReview";
 import styles from "../../styles/ProductDetail.module.css";
 
@@ -95,6 +99,19 @@ const ProductDetail = () => {
   const url2 = activeImage ? activeImage : detail;
 
 
+  // FAVORITE 
+  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+
+  const [isFavorited, setIsFavorited] = useState(false);
+  
+  const handleFavorite = (id: any) => {
+    const userId = myProfile.id;
+    const productId = id;
+    setIsFavorited(current => !current);
+    if (isFavorited) removeFromFavorites(userId, productId);
+    addToFavorites(userId, productId);
+  }
+
 
   return (
     <div className={styles.detail}>
@@ -151,6 +168,14 @@ const ProductDetail = () => {
             >
               Add to cart
             </button>
+
+            <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product.id)}>
+              <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
+                <p className={styles.wishlist_fav_btn}>
+                 {isFavorited ? <FaHeart /> : <FiHeart />}
+                </p>
+              </IconContext.Provider>
+            </div>
 
           </div>
         </div>

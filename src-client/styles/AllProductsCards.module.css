@@ -25,6 +25,21 @@
   border-radius: 0.3em;
 }
 
+/* Fav button */
+
+.wishlist_fav_btn_container {
+  display: flex;
+  align-self: flex-end;
+  margin-right: 2.2em;
+  padding-top: 1em;
+}
+
+.wishlist_fav_btn_container:hover {
+  cursor: pointer;
+}
+
+/* .wishlist_fav_btn {} */
+
 .product_card__title_and_img_container {
   display: flex;
   flex-direction: column;
@@ -38,7 +53,6 @@
 }
 
 .product_card__title {
-  margin-top: 1em;
   height: 3.5em;
   text-transform: capitalize;
 }
@@ -55,7 +69,6 @@
   align-items: center;
   text-transform: capitalize;
 }
-
 
 .add_to_cart__btn {
   margin-top: 1em;
