@@ -190,7 +190,7 @@
 
 .detail__info_price {
   font-family: var(--font-paragraph);
-  color: var(--color-primary);
+  color: var(--color-lightblue-grey);
   font-size: 1.4em;
   margin-bottom: .7em;
 }
