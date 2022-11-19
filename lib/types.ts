@@ -37,7 +37,7 @@ export interface IproductsByName {
 export interface Ireducers {
     reducerProduct?: null
     reducerProducts: IallProducts
-    reducerUser?: Iuser
+    reducerUser: Iuser
     reducerProductDetail: IDetail
     reducerProductsByName: IproductsByName
     reducerCart: any
@@ -108,10 +108,8 @@ interface Ievaluations {
     id: string
     review: string
     rating: number
-    product: IobjProduct[]
+    product: IobjProduct
 }
-
-
 
 
 
@@ -124,7 +122,6 @@ type userData = {
     direcciones: Idirecciones[]
     orders: Iorder[]
     evaluations: Ievaluations[]
-
 }
 
 interface IPayload {

@@ -28,15 +28,7 @@ export default function FavoriteProduct(): JSX.Element {
     return (
         <div className={styles.account__container}>
             <div>
-                <h1>{name}</h1>
-                <h3>{email}</h3>
-                <Image
-                    src={image}
-                    width='100'
-                    height='100'
-                    alt={name}
-                />
-                {myAdress}
+                {myFavotite}
             </div>
         </div>
     );
