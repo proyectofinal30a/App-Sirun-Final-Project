@@ -156,6 +156,11 @@ const AllProductsCards = () => {
     }
   }, [dispatch, data, myInfUser?.user?.id, myNuEmail, isFavorited]);
 
+  useEffect(() => {
+    document.addEventListener( "mousemove", () => setIsFavorited(!isFavorited))
+    return () => document.removeEventListener("mousemove", () => setIsFavorited(!isFavorited))
+  }, [isFavorited]);
+
   const biblioteca: any = {};
   myProfile?.favorites.forEach(fav => {
     if (fav.id) biblioteca[fav.id] = true;
@@ -167,12 +172,10 @@ const AllProductsCards = () => {
 
     if (biblioteca[productId]) {
       removeFromFavorites(userId, productId);
-      dispatch(getUserDetail(myNuEmail));
-      return setIsFavorited(!isFavorited);
+      return dispatch(getUserDetail(myNuEmail));
     };
     addToFavorites(userId, productId);
     dispatch(getUserDetail(myNuEmail));
-    return setIsFavorited(!isFavorited);
   }
 
   return (
