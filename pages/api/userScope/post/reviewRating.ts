@@ -17,7 +17,7 @@ export default async function reviewRating(req: NextApiRequest, res: NextApiResp
                 rating: Number(rating),
                 user: {
                     connect: {
-                        id: idUser
+                        email: idUser
                     }
                 },
                 product: {
