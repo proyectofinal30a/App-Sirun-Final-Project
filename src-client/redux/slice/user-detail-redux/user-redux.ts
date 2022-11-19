@@ -22,7 +22,7 @@ export const reducerUser = createSlice({
   name: "reducerUser",
   initialState: template,
   reducers: {
-    getProducts: (state: Iuser, action: any) => {
+    getUserDetail: (state: Iuser, action: any) => {
       state.user = action.payload;
       return;
     },
@@ -48,7 +48,7 @@ export const getUserDetail = (email: any) => async (dispatch: Function) => {
     url: `/api/userScope/get/userAll/${email}`,
   });
 
-  dispatch(reducerUser.actions.getProducts(data));
+  dispatch(reducerUser.actions.getUserDetail(data));
 };
 
 
@@ -61,9 +61,9 @@ export const addToFavorites = async (idUser: string, idProduct: string) => {
       data: { idUser, idProduct },
       headers: { Authorization: myToken },
     });
-
-    console.log(data)
-
+    
+    // console.log({ userId: idUser, productId: idProduct });
+    console.log(data);
   } catch (error) {
     console.log(error);
   }
@@ -71,7 +71,6 @@ export const addToFavorites = async (idUser: string, idProduct: string) => {
 
 
 export const removeFromFavorites = async (idUser: string, idProduct: string) => {
-  console.log({ userId: idUser, productId: idProduct });
   try {
     const myToken: any = userVerification("client");
     const { data } =  await axios({
@@ -81,7 +80,8 @@ export const removeFromFavorites = async (idUser: string, idProduct: string) => 
       headers: { Authorization: myToken },
     });
 
-    console.log(data) 
+    // console.log({ userId: idUser, productId: idProduct });
+    console.log(data);
   } catch (error) {
     console.log(error);
   }

@@ -12,19 +12,18 @@ import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import { removeFromFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
+import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import { useSession } from "next-auth/react";
 
 
 const AllProductsCards = () => {
   // GET ALL PRODUCTS
   const dispatch: Function = useDispatch();
 
-  const allProducts: any = useSelector<Ireducers>(
-    (state) => state.reducerProducts.products
-  );
+  const allProducts: any = useSelector<Ireducers>((state) => state.reducerProducts.products);
   const [...products]: any = allProducts;
-  const cart: any = useSelector<Ireducers>(
-    (state) => state.reducerCart.products
-  );
+
+  const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
 
 
 
@@ -37,6 +36,7 @@ const AllProductsCards = () => {
   if (filterProducts.length >= 1) {
     currentProducts = filterProducts;
   }
+
 
 
   // SHOPPING CART
@@ -141,17 +141,38 @@ const AllProductsCards = () => {
   }, [filterProducts, dispatch]);
 
 
-  // FAVORITE 
-  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
 
-  const [isFavorited, setIsFavorited] = useState(false);
+  // FAVORITE 
+  const { data } = useSession();
+  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+  const myNuEmail = data?.user?.email;
+  const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
+
+  const [isFavorited, setIsFavorited] = useState(true);
+
+  useEffect(() => {
+    if (!myInfUser?.user?.id) {
+      dispatch(getUserDetail(myNuEmail));
+    }
+  }, [dispatch, data, myInfUser?.user?.id, myNuEmail, isFavorited]);
+
+  const biblioteca: any = {};
+  myProfile?.favorites.forEach(fav => {
+    if (fav.id) biblioteca[fav.id] = true;
+  })
 
   const handleFavorite = (id: any) => {
-    const userId = myProfile.id;
-    const productId = id;
-    setIsFavorited(current => !current);
-    if (isFavorited) removeFromFavorites(userId, productId);
+    const userId: string = myProfile?.id;
+    const productId: string = id;
+
+    if (biblioteca[productId]) {
+      removeFromFavorites(userId, productId);
+      dispatch(getUserDetail(myNuEmail));
+      return setIsFavorited(!isFavorited);
+    };
     addToFavorites(userId, productId);
+    dispatch(getUserDetail(myNuEmail));
+    return setIsFavorited(!isFavorited);
   }
 
   return (
@@ -162,10 +183,11 @@ const AllProductsCards = () => {
             {paginatedProducts.map((product: any, index: number) => {
               return (
                 <div key={index} className={styles.product_card__container}>
+
                   <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product.id)}>
                     <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
                       <p className={styles.wishlist_fav_btn}>
-                       {isFavorited ? <FaHeart /> : <FiHeart />}
+                       {biblioteca[product.id] ? <FaHeart /> : <FiHeart />}
                       </p>
                     </IconContext.Provider>
                   </div>
