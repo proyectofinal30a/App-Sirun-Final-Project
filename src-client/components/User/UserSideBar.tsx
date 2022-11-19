@@ -11,12 +11,14 @@ const UserSideBar = () => {
   const dispatch: Function = useDispatch()
 
   const myNuEmail = data?.user?.email
+  const myInfUser = useSelector((state: Ireducers) => state.reducerUser)
 
   useEffect(() => {
-    dispatch(getUserDetail(myNuEmail))
+    if (!myInfUser?.user?.id) {
+      dispatch(getUserDetail(myNuEmail))
+    }
   }, [dispatch, data])
 
-  const myInfUser = useSelector((state: Ireducers) => state.reducerUser)
 
 
   console.log(myInfUser);

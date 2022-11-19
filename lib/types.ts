@@ -37,7 +37,7 @@ export interface IproductsByName {
 export interface Ireducers {
     reducerProduct?: null
     reducerProducts: IallProducts
-    reducerUser?: Iuser
+    reducerUser: Iuser
     reducerProductDetail: IDetail
     reducerProductsByName: IproductsByName
     reducerCart: any
@@ -68,25 +68,60 @@ declare module "next-auth" {
 
 
 
+interface Idirecciones {
+    dir: string
+    id?: string
+}
+interface IimageProduc {
+    image: string
+}
+
+interface IobjProduct {
+    name: string
+    id: string
+    image: IimageProduc[]
+}
+
+interface IproductOrde {
+
+}
+
+
+interface Iorder {
+    total: number
+    description: string
+    delivery_time: string
+    date: string
+    products: IobjProduct[]
+
+}
 
 
 
-interface IIdProductFavo {
+interface IdProductFavo {
     id: string
     name: string
     image: string
 }
 
+interface Ievaluations {
+    id: string
+    review: string
+    rating: number
+    product: IobjProduct
+}
+
+
+
 type userData = {
     id?: number
-    name?: string
-    email?: string
-    image?: string
-    favorites?: any
-    direcciones?: any
-    orders?: any
-    evaluations?: any
-
+    name: string
+    email: string
+    image: string
+    favorites: Iproduct[]
+    direcciones: Idirecciones[]
+    orders: Iorder[]
+    evaluations: Ievaluations[]
 }
 
 interface IPayload {
