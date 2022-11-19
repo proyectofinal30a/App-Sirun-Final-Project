@@ -8,6 +8,8 @@ export default function Profile(): JSX.Element {
     if (!myProfide) return <div>Loading</div>
     const { name, email, image, direcciones } = myProfide
 
+
+
     const myAdress = direcciones?.map((ele) => (
         <div>
             {ele.dir}

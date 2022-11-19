@@ -68,7 +68,7 @@ export const alfterOnsumbit = () => async (dispatch: Function) => {
 export const uploadFormNoRedux = async (dataForm: Iproduct, image: any) => {
   const myToken: any = await userVerification("client");
   dataForm.image = image;
-  const hola = await axios({
+  await axios({
     method: "post",
     url: "/api/adminScope/post/productPostAdm",
     data: dataForm,
@@ -113,7 +113,7 @@ export const postImageServer = (newImage: unknown) => async (dispatch: Function)
 
   const { public_id, secure_url } = data;
   const myFracmet: string = public_id.split("/")[1];
-    const myPackImage: imageAddId = {
+  const myPackImage: imageAddId = {
     id: myFracmet,
     image: secure_url,
   };

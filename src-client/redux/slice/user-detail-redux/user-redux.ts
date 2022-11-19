@@ -37,6 +37,38 @@ export const getUserDetail = (email: any) => async (dispatch: Function) => {
     dispatch(reducerUser.actions.getProducts(data));
 }
 
+////edit user
+interface IuserUpdate {
+    email: string
+    name: string
+    newImage: unknown
+}
+
+
+export const postImageServerUsert = ({ email, name, newImage }: IuserUpdate) => async (dispatch: Function) => {
+    const { data } = await axios({
+        method: "post",
+        url: "https://api.cloudinary.com/v1_1/dqhbskhe7/image/upload",
+        data: newImage,
+    });
+
+    const { public_id, secure_url } = data;
+    const myFracmet: string = public_id.split("/")[1];
+
+    const myPack = {
+        email,
+        name,
+        image: 
+}
+
+
+    await axios({
+        method: 'post',
+        url: `/api/userScope/put/user/`,
+        data:
+    });
+}
+
 
 
 

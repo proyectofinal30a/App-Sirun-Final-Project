@@ -3,12 +3,12 @@ import prisma from '../../../../lib/prisma'  //importo prisma del lib del root
 
 export default async function UpdateUser(req: NextApiRequest, res: NextApiResponse) {
     try {
-        interface email {
+        interface IuserUpdate {
             email: string
             name: string
             image: string
         }
-        const { email, name, image }: email = req.body
+        const { email, name, image }: IuserUpdate = req.body
 
         await prisma.user.update({
             where: {
