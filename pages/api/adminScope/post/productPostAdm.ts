@@ -35,7 +35,7 @@ const createProduct: Function = async (req: NextApiRequest, res: NextApiResponse
                 },
 
             })
-
+            prisma.$disconnect()
             return res.status(200).json({ msg: `Se creo el producto con nombre: ${name}` })
         }
         res.status(200).json({ msg: 'NO ESTAs AUTORIZADO' })

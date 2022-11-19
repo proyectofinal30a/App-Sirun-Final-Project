@@ -25,7 +25,7 @@ export default async function getAllReviews(req: NextApiRequest, res: NextApiRes
                     }
                 },
             })
-
+            prisma.$disconnect()
             res.status(200).json(allReviews)
         }
 

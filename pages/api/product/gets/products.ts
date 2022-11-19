@@ -1,7 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-//importo prisma del lib del root 
 import prisma from '../../../../lib/prisma'
-import { Iproduct } from '../../../../lib/types'
 import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from '../../auth/[...nextauth]'
 import userVerification from '../../../../src-client/controllers/userVerification-controller'
@@ -22,7 +20,6 @@ const products: Function = async (req: NextApiRequest, res: NextApiResponse) => 
 
       });
       prisma.$disconnect()
-
       return res.status(200).json(products)
     }
     res.status(200).json({ msj: 'NO ESTAS AUTORIZADO' })

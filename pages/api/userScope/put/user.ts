@@ -19,7 +19,7 @@ export default async function UpdateUser(req: NextApiRequest, res: NextApiRespon
                 image,
             },
         })
-
+        prisma.$disconnect()
         res.status(200).json({ msg: 'el usuario se ha actulizado correctamente' })
 
     } catch (error) {

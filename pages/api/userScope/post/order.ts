@@ -34,7 +34,7 @@ export default async function Order(req: NextApiRequest, res: NextApiResponse) {
                 }
             }
         })
-
+        prisma.$disconnect()
         res.status(200).json({ msg: "Order se ha creado" })
 
     } catch (error) {
