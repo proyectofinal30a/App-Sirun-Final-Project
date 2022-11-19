@@ -3,8 +3,10 @@ import Nav from "../../src-client/components/NavBar/Nav";
 import Footer from "../../src-client/components/Footer/Footer";
 import styles from "../../src-client/styles/AdminSideBar.module.css";
 import UserSideBar from "../../src-client/components/User/UserSideBar";
-import ReciewAndRating from "../../src-client/components/User/ReviewAndRating";
-export default function AdminProductsPage() {
+import ReviewAndRating from "../../src-client/components/User/ReviewAndRating";
+
+
+export default function UserMyReviewsPage() {
   return (
     <div>
       <HEAD />
@@ -15,7 +17,7 @@ export default function AdminProductsPage() {
           <UserSideBar />
         </div>
         <div className={styles.general__container_second_col}>
-          <ReciewAndRating />
+          <ReviewAndRating />
         </div>
       </main>
 

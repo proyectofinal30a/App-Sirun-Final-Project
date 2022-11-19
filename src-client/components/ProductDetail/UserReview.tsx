@@ -23,8 +23,6 @@ export const UserReview = () => {
     const listOfReviews : any = useSelector((state : any) => state.reducerUserReview.allReviews)
 
 
-
-
     const dispatch: Function = useDispatch();
 
 
@@ -40,7 +38,7 @@ export const UserReview = () => {
     
     
     const handleOnClick = (value: number) =>{ 
-      console.log(value);
+      // console.log(value);
       setReview({... review, rating : value})
     }
 

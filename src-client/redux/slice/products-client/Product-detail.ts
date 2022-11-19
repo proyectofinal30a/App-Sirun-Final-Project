@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import userVerification from "../../../controllers/userVerification-controller";
-import fromJsonToArray from '../../../controllers/imageJson'
-import { TypeDiet } from '@prisma/client'
+import fromJsonToArray from "../../../controllers/imageJson";
+import { TypeDiet } from "@prisma/client";
 //import switchIndex from '../../../controllers/switchIndex'
 
 type Iproduct = {
@@ -15,21 +15,19 @@ type Iproduct = {
   category?: string;
   image?: string[];
   description?: string;
-}
+};
 
 interface IDetail {
-  productDetail: Iproduct
+  productDetail: Iproduct;
 }
 
 const stateInit: IDetail = {
-  productDetail: {}
-}
+  productDetail: {},
+};
 
 // interface Iarray {
 //   productDetail.image : string[]
 // }
-
-
 
 export const reducerProductDetail = createSlice({
   name: "rootReducer",
@@ -41,36 +39,29 @@ export const reducerProductDetail = createSlice({
     cleanProductDetail: (state: any) => {
       state.productDetail = {};
     },
-
   },
 });
 
 
-export const getProductDetail = (id: string | string[] | undefined) => async (dispatch: Function) => {
-
-  const myToken: any = userVerification('client')
-  const { data } = await axios({
-    method: 'get',
-    url: `/api/product/gets/detailById/${id}`,
-    headers: {
-      "Authorization": myToken
+export const getProductDetail =
+  (id: string | string[] | undefined) => async (dispatch: Function) => {
+    const myToken: any = userVerification("client");
+    const { data } = await axios({
+      method: "get",
+      url: `/api/product/gets/detailById/${id}`,
+      headers: {
+        Authorization: myToken,
+      },
+    });
+    if (data) {
+      dispatch(reducerProductDetail.actions.getProductDetail(data));
     }
-  });
-  if (data) {
-
-    dispatch(reducerProductDetail.actions.getProductDetail(data));
-  }
-
-};
+  };
 
 
 export const cleanProductDetail = () => async (dispatch: Function) => {
   dispatch(reducerProductDetail.actions.cleanProductDetail());
-
 };
-
-
-
 
 
 export default reducerProductDetail.reducer;
