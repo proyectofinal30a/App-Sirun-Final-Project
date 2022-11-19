@@ -5,29 +5,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { useEffect } from "react";
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import formatDate from "../../controllers/format-date";
 export default function Orders(): JSX.Element {
     const dispatch: Function = useDispatch()
-
-
-    const myProfide = useSelector((state: Ireducers) => state.reducerUser.user)
-    if (!myProfide) return <div>Loading</div>
-    const { orders }: any = myProfide
     useEffect(() => {
         if (myProfide.email) {
             dispatch(getUserDetail(myProfide.email))
         }
-
     }, [dispatch])
-    if (!orders) return <div>Loading</div>
-    console.log(orders, 'asdadads');
-
-
-    const myOrder = orders?.map((elem: any) => {
-        const { products } = elem
-
-        const myProductOrder = products?.map((elem: any) => {
-            console.log(elem, '213213');
-
+    const myProfide = useSelector((state: Ireducers) => state.reducerUser.user)
+    if (!myProfide) return <div>Loading</div>
+    const { orders } = myProfide
+    const myOrder = orders?.map((elem) => {
+        const { product } = elem
+        const myProductOrder = product?.map((elem) => {
             const myImage: string = typeof elem?.image?.[0].image === "string" ?
                 elem.image[0].image : 'loading'
             return (
@@ -43,16 +34,16 @@ export default function Orders(): JSX.Element {
                 </div>
             )
         })
-        console.log(myProductOrder, '12321dff34213asd');
-
-
+        const mydate = `The purchase was made on the day ${formatDate(elem.date)} `
         return (
-            <div key={elem.id}>
+            <div key={elem.date}>
                 <h3>{elem.description}</h3>
-                <p>{elem.total}</p>
                 <p>{elem.status}</p>
+                {myProductOrder}
+                <p>{mydate}</p>
+                <h1>Total</h1>
+                <p>{elem.total}</p>
                 <div>
-                    {myProductOrder}
                 </div>
             </div>
         )
@@ -60,9 +51,7 @@ export default function Orders(): JSX.Element {
 
     return (
         <div className={styles.account__container}>
-
             {myOrder}
-
         </div>
     );
 }
