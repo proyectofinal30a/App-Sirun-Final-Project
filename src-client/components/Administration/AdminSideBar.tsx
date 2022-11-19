@@ -15,6 +15,11 @@ const AdminSideBar = () => {
               <span className={styles.nav_span}>Dashboard</span>
             </li>
           </Link>
+          <Link href="/admin/adminProfile" className={styles.nav__link}>
+            <li className={styles.nav__item}>
+              <span className={styles.nav_span}>Profile</span>
+            </li>
+          </Link>
           <Link href="/admin/productCreationForm" className={styles.nav__link}>
             <li className={styles.nav__item}>
               <span className={styles.nav_span}>Add new product</span>
@@ -30,11 +35,6 @@ const AdminSideBar = () => {
               <span className={styles.nav_span}>Manage users</span>
             </li>
           </Link>
-          <Link href="/admin/adminProfile" className={styles.nav__link}>
-            <li className={styles.nav__item}>
-              <span className={styles.nav_span}>Profile</span>
-            </li>
-          </Link>
         </ul>
       </nav>
       
@@ -47,10 +47,10 @@ const AdminSideBar = () => {
 
           <div className={styles.mobile_nav__dropdown_content}>
             <Link href="/administration" className={styles.mobile_nav__link}>Dashboard</Link>
+            <Link href="/admin/adminProfile" className={styles.mobile_nav__link}>Profile</Link>
             <Link href="/admin/productCreationForm" className={styles.mobile_nav__link}>Add new product</Link>
             <Link href="/admin/adminProducts" className={styles.mobile_nav__link}>Manage existing products</Link>
             <Link href="/admin/adminUsers" className={styles.mobile_nav__link}>Manage users</Link>
-            <Link href="/admin/adminProfile" className={styles.mobile_nav__link}>Profile</Link>
           </div>
         </div>
       </div>

@@ -27,26 +27,26 @@ export const reducerFavorites = createSlice({
   name: "reducerFavorites",
   initialState: initialState,
   reducers: {
-    // addToFavorites: (state: Iproducts, action) => {
-    //   state.products.push({ 
-    //     product: action.payload.product, 
-    //     userId: action.payload.id 
-    //   });
-    // },
+    addToFavorites: (state: Iproducts, action) => {
+      state.products.push({ 
+        product: action.payload.product, 
+        userId: action.payload.id 
+      });
+    },
     
-    // removeFromFavorites: (state: Iproducts, action) => {
-    //   state.products = state.products.filter((item) => item.product.id !== action.payload);
-    // },
+    removeFromFavorites: (state: Iproducts, action) => {
+      state.products = state.products.filter((item) => item.product.id !== action.payload);
+    },
   },
 });
 
 
-export const addToFavorites = (object: IfavProduct) => async (dispatch: Function) => { 
-//   return dispatch(reducerFavorites.actions.addToFavorites(object));
+export const addToFavorites = (object: IfavProduct) => (dispatch: Function) => { 
+  return dispatch(reducerFavorites.actions.addToFavorites(object));
 };
 
-export const removeFromFavorites = (id: string) => async (dispatch: Function) => {
-//   return dispatch(reducerFavorites.actions.removeFromFavorites(id));
+export const removeFromFavorites = (id: string) => (dispatch: Function) => {
+  return dispatch(reducerFavorites.actions.removeFromFavorites(id));
 };
 
 
