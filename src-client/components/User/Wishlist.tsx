@@ -2,38 +2,42 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Link from "next/link";
 import Image from "next/image";
-import { removeFromFavorites } from "../../redux/slice/user-detail-redux/user-redux";
+import { addToFavorites, removeFromFavorites } from "../../redux/slice/user-detail-redux/user-redux";
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { Ireducers } from "../../../lib/types";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { IconContext } from "react-icons";
+import { useSession } from "next-auth/react";
 import styles from "../../styles/Wishlist.module.css";
 
 
 export default function Wishlist(): JSX.Element {
   const dispatch: Function = useDispatch();
+  const { data } = useSession();
 
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+  const myNuEmail = data?.user?.email;
+  const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
+
 
   useEffect(() => {
-    if (myProfile) dispatch(getUserDetail(myProfile.email));
-  }, [dispatch, myProfile])
+    if (!myInfUser?.user?.id) {
+      dispatch(getUserDetail(myNuEmail));
+    }
+  }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
 
 
   if (!myProfile) return (<div className={styles.wishlist__loading}>Loading...</div>);
 
-
   const handleClick = (id: any) => {
-    if (typeof id === "string") {
-      const userId: string = myProfile.id;
-      const productId = id;
-      // console.log({ userId: userId, productId: productId });
+    const userId: string = myProfile.id;
+    const productId = id;
 
-      removeFromFavorites(userId, productId);
-
-    }
+    removeFromFavorites(userId, productId);
   }
+
+  console.log(data?.user.email)
 
 
   return (

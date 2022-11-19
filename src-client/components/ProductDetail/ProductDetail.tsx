@@ -12,6 +12,7 @@ import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import { removeFromFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
+import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { UserReview } from "./UserReview";
 import styles from "../../styles/ProductDetail.module.css";
 
@@ -88,6 +89,7 @@ const ProductDetail = () => {
   });
 
 
+  // IMAGES SWITCHER
   const [activeImage, setActiveImage] = useState("");
 
   const detail = product.image?.[0].image ? product.image?.[0].image : "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
@@ -99,19 +101,10 @@ const ProductDetail = () => {
   const url2 = activeImage ? activeImage : detail;
 
 
-  // FAVORITE 
-  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
-
-  const [isFavorited, setIsFavorited] = useState(false);
-  
+  // FAVORITE - WISHLIST
   const handleFavorite = (id: any) => {
-    const userId = myProfile.id;
-    const productId = id;
-    setIsFavorited(current => !current);
-    if (isFavorited) removeFromFavorites(userId, productId);
-    addToFavorites(userId, productId);
+    
   }
-
 
   return (
     <div className={styles.detail}>
@@ -172,7 +165,9 @@ const ProductDetail = () => {
             <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product.id)}>
               <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
                 <p className={styles.wishlist_fav_btn}>
-                 {isFavorited ? <FaHeart /> : <FiHeart />}
+                 {/* {isFavorited ?  */}
+                 <FaHeart /> 
+                 {/*  : <FiHeart />} */}
                 </p>
               </IconContext.Provider>
             </div>
