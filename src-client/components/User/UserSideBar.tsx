@@ -18,9 +18,9 @@ const UserSideBar = () => {
     if (!myInfUser?.user?.id) {
       dispatch(getUserDetail(myNuEmail));
     }
-  }, [dispatch, data]);
+  }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
 
-  console.log(myInfUser);
+  // console.log(myInfUser);
 
 
   return (

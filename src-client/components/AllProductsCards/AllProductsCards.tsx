@@ -8,19 +8,22 @@ import { getAllProducts } from "../../redux/slice/products-client/Products-all-r
 import styles from "../../styles/AllProductsCards.module.css";
 import Modal from "react-modal";
 import { BsFillTrashFill } from "react-icons/bs";
+import { FaHeart } from "react-icons/fa";
+import { FiHeart } from "react-icons/fi";
+import { IconContext } from "react-icons";
+import { removeFromFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
+import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import { useSession } from "next-auth/react";
 
 
 const AllProductsCards = () => {
   // GET ALL PRODUCTS
   const dispatch: Function = useDispatch();
 
-  const allProducts: any = useSelector<Ireducers>(
-    (state) => state.reducerProducts.products
-  );
+  const allProducts: any = useSelector<Ireducers>((state) => state.reducerProducts.products);
   const [...products]: any = allProducts;
-  const cart: any = useSelector<Ireducers>(
-    (state) => state.reducerCart.products
-  );
+
+  const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
 
 
 
@@ -33,6 +36,7 @@ const AllProductsCards = () => {
   if (filterProducts.length >= 1) {
     currentProducts = filterProducts;
   }
+
 
 
   // SHOPPING CART
@@ -130,11 +134,49 @@ const AllProductsCards = () => {
     window.scrollTo({ top: 0 });
   };
 
+
   useEffect(() => {
     if (filterProducts[0]) setCurrentPage(1);
     dispatch(getAllProducts());
-  }, [filterProducts]);
+  }, [filterProducts, dispatch]);
 
+
+
+  // FAVORITE 
+  const { data } = useSession();
+  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+  const myNuEmail = data?.user?.email;
+  const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
+
+  const [isFavorited, setIsFavorited] = useState(true);
+
+  useEffect(() => {
+    if (!myInfUser?.user?.id) {
+      dispatch(getUserDetail(myNuEmail));
+    }
+  }, [dispatch, data, myInfUser?.user?.id, myNuEmail, isFavorited]);
+
+  useEffect(() => {
+    document.addEventListener( "mousemove", () => setIsFavorited(!isFavorited))
+    return () => document.removeEventListener("mousemove", () => setIsFavorited(!isFavorited))
+  }, [isFavorited]);
+
+  const biblioteca: any = {};
+  myProfile?.favorites.forEach(fav => {
+    if (fav.id) biblioteca[fav.id] = true;
+  })
+
+  const handleFavorite = (id: any) => {
+    const userId: string = myProfile?.id;
+    const productId: string = id;
+
+    if (biblioteca[productId]) {
+      removeFromFavorites(userId, productId);
+      return dispatch(getUserDetail(myNuEmail));
+    };
+    addToFavorites(userId, productId);
+    dispatch(getUserDetail(myNuEmail));
+  }
 
   return (
     <div className={styles.general__container}>
@@ -143,14 +185,17 @@ const AllProductsCards = () => {
           <>
             {paginatedProducts.map((product: any, index: number) => {
               return (
-                <div
-                  key={index}
-                  className={styles.product_card__container}
-                >
-                  <Link
-                    href={`/productDetail/${product.id}`}
-                    className={styles.product_card__link}
-                  >
+                <div key={index} className={styles.product_card__container}>
+
+                  <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product.id)}>
+                    <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
+                      <p className={styles.wishlist_fav_btn}>
+                       {biblioteca[product.id] ? <FaHeart /> : <FiHeart />}
+                      </p>
+                    </IconContext.Provider>
+                  </div>
+
+                  <Link href={`/productDetail/${product.id}`} className={styles.product_card__link}>
                     <h1 className={styles.product_card__title}>{product.name.toLowerCase()}</h1>
 
                     <Image
@@ -165,15 +210,11 @@ const AllProductsCards = () => {
                   </Link>
 
 
-
                   <div className={styles.product_card__info_container}>
                     <p>$ {product.price}</p>
                     <p>{product.type}</p>
 
-                    <button
-                      className={styles.add_to_cart__btn}
-                      onClick={(e: any) => addProductOpenModal(e, product)}
-                    >
+                    <button className={styles.add_to_cart__btn} onClick={(e: any) => addProductOpenModal(e, product)}>
                       Add to cart
                     </button>
                   </div>

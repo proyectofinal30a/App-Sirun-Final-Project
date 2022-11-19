@@ -4,6 +4,7 @@ export interface Iimage {
     image: string[]
 }
 
+
 export interface Iproduct {
     id?: string;
     name: string;
@@ -53,7 +54,6 @@ export interface Ierror {
 };
 
 
-
 declare module "next-auth" {
     interface Session {
         user: {
@@ -66,21 +66,23 @@ declare module "next-auth" {
 }
 
 
-
-
 interface Idirecciones {
     dir: string
     id?: string
 }
+
+
 interface IimageProduc {
     image: string
 }
+
 
 interface IobjProduct {
     name: string
     id: string
     image: IimageProduc[]
 }
+
 
 interface IproductOrde {
 
@@ -97,12 +99,12 @@ interface Iorder {
 }
 
 
-
 interface IdProductFavo {
     id: string
     name: string
     image: string
 }
+
 
 interface Ievaluations {
     id: string
@@ -112,9 +114,8 @@ interface Ievaluations {
 }
 
 
-
 type userData = {
-    id?: number
+    id: string
     name: string
     email: string
     image: string
@@ -124,13 +125,17 @@ type userData = {
     evaluations: Ievaluations[]
 }
 
+
 interface IPayload {
     payload: userData
 }
 
+
 export interface Iuser {
     user: userData
 }
+
+
 // declare module "next" {
 //     interface NextApiRequest {
 //         query: Partial<{ [key: string]: string | string[] }>
