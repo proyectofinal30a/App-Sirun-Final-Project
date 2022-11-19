@@ -180,7 +180,7 @@
 }
 
 
- @media (max-width: 472px) {
+ @media (max-width: 545px) {
 
   .listReviews__avatar{
     width: 2em;
@@ -189,7 +189,12 @@
 
   .listReview__info{
     width: 50%;
+    font-size: .8em;
   }
 
+  .listReviews__rating_container{
+    font-size: .7em;
+    display: flex;
+  }
 
 } 
