@@ -10,7 +10,7 @@ import Modal from "react-modal";
 import { BsFillTrashFill } from "react-icons/bs";
 import { UserReview } from "./UserReview";
 import styles from "../../styles/ProductDetail.module.css";
-
+import Average from "./StarsAverage" 
 
 const ProductDetail = () => {
   const { query } = useRouter();
@@ -134,7 +134,7 @@ const ProductDetail = () => {
 
           <div className={styles.detail__info}>
             <h1 className={styles.detail__info_title}>{product.name && product.name.toLowerCase()}</h1>
-          
+          <Average/>
             <p className={styles.detail__info_price}>$ {product.price}</p>
 
             <div className={styles.detail__info_extra}>

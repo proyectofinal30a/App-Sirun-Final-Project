@@ -21,12 +21,12 @@ export const UserReview = () => {
     const [review, setReview] = useState<IReview>(myReview);
     const [hoverValue, setHoverValue] = useState(null)
     const listOfReviews : any = useSelector((state : any) => state.reducerUserReview.allReviews)
-    console.log(listOfReviews)
-console.log(Array.isArray(listOfReviews));
+
+
 
 
     const dispatch: Function = useDispatch();
-    const stars = [1, 2, 3, 4, 5]
+
 
     useEffect(()=>{
       dispatch(getAllReviews(productId))
@@ -61,9 +61,12 @@ console.log(Array.isArray(listOfReviews));
           review: review.description,
           rating : review.rating,
         }
-       await addReview(allData)
-       dispatch(getAllReviews(productId))
-      setReview(myReview)
+
+      
+        
+        await addReview(allData)
+        dispatch(getAllReviews(productId))
+        setReview(myReview)
     };
 
 const signOrAddReview: any =
@@ -76,14 +79,14 @@ const signOrAddReview: any =
         type="submit"
         onClick={(e) => handleOnSubmit(e)}
         className={styles.review__btn}
-        // disabled={Object.values(myReview).length !== 0}
+      
       >
         Send
       </button>
     );
     
     const userIcon: any =
-    status === "authenticated" ? <FaUserTimes /> : <FaUserCheck />;
+    status === "authenticated" ? <FaUserCheck /> : <FaUserTimes />;
     
 
       const placeholder = [
@@ -95,7 +98,8 @@ const signOrAddReview: any =
         "Why are you still here? Go buy it!"
       ]
 
-
+      
+      
   return (
     <div className={styles.review__container}>
       <h2 className={styles.review__title}>Reviews</h2>
@@ -108,7 +112,7 @@ const signOrAddReview: any =
 
         <div className={styles.rating__stars_container} >
         {
-           stars.map((star : number, index : number)=>{
+           Array(5).fill(0).map((star : number, index : number)=>{
             const ratingValue = index + 1
             return(
               <>
@@ -159,17 +163,13 @@ const signOrAddReview: any =
             </div>
             
             <div className={styles.listReviews__rating_container}>
-            {stars.map((star : number, index : number)=>{
-            const ratingValue = index + 1
-            return(
-              <>
-                <FaStar
-                />
+          
+           { elem.rating === 0 ?
+            Array(1)?.fill(<FaStar className={styles.stars__empthy}/>)
+             : Array(elem.rating).fill(<FaStar className={styles.stars__filled}/>)}
+        
 
-            </>
-            )
-          })
-        }
+
         </div>
 
             </div>
