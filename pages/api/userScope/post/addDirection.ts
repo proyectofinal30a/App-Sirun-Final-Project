@@ -23,7 +23,7 @@ export default async function productAddFav(req: NextApiRequest, res: NextApiRes
 
         res.status(200).json({ msg: 'La direccion se ha agregado correctamente' })
 
-
+        prisma.$disconnect()
     } catch (error) {
         console.log(error);
 

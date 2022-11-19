@@ -88,7 +88,6 @@ interface IproductOrde {
 
 
 interface Iorder {
-    id: number
     total: number
     description: string
     delivery_time: string

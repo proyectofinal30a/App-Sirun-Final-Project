@@ -15,9 +15,9 @@ export default function Orders(): JSX.Element {
     }, [dispatch])
     const myProfide = useSelector((state: Ireducers) => state.reducerUser.user)
     if (!myProfide) return <div>Loading</div>
-    const { orders } = myProfide
+    const { orders } = myProfide;
     const myOrder = orders?.map((elem) => {
-        const { product } = elem
+        const { product } = elem;
         const myProductOrder = product?.map((elem) => {
             const myImage: string = typeof elem?.image?.[0].image === "string" ?
                 elem.image[0].image : 'loading'

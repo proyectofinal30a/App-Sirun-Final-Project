@@ -28,6 +28,7 @@ export default async function reviewRating(req: NextApiRequest, res: NextApiResp
 
             },
         })
+        prisma.$disconnect()
         res.status(200).json({ msg: "la review se ha cargado correctamente" })
     } catch (error) {
         console.log(error);
