@@ -8,6 +8,10 @@ import { getAllProducts } from "../../redux/slice/products-client/Products-all-r
 import styles from "../../styles/AllProductsCards.module.css";
 import Modal from "react-modal";
 import { BsFillTrashFill } from "react-icons/bs";
+import { FaHeart } from "react-icons/fa";
+import { FiHeart } from "react-icons/fi";
+import { IconContext } from "react-icons";
+import { removeFromFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
 
 
 const AllProductsCards = () => {
@@ -130,11 +134,25 @@ const AllProductsCards = () => {
     window.scrollTo({ top: 0 });
   };
 
+
   useEffect(() => {
     if (filterProducts[0]) setCurrentPage(1);
     dispatch(getAllProducts());
-  }, [filterProducts]);
+  }, [filterProducts, dispatch]);
 
+
+  // FAVORITE 
+  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+
+  const [isFavorited, setIsFavorited] = useState(false);
+
+  const handleFavorite = (id: any) => {
+    const userId = myProfile.id;
+    const productId = id;
+    setIsFavorited(current => !current);
+    if (isFavorited) removeFromFavorites(userId, productId);
+    addToFavorites(userId, productId);
+  }
 
   return (
     <div className={styles.general__container}>
@@ -143,14 +161,16 @@ const AllProductsCards = () => {
           <>
             {paginatedProducts.map((product: any, index: number) => {
               return (
-                <div
-                  key={index}
-                  className={styles.product_card__container}
-                >
-                  <Link
-                    href={`/productDetail/${product.id}`}
-                    className={styles.product_card__link}
-                  >
+                <div key={index} className={styles.product_card__container}>
+                  <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product.id)}>
+                    <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
+                      <p className={styles.wishlist_fav_btn}>
+                       {isFavorited ? <FaHeart /> : <FiHeart />}
+                      </p>
+                    </IconContext.Provider>
+                  </div>
+
+                  <Link href={`/productDetail/${product.id}`} className={styles.product_card__link}>
                     <h1 className={styles.product_card__title}>{product.name.toLowerCase()}</h1>
 
                     <Image
@@ -165,15 +185,11 @@ const AllProductsCards = () => {
                   </Link>
 
 
-
                   <div className={styles.product_card__info_container}>
                     <p>$ {product.price}</p>
                     <p>{product.type}</p>
 
-                    <button
-                      className={styles.add_to_cart__btn}
-                      onClick={(e: any) => addProductOpenModal(e, product)}
-                    >
+                    <button className={styles.add_to_cart__btn} onClick={(e: any) => addProductOpenModal(e, product)}>
                       Add to cart
                     </button>
                   </div>

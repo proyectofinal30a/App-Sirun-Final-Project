@@ -12,7 +12,7 @@ GET http://localhost:3000/api/test/ezequiel.ignacio.sosa@gmail.com
 
 
 ### USER DETAIL
-GET http://localhost:3000/api/userScope/get/ezequiel.ignacio.sosa@gmail.com
+GET http://localhost:3000/api/userScope/get/userAll/ezequiel.ignacio.sosa@gmail.com
 ###
 
 ### FAVORITE PRODUCT
