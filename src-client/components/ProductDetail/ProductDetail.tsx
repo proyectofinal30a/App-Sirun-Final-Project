@@ -86,17 +86,17 @@ const ProductDetail = () => {
 
   const [activeImage, setActiveImage] = useState("");
 
-  const detail = product.image?.[0].image ? product.image?.[0].image : "https://hackernoon.com/images/0*4Gzjgh9Y7Gu8KEtZ.gif";
+  const detail = product.image?.[0].image ? product.image?.[0].image : "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
 
   const handleMouseOver = (url: string, index: number) => {
     setActiveImage(url);
   };
 
-  const url2 = activeImage ? activeImage : detail
+  const url2 = activeImage ? activeImage : detail;
+
 
 
   return (
-
     <div className={styles.detail}>
       {product ?
         <div className={styles.detail__container}>
