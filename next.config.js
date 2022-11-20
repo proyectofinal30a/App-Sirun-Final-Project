@@ -2,6 +2,15 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  env: {
+    "CLOUDINARY_CLOUD": "dvopyvz7r",
+    "CLOUDINARY_ABOUT": "whe6ndum",
+    "CLOUDINARY_LOGO": "i0wjlsai",
+    "CLOUDINARY_PRODUCTS": "r94njzcs",
+    "CLOUDINARY_SLIDER": "slider",
+    "CLOUDINARY_USER_PROFILE": "mfrtuke4"
+  }
+  ,
   images: {
     domains: [
       "lh3.googleusercontent.com",

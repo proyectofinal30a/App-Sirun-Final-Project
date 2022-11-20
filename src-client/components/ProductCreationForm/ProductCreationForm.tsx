@@ -119,8 +119,9 @@ export default function FormProduct(): JSX.Element {
     if (!imageFile[0]) return;
     formData.append("file", imageFile[0]);
 
-    formData.append("upload_preset", "prueba_eze");
+    formData.append("upload_preset", `${process.env.CLOUDINARY_PRODUCTS}`);
     dispatch(postImageServer(formData));
+
   };
 
 
