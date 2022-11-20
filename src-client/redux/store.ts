@@ -15,7 +15,6 @@ import reducerUserReview from "../redux/slice/user-review/user-review"
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: []
 }
 
 const myReducers = combineReducers({

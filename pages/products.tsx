@@ -3,6 +3,7 @@ import NavOnSearch from "../src-client/components/NavBar/NavOnSearch";
 import FilterAndOrder from "../src-client/components/FiltersAndOrders/FiltersAndOrders";
 import AllProductsCards from "../src-client/components/AllProductsCards/AllProductsCards";
 import Footer from "../src-client/components/Footer/Footer";
+import React from "react";
 
 export default function ProductsPage() {
   return (

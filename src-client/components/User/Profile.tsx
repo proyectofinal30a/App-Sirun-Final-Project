@@ -1,3 +1,4 @@
+import React from 'react';
 import styles from "../../styles/Account.module.css";
 import Image from 'next/image'
 import { useEffect, useState } from "react";
@@ -6,6 +7,7 @@ import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { Ireducers } from "../../../lib/types";
 import cloudinaryOrUrl from "../../controllers/detectionOfImage";
 import { postImageServerUsert } from "../../redux/slice/user-detail-redux/user-redux";
+
 
 export default function Profile(): JSX.Element {
     const myStateForm = {
@@ -22,8 +24,10 @@ export default function Profile(): JSX.Element {
         | React.ChangeEvent<HTMLInputElement>
         | React.ChangeEvent<HTMLSelectElement>;
     const myProfide = useSelector((state: Ireducers) => state.reducerUser.user)
-    if (!myProfide) return <div>Loading</div>
-    const { name, email, image, direcciones, } = myProfide
+    if (!myProfide) return <div>Loading</div> //  para arreglar el error de undefined en el primer renderizado de la pagina
+    const { name, email, image, direcciones} = myProfide
+   
+
 
     const myimage = cloudinaryOrUrl(image, 'client')
 
@@ -106,13 +110,13 @@ export default function Profile(): JSX.Element {
             <div className={styles.profile__container}>
 
                 <Image
-                    src={myImage || " "}
+                    src={myImage || "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif"}
                     width='100'
                     height='100'
                     alt={name}
                     className={styles.avatar__image}
                     />
-                    <h1 className={styles.profile__title}>{myName.toUpperCase()}</h1>
+                    <h1 className={styles.profile__title}>{myName}</h1>
             </div>
                     
             <div className={styles.adress__container}>
@@ -127,4 +131,5 @@ export default function Profile(): JSX.Element {
         </div>
     );
 }
+
 
