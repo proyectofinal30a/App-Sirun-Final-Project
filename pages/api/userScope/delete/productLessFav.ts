@@ -1,9 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import prisma from "../../../../lib/prisma"; //importo prisma del lib del root
+import { prisma } from "../../../../lib/prisma"; //importo prisma del lib del root
 
 
-export default async function productLessFav(req: NextApiRequest,res: NextApiResponse) {
+export default async function productLessFav(req: NextApiRequest, res: NextApiResponse) {
   try {
     const { idUser, idProduct } = req.body;
 
@@ -16,7 +16,7 @@ export default async function productLessFav(req: NextApiRequest,res: NextApiRes
           },
         },
       });
-      
+
       res.status(200).json({ msg: "El producto se ha quitado correctamente correctamente de favoritos" });
     }
   } catch (error) {

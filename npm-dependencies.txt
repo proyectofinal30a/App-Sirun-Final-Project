@@ -31,6 +31,8 @@ npm install typescript ts-node @types/node --save-dev
 npm install @prisma/client >>> resuelve el problema de npx prisma migrate
 npm install prisma --save-dev 
 npx prisma init --datasource-provider postgresql
+npx prisma db pull es como hacer un git pull pero te traes los cambio de la base de datos.
+ 
 ///
 
 /// ejecucion

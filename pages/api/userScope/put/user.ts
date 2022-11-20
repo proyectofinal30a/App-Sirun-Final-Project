@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { v2 as cloudinary } from 'cloudinary'
 import cloudinaryOrUrl from '../../../../src-client/controllers/detectionOfImage'
-import prisma from '../../../../lib/prisma'  //importo prisma del lib del root 
+import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del root 
 export default async function UpdateUser(req: NextApiRequest, res: NextApiResponse) {
     try {
         interface IuserUpdate {
@@ -17,8 +17,6 @@ export default async function UpdateUser(req: NextApiRequest, res: NextApiRespon
             const id_public: string = file + packImage
             await cloudinary.uploader.destroy(id_public)
         }
-
-        console.log('dasdadasdasdadadadadadadasdadas');
 
         await prisma.user.update({
             where: {
