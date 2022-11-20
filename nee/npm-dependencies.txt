@@ -1,0 +1,61 @@
+
+/// next.j
+/// primero 
+npx create-next-app@latest --typescript
+///
+
+/// redux
+npm i redux-reset
+npm install @reduxjs/toolkit react-redux redux-thunk redux-devtools-extension redux-persist next-redux-wrapper
+///
+
+/// request
+npm install axios
+///
+
+/// animacion
+npm install framer-motion
+///
+
+/// enviar email
+npm install nodemailer
+///
+
+/// middleware
+npm i nextjs-cors /// OjO FALTA INVESTIGAR / no se ha instalado 8/11/22 
+///
+
+/// prisma orm
+/// instalacion
+npm install typescript ts-node @types/node --save-dev
+npm install @prisma/client >>> resuelve el problema de npx prisma migrate
+npm install prisma --save-dev 
+npx prisma init --datasource-provider postgresql
+npx prisma db pull es como hacer un git pull pero te traes los cambio de la base de datos.
+ 
+///
+
+/// ejecucion
+npx prisma generate >>> carga los modelos a Postgres, USAR SI QUERES ACTUALIZAR LOS MODELOS :)
+npx prisma migrate dev --name nombre del cambio init //EJECUTAR SOLO SI QUERES MIGRAR LOS DATOS DE LOS MODELOS !!!OOJO
+^^^^^^^<<< si no tenes la carpeta migrate ni lo EJECUTES PORQUE BORRAS LA BASE DE DATOSSSSS!!!! >:(
+npx prisma studio >> opcional, abre base de datos para hacer imports desde el web como si fuese phpmyadmin
+npx prisma db pull  // investigar NO EJECUTAR!!!!!
+///
+
+/// NextAuth autenticacion & autorizacion 
+npm install next-auth  @next-auth/prisma-adapter
+
+/// styles
+npm install react-icons --save //instalacion de iconos 
+///
+
+
+/// cloudinary 
+npm install cloudinary
+///
+
+
+/// whatsapp
+npm i react-floating-whatsapp
+///
