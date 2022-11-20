@@ -81,7 +81,7 @@ const Menu = () => {
           </li>
           <li className={styles.nav__item}>
             <Link
-              href={`/user/${session?.user?.name}`}
+              href={`/user/profile`}
               className={styles.nav__link}
               onClick={handleClick}
             >
