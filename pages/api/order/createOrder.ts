@@ -1,7 +1,7 @@
 // // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 // import { createCipheriv } from 'crypto';
 // import type { NextApiRequest, NextApiResponse } from 'next'
-// import prisma from '../../../../lib/prisma'  //importo prisma del lib del root 
+// import{ prisma }from '../../../../lib/prisma'  //importo prisma del lib del root 
 // import {CategoryPro  } from '@prisma/client'
 // import {  } from '../../../../lib/types'
 

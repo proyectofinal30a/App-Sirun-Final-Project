@@ -1,6 +1,6 @@
 
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../../lib/prisma'
+import { prisma } from '../../../../lib/prisma'
 import { StatusType } from '@prisma/client'
 export default async function Order(req: NextApiRequest, res: NextApiResponse) {
     try {
