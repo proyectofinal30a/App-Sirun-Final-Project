@@ -1,21 +1,32 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Ireducers } from "../../../lib/types";
+import {deleteReview} from "../../redux/slice/user-review/user-review"
+import {getUserDetail} from '../../redux/slice/user-detail-redux/user-redux'
 import Link from "next/link";
 import Image from "next/image";
-import { AiFillStar } from "react-icons/ai";
+import { FaStar } from "react-icons/fa";
 import styles from "../../styles/ReviewAndRating.module.css";
 
 
 const ReviewAndRating = () => {
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+  const dispatch : Function = useDispatch()
+
+  const {email} = myProfile;
+
 
   if (!myProfile) return <div className={styles.loading}>Loading...</div>;
 
   const { evaluations } = myProfile;
 
+
   if (!evaluations) return <div className={styles.loading}>Loading...</div>;
 
+  const handleDelete = (id: string, email : string) => { 
+    dispatch(deleteReview(id));
+    dispatch(getUserDetail(email))
+  };
 
   return (
     <div className={styles.reviews__container}>
@@ -24,6 +35,8 @@ const ReviewAndRating = () => {
       {evaluations?.map((elem) => {
         const { product } = elem;
         const { image } = product.image[0];
+        const {id} = elem;
+        
 
         return (
           <div key={elem.id} className={styles.reviews__review_container}>
@@ -37,7 +50,10 @@ const ReviewAndRating = () => {
               />
             </div>
 
+
             <div className={styles.reviews__info_container}>
+
+
               <div className={styles.reviews__info}>
                 <p className={styles.reviews__name}>
                   {product.name.toLowerCase()}
@@ -53,15 +69,22 @@ const ReviewAndRating = () => {
                 {elem.review}
               </p>
 
+
               <div className={styles.reviews__rating_container}>
                 <span className={styles.reviews__span}>Rating: </span>
                 <div className={styles.reviews__rating_value_container}>
                   <p className={styles.reviews__rating}>{elem.rating}</p>
-                  <p className={styles.reviews_rating_star_icon}><AiFillStar /></p>
+                  { elem.rating === 0 ?
+                   Array(1)?.fill(<FaStar className={styles.stars__empthy}/>)
+                     : Array(elem.rating).fill(<FaStar className={styles.stars__filled}/>)}
                 </div>
               </div>
 
             </div>
+            
+              <div className={styles.delete__container}>
+                <button className={styles.delete__review}  onClick={() => handleDelete(id, email)}>x</button>
+              </div>
           </div>
         );
       })}

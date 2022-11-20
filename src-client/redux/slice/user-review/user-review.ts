@@ -39,28 +39,23 @@ export const reducerUserReview = createSlice({
 export const getAllReviews = (id : string) => async (dispatch: Function) => {
     try{
       const myToken: any = await userVerification('client')
-    const allReviews = await axios({
-      method: 'get',
-      url: `/api/userScope/get/productReview/${id}`,
-      headers: {
-        "Authorization": myToken
-      }
-    });  
-    //console.log(allReviews.data);
+      const allReviews = await axios({
+        method: 'get',
+        url: `/api/userScope/get/productReview/${id}`,
+        headers: {
+          "Authorization": myToken
+        }
+    });
+  } catch (error) {
+    console.log(error);
     
-        return dispatch(reducerUserReview.actions.getReviews(allReviews.data));
-    }catch(error){
-    console.log(error)
-    }
-  };
+}  
+  }
 
-
-
-
-
+    
 
   export const addReview = async (objectReview : any) => {
-    console.log(objectReview);
+   // console.log(objectReview);
     try {
         const myToken: any = userVerification("client");
          const reviewData= await axios({
@@ -78,21 +73,24 @@ export const getAllReviews = (id : string) => async (dispatch: Function) => {
     }
   } 
 
-//   export const deleteReview = (id : string) => async (dispatch: Function) => {
-//     try{
-//       const myToken: any = await userVerification('client')
-//     const deletedReview = await axios({
-//       method: 'post',
-//       url: `/api/userScope/reviewRaitinfLess/${id}`,
-//       headers: {
-//         "Authorization": myToken
-//       }
-//     });
+  export const deleteReview = (id : string) => async (dispatch: Function) => {
+    
+    try{
+      console.log(id);
+      const myToken: any = await userVerification('client')
+    const deletedReview = await axios({
+      method: 'post',
+      url: `/api/userScope/delete/${id}`,
+      headers: {
+        "Authorization": myToken
+      }
+    });
+    dispatch(reducerUserReview.actions.deleteOneReview(id))
+    }catch(error){
+    console.log(error)
+    }
+  };
 
-//          dispatch(reducerUserReview.actions.deleteOneReview(id));
-//     }catch(error){
-//     console.log(error)
-//     }
-//   };
+
 
 export default reducerUserReview.reducer;

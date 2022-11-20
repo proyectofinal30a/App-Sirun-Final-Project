@@ -21,8 +21,6 @@ export const UserReview = () => {
     const [review, setReview] = useState<IReview>(myReview);
     const [hoverValue, setHoverValue] = useState(null)
     const listOfReviews : any = useSelector((state : any) => state.reducerUserReview.allReviews)
-
-
     const dispatch: Function = useDispatch();
 
 
@@ -38,8 +36,7 @@ export const UserReview = () => {
     
     
     const handleOnClick = (value: number) =>{ 
-      // console.log(value);
-      setReview({... review, rating : value})
+         setReview({... review, rating : value})
     }
 
 
@@ -59,9 +56,6 @@ export const UserReview = () => {
           review: review.description,
           rating : review.rating,
         }
-
-      
-        
         await addReview(allData)
         dispatch(getAllReviews(productId))
         setReview(myReview)
@@ -77,7 +71,7 @@ const signOrAddReview: any =
         type="submit"
         onClick={(e) => handleOnSubmit(e)}
         className={styles.review__btn}
-      
+      // disable
       >
         Send
       </button>
