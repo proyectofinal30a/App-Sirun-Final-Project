@@ -7,9 +7,10 @@
 
 .profile__container {
   font-family: var(--font-paragraph);
-  width: 90%;
-  margin-bottom: 6em;
-
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .profile__title {
@@ -18,12 +19,7 @@
   margin-bottom: 0.5em;
 }
 
-.profile__data{
-  display: flex;
-  flex-direction: row;
 
-  width: 60%;
-}
 
 .profile__info_container{
   padding: 2em;
@@ -33,10 +29,85 @@
   border-radius: 50%;
   object-fit: cover;
   object-position: center;
-  width: 5em;
-  height: 5em;
-  margin: 2em;
+  width: 8em;
+  height: 8em;
+  margin: .8em;
 }
+
+.adress{
+  margin-top: .2em;
+}
+
+
+.btn__aling{
+  margin-top: 1.5em;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.switch__btn, 
+.btn,
+.btn__submit {
+  width: 8em;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  margin-left: auto;
+  padding: 0.5em;
+  background-color: var(--color-light-pink);
+  border: 1px solid var(--color-dark-blue);
+  border-radius: 5px;
+  font-family: var(--font-paragraph);
+  font-size: 0.9em;
+  color: var(--color-dark-blue);
+}
+
+.switch__btn:hover, 
+.btn:hover,
+.btn__submit:hover {
+  background-color: rgb(246, 226, 226);
+  cursor: pointer;
+}
+
+.form__container{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.form__input {
+  padding: 0.3em;
+  margin-bottom: 0.5em;
+  padding: .3em;
+}
+
+.btn{
+  width: 6em;
+  padding: 0.4em;
+  margin: .2em;
+}
+
+.btn__img{
+  padding:  0.5em 0;
+  font-family: var(--font-paragraph);
+  font-size: 0.9em;
+  color: var(--color-dark-blue);  
+}
+
+.election__btn{
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 1em;
+}
+
+.btn__submit{
+  width: 6em;
+  padding: 0.4em;
+  margin: .2em;
+  background-color: var(--color-dark-pink);
+  color: var(--color-light-blue);
+}
+
 
 
 @media (max-width: 1540px) {
@@ -55,4 +126,15 @@
   .account__container {
     padding-top: 11em;
   }
+}
+
+
+@media (max-width: 375px) {
+  .account__container {
+    padding-top: 13em;
+  }
+
+  /* .profile__container{
+    padding-top: 1em;
+  } */
 }
