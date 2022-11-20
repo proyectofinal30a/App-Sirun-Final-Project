@@ -42,8 +42,15 @@
 .addresses_container {
   display: flex;
   flex-direction: column;
+  width: 100%;
+}
+
+.addresses {
+  display: flex;
+  flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
+  margin: auto;
 }
 
 .address {
@@ -55,13 +62,19 @@
   font-weight: bold;
 }
 
+.addresses_container > span {
+  text-align: center;
+}
+
 .email__container > p,
 .addresses_container > p:last-child {
   margin-bottom: 1em;
+  color: rgb(49, 49, 49);
 }
 
 .addresses_container > p {
   margin-bottom: .5em;
+  color: rgb(49, 49, 49);
 }
 
 .btn__aling {
@@ -86,9 +99,7 @@
   color: var(--color-dark-blue);
 }
 
-.switch__btn:hover,
-.btn:hover,
-.btn__submit:hover {
+.switch__btn:hover {
   background-color: rgb(246, 226, 226);
   cursor: pointer;
 }
@@ -99,6 +110,7 @@
   padding: 1em;
   display: flex;
   flex-direction: column;
+  margin-bottom: 5em;
 }
 
 .form__label {
@@ -133,17 +145,31 @@
   margin-top: 1em;
 }
 
+.btn {
+  background-color: red;
+  color: white;
+}
+
+.btn:hover {
+  background-color: rgb(221, 20, 20);
+  cursor: pointer;
+}
+
 .btn__submit {
   padding: 0.4em;
   margin: 0.2em;
-  background-color: var(--color-dark-pink);
-  color: var(--color-light-blue);
+  background-color: rgb(10, 198, 10);
+  color: white;
+}
+
+.btn__submit:hover {
+  background-color: rgb(10, 181, 10);
+  cursor: pointer;
 }
 
 
-
-
 /* Loading */
+
 
 .avatar__loader {
   height: 6em;
@@ -171,7 +197,7 @@
 @media (max-width: 1175px) {
   .profile__general_container {
     padding-top: 9em;
-  }
+  }   
 }
 
 @media (max-width: 880px) {

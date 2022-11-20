@@ -145,12 +145,12 @@ const Profile = () => {
       </div>
 
       <div className={styles.email__container}>
-        <span className={styles.adress__span}>Email</span>
+        <span>Email</span>
         <p>{email}</p>
       </div>
       <div className={styles.addresses_container}>
-        <span className={styles.adress__span}>Addresses</span>
-        <p>{myAdress}</p>
+        <span>Addresses</span>
+        <p className={styles.addresses}>{myAdress}</p>
       </div>
      
 
