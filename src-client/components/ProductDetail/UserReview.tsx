@@ -152,7 +152,7 @@ export const UserReview = () => {
         return (
 
           <div key={index} className={styles.listReviews__container}>
-            <Image src={elem.user.image} className={styles.listReviews__avatar} alt="" width={200} height={200} />
+            <Image src={cloudinaryOrUrl(elem.user.image, 'client') || ' '} className={styles.listReviews__avatar} alt="" width={200} height={200} />
 
             <div className={styles.listReview__info}>
               <p>{elem.user.name.toUpperCase()}</p>
