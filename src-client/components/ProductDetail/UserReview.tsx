@@ -116,7 +116,7 @@ export const UserReview = () => {
             Array(5).fill(0).map((star: number, index: number) => {
               const ratingValue = index + 1
               return (
-                <>
+                <div key={index}>
                   <input
                     key={index}
                     type="radio"
@@ -131,8 +131,7 @@ export const UserReview = () => {
                     className={ratingValue <= (hoverValue || review.rating) ? styles.rating__star : styles.rating__star_hover}
 
                   />
-
-                </>
+                </div>
               )
             })
           }
