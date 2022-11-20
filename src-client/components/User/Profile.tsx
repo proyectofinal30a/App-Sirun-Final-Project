@@ -1,5 +1,5 @@
 import styles from "../../styles/Account.module.css";
-import Image from 'next/image'
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
@@ -9,121 +9,122 @@ import cloudinaryOrUrl from "../../controllers/detectionOfImage";
 import { postImageServerUsert } from "../../redux/slice/user-detail-redux/user-redux";
 
 export default function Profile(): JSX.Element {
-    const myStateForm = {
-        image: '',
-        name: '',
-        status: true
-    }
-    const [imageUser, setImageUser] = useState(null)
-    const dispatch: Function = useDispatch()
-    const [previewForm, setPreviewFrom] = useState(myStateForm)
+  const myStateForm = {
+    image: "",
+    name: "",
+    status: true,
+  };
+  const [imageUser, setImageUser] = useState(null);
+  const dispatch: Function = useDispatch();
+  const [previewForm, setPreviewFrom] = useState(myStateForm);
 
-    type valueForm =
-        | React.FormEvent<HTMLFormElement>
-        | React.ChangeEvent<HTMLInputElement>
-        | React.ChangeEvent<HTMLSelectElement>;
-    const myProfide = useSelector((state: Ireducers) => state.reducerUser.user)
-    if (!myProfide) return <div>Loading</div>
-    const { name, email, image, direcciones, } = myProfide
+  type valueForm =
+    | React.FormEvent<HTMLFormElement>
+    | React.ChangeEvent<HTMLInputElement>
+    | React.ChangeEvent<HTMLSelectElement>;
+  const myProfide = useSelector((state: Ireducers) => state.reducerUser.user);
+  if (!myProfide) return <div>Loading</div>;
+  const { name, email, image, direcciones } = myProfide;
 
-    const myimage = cloudinaryOrUrl(image, 'client')
+  const myimage = cloudinaryOrUrl(image, "client");
 
-    const handleOnFile = (event: any) => {
-        const imageFile = event.target.files;
-        // const formData: any = new FormData();
-        // formData.append("file", imageFile[0]);
-        // formData.append("upload_preset", process.env.CLOUDINARY_USER_PROFILE);
+  const handleOnFile = (event: any) => {
+    const imageFile = event.target.files;
+    // const formData: any = new FormData();
+    // formData.append("file", imageFile[0]);
+    // formData.append("upload_preset", process.env.CLOUDINARY_USER_PROFILE);
 
-        setImageUser(imageFile[0])
-        if (!imageFile || !imageFile[0]) return;
-        const imgURL: any = URL.createObjectURL(imageFile[0]);
-        setPreviewFrom({ ...previewForm, image: imgURL })
+    setImageUser(imageFile[0]);
+    if (!imageFile || !imageFile[0]) return;
+    const imgURL: any = URL.createObjectURL(imageFile[0]);
+    setPreviewFrom({ ...previewForm, image: imgURL });
+  };
+
+  const handleOnchage = (event: any) => {
+    const { value } = event.target;
+    setPreviewFrom({ ...previewForm, name: value });
+  };
+
+  const handleOnsubmit = async (event: valueForm) => {
+    event.preventDefault();
+    const packFormUserUpdate = {
+      name: previewForm.name,
+      newImage: imageUser,
+      email,
+      deleteImage: image,
     };
+    await postImageServerUsert(packFormUserUpdate);
+    setPreviewFrom(myStateForm);
 
-    const handleOnchage = (event: any) => {
-        const { value } = event.target
-        setPreviewFrom({ ...previewForm, name: value })
-    }
+    dispatch(getUserDetail(email));
+  };
 
-    const handleOnsubmit = async (event: valueForm) => {
-        event.preventDefault()
-        const packFormUserUpdate = {
-            name: previewForm.name,
-            newImage: imageUser,
-            email,
-            deleteImage: image
-        }
-        await postImageServerUsert(packFormUserUpdate)
-        setPreviewFrom(myStateForm)
+  const myImage: any = previewForm.image || myimage;
+  const myName: string = previewForm.name || name;
+  const handleOnclikSwich = () => {
+    setPreviewFrom({
+      image: "",
+      name: "",
+      status: !previewForm.status,
+    });
+  };
 
-        dispatch(getUserDetail(email))
+  const myForm = (
+    <form onSubmit={handleOnsubmit}>
+      <input
+        type="text"
+        placeholder=" My Name"
+        value={previewForm.name}
+        onChange={handleOnchage}
+      />
+      <input
+        type="file"
+        accept=".jpg , .png , .jpeg"
+        onChange={handleOnFile}
+        name="image"
+        className={styles.creation_form__img_input}
+        required
+      />
+      <input type="submit" />
+      <button onClick={handleOnclikSwich}>Revert</button>
+    </form>
+  );
 
-    }
+  const myButtonSwith = previewForm.status ? (
+    <button onClick={handleOnclikSwich}>Profile Edition</button>
+  ) : (
+    myForm
+  );
 
+  const myAdress = direcciones?.map((ele, index: number) => (
+    <div key={index}>
+      <p>
+        Direccion{index}: {ele.dir}{" "}
+      </p>
+    </div>
+  ));
+  return (
+    <div className={styles.profile__container}>
+      <div>
+        <div className={styles.profile__data}>
+          <h1 className={styles.profile__title}>{myName}</h1>
 
-    const myImage: any = previewForm.image || myimage
-    const myName: string = previewForm.name || name
-    const handleOnclikSwich = () => {
-        setPreviewFrom({
-            image: '',
-            name: '',
-            status: !previewForm.status
-        })
-    }
+          <h3>Email: {email}</h3>
 
-    const myForm = (
-        <form onSubmit={handleOnsubmit} >
-            <input type="text" placeholder=" My Name" value={previewForm.name} onChange={handleOnchage} />
-            <input
-                type="file"
-                accept=".jpg , .png , .jpeg"
-                onChange={handleOnFile}
-                name="image"
-                className={styles.creation_form__img_input}
-                required
-            />
-            <input type="submit" />
-            <button onClick={handleOnclikSwich}>Revert</button>
-        </form>
-    )
-
-
-
-    const myButtonSwith = previewForm.status ?
-        <button onClick={handleOnclikSwich}>Profile Edition</button> :
-        myForm;
-
-    const myAdress = direcciones?.map((ele, index:number) => (
-        <div key={index}>
-            <p>Direccion{index}:  {ele.dir} </p>
+          <Image
+            src={
+              myImage ||
+              "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif"
+            }
+            width="100"
+            height="100"
+            alt={name}
+            className={styles.avatar__image}
+          />
         </div>
-    ))
-    return (
-
-        <div className={styles.profile__container}>
-            <div>
-                <div className={styles.profile__data}>
-                <h1 className={styles.profile__title}>{myName}</h1>
-                
-                <h3>Email: {email}</h3>
-
-                <Image
-                    src={myImage || " "}
-                    width='100'
-                    height='100'
-                    alt={name}
-                    className={styles.avatar__image}
-                    />
-                   
-            </div>   
-        <div>
-                {myButtonSwith}
-                </div>
-                {myAdress}
-                </div>
-
-
-        </div>
-    );
+        <div>{myButtonSwith}</div>
+        {myAdress}
+      </div>
+    </div>
+  );
 }
-

@@ -24,21 +24,19 @@ model VerificationToken {
 }
 
 model Account {
-  id String @id @unique @default(uuid())
-
+  id                String  @id @unique @default(uuid())
   userId            String
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -51,18 +49,18 @@ model User {
   image         String?
   role          String       @default("user")
   accounts      Account[]
+  direcciones   Direccion[]
+  evaluations   Evaluation[]
+  orders        Order[]
   sessions      Session[]
   favorites     Product[]
-  direcciones   Direccion[]
-  orders        Order[]
-  evaluations   Evaluation[]
 }
 
 model Direccion {
   id      String @id @unique @default(uuid())
   id_user String
+  dir     String
   user    User   @relation(fields: [id_user], references: [id])
-  dir     String //dos personas que viven juntas y usan diferente mail.
 }
 
 model Evaluation {
@@ -75,23 +73,45 @@ model Evaluation {
   user       User    @relation(fields: [id_user], references: [id])
 }
 
+model Order {
+  id            String     @id @unique @default(uuid())
+  id_user       String
+  description   String
+  total         Int
+  status        StatusType
+  date          DateTime   @default(now())
+  delivery_time String
+  user          User       @relation(fields: [id_user], references: [id])
+  product       Product[]
+}
+
+model Product {
+  id          String       @id @unique @default(uuid())
+  name        String
+  price       Int
+  dimension   Int
+  available   Boolean
+  type        TypeDiet
+  category    CategoryPro
+  description String
+  evaluation  Evaluation[]
+  image       ImageProdu[]
+  order       Order[]
+  user        User[]
+}
+
+model ImageProdu {
+  id         String  @id @default(uuid())
+  image      String
+  id_product String
+  product    Product @relation(fields: [id_product], references: [id])
+}
+
 enum StatusType {
   pending
   in_progress
   canceled
   fullfiled
-}
-
-model Order {
-  id            String     @id @unique @default(uuid())
-  id_user       String
-  description   String
-  product       Product[]
-  total         Int
-  status        StatusType
-  date          DateTime   @default(now())
-  user          User       @relation(fields: [id_user], references: [id])
-  delivery_time String
 }
 
 enum TypeDiet {
@@ -109,26 +129,4 @@ enum CategoryPro {
   desserts
   pies
   others
-}
-
-model Product {
-  id          String       @id @unique @default(uuid())
-  name        String
-  price       Int
-  dimension   Int
-  available   Boolean
-  type        TypeDiet
-  category    CategoryPro
-  image       ImageProdu[]
-  description String
-  evaluation  Evaluation[]
-  user        User[]
-  order       Order[]
-}
-
-model ImageProdu {
-  id         String  @id @default(uuid())
-  image      String
-  id_product String
-  product    Product @relation(fields: [id_product], references: [id])
 }
