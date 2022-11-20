@@ -46,6 +46,9 @@ export const getAllReviews = (id : string) => async (dispatch: Function) => {
           "Authorization": myToken
         }
     });
+
+    dispatch(reducerUserReview.actions.getReviews(allReviews))
+
   } catch (error) {
     console.log(error);
     
@@ -55,7 +58,6 @@ export const getAllReviews = (id : string) => async (dispatch: Function) => {
     
 
   export const addReview = async (objectReview : any) => {
-   // console.log(objectReview);
     try {
         const myToken: any = userVerification("client");
          const reviewData= await axios({

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { Ireducers } from "../../../lib/types";
-
 import cloudinaryOrUrl from "../../controllers/detectionOfImage";
 import { postImageServerUsert } from "../../redux/slice/user-detail-redux/user-redux";
 
@@ -63,6 +62,7 @@ export default function Profile(): JSX.Element {
 
     const myImage: any = previewForm.image || myimage
     const myName: string = previewForm.name || name
+    
     const handleOnclikSwich = () => {
         setPreviewFrom({
             image: '',
@@ -72,40 +72,38 @@ export default function Profile(): JSX.Element {
     }
 
     const myForm = (
-        <form onSubmit={handleOnsubmit} >
-            <input type="text" placeholder=" My Name" value={previewForm.name} onChange={handleOnchage} />
+        <form className={styles.form__container} onSubmit={handleOnsubmit} >
+            <input className={styles.form__input} type="text" placeholder=" My Name" value={previewForm.name} onChange={handleOnchage} />
             <input
+                className={styles.btn__img} 
                 type="file"
                 accept=".jpg , .png , .jpeg"
                 onChange={handleOnFile}
                 name="image"
-                className={styles.creation_form__img_input}
                 required
             />
-            <input type="submit" />
-            <button onClick={handleOnclikSwich}>Revert</button>
+            <div className={styles.election__btn}>
+                <button   className={styles.btn} onClick={handleOnclikSwich}>Revert</button>
+                <input   className={styles.btn__submit} type="submit" />
+            </div>
         </form>
     )
 
 
 
     const myButtonSwith = previewForm.status ?
-        <button onClick={handleOnclikSwich}>Profile Edition</button> :
+        <button  className={styles.switch__btn} onClick={handleOnclikSwich}>Profile Edition</button> :
         myForm;
 
-    const myAdress = direcciones?.map((ele, index:number) => (
-        <div key={index}>
-            <p>Direccion{index}:  {ele.dir} </p>
+    const myAdress = direcciones?.map((ele, index :number) => (
+        <div className={styles.adress} key={index}>
+            <p>Direccion {index + 1}:  {ele.dir} </p>
         </div>
     ))
     return (
 
-        <div className={styles.profile__container}>
-            <div>
-                <div className={styles.profile__data}>
-                <h1 className={styles.profile__title}>{myName}</h1>
-                
-                <h3>Email: {email}</h3>
+        <div>
+            <div className={styles.profile__container}>
 
                 <Image
                     src={myImage || " "}
@@ -114,14 +112,17 @@ export default function Profile(): JSX.Element {
                     alt={name}
                     className={styles.avatar__image}
                     />
-                   
-            </div>   
-        <div>
-                {myButtonSwith}
-                </div>
+                    <h1 className={styles.profile__title}>{myName.toUpperCase()}</h1>
+            </div>
+                    
+            <div className={styles.adress__container}>
+                <p>Email: {email}</p>
                 {myAdress}
-                </div>
-
+            </div>
+            
+            <div className={styles.btn__aling}>
+                {myButtonSwith}
+            </div>  
 
         </div>
     );
