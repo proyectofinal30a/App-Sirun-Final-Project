@@ -60,11 +60,7 @@ export const UserReview = () => {
       idProduct: productId,
       review: review.description,
       rating: review.rating,
-
     }
-
-
-
     await addReview(allData)
     dispatch(getAllReviews(productId))
     setReview(myReview)
@@ -140,7 +136,9 @@ export const UserReview = () => {
               )
             })
           }
+          </div>
         </div>
+
         <div className={styles.review__container_text}>
           <div className={styles.review__icon}>{userIcon}</div>
           <textarea
@@ -152,8 +150,9 @@ export const UserReview = () => {
             required
           ></textarea>
         </div>
-      </div>
       {signOrAddReview}
+
+
       {listOfReviews?.evaluation && listOfReviews.evaluation?.map((elem: any, index: number) => {
         return (
 
