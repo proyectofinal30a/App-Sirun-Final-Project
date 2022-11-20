@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../lib/prisma'
+import { prisma } from '../../../lib/prisma'
 import { PrismaClient, StatusType } from '@prisma/client'
 export default async function reviewRating(req: NextApiRequest, res: NextApiResponse) {
 

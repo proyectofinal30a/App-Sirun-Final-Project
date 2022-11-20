@@ -1,6 +1,6 @@
 import Auth0Provider from "next-auth/providers/auth0";
 import NextAuth, { NextAuthOptions } from "next-auth"
-//import prisma from "../../../lib/prisma"
+//import { prisma } from "../../../lib/prisma"
 import { PrismaClient } from "@prisma/client";
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 const clientId: any = process.env.CLIENT_ID

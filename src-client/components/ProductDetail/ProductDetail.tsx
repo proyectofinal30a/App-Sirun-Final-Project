@@ -16,13 +16,18 @@ import { useSession } from "next-auth/react";
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { UserReview } from "./UserReview";
 import styles from "../../styles/ProductDetail.module.css";
-import Average from "./StarsAverage" 
+import Average from "./StarsAverage"
 
 const ProductDetail = () => {
   const { query } = useRouter();
   const id = query.id;
- 
+
+  const { data } = useSession();
+  const myNuEmail = data?.user?.email;
+  const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
+
   const dispatch: Function = useDispatch();
+  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const product: any = useSelector<Ireducers>((state) => state.reducerProductDetail.productDetail);
   const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
 
@@ -31,6 +36,13 @@ const ProductDetail = () => {
     return () => dispatch(cleanProductDetail());
   }, [dispatch, id]);
 
+
+
+  useEffect(() => {
+    if (!myInfUser?.user?.id) {
+      dispatch(getUserDetail(myNuEmail));
+    }
+  }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
 
 
   // SHOPPING CART
@@ -103,23 +115,7 @@ const ProductDetail = () => {
 
 
   // FAVORITE 
-  const { data } = useSession();
-  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
-  const myNuEmail = data?.user?.email;
-  const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
 
-  const [isFavorited, setIsFavorited] = useState(true);
-
-  useEffect(() => {
-    if (!myInfUser?.user?.id) {
-      dispatch(getUserDetail(myNuEmail));
-    }
-  }, [dispatch, data, myInfUser?.user?.id, myNuEmail, isFavorited]);
-
-  useEffect(() => {
-    document.addEventListener( "mousemove", () => setIsFavorited(!isFavorited))
-    return () => document.removeEventListener("mousemove", () => setIsFavorited(!isFavorited))
-  }, [isFavorited]);
 
   const biblioteca: any = {};
   myProfile?.favorites.forEach(fav => {
@@ -176,7 +172,7 @@ const ProductDetail = () => {
 
           <div className={styles.detail__info}>
             <h1 className={styles.detail__info_title}>{product.name && product.name.toLowerCase()}</h1>
-          <Average/>
+            <Average />
             <p className={styles.detail__info_price}>$ {product.price}</p>
 
             <div className={styles.detail__info_extra}>
@@ -198,9 +194,9 @@ const ProductDetail = () => {
             <div className={styles.fav_btn_container} onClick={() => handleFavorite(product.id)}>
               <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
                 <p className={styles.fav_btn}>
-                  {biblioteca[product.id] 
-                  ? <> <FaHeart /> <span className={styles.fav_span}>Remove from favorites</span> </>
-                  : <> <FiHeart /> <span className={styles.fav_span}>Add to favorites</span> </> } 
+                  {biblioteca[product.id]
+                    ? <> <FaHeart /> <span className={styles.fav_span}>Remove from favorites</span> </>
+                    : <> <FiHeart /> <span className={styles.fav_span}>Add to favorites</span> </>}
                 </p>
               </IconContext.Provider>
             </div>
@@ -295,7 +291,7 @@ const ProductDetail = () => {
       </Modal>
 
       <div className={styles.reviews__container}>
-        <UserReview/>
+        <UserReview />
       </div>
     </div>
   );
