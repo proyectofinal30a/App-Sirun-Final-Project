@@ -33,7 +33,7 @@ local.env
 .vercel   
 
 
-
+next.config.js
 # typescript
 *.tsbuildinfo
 next-env.d.ts

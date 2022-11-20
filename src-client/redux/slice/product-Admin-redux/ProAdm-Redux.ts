@@ -68,7 +68,7 @@ export const alfterOnsumbit = () => async (dispatch: Function) => {
 export const uploadFormNoRedux = async (dataForm: Iproduct, image: any) => {
   const myToken: any = await userVerification("client");
   dataForm.image = image;
-  const hola = await axios({
+  await axios({
     method: "post",
     url: "/api/adminScope/post/productPostAdm",
     data: dataForm,
@@ -107,13 +107,13 @@ export const deleteImagePreview = (id: string) => async (dispatch: Function) => 
 export const postImageServer = (newImage: unknown) => async (dispatch: Function) => {
   const { data } = await axios({
     method: "post",
-    url: "https://api.cloudinary.com/v1_1/dqhbskhe7/image/upload",
+    url: `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD}/image/upload`,
     data: newImage,
   });
 
   const { public_id, secure_url } = data;
   const myFracmet: string = public_id.split("/")[1];
-    const myPackImage: imageAddId = {
+  const myPackImage: imageAddId = {
     id: myFracmet,
     image: secure_url,
   };
