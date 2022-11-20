@@ -8,36 +8,42 @@ import { Ireducers } from "../../../lib/types";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { IconContext } from "react-icons";
+import { useSession } from "next-auth/react";
 import styles from "../../styles/Wishlist.module.css";
 
 
 export default function Wishlist(): JSX.Element {
   const dispatch: Function = useDispatch();
+  const { data } = useSession();
 
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+  const myNuEmail = data?.user?.email;
+  const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
+
+  // const [isFavorited, setIsFavorited] = useState({ id: "", favorited: true });
 
   useEffect(() => {
-    if (myProfile) dispatch(getUserDetail(myProfile.email));
-  }, [dispatch, myProfile])
+    if (!myInfUser?.user?.id) {
+      dispatch(getUserDetail(myNuEmail));
+    }
+  }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
 
 
   if (!myProfile) return (<div className={styles.wishlist__loading}>Loading...</div>);
 
-
   const handleClick = (id: any) => {
-    if (typeof id === "string") {
-      const userId: string = myProfile.id;
-      const productId = id;
-      // console.log({ userId: userId, productId: productId });
+    const userId: string = myProfile.id;
+    const productId = id;
 
-      removeFromFavorites(userId, productId);
-
-    }
+    // setIsFavorited({ id: userId, favorited: false ? true : false });
+    removeFromFavorites(userId, productId);
   }
 
 
   return (
     <div className={styles.wishlist__container}>
+      <h3 className={styles.wishlist_title}>My Wishlist</h3>
+      
       {myProfile.favorites.map((elem) => {
         const myImage: string = typeof elem?.image?.[0].image === "string" ? elem.image[0].image : "Loading...";
 
@@ -64,8 +70,8 @@ export default function Wishlist(): JSX.Element {
             <div className={styles.wishlist_fav_btn_container} onClick={() => handleClick(elem.id)}>
               <IconContext.Provider value={{ color: "red", size: "1.3em" }}>
                 <p className={styles.wishlist_fav_btn}>
-                  <FaHeart /> 
-                  <FiHeart />
+                  <FaHeart />
+                  {/* <FiHeart /> */}
                 </p>
               </IconContext.Provider>
             </div>

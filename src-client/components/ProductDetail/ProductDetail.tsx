@@ -12,14 +12,16 @@ import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { IconContext } from "react-icons";
 import { removeFromFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
+import { useSession } from "next-auth/react";
+import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { UserReview } from "./UserReview";
 import styles from "../../styles/ProductDetail.module.css";
-
+import Average from "./StarsAverage" 
 
 const ProductDetail = () => {
   const { query } = useRouter();
   const id = query.id;
-
+ 
   const dispatch: Function = useDispatch();
   const product: any = useSelector<Ireducers>((state) => state.reducerProductDetail.productDetail);
   const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
@@ -88,6 +90,7 @@ const ProductDetail = () => {
   });
 
 
+  // IMAGES SWITCHER
   const [activeImage, setActiveImage] = useState("");
 
   const detail = product.image?.[0].image ? product.image?.[0].image : "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
@@ -100,18 +103,40 @@ const ProductDetail = () => {
 
 
   // FAVORITE 
+  const { data } = useSession();
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+  const myNuEmail = data?.user?.email;
+  const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
 
-  const [isFavorited, setIsFavorited] = useState(false);
-  
+  const [isFavorited, setIsFavorited] = useState(true);
+
+  useEffect(() => {
+    if (!myInfUser?.user?.id) {
+      dispatch(getUserDetail(myNuEmail));
+    }
+  }, [dispatch, data, myInfUser?.user?.id, myNuEmail, isFavorited]);
+
+  useEffect(() => {
+    document.addEventListener( "mousemove", () => setIsFavorited(!isFavorited))
+    return () => document.removeEventListener("mousemove", () => setIsFavorited(!isFavorited))
+  }, [isFavorited]);
+
+  const biblioteca: any = {};
+  myProfile?.favorites.forEach(fav => {
+    if (fav.id) biblioteca[fav.id] = true;
+  })
+
   const handleFavorite = (id: any) => {
-    const userId = myProfile.id;
-    const productId = id;
-    setIsFavorited(current => !current);
-    if (isFavorited) removeFromFavorites(userId, productId);
-    addToFavorites(userId, productId);
-  }
+    const userId: string = myProfile?.id;
+    const productId: string = id;
 
+    if (biblioteca[productId]) {
+      removeFromFavorites(userId, productId);
+      return dispatch(getUserDetail(myNuEmail));
+    };
+    addToFavorites(userId, productId);
+    return dispatch(getUserDetail(myNuEmail));
+  }
 
   return (
     <div className={styles.detail}>
@@ -151,6 +176,7 @@ const ProductDetail = () => {
 
           <div className={styles.detail__info}>
             <h1 className={styles.detail__info_title}>{product.name && product.name.toLowerCase()}</h1>
+          <Average/>
             <p className={styles.detail__info_price}>$ {product.price}</p>
 
             <div className={styles.detail__info_extra}>
@@ -169,10 +195,12 @@ const ProductDetail = () => {
               Add to cart
             </button>
 
-            <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product.id)}>
+            <div className={styles.fav_btn_container} onClick={() => handleFavorite(product.id)}>
               <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
-                <p className={styles.wishlist_fav_btn}>
-                 {isFavorited ? <FaHeart /> : <FiHeart />}
+                <p className={styles.fav_btn}>
+                  {biblioteca[product.id] 
+                  ? <> <FaHeart /> <span className={styles.fav_span}>Remove from favorites</span> </>
+                  : <> <FiHeart /> <span className={styles.fav_span}>Add to favorites</span> </> } 
                 </p>
               </IconContext.Provider>
             </div>

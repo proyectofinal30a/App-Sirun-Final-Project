@@ -21,12 +21,10 @@ export const UserReview = () => {
   const [review, setReview] = useState<IReview>(myReview);
   const [hoverValue, setHoverValue] = useState(null)
   const listOfReviews: any = useSelector((state: any) => state.reducerUserReview.allReviews)
-  console.log(listOfReviews)
-  console.log(Array.isArray(listOfReviews));
 
 
   const dispatch: Function = useDispatch();
-  const stars = [1, 2, 3, 4, 5]
+
 
   useEffect(() => {
     dispatch(getAllReviews(productId))
@@ -40,7 +38,7 @@ export const UserReview = () => {
 
 
   const handleOnClick = (value: number) => {
-    console.log(value);
+    // console.log(value);
     setReview({ ...review, rating: value })
   }
 
@@ -61,6 +59,9 @@ export const UserReview = () => {
       review: review.description,
       rating: review.rating,
     }
+
+
+
     await addReview(allData)
     dispatch(getAllReviews(productId))
     setReview(myReview)
@@ -76,14 +77,14 @@ export const UserReview = () => {
         type="submit"
         onClick={(e) => handleOnSubmit(e)}
         className={styles.review__btn}
-      // disabled={Object.values(myReview).length !== 0}
       >
         Send
       </button>
     );
 
+
   const userIcon: any =
-    status === "authenticated" ? <FaUserTimes /> : <FaUserCheck />;
+    status === "authenticated" ? <FaUserCheck /> : <FaUserTimes />;
 
 
   const placeholder = [
@@ -94,6 +95,7 @@ export const UserReview = () => {
     "What is your opinion?",
     "Why are you still here? Go buy it!"
   ]
+
 
 
   return (
@@ -107,8 +109,9 @@ export const UserReview = () => {
         }
 
         <div className={styles.rating__stars_container} >
+
           {
-            stars.map((star: number, index: number) => {
+            Array(5).fill(0).map((star: number, index: number) => {
               const ratingValue = index + 1
               return (
                 <>
@@ -131,40 +134,44 @@ export const UserReview = () => {
               )
             })
           }
-
+        </div>
+        <div className={styles.review__container_text}>
+          <div className={styles.review__icon}>{userIcon}</div>
+          <textarea
+            name='description'
+            value={review.description}
+            onChange={(e: any) => handleOnChangeText(e)}
+            className={styles.review__description}
+            placeholder={placeholder[review.rating]}
+            required
+          ></textarea>
         </div>
       </div>
-      <div className={styles.review__container_text}>
-        <div className={styles.review__icon}>{userIcon}</div>
-        <textarea
-          name='description'
-          value={review.description}
-          onChange={(e: any) => handleOnChangeText(e)}
-          className={styles.review__description}
-          placeholder={placeholder[review.rating]}
-          required
-        ></textarea>
-      </div>
       {signOrAddReview}
-
-
       {listOfReviews?.evaluation && listOfReviews.evaluation?.map((elem: any, index: number) => {
         return (
-          <div key={index}>
-            <div className={styles.avatar__img_container}>
-              <Image src={`${cloudinaryOrUrl(elem.user.image, 'client')}`} alt="" width={200} height={200} />
-            </div>
-            <div className={styles.review__info}>
-              <p>{elem.user.name}</p>
+
+          <div key={index} className={styles.listReviews__container}>
+            <Image src={elem.user.image} className={styles.listReviews__avatar} alt="" width={200} height={200} />
+
+            <div className={styles.listReview__info}>
+              <p>{elem.user.name.toUpperCase()}</p>
               <p>{elem.review}</p>
             </div>
-            <p>Rating: {elem.rating}</p>
+
+            <div className={styles.listReviews__rating_container}>
+
+              {elem.rating === 0 ?
+                Array(1)?.fill(<FaStar className={styles.stars__empthy} />)
+                : Array(elem.rating).fill(<FaStar className={styles.stars__filled} />)}
+
+
+
+            </div>
+
           </div>
         )
       })}
-
-
-
 
     </div>
   );

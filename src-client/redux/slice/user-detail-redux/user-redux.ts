@@ -18,6 +18,7 @@ const template: Iuser = {
 
 
 export const reducerUser = createSlice({
+<<<<<<< HEAD
     name: "reducerUser",
     initialState: template,
     reducers: {
@@ -25,6 +26,15 @@ export const reducerUser = createSlice({
             state.user = action.payload;
             return;
         },
+=======
+  name: "reducerUser",
+  initialState: template,
+  reducers: {
+    getUserDetail: (state: Iuser, action: any) => {
+      state.user = action.payload;
+      return;
+    },
+>>>>>>> develop
 
         addToFavorites: (state: Iuser, action) => {
             const foundProduct = state.user.favorites.find(product => product.id === action.payload.idProduct);
@@ -48,11 +58,16 @@ export const getUserDetail = (email: any) => async (dispatch: Function) => {
         url: `/api/userScope/get/userAll/${email}`,
     });
 
+<<<<<<< HEAD
     dispatch(reducerUser.actions.getProducts(data));
+=======
+  dispatch(reducerUser.actions.getUserDetail(data));
+>>>>>>> develop
 };
 
 
 export const addToFavorites = async (idUser: string, idProduct: string) => {
+<<<<<<< HEAD
     try {
         const myToken: any = userVerification("client");
         const { data }: any = await axios({
@@ -67,6 +82,20 @@ export const addToFavorites = async (idUser: string, idProduct: string) => {
     } catch (error) {
         console.log(error);
     }
+=======
+  try {
+    const myToken: any = userVerification("client");
+    const { data }: any = await axios({
+      method: "post",
+      url: "/api/userScope/post/productAddFav",
+      data: { idUser, idProduct },
+      headers: { Authorization: myToken },
+    });
+    
+  } catch (error) {
+    console.log(error);
+  }
+>>>>>>> develop
 };
 
 ////edit user
@@ -112,6 +141,7 @@ export const postImageServerUsert = async ({ email, name, newImage, deleteImage 
 
 
 export const removeFromFavorites = async (idUser: string, idProduct: string) => {
+<<<<<<< HEAD
     console.log({ userId: idUser, productId: idProduct });
     try {
         const myToken: any = userVerification("client");
@@ -126,6 +156,20 @@ export const removeFromFavorites = async (idUser: string, idProduct: string) => 
     } catch (error) {
         console.log(error);
     }
+=======
+  try {
+    const myToken: any = userVerification("client");
+    const { data } =  await axios({
+      method: "delete",
+      url: "/api/userScope/delete/productLessFav",
+      data: { idUser, idProduct },
+      headers: { Authorization: myToken },
+    });
+
+  } catch (error) {
+    console.log(error);
+  }
+>>>>>>> develop
 };
 
 

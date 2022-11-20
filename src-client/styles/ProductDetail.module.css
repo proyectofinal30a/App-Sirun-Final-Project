@@ -26,6 +26,30 @@
   object-fit: cover;
 }
 
+
+/* Fav button */
+
+
+.fav_btn_container {
+  display: flex;
+  margin: 2em 0;
+}
+
+.fav_btn_container:hover {
+  cursor: pointer;
+  color: var(--color-dark-blue);
+}
+
+.fav_span {
+  vertical-align: top;
+  margin-left: .3em;
+}
+
+
+
+/* Responsive layout */
+
+
 @media (max-width: 1100px) {
   .image_main__loader_container {
     display: flex;
@@ -166,7 +190,7 @@
 
 .detail__info_price {
   font-family: var(--font-paragraph);
-  color: var(--color-primary);
+  color: var(--color-lightblue-grey);
   font-size: 1.4em;
   margin-bottom: .7em;
 }
