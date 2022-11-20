@@ -107,7 +107,7 @@ export const deleteImagePreview = (id: string) => async (dispatch: Function) => 
 export const postImageServer = (newImage: unknown) => async (dispatch: Function) => {
   const { data } = await axios({
     method: "post",
-    url: "https://api.cloudinary.com/v1_1/dqhbskhe7/image/upload",
+    url: `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD}/image/upload`,
     data: newImage,
   });
 
