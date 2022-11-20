@@ -1,25 +1,25 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../../../lib/prisma'
+import { prisma } from '../../../../../lib/prisma'
 export default async function findUser(req: NextApiRequest, res: NextApiResponse) {
     try {
 
-        const {id} = req.query
+        const { id } = req.query
         if (typeof id === 'string') {
             const myProductReview = await prisma.product.findFirst({
                 where: {
                     id
                 },
-                select:{
+                select: {
                     evaluation: {
-                        select:{
-                            user : {
-                                select:{
+                        select: {
+                            user: {
+                                select: {
                                     name: true,
                                     image: true,
                                 }
                             },
-                            review : true,
-                            rating : true,
+                            review: true,
+                            rating: true,
                         }
                     }
                 }
@@ -29,7 +29,7 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
 
     } catch (error) {
         console.log(error);
-        
+
         res.status(404).json({ msg: "usuario no encontrado" })
     }
 

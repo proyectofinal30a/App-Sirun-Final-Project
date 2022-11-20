@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../../lib/prisma'  //importo prisma del lib del root 
+import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del root 
 import { TypeDiet, CategoryPro } from '@prisma/client'
 import { unstable_getServerSession } from "next-auth/next"
 import userVerification from '../../../../src-client/controllers/userVerification-controller'

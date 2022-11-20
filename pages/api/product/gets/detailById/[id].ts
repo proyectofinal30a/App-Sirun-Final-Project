@@ -1,6 +1,6 @@
 
 import type { NextApiRequest, NextApiResponse, } from "next";
-import prisma from "../../../../../lib/prisma";
+import { prisma } from "../../../../../lib/prisma";
 import { Iproduct } from "../../../../../lib/types";
 const getproductDetail: Function = async (req: NextApiRequest, res: NextApiResponse) => {
 
