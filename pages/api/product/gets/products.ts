@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../../lib/prisma'
+import { prisma } from '../../../../lib/prisma'
 import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from '../../auth/[...nextauth]'
 import userVerification from '../../../../src-client/controllers/userVerification-controller'

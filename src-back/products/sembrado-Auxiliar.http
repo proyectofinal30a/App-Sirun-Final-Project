@@ -6,32 +6,7 @@ POST http://localhost:3000/api/test/sembradoAux
 Content-Type: application/json
 
 [
-     {
-    "name": "Muffins de frutilla",
-    "image": [
-        {
-        "id":"qkccuad9chwsezp8omti",
-        "image":"https://res.cloudinary.com/dqhbskhe7/image/upload/v1668686110/prueba_eze/qkccuad9chwsezp8omti.jpg"
-        },
-        {
-        "id":"t5bolace6lyq8a6vmt6h",
-        "image":"https://res.cloudinary.com/dqhbskhe7/image/upload/v1668686114/prueba_eze/t5bolace6lyq8a6vmt6h.jpg"
-        },
-        {
-        "id":"faoyn79oyspnc1icnhhz",
-        "image":"https://res.cloudinary.com/dqhbskhe7/image/upload/v1668686116/prueba_eze/faoyn79oyspnc1icnhhz.jpg"
-        },
-        {
-        "id":"omtaxu0igyhxeg6mnzsk","image":"https://res.cloudinary.com/dqhbskhe7/image/upload/v1668686119/prueba_eze/omtaxu0igyhxeg6mnzsk.jpg"
-        }
-        ],
-    "price": 1000,
-    "dimension": 30,
-    "category": "muffins",
-    "type": "vegan",
-    "description": "Incluye 6",
-    "available": true
-  },
+    
  {
         "name": "SPANISH SPONGE CAKE",
         "price": 500,

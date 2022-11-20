@@ -1,6 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import prisma from '../../../lib/prisma'  //importo prisma del lib del root 
+import { prisma } from '../../../lib/prisma'  //importo prisma del lib del root 
 const siembraDatos: any = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const product: object = await prisma.product.findMany({
