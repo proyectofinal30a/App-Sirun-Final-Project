@@ -13,7 +13,9 @@ const ReviewAndRating = () => {
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const dispatch : Function = useDispatch()
 
-  const {email} = myProfile;
+  const {email} = myProfile; 
+
+  
 
 
   if (!myProfile) return <div className={styles.loading}>Loading...</div>;
@@ -71,12 +73,24 @@ const ReviewAndRating = () => {
 
 
               <div className={styles.reviews__rating_container}>
-                <span className={styles.reviews__span}>Rating: </span>
+                <span className={styles.reviews__span}>Rating:   </span>
                 <div className={styles.reviews__rating_value_container}>
-                  <p className={styles.reviews__rating}>{elem.rating}</p>
-                  { elem.rating === 0 ?
-                   Array(1)?.fill(<FaStar className={styles.stars__empthy}/>)
-                     : Array(elem.rating).fill(<FaStar className={styles.stars__filled}/>)}
+                         
+               {Array(5).fill(0).map( 
+                (star: number, index: number) => {
+                  const ratingValue = index + 1;
+                  return (
+                    <div key={index}>
+                      <FaStar
+                        className={
+                          ratingValue <= elem.rating
+                            ? styles.stars__filled
+                            : styles.stars__empthy
+                        } 
+                      />
+                    </div>
+                  ); })}
+
                 </div>
               </div>
             </div>

@@ -16,7 +16,7 @@ const Average = () => {
 
 
 
- const averageTotal = Array(reviewsAlreadyFind)?.fill(<FaStar className={styles.stars__filled}/>)
+ const averageTotal = Array(reviewsAlreadyFind)?.fill(<FaStar key={Math.random()} className={styles.stars__filled}/>)
  
   return (
     <div className={styles.average__container}>

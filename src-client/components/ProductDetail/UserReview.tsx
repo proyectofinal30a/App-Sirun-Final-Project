@@ -61,10 +61,14 @@ export const UserReview = () => {
       review: review.description,
       rating: review.rating,
     }
+    // if(review.rating === 0 || review.description === ""){
+    //   alert("Please fill all the fields") 
+    // }
     await addReview(allData)
     dispatch(getAllReviews(productId))
     setReview(myReview)
-  };
+  
+}
 
 
   const signOrAddReview: any =
@@ -78,7 +82,7 @@ export const UserReview = () => {
         type="submit"
         onClick={(e) => handleOnSubmit(e)}
         className={styles.review__btn}
-      // disable
+        disabled={review.rating === 0 || review.description === ""}
      >
         Send
       </button>
@@ -118,7 +122,7 @@ export const UserReview = () => {
               return (
                 <div key={index}>
                   <input
-                    key={index}
+                  
                     type="radio"
                     name="rating"
                     value={ratingValue}
@@ -129,7 +133,6 @@ export const UserReview = () => {
                     onMouseOver={() => handleMouseOver(ratingValue)}
                     onMouseLeave={() => setHoverValue(null)}
                     className={ratingValue <= (hoverValue || review.rating) ? styles.rating__star : styles.rating__star_hover}
-
                   />
                 </div>
               )
@@ -165,9 +168,24 @@ export const UserReview = () => {
 
             <div className={styles.listReviews__rating_container}>
 
-              {elem.rating === 0 ?
-                Array(1)?.fill(<FaStar className={styles.stars__empthy} />)
-                : Array(elem.rating).fill(<FaStar className={styles.stars__filled} />)}
+            
+               {
+                Array(5).fill(0).map((star: number, index: number) => {
+                  const ratingValue = index + 1
+                  return (
+                    <div key={index}>
+                     <FaStar
+                        className={ratingValue <= (elem.rating) ? styles.stars__filled : styles.stars__empthy}
+                      />
+
+                    </div>
+
+                  )
+                })
+
+               }
+                
+
 
 
 

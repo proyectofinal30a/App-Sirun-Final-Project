@@ -8,6 +8,7 @@ import Slider from "../src-client/components/Home/Slider";
 import HomeInfo from "../src-client/components/Home/HomeInfo";
 import Footer from "../src-client/components/Footer/Footer";
 import styles from "../src-client/styles/Home.module.css";
+import React from "react";
 
 export default function Home() {
   const dispatch: Function = useDispatch();

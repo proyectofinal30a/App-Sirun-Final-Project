@@ -1,3 +1,4 @@
+
 import React from "react";
 import styles from "../../styles/Account.module.css";
 import Image from "next/image";
@@ -7,6 +8,7 @@ import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { Ireducers } from "../../../lib/types";
 import cloudinaryOrUrl from "../../controllers/detectionOfImage";
 import { postImageServerUsert } from "../../redux/slice/user-detail-redux/user-redux";
+
 
 const Profile = () => {
   const myStateForm = {
@@ -18,6 +20,7 @@ const Profile = () => {
   const [imageUser, setImageUser] = useState(null);
   const dispatch: Function = useDispatch();
   const [previewForm, setPreviewFrom] = useState(myStateForm);
+
 
   type valueForm =
     | React.FormEvent<HTMLFormElement>
@@ -50,6 +53,7 @@ const Profile = () => {
   };
 
 
+
   const handleOnsubmit = async (event: valueForm) => {
     event.preventDefault();
     const packFormUserUpdate = {
@@ -60,6 +64,7 @@ const Profile = () => {
     };
     await postImageServerUsert(packFormUserUpdate);
     setPreviewFrom(myStateForm);
+
 
     dispatch(getUserDetail(email));
   };
@@ -146,3 +151,4 @@ const Profile = () => {
 };
 
 export default Profile;
+
