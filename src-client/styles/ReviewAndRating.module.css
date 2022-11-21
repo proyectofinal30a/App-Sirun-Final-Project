@@ -220,3 +220,13 @@
   }
 }
 
+
+@media (max-width: 280px) {
+  .reviews__container {
+    font-size: .7em;
+  }
+  
+  .reviews__info_container {
+    margin-top: .4em;
+  }
+}
