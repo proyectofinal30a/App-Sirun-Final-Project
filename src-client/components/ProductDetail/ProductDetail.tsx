@@ -35,21 +35,21 @@ const ProductDetail = () => {
   const product = useSelector((state: Ireducers) => state.reducerProductDetail.detail);
   const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
 
-  if (!product?.evaluation) return <div>loading</div>
-
-  const { evaluation } = product
-
-  useEffect(() => {
+    useEffect(() => {
     typeof id === 'string' && dispatch(getProductDetail(id));
     return () => dispatch(cleanProductDetail());
   }, [dispatch, id]);
-
-
+  
+  
   useEffect(() => {
     if (!myInfUser?.user?.id) {
       dispatch(getUserDetail(myNuEmail));
     }
   }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
+  
+  if (!product?.evaluation) return <div>loading</div>
+
+  const { evaluation } = product
 
 
   // SHOPPING CART
@@ -111,9 +111,9 @@ const ProductDetail = () => {
 
   // IMAGES SWITCHER
 
+if(!product?.image?.[0]?.image) return <div>...loading</div>
 
-
-  const detail = product?.image?.[0].image ? product.image?.[0].image : "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
+  const detail = product.image.[0].image 
 
   const handleMouseOver = (url: string, index: number) => {
     setActiveImage(url);
