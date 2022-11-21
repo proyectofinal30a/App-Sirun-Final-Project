@@ -48,6 +48,7 @@ export default async function createPayment(req: NextApiRequest, res: NextApiRes
                 payer: response.data.payer
             }
         }
+        
         return res.status(200).json(response.data.init_point)
     } catch (error) {
         res.status(400).json(error)

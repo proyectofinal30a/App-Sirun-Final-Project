@@ -26,6 +26,8 @@ export const authOptions: NextAuthOptions = {
             const myUser: any = user
             const myse: any = session
             myse.user.role = myUser.role
+            console.log(session, token, user);
+            
             return myse;
         }
     },

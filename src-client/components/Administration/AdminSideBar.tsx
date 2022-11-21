@@ -1,9 +1,13 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import styles from "../../styles/AdminSideBar.module.css";
+import axios from "axios";
 
 
 const AdminSideBar = () => {
+
+  async function handleUsers(){
+  }
   return (
     <div className={styles.nav__container}>
 
@@ -25,7 +29,7 @@ const AdminSideBar = () => {
               <span className={styles.nav_span}>Manage existing products</span>
             </li>
           </Link>
-          <Link href="/admin/adminUsers" className={styles.nav__link}>
+          <Link href="/admin/adminUsers" onClick={() => handleUsers()} className={styles.nav__link}>
             <li className={styles.nav__item}>
               <span className={styles.nav_span}>Manage users</span>
             </li>

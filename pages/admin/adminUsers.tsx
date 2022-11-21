@@ -15,7 +15,7 @@ export default function AdminUsersPage() {
           <AdminSideBar />
         </div>
         <div className={styles.general__container_second_col}>
-          {/* Falta crear componente AdminUsers */}
+           
         </div>
       </main>
 
