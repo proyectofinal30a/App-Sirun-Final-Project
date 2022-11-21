@@ -11,6 +11,9 @@ export default async function reviewRating(req: NextApiRequest, res: NextApiResp
             idProduct: string
         }
         const { idUser, idProduct, review, rating }: IreRA = req.body
+
+
+
         await prisma.evaluation.create({
             data: {
                 review,

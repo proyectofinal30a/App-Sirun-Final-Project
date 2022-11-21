@@ -35,6 +35,15 @@ export interface IproductsByName {
 }
 
 
+
+
+
+
+interface Ireviews {
+    allReviews: IReview[],
+}
+
+
 export interface Ireducers {
     reducerProduct?: null
     reducerProducts: IallProducts
@@ -43,6 +52,7 @@ export interface Ireducers {
     reducerProductsByName: IproductsByName
     reducerCart: any
     reducerFilters: IallProducts
+    reducerUserReview: Ireviews
 }
 
 
@@ -103,6 +113,12 @@ interface IdProductFavo {
     id: string
     name: string
     image: string
+}
+export interface IReview {
+    id: string
+    review: string
+    rating: number
+    user: userData
 }
 
 

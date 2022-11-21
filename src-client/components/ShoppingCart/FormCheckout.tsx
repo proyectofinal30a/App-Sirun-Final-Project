@@ -61,13 +61,10 @@ const FormCheckout = (): JSX.Element => {
   // Submitea cuando se cliquea el botón del modal (el form esta dentro del modal)
   async function handleSubmit(e: Event) {
     e.preventDefault();
-    console.log("estoy aca", confirmedCart, payLink);
-
     const info = {
       products: productsInCart,
       infoBuyer: inputUser,
     };
-    console.log(info);
 
     dispatch(sendOrderDetail(info));
   }

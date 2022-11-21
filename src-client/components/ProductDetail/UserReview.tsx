@@ -4,7 +4,8 @@ import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaUserTimes, FaUserCheck, FaStar } from "react-icons/fa";
-import { getAllReviews, addReview, IReview } from '../../redux/slice/user-review/user-review'
+import { IReview, Ireducers } from '../../../lib/types'
+import { getAllReviews, addReview } from '../../redux/slice/user-review/user-review-redux'
 import styles from "../../styles/UserReview.module.css";
 import Image from "next/image"
 import cloudinaryOrUrl from "../../controllers/detectionOfImage";
@@ -12,25 +13,25 @@ export const UserReview = () => {
 
 
   const myReview: any = {
-    description: "",
+    review: "",
     rating: 0,
   }
 
   const { query } = useRouter();
   const productId: any = query.id;
   const { data, status }: any = useSession<boolean>();
-  const [review, setReview] = useState<IReview>(myReview);
+  const [evaluation, setEvaluation] = useState<IReview>(myReview);
   const [hoverValue, setHoverValue] = useState(null)
-  const listOfReviews: any = useSelector((state: any) => state.reducerUserReview.allReviews)
-
+  const listOfReviews = useSelector((state: Ireducers) => state.reducerUserReview.allReviews)
 
   const dispatch: Function = useDispatch();
 
 
 
+
   useEffect(() => {
     dispatch(getAllReviews(productId))
-  }, [dispatch, productId])
+  }, [])
 
 
 
@@ -41,13 +42,13 @@ export const UserReview = () => {
 
 
   const handleOnClick = (value: number) => {
-      setReview({ ...review, rating: value })
+    setEvaluation({ ...evaluation, rating: value })
   }
 
 
   const handleOnChangeText = (e: any) => {
     const { value, name } = e.target
-    setReview({ ...review, [name]: value })
+    setEvaluation({ ...evaluation, [name]: value })
   }
 
 
@@ -58,17 +59,15 @@ export const UserReview = () => {
     const allData = {
       idUser: userId,
       idProduct: productId,
-      review: review.description,
-      rating: review.rating,
+      review: evaluation.review,
+      rating: evaluation.rating,
     }
-    // if(review.rating === 0 || review.description === ""){
-    //   alert("Please fill all the fields") 
-    // }
+
     await addReview(allData)
     dispatch(getAllReviews(productId))
-    setReview(myReview)
-  
-}
+    setEvaluation(myReview)
+
+  }
 
 
   const signOrAddReview: any =
@@ -82,8 +81,8 @@ export const UserReview = () => {
         type="submit"
         onClick={(e) => handleOnSubmit(e)}
         className={styles.review__btn}
-        disabled={review.rating === 0 || review.description === ""}
-     >
+        disabled={evaluation.rating === 0 || evaluation.review === ""}
+      >
         Send
       </button>
     );
@@ -102,7 +101,7 @@ export const UserReview = () => {
     "Why are you still here? Go buy it!"
   ]
 
-
+  console.log(listOfReviews);
 
   return (
     <div className={styles.review__container}>
@@ -122,7 +121,7 @@ export const UserReview = () => {
               return (
                 <div key={index}>
                   <input
-                  
+
                     type="radio"
                     name="rating"
                     value={ratingValue}
@@ -132,34 +131,35 @@ export const UserReview = () => {
                     onClick={() => handleOnClick(ratingValue)}
                     onMouseOver={() => handleMouseOver(ratingValue)}
                     onMouseLeave={() => setHoverValue(null)}
-                    className={ratingValue <= (hoverValue || review.rating) ? styles.rating__star : styles.rating__star_hover}
+                    className={ratingValue <= (hoverValue || evaluation.rating) ? styles.rating__star : styles.rating__star_hover}
                   />
                 </div>
               )
             })
           }
-          </div>
         </div>
+      </div>
 
-        <div className={styles.review__container_text}>
-          <div className={styles.review__icon}>{userIcon}</div>
-          <textarea
-            name='description'
-            value={review.description}
-            onChange={(e: any) => handleOnChangeText(e)}
-            className={styles.review__description}
-            placeholder={placeholder[review.rating]}
-            required
-          ></textarea>
-        </div>
+      <div className={styles.review__container_text}>
+        <div className={styles.review__icon}>{userIcon}</div>
+        <textarea
+          name='review'
+          value={evaluation.review}
+          onChange={(e: any) => handleOnChangeText(e)}
+          className={styles.review__description}
+          placeholder={placeholder[evaluation.rating]}
+          required
+        ></textarea>
+      </div>
       {signOrAddReview}
 
 
-      {listOfReviews?.evaluation && listOfReviews.evaluation?.map((elem: any, index: number) => {
+
+      {listOfReviews && listOfReviews?.map((elem, index: number) => {
         return (
 
           <div key={index} className={styles.listReviews__container}>
-            <Image src={cloudinaryOrUrl(elem.user.image, 'client') || ' '} className={styles.listReviews__avatar} alt="" width={200} height={200} />
+            <Image src={cloudinaryOrUrl(elem.user.image, 'client') || "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif"} className={styles.listReviews__avatar} alt="" width={200} height={200} />
 
             <div className={styles.listReview__info}>
               <p>{elem.user.name.toUpperCase()}</p>
@@ -168,13 +168,13 @@ export const UserReview = () => {
 
             <div className={styles.listReviews__rating_container}>
 
-            
-               {
+
+              {
                 Array(5).fill(0).map((star: number, index: number) => {
                   const ratingValue = index + 1
                   return (
                     <div key={index}>
-                     <FaStar
+                      <FaStar
                         className={ratingValue <= (elem.rating) ? styles.stars__filled : styles.stars__empthy}
                       />
 
@@ -183,8 +183,8 @@ export const UserReview = () => {
                   )
                 })
 
-               }
-                
+              }
+
 
 
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Ireducers } from "../../../lib/types";
-import { deleteReview } from "../../redux/slice/user-review/user-review"
+import { deleteReview } from "../../redux/slice/user-review/user-review-redux"
 import { getUserDetail } from '../../redux/slice/user-detail-redux/user-redux'
 import Link from "next/link";
 import Image from "next/image";
