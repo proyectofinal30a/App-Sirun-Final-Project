@@ -133,6 +133,7 @@
 
 .listReviews__rating_container{
   margin-left: auto;
+  display: flex;
 }
 
 .stars__filled{

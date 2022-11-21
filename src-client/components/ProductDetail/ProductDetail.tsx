@@ -50,7 +50,7 @@ const ProductDetail = () => {
 
   }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
 
-  if (id !== product.id || !product?.evaluation) return <div>..Loading</div>
+  if (id !== product.id || !product?.evaluation) return <div className={styles.loading}>Loading...</div>
 
 
   const { evaluation } = product
@@ -112,7 +112,7 @@ const ProductDetail = () => {
 
   // IMAGES SWITCHER
 
-  if (!product?.image?.[0]?.image) return <div>...loading</div>
+  if (!product?.image?.[0]?.image) return <div className={styles.loading}>Loading...</div>
 
   const detail = product.image[0].image
 
@@ -142,8 +142,10 @@ const ProductDetail = () => {
     return dispatch(getUserDetail(myNuEmail));
   }
 
+
+
   return (
-    <div className={url2 === "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" ? styles.detail__loader : styles.detail}>
+    <div className={styles.detail}>
       {product ?
         <div className={styles.detail__container}>
 
@@ -166,13 +168,13 @@ const ProductDetail = () => {
               })}
             </div>
 
-            <div className={url2 === "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" ? styles.image_main__loader_container : styles.image_main__container}>
+            <div className={styles.image_main__container}>
               <Image
                 src={url2}
                 width={500}
                 alt="Product main image"
                 height={500}
-                className={url2 === "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" ? styles.image_main__loader_img : styles.image_main__img}
+                className={styles.image_main__img}
               />
             </div>
           </div>
@@ -231,7 +233,7 @@ const ProductDetail = () => {
           </div>
 
           <h2>Shopping Cart</h2>
-
+          {/* FALTA: Close modal when cart is empty */}
           {cart?.map((elem: any, index: number) => {
             const myUrl = elem?.product?.image?.[0]?.image
             return (
