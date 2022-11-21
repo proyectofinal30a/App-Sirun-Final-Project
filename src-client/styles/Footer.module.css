@@ -9,6 +9,7 @@
   grid-template-columns: repeat(3, 1fr) 2fr;
   grid-gap: 1rem;
   padding-top: 1rem;
+  margin-top: -2.1em;
   font-size: 0.9em;
 }
 
@@ -189,7 +190,7 @@
   margin: auto;
   text-align: center;
   width: 100%;
-  margin: 1.2em 0 ;
+  margin: 1.2em 0;
 }
 
 /* VERSION RESPONSIVE */
@@ -222,8 +223,8 @@
 
   .footer__right {
     align-items: center;
-    padding-left: 6em;
-    padding-right: 6em;
+    padding-left: 3em;
+    padding-right: 3em;
     margin: 1em;
     height: 100%;
   }
@@ -238,6 +239,7 @@
   }
 
   .footer__copyrigth {
+    font-size: .9em;
     margin: auto;
     text-align: center;
     width: 100%;
