@@ -113,7 +113,7 @@ const ProductDetail = () => {
 
 if(!product?.image?.[0]?.image) return <div>...loading</div>
 
-  const detail = product.image.[0].image 
+  const detail = product.image[0].image 
 
   const handleMouseOver = (url: string, index: number) => {
     setActiveImage(url);
