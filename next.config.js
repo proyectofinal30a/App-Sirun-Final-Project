@@ -71,6 +71,7 @@ const nextConfig = {
       "acegif.com",
       "thumbs.gfycat.com",
       "media.tenor.com",
+      "www.genusdei.it",
       "**"
     ],
     async redirects() {

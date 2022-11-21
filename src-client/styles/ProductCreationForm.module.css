@@ -69,6 +69,7 @@
 
 .creation_form__available_container {
   max-width: 15em;
+  margin-left: .5em;
 }
 
 .creation_form__available_btn {
@@ -234,3 +235,29 @@
     margin-top: 3em;
   }
 }
+
+@media (max-width: 400px) {
+  .creation_form__label,
+  .creation_form__input,
+  .creation_form__textarea,
+  .creation_form__select,
+  .creation_form__img_input,
+  .creation_form__submit_btn {
+    margin: auto;
+    width: 20em;
+  }
+
+  .creation_form__available_container {
+    width: 20em;
+    margin-left: 3em;
+  }
+
+  .creation_form__select {
+    margin-bottom: 1.5em;
+  }
+
+  .creation_form__img_input {
+    margin-bottom: 2em;
+  }
+}
+

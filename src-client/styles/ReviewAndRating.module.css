@@ -192,10 +192,6 @@
     padding-top: 2em;
   }
 
-  .reviews__info_container {
-    font-size: 0.85em;
-  }
-
   .delete__review {
     display: flex;
     align-items: flex-start;
@@ -211,36 +207,16 @@
 @media (max-width: 660px) {
   .reviews__container {
     padding-top: 2em;
-    font-size: 0.9em;
   }
 }
 
 @media (max-width: 520px) {
   .reviews__container {
-    padding-top: 2em;
-    font-size: 0.9em;
+    font-size: .9em;
   }
-
+  
   .reviews__info_container {
-    font-size: 0.9em;
+    font-size: .9em;
   }
 }
 
-@media (max-width: 461px) {
-  .reviews__container {
-    padding-top: 2em;
-    font-size: 0.9em;
-  }
-
-  .reviews__info_container {
-    font-size: 0.8em;
-  }
-
-  .first__line_container {
-    display: flex;
-  }
-
-  /* .delete__review{
-    font-size: small;
-  } */
-}
