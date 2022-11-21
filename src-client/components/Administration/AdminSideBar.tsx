@@ -10,7 +10,7 @@ const AdminSideBar = () => {
       {/* Fullscreen admin side bar */}
       <nav className={styles.nav}>
         <ul className={styles.nav__list}>
-          <Link href="/administration" className={styles.nav__link}>
+          <Link href="/admin/adminDashboard" className={styles.nav__link}>
             <li className={styles.nav__item}>
               <span className={styles.nav_span}>Dashboard</span>
             </li>
@@ -46,7 +46,7 @@ const AdminSideBar = () => {
           <button className={styles.mobile_nav__dropdown_btn}>Administrate site</button>
 
           <div className={styles.mobile_nav__dropdown_content}>
-            <Link href="/administration" className={styles.mobile_nav__link}>Dashboard</Link>
+            <Link href="/admin/adminDashboard" className={styles.mobile_nav__link}>Dashboard</Link>
             <Link href="/admin/adminProfile" className={styles.mobile_nav__link}>Profile</Link>
             <Link href="/admin/productCreationForm" className={styles.mobile_nav__link}>Add new product</Link>
             <Link href="/admin/adminProducts" className={styles.mobile_nav__link}>Manage existing products</Link>
