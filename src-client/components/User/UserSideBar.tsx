@@ -20,9 +20,6 @@ const UserSideBar = () => {
     }
   }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
 
-  // console.log(myInfUser);
-
-
   return (
     <div className={styles.nav__container}>
 

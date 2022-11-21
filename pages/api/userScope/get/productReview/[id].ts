@@ -4,7 +4,8 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
     try {
 
         const { id } = req.query
-        if (typeof id === 'string') {
+
+        if (typeof id === 'string' && id !== 'undefined') {
             const myProductReview = await prisma.product.findFirst({
                 where: {
                     id
@@ -12,6 +13,7 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                 select: {
                     evaluation: {
                         select: {
+                            id: true,
                             user: {
                                 select: {
                                     name: true,
@@ -24,7 +26,10 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                     }
                 }
             })
-            res.status(200).json(myProductReview)
+
+
+
+            res.status(200).json(myProductReview?.evaluation)
         }
 
     } catch (error) {
