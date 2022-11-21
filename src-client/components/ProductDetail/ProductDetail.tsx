@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductDetail, cleanProductDetail } from "../../redux/slice/products-client/Product-detail";
+import { getProductDetail, cleanProductDetail } from "../../redux/slice/products-client/Product-detail-redux";
 import { Iproduct, Ireducers } from "../../../lib/types";
 import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart";
 import { useRouter } from "next/router";
@@ -17,6 +17,9 @@ import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { UserReview } from "./UserReview";
 import styles from "../../styles/ProductDetail.module.css";
 import Average from "./StarsAverage"
+import styless from "../../styles/UserReview.module.css";
+import { Ievaluations } from '../../../lib/types';
+import { FaStar } from "react-icons/fa";
 
 const ProductDetail = () => {
   const { query } = useRouter();
@@ -25,17 +28,21 @@ const ProductDetail = () => {
   const { data } = useSession();
   const myNuEmail = data?.user?.email;
   const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
+  const [activeImage, setActiveImage] = useState("");
 
   const dispatch: Function = useDispatch();
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
-  const product: any = useSelector<Ireducers>((state) => state.reducerProductDetail.productDetail);
+  const product = useSelector((state: Ireducers) => state.reducerProductDetail.detail);
   const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
 
+  if (!product?.evaluation) return <div>loading</div>
+
+  const { evaluation } = product
+
   useEffect(() => {
-    dispatch(getProductDetail(id));
+    typeof id === 'string' && dispatch(getProductDetail(id));
     return () => dispatch(cleanProductDetail());
   }, [dispatch, id]);
-
 
 
   useEffect(() => {
@@ -103,9 +110,10 @@ const ProductDetail = () => {
 
 
   // IMAGES SWITCHER
-  const [activeImage, setActiveImage] = useState("");
 
-  const detail = product.image?.[0].image ? product.image?.[0].image : "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
+
+
+  const detail = product?.image?.[0].image ? product.image?.[0].image : "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
 
   const handleMouseOver = (url: string, index: number) => {
     setActiveImage(url);
@@ -116,7 +124,7 @@ const ProductDetail = () => {
 
   // FAVORITE 
 
-
+  console.log(product?.evaluation?.length)
   const biblioteca: any = {};
   myProfile?.favorites.forEach(fav => {
     if (fav.id) biblioteca[fav.id] = true;
@@ -172,7 +180,7 @@ const ProductDetail = () => {
 
           <div className={styles.detail__info}>
             <h1 className={styles.detail__info_title}>{product.name && product.name.toLowerCase()}</h1>
-            <Average />
+            <Average evaluation={evaluation} />
             <p className={styles.detail__info_price}>$ {product.price}</p>
 
             <div className={styles.detail__info_extra}>
