@@ -1,8 +1,10 @@
 import HEAD from "../../src-client/components/HEAD";
 import Nav from "../../src-client/components/NavBar/Nav";
 import Footer from "../../src-client/components/Footer/Footer";
-import AdminSideBar from "../../src-client/components/Administration/AdminSideBar"; // estilos generales de layout de user administrador
+import AdminSideBar from "../../src-client/components/Administration/AdminSideBar"; 
+import AdminManageUsers from "../../src-client/components/Administration/AdminManageUsers";
 import styles from "../../src-client/styles/AdminSideBar.module.css";
+import React from "react";
 
 export default function AdminUsersPage() {
   return (
@@ -15,7 +17,7 @@ export default function AdminUsersPage() {
           <AdminSideBar />
         </div>
         <div className={styles.general__container_second_col}>
-          {/* Falta crear componente AdminUsers */}
+          <AdminManageUsers />
         </div>
       </main>
 

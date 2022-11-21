@@ -81,7 +81,7 @@ const Menu = () => {
           </li>
           <li className={styles.nav__item}>
             <Link
-              href={"/user/profile"}
+              href="/user/profile"
               className={styles.nav__link}
               onClick={handleClick}
             >
@@ -104,7 +104,7 @@ const Menu = () => {
           </li>
           {session?.user?.role === "admin" && (
             <li className={styles.nav__item}>
-              <Link href="/administration" className={styles.nav__link}>
+              <Link href="/admin/adminDashboard" className={styles.nav__link}>
                 <span className={styles.nav_span}>Administration</span>
               </Link>
             </li>
