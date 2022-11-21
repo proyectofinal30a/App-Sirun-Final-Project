@@ -146,10 +146,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-size: 1em;
 }
 
 .empty_cart__message {
-  padding-top: 5em; 
+  padding-top: 6em; 
   margin-bottom: 2em;
 }
 
