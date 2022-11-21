@@ -35,8 +35,8 @@ const ReviewAndRating = () => {
               <div className={styles.reviews__img_container}>
                 <Image
                   src={image}
-                  width="300"
-                  height="300"
+                  width="500"
+                  height="500"
                   alt={product.name}
                   className={styles.reviews__img}
                 />

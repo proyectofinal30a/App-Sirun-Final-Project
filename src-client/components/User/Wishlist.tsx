@@ -56,8 +56,8 @@ export default function Wishlist(): JSX.Element {
             <div className={styles.wishlist_product_img_container}>
               <Image 
                 src={myImage} 
-                width="100" 
-                height="100" 
+                width="300" 
+                height="300" 
                 alt={elem.name} 
                 className={styles.wishlist_product_img}
               />
