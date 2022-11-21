@@ -18,20 +18,16 @@ export const UserReview = () => {
   }
 
   const { query } = useRouter();
-  const productId: any = query.id;
-  const { data, status }: any = useSession<boolean>();
+  const productId = query.id;
+  const { data, status } = useSession<boolean>();
   const [evaluation, setEvaluation] = useState<IReview>(myReview);
   const [hoverValue, setHoverValue] = useState(null)
   const listOfReviews = useSelector((state: Ireducers) => state.reducerUserReview.allReviews)
 
   const dispatch: Function = useDispatch();
 
-
-
-  console.log(productId);
-
   useEffect(() => {
-    dispatch(getAllReviews(productId))
+    typeof productId === 'string' && dispatch(getAllReviews(productId))
   }, [productId, dispatch])
 
 
@@ -65,7 +61,7 @@ export const UserReview = () => {
     }
 
     await addReview(allData)
-    dispatch(getAllReviews(productId))
+    typeof productId === 'string' && dispatch(getAllReviews(productId))
     setEvaluation(myReview)
 
   }

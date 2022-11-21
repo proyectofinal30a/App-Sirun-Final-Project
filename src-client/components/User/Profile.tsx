@@ -1,6 +1,6 @@
 
 import React from "react";
-import styles from "../../styles/Account.module.css";
+import styles from "../../styles/Profile.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -11,6 +11,8 @@ import { postImageServerUsert } from "../../redux/slice/user-detail-redux/user-r
 
 
 const Profile = () => {
+  const dispatch: Function = useDispatch();
+
   const myStateForm = {
     image: "",
     name: "",
@@ -18,17 +20,17 @@ const Profile = () => {
   };
 
   const [imageUser, setImageUser] = useState(null);
-  const dispatch: Function = useDispatch();
   const [previewForm, setPreviewFrom] = useState(myStateForm);
-
 
   type valueForm =
     | React.FormEvent<HTMLFormElement>
     | React.ChangeEvent<HTMLInputElement>
     | React.ChangeEvent<HTMLSelectElement>;
     
+
   const myProfide = useSelector((state: Ireducers) => state.reducerUser.user);
-  if (!myProfide) return <div>Loading...</div>;
+  if (!myProfide) return <div className={styles.loading}>Loading...</div>;
+
   const { name, email, image, direcciones } = myProfide;
 
   const myimage = cloudinaryOrUrl(image, "client");
@@ -36,9 +38,6 @@ const Profile = () => {
 
   const handleOnFile = (event: any) => {
     const imageFile = event.target.files;
-    // const formData: any = new FormData();
-    // formData.append("file", imageFile[0]);
-    // formData.append("upload_preset", process.env.CLOUDINARY_USER_PROFILE);
 
     setImageUser(imageFile[0]);
     if (!imageFile || !imageFile[0]) return;
@@ -62,16 +61,16 @@ const Profile = () => {
       email,
       deleteImage: image,
     };
+
     await postImageServerUsert(packFormUserUpdate);
     setPreviewFrom(myStateForm);
-
-
     dispatch(getUserDetail(email));
   };
 
 
   const myImage: any = previewForm.image || myimage;
   const myName: string = previewForm.name || name;
+
 
   const handleOnclikSwich = () => {
     setPreviewFrom({
@@ -84,13 +83,16 @@ const Profile = () => {
 
   const myForm = (
     <form className={styles.form__container} onSubmit={handleOnsubmit}>
+      <label className={styles.form__label}>Enter your name</label>
       <input
         className={styles.form__input}
         type="text"
-        placeholder=" My Name"
+        placeholder="Enter your name"
         value={previewForm.name}
         onChange={handleOnchage}
       />
+
+      <label className={styles.form__label}>Choose your profile picture</label>
       <input
         className={styles.btn__img}
         type="file"
@@ -99,53 +101,61 @@ const Profile = () => {
         name="image"
         required
       />
+
       <div className={styles.election__btn}>
         <button className={styles.btn} onClick={handleOnclikSwich}>
-          Revert
+          Revert changes
         </button>
-        <input className={styles.btn__submit} type="submit" />
+        <input 
+          className={styles.btn__submit} 
+          type="submit" 
+          value="Change profile"
+        />
       </div>
     </form>
   );
 
   const myButtonSwith = previewForm.status ? (
     <button className={styles.switch__btn} onClick={handleOnclikSwich}>
-      Profile Edition
+      Edit profile
     </button>
   ) : (
     myForm
   );
 
   const myAdress = direcciones?.map((ele, index: number) => (
-    <div className={styles.adress} key={index}>
+    <div className={styles.address} key={index}>
       <p>
-        Direccion {index + 1}: {ele.dir}{" "}
+        Address {index + 1}: {ele.dir.toLowerCase()}{" "}
       </p>
     </div>
   ));
 
   
   return (
-    <div>
+    <div className={styles.profile__general_container}>
       <div className={styles.profile__container}>
         <Image
           src={myImage || "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif"}
           width="200"
           height="200"
           alt={name}
-          className={styles.avatar__image}
+          className={myImage ? styles.avatar__image : styles.avatar__loader}
         />
         <h1 className={styles.profile__title}>{myName.toUpperCase()}</h1>
       </div>
 
-      <div className={styles.adress__container}>
-        <p>Email: {email}</p>
-        {myAdress}
+      <div className={styles.email__container}>
+        <span>Email</span>
+        <p>{email}</p>
       </div>
+      <div className={styles.addresses_container}>
+        <span>Addresses</span>
+        <div className={styles.addresses}>{myAdress}</div>
+      </div>
+     
 
       <div className={styles.btn__aling}>{myButtonSwith}</div>
-
-      {myAdress}
     </div>
   );
 };
