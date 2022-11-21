@@ -8,10 +8,9 @@
 }
 
 .dashboard__title {
-  /* font-size: 2em; */
-  /* color: var(--color-dark-blue); */
-  /* text-align: center; */
-  font-weight: 400;
+  font-size: 2em;
+  color: var(--color-dark-blue);
+  text-align: center;
 }
 
 @media (max-width: 1540px) {
