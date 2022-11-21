@@ -68,15 +68,12 @@ export const getProductDetail = (id: string) => async (dispatch: Function) => {
   });
   const myDatailProdut: Iproduct = data.data
 
-  console.log(myDatailProdut, 'redux');
-
-
   myDatailProdut && dispatch(reducerProductDetail.actions.getProductDetail(myDatailProdut));
 
 };
 
 
-export const cleanProductDetail = () => async (dispatch: Function) => {
+export const cleanProductDetail = () => (dispatch: Function) => {
   dispatch(reducerProductDetail.actions.cleanProductDetail(stateInit));
 };
 

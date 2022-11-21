@@ -16,13 +16,23 @@ import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { useSession } from "next-auth/react";
 
 
+
 const AllProductsCards = () => {
   // GET ALL PRODUCTS
   const dispatch: Function = useDispatch();
+  // FAVORITE 
+  const { data } = useSession();
+  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+  const myNuEmail = data?.user?.email;
+  const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
 
+
+  useEffect(() => {
+    if (!myInfUser?.user?.id) {
+      dispatch(getUserDetail(myNuEmail));
+    }
+  }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
   const allProducts: any = useSelector<Ireducers>((state) => state.reducerProducts.products);
-  const [...products]: any = allProducts;
-
   const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
 
 
@@ -108,7 +118,7 @@ const AllProductsCards = () => {
     indexOfLastProduct
   );
 
-  let pageNumbers = [];
+  let pageNumbers: number[] = [];
   for (let i = 1; i <= Math.ceil(currentProducts.length / productsPerPage); i++) {
     pageNumbers.push(i);
   }
@@ -142,25 +152,6 @@ const AllProductsCards = () => {
 
 
 
-  // FAVORITE 
-  const { data } = useSession();
-  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
-  const myNuEmail = data?.user?.email;
-  const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
-
-  const [isFavorited, setIsFavorited] = useState(true);
-
-  useEffect(() => {
-    if (!myInfUser?.user?.id) {
-      dispatch(getUserDetail(myNuEmail));
-    }
-  }, [dispatch, data, myInfUser?.user?.id, myNuEmail, isFavorited]);
-
-  useEffect(() => {
-    document.addEventListener( "mousemove", () => setIsFavorited(!isFavorited))
-    return () => document.removeEventListener("mousemove", () => setIsFavorited(!isFavorited))
-  }, [isFavorited]);
-
   const biblioteca: any = {};
   myProfile?.favorites.forEach(fav => {
     if (fav.id) biblioteca[fav.id] = true;
@@ -190,7 +181,7 @@ const AllProductsCards = () => {
                   <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product.id)}>
                     <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
                       <p className={styles.wishlist_fav_btn}>
-                       {biblioteca[product.id] ? <FaHeart /> : <FiHeart />}
+                        {biblioteca[product.id] ? <FaHeart /> : <FiHeart />}
                       </p>
                     </IconContext.Provider>
                   </div>
