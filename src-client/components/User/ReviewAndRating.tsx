@@ -59,7 +59,7 @@ const ReviewAndRating = () => {
                 </div>
 
                 <p className={styles.reviews__review_message}>
-                  <span className={styles.reviews__span}>Review message: </span>
+                  <span className={styles.reviews__span}>Review message:</span>
                   {elem.review}
                 </p>
 
