@@ -36,6 +36,10 @@ export default function Wishlist(): JSX.Element {
     const productId = id;
 
     // setIsFavorited({ id: userId, favorited: false ? true : false });
+
+    // Deleting from wishlist confirmation
+    let deleteConfirmation = confirm("Are you sure you want to delete this product from your wishlist?");
+    if (deleteConfirmation === false) return;
     removeFromFavorites(userId, productId);
   }
 
