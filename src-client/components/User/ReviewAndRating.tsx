@@ -35,8 +35,8 @@ const ReviewAndRating = () => {
               <div className={styles.reviews__img_container}>
                 <Image
                   src={image}
-                  width="300"
-                  height="300"
+                  width="500"
+                  height="500"
                   alt={product.name}
                   className={styles.reviews__img}
                 />
@@ -59,7 +59,7 @@ const ReviewAndRating = () => {
                 </div>
 
                 <p className={styles.reviews__review_message}>
-                  <span className={styles.reviews__span}>Review message: </span>
+                  <span className={styles.reviews__span}>Review message:</span>
                   {elem.review}
                 </p>
 

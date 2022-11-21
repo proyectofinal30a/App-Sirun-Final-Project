@@ -3,6 +3,7 @@
   padding-top: 7em;
   font-family: var(--font-paragraph);
   width: 80%;
+  margin-bottom: 3em;
 }
 
 .order__info_container {
@@ -79,6 +80,7 @@
 .order__product_info {
   display: flex;
   flex-direction: column;
+  width: 75%;
 }
 
 /* Loader */

@@ -66,14 +66,14 @@
   text-align: center;
 }
 
-.email__container > p,
-.addresses_container > p:last-child {
-  margin-bottom: 1em;
+.addresses_container > div {
+  margin-bottom: .5em;
   color: rgb(49, 49, 49);
 }
 
-.addresses_container > p {
-  margin-bottom: .5em;
+.email__container > p,
+.addresses_container > div:last-child {
+  margin-bottom: 1em;
   color: rgb(49, 49, 49);
 }
 

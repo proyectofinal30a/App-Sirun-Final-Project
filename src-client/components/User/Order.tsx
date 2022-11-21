@@ -1,3 +1,4 @@
+import React from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Ireducers } from "../../../lib/types";
 import Link from "next/link";
@@ -36,8 +37,8 @@ export default function Orders(): JSX.Element {
               <div className={styles.order__img_container}>
                 <Image 
                     src={myImage} 
-                    width="100" 
-                    height="100" 
+                    width="300" 
+                    height="300" 
                     alt={elem.name} 
                     className={styles.order__img}
                 />

@@ -36,6 +36,10 @@ export default function Wishlist(): JSX.Element {
     const productId = id;
 
     // setIsFavorited({ id: userId, favorited: false ? true : false });
+
+    // Deleting from wishlist confirmation
+    let deleteConfirmation = confirm("Are you sure you want to delete this product from your wishlist?");
+    if (deleteConfirmation === false) return;
     removeFromFavorites(userId, productId);
   }
 
@@ -52,8 +56,8 @@ export default function Wishlist(): JSX.Element {
             <div className={styles.wishlist_product_img_container}>
               <Image 
                 src={myImage} 
-                width="100" 
-                height="100" 
+                width="300" 
+                height="300" 
                 alt={elem.name} 
                 className={styles.wishlist_product_img}
               />
