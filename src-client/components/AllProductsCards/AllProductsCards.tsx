@@ -214,7 +214,7 @@ const AllProductsCards = () => {
 
 
                   <div className={styles.product_card__info_container}>
-                    <p>{product.type}</p>
+                    <p>{product.type !== "none" ? product.type : ""}</p>
                     <p>$ {product.price}</p>
                   </div>
 
