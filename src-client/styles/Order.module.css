@@ -79,6 +79,7 @@
 .order__product_info {
   display: flex;
   flex-direction: column;
+  width: 75%;
 }
 
 /* Loader */
