@@ -29,31 +29,32 @@ const ProductDetail = () => {
   const myNuEmail = data?.user?.email;
   const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
   const [activeImage, setActiveImage] = useState("");
+  const [modalIsOpen, setIsOpen] = useState(false);
 
   const dispatch: Function = useDispatch();
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const product = useSelector((state: Ireducers) => state.reducerProductDetail.detail);
   const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
 
-    useEffect(() => {
+  useEffect(() => {
+    dispatch(cleanProductDetail());
     typeof id === 'string' && dispatch(getProductDetail(id));
-    return () => dispatch(cleanProductDetail());
   }, [dispatch, id]);
-  
-  
+
+
   useEffect(() => {
     if (!myInfUser?.user?.id) {
       dispatch(getUserDetail(myNuEmail));
+
     }
+
   }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
-  
-  if (!product?.evaluation) return <div>loading</div>
+
+  if (id !== product.id || !product?.evaluation) return <div>..Loading</div>
+
 
   const { evaluation } = product
-
-
   // SHOPPING CART
-  const [modalIsOpen, setIsOpen] = useState(false);
   function closeModal() {
     setIsOpen(false);
   }
@@ -111,9 +112,9 @@ const ProductDetail = () => {
 
   // IMAGES SWITCHER
 
-if(!product?.image?.[0]?.image) return <div>...loading</div>
+  if (!product?.image?.[0]?.image) return <div>...loading</div>
 
-  const detail = product.image[0].image 
+  const detail = product.image[0].image
 
   const handleMouseOver = (url: string, index: number) => {
     setActiveImage(url);
@@ -124,7 +125,6 @@ if(!product?.image?.[0]?.image) return <div>...loading</div>
 
   // FAVORITE 
 
-  console.log(product?.evaluation?.length)
   const biblioteca: any = {};
   myProfile?.favorites.forEach(fav => {
     if (fav.id) biblioteca[fav.id] = true;

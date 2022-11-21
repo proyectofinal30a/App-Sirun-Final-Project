@@ -13,8 +13,9 @@ import reducerCart from "./slice/cart-redux/cart";
 
 
 const persistConfig = {
-  key: 'rooaita',
+  key: 'rooyu',
   storage,
+  whilelist: ['reducerCart']
 }
 
 const myReducers = combineReducers({
