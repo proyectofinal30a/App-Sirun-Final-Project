@@ -30,19 +30,9 @@ export interface IallProducts {
 }
 
 
-export interface IDetail {
-    productDetail: Iproduct
-}
-
-
 export interface IproductsByName {
     products: Iproduct[]
 }
-
-
-
-
-
 
 export interface PackProducDetailRating {
     detail: Iproduct
@@ -54,7 +44,7 @@ export interface Ireducers {
     reducerProduct?: null
     reducerProducts: IallProducts
     reducerUser: Iuser
-    reducerProductDetail: IDetail
+    reducerProductDetail: PackProducDetailRating
     reducerProductsByName: IproductsByName
     reducerCart: any
     reducerFilters: IallProducts
@@ -99,9 +89,6 @@ interface IobjProduct {
 }
 
 
-interface IproductOrde {
-
-}
 
 
 interface Iorder {
@@ -114,11 +101,6 @@ interface Iorder {
 }
 
 
-interface IdProductFavo {
-    id: string
-    name: string
-    image: string
-}
 export interface IReview {
     id: string
     review: string
@@ -148,9 +130,6 @@ type userData = {
 }
 
 
-interface IPayload {
-    payload: userData
-}
 
 
 export interface Iuser {
