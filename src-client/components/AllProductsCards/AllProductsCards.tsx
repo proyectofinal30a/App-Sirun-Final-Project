@@ -198,26 +198,29 @@ const AllProductsCards = () => {
                   <Link href={`/productDetail/${product.id}`} className={styles.product_card__link}>
                     <h1 className={styles.product_card__title}>{product.name.toLowerCase()}</h1>
 
-                    <Image
-                      key={index}
-                      src={product.image?.[0]?.image}
-                      width={250}
-                      alt={product.name}
-                      height={250}
-                      priority
-                      className={styles.product_card__img}
-                    />
+                    <div className={styles.product_card__img_container}>
+                      <Image
+                        key={index}
+                        src={product.image?.[0]?.image}
+                        width={1000}
+                        alt={product.name}
+                        height={1000}
+                        priority
+                        className={styles.product_card__img}
+                      />
+                    </div>
+
                   </Link>
 
 
                   <div className={styles.product_card__info_container}>
-                    <p>$ {product.price}</p>
                     <p>{product.type}</p>
-
-                    <button className={styles.add_to_cart__btn} onClick={(e: any) => addProductOpenModal(e, product)}>
-                      Add to cart
-                    </button>
+                    <p>$ {product.price}</p>
                   </div>
+
+                  <button className={styles.add_to_cart__btn} onClick={(e: any) => addProductOpenModal(e, product)}>
+                    Add to cart
+                  </button>
                 </div>
               )
             })}
