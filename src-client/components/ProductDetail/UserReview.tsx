@@ -28,10 +28,11 @@ export const UserReview = () => {
 
 
 
+  console.log(productId);
 
   useEffect(() => {
     dispatch(getAllReviews(productId))
-  }, [])
+  }, [productId, dispatch])
 
 
 
@@ -101,7 +102,7 @@ export const UserReview = () => {
     "Why are you still here? Go buy it!"
   ]
 
-  console.log(listOfReviews);
+
 
   return (
     <div className={styles.review__container}>

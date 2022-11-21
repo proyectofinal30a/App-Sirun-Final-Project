@@ -13,7 +13,7 @@ import reducerUserReview from "./slice/user-review/user-review-redux"
 
 
 const persistConfig = {
-  key: 'rooita',
+  key: 'rooaita',
   storage,
 }
 

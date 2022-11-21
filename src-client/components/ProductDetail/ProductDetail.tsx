@@ -17,6 +17,9 @@ import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { UserReview } from "./UserReview";
 import styles from "../../styles/ProductDetail.module.css";
 import Average from "./StarsAverage"
+import styless from "../../styles/UserReview.module.css";
+import { Ievaluations } from '../../../lib/types';
+import { FaStar } from "react-icons/fa";
 
 const ProductDetail = () => {
   const { query } = useRouter();
@@ -28,13 +31,36 @@ const ProductDetail = () => {
 
   const dispatch: Function = useDispatch();
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
-  const product: any = useSelector<Ireducers>((state) => state.reducerProductDetail.productDetail);
+  const product = useSelector((state: Ireducers) => state.reducerProductDetail.productDetail);
   const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
 
   useEffect(() => {
     dispatch(getProductDetail(id));
+
     return () => dispatch(cleanProductDetail());
   }, [dispatch, id]);
+
+
+
+  const totalRating = product.evaluation?.[0] && product.evaluation?.map((elem) => elem.rating).reduce((elem, acc: number) => elem + acc)
+
+  const myReating = totalRating && (Math.round(totalRating / product.evaluation.length))
+
+  const averageTotal = myReating && Array(myReating).fill(<FaStar key={Math.random()} className={styles.stars__filled} />)
+
+  const myPrueba = averageTotal ? (
+    <div className={styles.average__container}>
+      <p className={styles.review__average}>The rating average is {myReating}</p>
+      {averageTotal}
+
+    </div>
+  ) : (<div className={styles.average__container}>
+    <p className={styles.review__average}>There are no reviews</p>
+  </div>)
+
+
+
+
 
 
 
@@ -101,10 +127,17 @@ const ProductDetail = () => {
     return (total += elem.subTotal);
   });
 
+  console.log(product, 'critica');
 
   // IMAGES SWITCHER
   const [activeImage, setActiveImage] = useState("");
+  const [activeImage2, setActiveImage2] = useState(0);
 
+  useEffect(() => {
+    dispatch(getProductDetail(id));
+
+    return () => dispatch(cleanProductDetail());
+  }, [dispatch, id, activeImage2]);
   const detail = product.image?.[0].image ? product.image?.[0].image : "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
 
   const handleMouseOver = (url: string, index: number) => {
@@ -172,7 +205,7 @@ const ProductDetail = () => {
 
           <div className={styles.detail__info}>
             <h1 className={styles.detail__info_title}>{product.name && product.name.toLowerCase()}</h1>
-            <Average />
+            {product?.evaluation?.length / 2}
             <p className={styles.detail__info_price}>$ {product.price}</p>
 
             <div className={styles.detail__info_extra}>

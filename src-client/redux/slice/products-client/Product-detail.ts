@@ -53,9 +53,9 @@ export const getProductDetail =
         Authorization: myToken,
       },
     });
-    if (data) {
-      dispatch(reducerProductDetail.actions.getProductDetail(data));
-    }
+
+    data && dispatch(reducerProductDetail.actions.getProductDetail(data));
+
   };
 
 

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Ireducers } from "../../../lib/types";
 import { deleteReview } from "../../redux/slice/user-review/user-review-redux"
@@ -12,6 +12,10 @@ import styles from "../../styles/ReviewAndRating.module.css";
 const ReviewAndRating = () => {
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const dispatch: Function = useDispatch()
+  useEffect(() => {
+    myProfile?.email && dispatch(getUserDetail(myProfile.email));
+  }, []);
+
   if (!myProfile) return <div className={styles.loading}>Loading...</div>;
   const { email } = myProfile;
   const { evaluations } = myProfile;
@@ -21,6 +25,7 @@ const ReviewAndRating = () => {
     dispatch(deleteReview(id));
     dispatch(getUserDetail(email))
   };
+
 
   return (
     <div className={styles.reviews__container}>

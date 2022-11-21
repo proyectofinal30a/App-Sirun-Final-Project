@@ -12,15 +12,38 @@ const getproductDetail: Function = async (req: NextApiRequest, res: NextApiRespo
     const productDetail: any = await prisma.product.findUnique(
       {
         where: { id },
-        include: {
+        select: {
+          id: true,
+          name: true,
+          price: true,
+          dimension: true,
+          available: true,
+          type: true,
+          category: true,
           image: {
             select: {
-              image: true
+              image: true,
             }
-          }
-        }
+          },
+          evaluation: {
+            select: {
+              id: true,
+              rating: true,
+              review: true,
+              user: {
+                select: {
+                  name: true,
+                  image: true,
+                  role: true
+                }
+              }
+            }
+          },
 
+        }
       }
+
+
     )
     prisma.$disconnect()
     res.status(200).json(productDetail);
@@ -29,6 +52,16 @@ const getproductDetail: Function = async (req: NextApiRequest, res: NextApiRespo
   }
 };
 
+// id: string;
+// name: string;
+// price: number;
+// dimension: number;
+// available: boolean;
+// type: TypeDiet;
+// category: CategoryPro;
+// image: Iimage[];
+// description: string;
+// evaluation: Ievaluations[]
 
 
 

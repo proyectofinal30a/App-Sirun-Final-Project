@@ -1,28 +1,37 @@
-import React from 'react'
-import { useSelector } from "react-redux";
-import {FaStar } from "react-icons/fa";
+import React, { useState } from 'react'
+
+import { FaStar } from "react-icons/fa";
 import styles from "../../styles/UserReview.module.css";
+import { Ievaluations } from '../../../lib/types';
 
-const Average = () => {
-  const listOfReviews : any = useSelector((state : any) => state.reducerUserReview.allReviews)
-
- 
- let totalRating = 0
-  listOfReviews?.evaluation?.map((elem : any)=>{
-      totalRating = elem.rating + totalRating;
-  })
-
-  const reviewsAlreadyFind = listOfReviews?.evaluation?.length ? Math.round(totalRating / listOfReviews?.evaluation?.length) : 0
+interface IpropEva {
+  evaluation: Ievaluations[]
+  setActiveImage2: Function
+  activeImage2: number
+}
 
 
+const Average = ({ evaluation, setActiveImage2, activeImage2 }: IpropEva) => {
+  const [rating, setRating] = useState(0)
 
- const averageTotal = Array(reviewsAlreadyFind)?.fill(<FaStar key={Math.random()} className={styles.stars__filled}/>)
- 
+  if (!evaluation[0]) return (
+    <div className={styles.average__container}>
+      <p className={styles.review__average}>There are no reviews</p>
+    </div>
+  )
+
+  const totalRating = evaluation.map((elem) => elem.rating).reduce((elem, acc: number) => elem + acc)
+  console.log(totalRating, 'rating');
+
+
+  setRating(Math.round(totalRating / evaluation.length))
+  const averageTotal = Array(rating).fill(<FaStar key={Math.random()} className={styles.stars__filled} />)
+
   return (
     <div className={styles.average__container}>
-      <p className={styles.review__average}>The rating average is {reviewsAlreadyFind}</p> 
-      {averageTotal} 
-  
+      <p className={styles.review__average}>The rating average is {rating}</p>
+      {averageTotal}
+
     </div>
   )
 }
