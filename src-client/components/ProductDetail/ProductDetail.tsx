@@ -135,7 +135,7 @@ const ProductDetail = () => {
   }
 
   return (
-    <div className={styles.detail}>
+    <div className={url2 === "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif" ? styles.detail__loader : styles.detail}>
       {product ?
         <div className={styles.detail__container}>
 
