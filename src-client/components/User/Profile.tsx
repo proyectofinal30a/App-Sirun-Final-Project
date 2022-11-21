@@ -11,6 +11,8 @@ import { postImageServerUsert } from "../../redux/slice/user-detail-redux/user-r
 
 
 const Profile = () => {
+  const dispatch: Function = useDispatch();
+
   const myStateForm = {
     image: "",
     name: "",
@@ -18,9 +20,7 @@ const Profile = () => {
   };
 
   const [imageUser, setImageUser] = useState(null);
-  const dispatch: Function = useDispatch();
   const [previewForm, setPreviewFrom] = useState(myStateForm);
-
 
   type valueForm =
     | React.FormEvent<HTMLFormElement>
@@ -29,7 +29,6 @@ const Profile = () => {
     
 
   const myProfide = useSelector((state: Ireducers) => state.reducerUser.user);
-
   if (!myProfide) return <div className={styles.loading}>Loading...</div>;
 
   const { name, email, image, direcciones } = myProfide;
@@ -39,9 +38,6 @@ const Profile = () => {
 
   const handleOnFile = (event: any) => {
     const imageFile = event.target.files;
-    // const formData: any = new FormData();
-    // formData.append("file", imageFile[0]);
-    // formData.append("upload_preset", process.env.CLOUDINARY_USER_PROFILE);
 
     setImageUser(imageFile[0]);
     if (!imageFile || !imageFile[0]) return;
@@ -65,10 +61,9 @@ const Profile = () => {
       email,
       deleteImage: image,
     };
+
     await postImageServerUsert(packFormUserUpdate);
     setPreviewFrom(myStateForm);
-
-
     dispatch(getUserDetail(email));
   };
 
@@ -96,6 +91,7 @@ const Profile = () => {
         value={previewForm.name}
         onChange={handleOnchage}
       />
+
       <label className={styles.form__label}>Choose your profile picture</label>
       <input
         className={styles.btn__img}
@@ -105,6 +101,7 @@ const Profile = () => {
         name="image"
         required
       />
+
       <div className={styles.election__btn}>
         <button className={styles.btn} onClick={handleOnclikSwich}>
           Revert changes
@@ -154,7 +151,7 @@ const Profile = () => {
       </div>
       <div className={styles.addresses_container}>
         <span>Addresses</span>
-        <p className={styles.addresses}>{myAdress}</p>
+        <div className={styles.addresses}>{myAdress}</div>
       </div>
      
 
