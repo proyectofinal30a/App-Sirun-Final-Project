@@ -23,7 +23,7 @@
   background-color: rgb(243, 238, 238);
   padding-top: 1em;
   margin: 1em;
-  border-radius: 0.5em;
+  border-radius: 0.3em;
 }
 
 
@@ -75,6 +75,7 @@
 .product_card__img {
   width: 100%;
   height: 100%;
+  border-radius: .2em;
   object-fit: cover;
 }
 

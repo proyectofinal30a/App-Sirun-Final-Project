@@ -15,7 +15,7 @@
 }
 
 .image_main__loader_container {
-  margin: auto;
+  margin: auto; 
   display: flex;
   justify-content: center;
   align-items: center; 
@@ -208,7 +208,9 @@
   justify-content: flex-start;
 }
 
-/* INFO */
+
+/* Product detail info */
+
 
 .detail__info {
   margin-left: 4em;
@@ -227,7 +229,7 @@
   font-size: 2em;
   font-weight: 600;
   text-transform: capitalize;
-  padding-bottom: .5em;
+  padding-bottom: .2em;
 }
 
 .detail__info_price {
@@ -235,6 +237,7 @@
   color: var(--color-lightblue-grey);
   font-size: 1.4em;
   margin-bottom: .7em;
+  margin-top: 1em;
 }
 
 .detail__info_extra {
