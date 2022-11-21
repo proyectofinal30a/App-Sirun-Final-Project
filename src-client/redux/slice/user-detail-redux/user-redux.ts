@@ -16,6 +16,10 @@ const template: Iuser = {
     },
 };
 
+interface IidString {
+    payload: string
+}
+
 
 export const reducerUser = createSlice({
 
@@ -37,7 +41,10 @@ export const reducerUser = createSlice({
             const foundProduct = state.user.favorites.find(product => product.id === action.payload.idProduct);
             if (!foundProduct) return;
             state.user.favorites = state.user.favorites.filter(product => product.id !== action.payload.idProduct);
-        }
+        },
+        deleteOneReview: (state: Iuser, action: IidString) => {
+            state.user.evaluations = state.user.evaluations.filter((elem) => elem.id !== action.payload)
+        },
 
     },
 });
@@ -52,6 +59,24 @@ export const getUserDetail = (email: any) => async (dispatch: Function) => {
     dispatch(reducerUser.actions.getProducts(data));
 
 };
+
+
+export const deleteReview = (id: string) => async (dispatch: Function) => {
+    try {
+        const myToken: any = await userVerification('client')
+        await axios({
+            method: 'delete',
+            url: `/api/userScope/delete/${id}`,
+            headers: {
+                "Authorization": myToken
+            }
+        });
+        dispatch(reducerUser.actions.deleteOneReview(id))
+    } catch (error) {
+        console.log(error)
+    }
+};
+
 
 
 export const addToFavorites = async (idUser: string, idProduct: string) => {

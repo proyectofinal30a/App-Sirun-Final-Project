@@ -5,15 +5,15 @@ import storage from "redux-persist/lib/storage";
 import reducerUser from "./slice/user-detail-redux/user-redux";
 import reducerProductAdm from "./slice/product-Admin-redux/ProAdm-Redux";
 import reducerProducts from "./slice/products-client/Products-all-redux";
-import reducerProductDetail from "./slice/products-client/Product-detail";
+import reducerProductDetail from "./slice/products-client/Product-detail-redux";
 import reducerFilters from "./slice/filter-product-client/filters-redux";
 import reducerProductsByName from "./slice/products-client/ProductByName-redux";
 import reducerCart from "./slice/cart-redux/cart";
-import reducerUserReview from "./slice/user-review/user-review-redux"
+
 
 
 const persistConfig = {
-  key: 'rooita',
+  key: 'rooaita',
   storage,
 }
 
@@ -25,7 +25,6 @@ const myReducers = combineReducers({
   reducerProductsByName,
   reducerCart,
   reducerFilters,
-  reducerUserReview,
 })
 
 

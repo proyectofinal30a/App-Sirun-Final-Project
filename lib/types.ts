@@ -1,25 +1,30 @@
 import { TypeDiet, CategoryPro, StatusType } from '@prisma/client'
 
 export interface Iimage {
-    image: string[]
+    image: string
 }
 
 
 export interface Iproduct {
-    id?: string;
+    id: string;
     name: string;
     price: number;
     dimension: number;
     available: boolean;
     type: TypeDiet;
     category: CategoryPro;
-    image?: Iimage[];
+    image: Iimage[];
     description: string;
+    evaluation: Ievaluations[]
 }
 
 
+
+
+
+
 export interface IallProducts {
-    products: Iproduct[] | []
+    products: Iproduct[]
     productsToFilter: Iproduct[]
     productPrevState: Iproduct[]
 }
@@ -39,8 +44,9 @@ export interface IproductsByName {
 
 
 
-interface Ireviews {
-    allReviews: IReview[],
+export interface PackProducDetailRating {
+    detail: Iproduct
+    rating: number
 }
 
 
@@ -52,7 +58,6 @@ export interface Ireducers {
     reducerProductsByName: IproductsByName
     reducerCart: any
     reducerFilters: IallProducts
-    reducerUserReview: Ireviews
 }
 
 
@@ -122,11 +127,12 @@ export interface IReview {
 }
 
 
-interface Ievaluations {
+export interface Ievaluations {
     id: string
     review: string
     rating: number
     product: IobjProduct
+    user: userData
 }
 
 

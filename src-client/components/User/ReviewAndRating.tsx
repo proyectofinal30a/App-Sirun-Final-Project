@@ -1,20 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { Ireducers } from "../../../lib/types";
-import { deleteReview } from "../../redux/slice/user-review/user-review-redux"
+import { deleteReview } from "../../redux/slice/user-detail-redux/user-redux"
 import { getUserDetail } from '../../redux/slice/user-detail-redux/user-redux'
 import Link from "next/link";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import styles from "../../styles/ReviewAndRating.module.css";
 
-
 const ReviewAndRating = () => {
   const router = useRouter();
-  const dispatch: Function = useDispatch();
-
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+
+  const dispatch: Function = useDispatch()
+  useEffect(() => {
+    myProfile?.email && dispatch(getUserDetail(myProfile.email));
+  }, []);
+
   if (!myProfile) return <div className={styles.loading}>Loading...</div>;
   const { email } = myProfile;
 
@@ -22,9 +25,8 @@ const ReviewAndRating = () => {
   if (!evaluations) return <div className={styles.loading}>Loading...</div>;
 
 
-  const handleDelete = (id: string, email: string) => {
+  const handleDelete = (id: string) => {
     dispatch(deleteReview(id));
-    dispatch(getUserDetail(email))
   };
 
 
@@ -32,7 +34,7 @@ const ReviewAndRating = () => {
     <div className={styles.reviews__container}>
       <h1 className={evaluations[0] ? styles.reviews__title : styles.reviews__title_hidden}>My reviews</h1>
 
-      {evaluations[0] ? 
+      {evaluations[0] ?
         evaluations?.map((elem) => {
           const { product } = elem;
           const { image } = product.image[0];
@@ -58,7 +60,7 @@ const ReviewAndRating = () => {
                       <p className={styles.reviews__name}>
                         {product.name.toLowerCase()}
                       </p>
-                      <button className={styles.delete__review} onClick={() => handleDelete(id, email)}>x</button>
+                      <button className={styles.delete__review} onClick={() => handleDelete(id)}>x</button>
                     </div>
 
                     <Link href={`/productDetail/${product.id}`} className={styles.reviews__details}>
@@ -99,17 +101,17 @@ const ReviewAndRating = () => {
             </div>
           );
         })
-      : 
-      <div className={styles.empty_cart__container}>
-        <p className={styles.empty_cart__message}>You haven&apos;t made a review yet.</p>
-        <button
-          onClick={() => router.push("/products")}
-          className={styles.empty_cart__btn}
-        >
-          View products
-        </button>
-      </div>
-    }
+        :
+        <div className={styles.empty_cart__container}>
+          <p className={styles.empty_cart__message}>You haven&apos;t made a review yet.</p>
+          <button
+            onClick={() => router.push("/products")}
+            className={styles.empty_cart__btn}
+          >
+            View products
+          </button>
+        </div>
+      }
     </div>
   );
 };
