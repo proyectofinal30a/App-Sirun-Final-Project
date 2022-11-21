@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import { removeFromFavorites } from "../../redux/slice/user-detail-redux/user-redux";
@@ -13,6 +14,7 @@ import styles from "../../styles/Wishlist.module.css";
 
 
 export default function Wishlist(): JSX.Element {
+  const router = useRouter();
   const dispatch: Function = useDispatch();
   const { data } = useSession();
 
@@ -46,42 +48,55 @@ export default function Wishlist(): JSX.Element {
 
   return (
     <div className={styles.wishlist__container}>
-      <h3 className={styles.wishlist_title}>My Wishlist</h3>
-      
-      {myProfile.favorites.map((elem) => {
-        const myImage: string = typeof elem?.image?.[0].image === "string" ? elem.image[0].image : "Loading...";
+      <h3 className={myProfile.favorites[0] ? styles.wishlist_title : styles.wishlist_title_hidden}>My Wishlist</h3>
 
-        return (
-          <div key={elem.id} className={styles.wishlist_product_container}>
-            <div className={styles.wishlist_product_img_container}>
-              <Image 
-                src={myImage} 
-                width="300" 
-                height="300" 
-                alt={elem.name} 
-                className={styles.wishlist_product_img}
-              />
+      {myProfile.favorites[0] ? 
+        myProfile.favorites.map((elem) => {
+          const myImage: string = typeof elem?.image?.[0].image === "string" ? elem.image[0].image : "Loading...";
+
+          return (
+            <div key={elem.id} className={styles.wishlist_product_container}>
+              <div className={styles.wishlist_product_img_container}>
+                <Image 
+                  src={myImage} 
+                  width="300" 
+                  height="300" 
+                  alt={elem.name} 
+                  className={styles.wishlist_product_img}
+                />
+              </div>
+
+              <div className={styles.wishlist_product_info_container}>
+                <h3 className={styles.wishlist_product_name}>{elem.name.toLowerCase()}</h3>
+
+                <Link href={`/productDetail/${elem.id}`} className={styles.wishlist_product_details_btn}>
+                  View product details
+                </Link>
+              </div>
+
+              <div className={styles.wishlist_fav_btn_container} onClick={() => handleClick(elem.id)}>
+                <IconContext.Provider value={{ color: "red", size: "1.3em" }}>
+                  <p className={styles.wishlist_fav_btn}>
+                    <FaHeart />
+                    {/* <FiHeart /> */}
+                  </p>
+                </IconContext.Provider>
+              </div>
             </div>
+          )
+        })
 
-            <div className={styles.wishlist_product_info_container}>
-              <h3 className={styles.wishlist_product_name}>{elem.name.toLowerCase()}</h3>
-
-              <Link href={`/productDetail/${elem.id}`} className={styles.wishlist_product_details_btn}>
-                View product details
-              </Link>
-            </div>
-
-            <div className={styles.wishlist_fav_btn_container} onClick={() => handleClick(elem.id)}>
-              <IconContext.Provider value={{ color: "red", size: "1.3em" }}>
-                <p className={styles.wishlist_fav_btn}>
-                  <FaHeart />
-                  {/* <FiHeart /> */}
-                </p>
-              </IconContext.Provider>
-            </div>
-          </div>
-        )
-      })}
+      : 
+        <div className={styles.empty_cart__container}>
+          <p className={styles.empty_cart__message}>Your wishlist is empty.</p>
+          <button
+            onClick={() => router.push("/products")}
+            className={styles.empty_cart__btn}
+          >
+            View products
+          </button>
+        </div>
+      }
     </div>
   );
 }
