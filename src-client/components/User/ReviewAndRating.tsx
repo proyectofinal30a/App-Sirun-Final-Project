@@ -2,13 +2,12 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { Ireducers } from "../../../lib/types";
-import { deleteReview } from "../../redux/slice/user-review/user-review-redux"
+import { deleteReview } from "../../redux/slice/user-detail-redux/user-redux"
 import { getUserDetail } from '../../redux/slice/user-detail-redux/user-redux'
 import Link from "next/link";
 import Image from "next/image";
 import { FaStar } from "react-icons/fa";
 import styles from "../../styles/ReviewAndRating.module.css";
-
 
 const ReviewAndRating = () => {
   const router = useRouter();
@@ -26,9 +25,8 @@ const ReviewAndRating = () => {
   if (!evaluations) return <div className={styles.loading}>Loading...</div>;
 
 
-  const handleDelete = (id: string, email: string) => {
+  const handleDelete = (id: string) => {
     dispatch(deleteReview(id));
-    dispatch(getUserDetail(email))
   };
 
 
@@ -62,7 +60,7 @@ const ReviewAndRating = () => {
                       <p className={styles.reviews__name}>
                         {product.name.toLowerCase()}
                       </p>
-                      <button className={styles.delete__review} onClick={() => handleDelete(id, email)}>x</button>
+                      <button className={styles.delete__review} onClick={() => handleDelete(id)}>x</button>
                     </div>
 
                     <Link href={`/productDetail/${product.id}`} className={styles.reviews__details}>

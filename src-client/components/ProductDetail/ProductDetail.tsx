@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductDetail, cleanProductDetail } from "../../redux/slice/products-client/Product-detail";
+import { getProductDetail, cleanProductDetail } from "../../redux/slice/products-client/Product-detail-redux";
 import { Iproduct, Ireducers } from "../../../lib/types";
 import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart";
 import { useRouter } from "next/router";
@@ -28,40 +28,21 @@ const ProductDetail = () => {
   const { data } = useSession();
   const myNuEmail = data?.user?.email;
   const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
+  const [activeImage, setActiveImage] = useState("");
 
   const dispatch: Function = useDispatch();
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
-  const product = useSelector((state: Ireducers) => state.reducerProductDetail.productDetail);
+  const product = useSelector((state: Ireducers) => state.reducerProductDetail.detail);
   const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
 
-  useEffect(() => {
-    dispatch(getProductDetail(id));
+  if (!product?.evaluation) return <div>loading</div>
 
+  const { evaluation } = product
+
+  useEffect(() => {
+    typeof id === 'string' && dispatch(getProductDetail(id));
     return () => dispatch(cleanProductDetail());
   }, [dispatch, id]);
-
-
-
-  const totalRating = product.evaluation?.[0] && product.evaluation?.map((elem) => elem.rating).reduce((elem, acc: number) => elem + acc)
-
-  const myReating = totalRating && (Math.round(totalRating / product.evaluation.length))
-
-  const averageTotal = myReating && Array(myReating).fill(<FaStar key={Math.random()} className={styles.stars__filled} />)
-
-  const myPrueba = averageTotal ? (
-    <div className={styles.average__container}>
-      <p className={styles.review__average}>The rating average is {myReating}</p>
-      {averageTotal}
-
-    </div>
-  ) : (<div className={styles.average__container}>
-    <p className={styles.review__average}>There are no reviews</p>
-  </div>)
-
-
-
-
-
 
 
   useEffect(() => {
@@ -127,18 +108,12 @@ const ProductDetail = () => {
     return (total += elem.subTotal);
   });
 
-  console.log(product, 'critica');
 
   // IMAGES SWITCHER
-  const [activeImage, setActiveImage] = useState("");
-  const [activeImage2, setActiveImage2] = useState(0);
 
-  useEffect(() => {
-    dispatch(getProductDetail(id));
 
-    return () => dispatch(cleanProductDetail());
-  }, [dispatch, id, activeImage2]);
-  const detail = product.image?.[0].image ? product.image?.[0].image : "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
+
+  const detail = product?.image?.[0].image ? product.image?.[0].image : "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif";
 
   const handleMouseOver = (url: string, index: number) => {
     setActiveImage(url);
@@ -149,7 +124,7 @@ const ProductDetail = () => {
 
   // FAVORITE 
 
-
+  console.log(product?.evaluation?.length)
   const biblioteca: any = {};
   myProfile?.favorites.forEach(fav => {
     if (fav.id) biblioteca[fav.id] = true;
@@ -205,7 +180,7 @@ const ProductDetail = () => {
 
           <div className={styles.detail__info}>
             <h1 className={styles.detail__info_title}>{product.name && product.name.toLowerCase()}</h1>
-            {product?.evaluation?.length / 2}
+            <Average evaluation={evaluation} />
             <p className={styles.detail__info_price}>$ {product.price}</p>
 
             <div className={styles.detail__info_extra}>

@@ -1,37 +1,37 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
 import { useDispatch, useSelector } from "react-redux";
 import { FaUserTimes, FaUserCheck, FaStar } from "react-icons/fa";
-import { IReview, Ireducers } from '../../../lib/types'
-import { getAllReviews, addReview } from '../../redux/slice/user-review/user-review-redux'
+import { Ireducers } from '../../../lib/types'
 import styles from "../../styles/UserReview.module.css";
 import Image from "next/image"
 import cloudinaryOrUrl from "../../controllers/detectionOfImage";
+import { getProductDetail, addReview } from "../../redux/slice/products-client/Product-detail-redux";
 export const UserReview = () => {
 
+  interface review {
+    review: string,
+    rating: number,
+  }
 
-  const myReview: any = {
+
+  const myReview: review = {
     review: "",
     rating: 0,
   }
 
-  const { query } = useRouter();
-  const productId = query.id;
   const { data, status } = useSession<boolean>();
-  const [evaluation, setEvaluation] = useState<IReview>(myReview);
+  const [input, setInput] = useState<review>(myReview);
   const [hoverValue, setHoverValue] = useState(null)
-  const listOfReviews = useSelector((state: Ireducers) => state.reducerUserReview.allReviews)
+  const listOfReviews = useSelector((state: Ireducers) => state.reducerProductDetail.detail)
+
+
+  if (!listOfReviews) return <div>loading...</div>
+
+  const { id, evaluation } = listOfReviews
 
   const dispatch: Function = useDispatch();
-
-  useEffect(() => {
-    typeof productId === 'string' && dispatch(getAllReviews(productId))
-  }, [productId, dispatch])
-
-
-
 
   const handleMouseOver = (value: any) => {
     setHoverValue(value)
@@ -39,13 +39,13 @@ export const UserReview = () => {
 
 
   const handleOnClick = (value: number) => {
-    setEvaluation({ ...evaluation, rating: value })
+    setInput({ ...input, rating: value })
   }
 
 
   const handleOnChangeText = (e: any) => {
     const { value, name } = e.target
-    setEvaluation({ ...evaluation, [name]: value })
+    setInput({ ...input, [name]: value })
   }
 
 
@@ -55,37 +55,36 @@ export const UserReview = () => {
 
     const allData = {
       idUser: userId,
-      idProduct: productId,
-      review: evaluation.review,
-      rating: evaluation.rating,
+      idProduct: id,
+      review: input.review,
+      rating: input.rating,
     }
 
     await addReview(allData)
-    typeof productId === 'string' && dispatch(getAllReviews(productId))
-    setEvaluation(myReview)
+
+    typeof id === 'string' && dispatch(getProductDetail(id))
+    setInput(myReview)
 
   }
 
 
-  const signOrAddReview: any =
-
-    status === "unauthenticated" ? (
-      <button onClick={() => signIn("auth0")} className={styles.review__btn}>
-        Sign In
-      </button>
-    ) : (
-      <button
-        type="submit"
-        onClick={(e) => handleOnSubmit(e)}
-        className={styles.review__btn}
-        disabled={evaluation.rating === 0 || evaluation.review === ""}
-      >
-        Send
-      </button>
-    );
+  const signOrAddReview = status === "unauthenticated" ? (
+    <button onClick={() => signIn("auth0")} className={styles.review__btn}>
+      Sign In
+    </button>
+  ) : (
+    <button
+      type="submit"
+      onClick={(e) => handleOnSubmit(e)}
+      className={styles.review__btn}
+      disabled={input.rating === 0 || input.review === ""}
+    >
+      Send
+    </button>
+  );
 
 
-  const userIcon: any =
+  const userIcon =
     status === "authenticated" ? <FaUserCheck /> : <FaUserTimes />;
 
 
@@ -128,7 +127,7 @@ export const UserReview = () => {
                     onClick={() => handleOnClick(ratingValue)}
                     onMouseOver={() => handleMouseOver(ratingValue)}
                     onMouseLeave={() => setHoverValue(null)}
-                    className={ratingValue <= (hoverValue || evaluation.rating) ? styles.rating__star : styles.rating__star_hover}
+                    className={ratingValue <= (hoverValue || input.rating) ? styles.rating__star : styles.rating__star_hover}
                   />
                 </div>
               )
@@ -141,10 +140,10 @@ export const UserReview = () => {
         <div className={styles.review__icon}>{userIcon}</div>
         <textarea
           name='review'
-          value={evaluation.review}
+          value={input.review}
           onChange={(e: any) => handleOnChangeText(e)}
           className={styles.review__description}
-          placeholder={placeholder[evaluation.rating]}
+          placeholder={placeholder[input.rating]}
           required
         ></textarea>
       </div>
@@ -152,11 +151,11 @@ export const UserReview = () => {
 
 
 
-      {listOfReviews && listOfReviews?.map((elem, index: number) => {
+      {evaluation && evaluation?.map((elem, index: number) => {
         return (
 
           <div key={index} className={styles.listReviews__container}>
-            <Image src={cloudinaryOrUrl(elem.user.image, 'client') || "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif"} className={styles.listReviews__avatar} alt="" width={200} height={200} />
+            <Image src={cloudinaryOrUrl(elem.user.image, 'client') || "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif"} className={styles.listReviews__avatar} alt={elem.user.name} width={200} height={200} />
 
             <div className={styles.listReview__info}>
               <p>{elem.user.name.toUpperCase()}</p>

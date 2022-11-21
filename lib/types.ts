@@ -19,6 +19,10 @@ export interface Iproduct {
 }
 
 
+
+
+
+
 export interface IallProducts {
     products: Iproduct[]
     productsToFilter: Iproduct[]
@@ -40,8 +44,9 @@ export interface IproductsByName {
 
 
 
-interface Ireviews {
-    allReviews: IReview[],
+export interface PackProducDetailRating {
+    detail: Iproduct
+    rating: number
 }
 
 
@@ -53,7 +58,6 @@ export interface Ireducers {
     reducerProductsByName: IproductsByName
     reducerCart: any
     reducerFilters: IallProducts
-    reducerUserReview: Ireviews
 }
 
 
