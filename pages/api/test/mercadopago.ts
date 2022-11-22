@@ -1,10 +1,13 @@
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
-import axios from 'axios';
-export default async function createPayment(req: NextApiRequest, res: NextApiResponse) {
+import axios from "axios"
+import { prisma } from '../../../lib/prisma'  //importo prisma del lib del root 
+const testMercadoPago = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const { products, infoBuyer } = req.body
         const url = 'https://api.mercadopago.com/checkout/preferences'
         const preference = {
+            external_reference: infoBuyer.email,
             payer: {
                 email: infoBuyer.email,
                 name: infoBuyer.name,
@@ -28,7 +31,7 @@ export default async function createPayment(req: NextApiRequest, res: NextApiRes
                 }
             }),
             back_urls: {
-                success: 'http://localhost:3000/',
+                success: 'http://localhost:3000/${id}',
                 failure: 'http://localhost:3000/',
                 pending: 'http://localhost:3000/'
             },
@@ -36,15 +39,25 @@ export default async function createPayment(req: NextApiRequest, res: NextApiRes
         const response = await axios.post(url, preference, {
             headers: {
                 'Content-Type': "application/json",
-                Authorization: `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
+                Authorization: `Bearer APP_USR-1385912062963638-111422-e1e1168b94be269d55d7cbca8fcaf186-1239200986`
             }
         })
-        return res.status(200).json({ info: response.data.init_point, state: true })
+        let responseData: any
+        if (response.data.state) {
+            responseData = {
+                link: response.data.init_point,
+                date: response.data.date_created,
+                items: response.data.items,
+                payer: response.data.payer
+            }
+        }
+        console.log(response.data);
+
+        return res.status(200).json({info:response.data.init_point,status:true})
     } catch (error) {
-        res.status(400).json({ msg: 'Error formProduct' })
+        res.status(400).json(error)
 
     }
 }
 
-
-
+export default testMercadoPago

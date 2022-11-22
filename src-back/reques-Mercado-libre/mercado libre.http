@@ -1,0 +1,84 @@
+
+
+
+
+
+POST http://localhost:3000/api/mercadopago/createPayment
+Content-Type: application/json
+
+  {
+    "products": [
+        {
+            "product": {
+                "id": "836e7c7c-8d0a-41d4-bc60-380ff179dff2",
+                "name": "TRES LECHES CAKE",
+                "price": 500,
+                "image": [
+                    {
+                        "image": "https://izzycooking.com/wp-content/uploads/2021/05/Tres-Leches-Cake-683x1024.jpg"
+                    },
+                    {
+                        "image": "https://tastesbetterfromscratch.com/wp-content/uploads/2017/04/Tres-Leches-Cake-1-1.jpg"
+                    },
+                    {
+                        "image": "https://tastesbetterfromscratch.com/wp-content/uploads/2017/04/Tres-Leches-Cake-1-1.jpg"
+                    }
+                ]
+            },
+            "quantity": 1,
+            "subTotal": 500,
+            "infoUser": {}
+        },
+        {
+            "product": {
+                "id": "0fcfd1c9-0ef5-4e86-ba3f-1e2488c0df15",
+                "name": "CHURROS WITH CHOCOLATE SAUCE",
+                "price": 300,
+                "image": [
+                    {
+                        "image": "https://izzycooking.com/wp-content/uploads/2021/05/Churros-683x1024.jpg"
+                    },
+                    {
+                        "image": "https://www.pequerecetas.com/wp-content/uploads/2010/05/chocolate-con-churros-receta.jpg"
+                    },
+                    {
+                        "image": "https://www.pequerecetas.com/wp-content/uploads/2010/05/chocolate-con-churros-receta.jpg"
+                    }
+                ]
+            },
+            "quantity": 1,
+            "subTotal": 300,
+            "infoUser": {}
+        },
+        {
+            "product": {
+                "id": "3f258d01-4fd9-4165-a7ef-0143e135d423",
+                "name": "SPANISH SPONGE CAKE",
+                "price": 500,
+                "image": [
+                    {
+                        "image": "https://izzycooking.com/wp-content/uploads/2021/05/Spanish-Sponge-Cake-683x1024.jpg"
+                    },
+                    {
+                        "image": "https://izzycooking.com/wp-content/uploads/2021/05/Spanish-Sponge-Cake-683x1024.jpg"
+                    },
+                    {
+                        "image": "https://tastesbetterfromscratch.com/wp-content/uploads/2017/04/Tres-Leches-Cake-1-1.jpg"
+                    }
+                ]
+            },
+            "quantity": 1,
+            "subTotal": 500,
+            "infoUser": {}
+        }
+    ],
+    "infoBuyer": {
+        "name": "Ezequiel sosa",
+        "email": "test_user_16943485@testuser.com",
+        "phone": "1231212",
+        "areaCode": "1121",
+        "zipCode": "5521",
+        "streetName": "calle cerro arco",   
+        "streetNumber": "1"
+    }
+}

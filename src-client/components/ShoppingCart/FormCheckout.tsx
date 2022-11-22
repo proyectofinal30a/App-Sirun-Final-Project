@@ -3,7 +3,7 @@ import styles from "../../styles/FormCheckout.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Modal from "react-modal";
-import { sendOrderDetail, resetCart } from "../../redux/slice/cart-redux/cart";
+import { sendOrderDetail, resetCart } from "../../redux/slice/cart-redux/cart-redux";
 import validate from "../../controllers/validateFormCheckout";
 
 import { symlink } from "fs";
@@ -11,7 +11,7 @@ import { symlink } from "fs";
 // PARA DATOS DE ENTREGA
 
 const FormCheckout = (): JSX.Element => {
-  const dispatch = useDispatch();
+  const dispatch:Function = useDispatch();
 
   const productsInCart = useSelector((state: any) => state.reducerCart.products);
   const confirmedCart = useSelector((state: any) => state.reducerCart.confirmed);
@@ -61,7 +61,7 @@ const FormCheckout = (): JSX.Element => {
   // Submitea cuando se cliquea el botón del modal (el form esta dentro del modal)
   async function handleSubmit(e: Event) {
     e.preventDefault();
-    const info = {
+    const info:any = {
       products: productsInCart,
       infoBuyer: inputUser,
     };

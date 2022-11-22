@@ -7,14 +7,14 @@ import reducerProducts from "./slice/products-client/Products-all-redux";
 import reducerProductDetail from "./slice/products-client/Product-detail-redux";
 import reducerFilters from "./slice/filter-product-client/filters-redux";
 import reducerProductsByName from "./slice/products-client/ProductByName-redux";
-import reducerCart from "./slice/cart-redux/cart";
+import reducerCart from "./slice/cart-redux/cart-redux";
 
 
 
 const persistConfig = {
-  key: 'rooyu',
+  key: 'a',
   storage,
-  whilelist: ['reducerCart']
+  whilelist: []
 }
 
 const myReducers = combineReducers({

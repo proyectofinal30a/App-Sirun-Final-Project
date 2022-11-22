@@ -36,9 +36,9 @@ interface Iproducts {
 }
 
 const initialState: Iproducts = {
-    products: [],
-    confirmed: false,
-    payLink: ''
+  products: [],
+  confirmed: false,
+  payLink: ''
 }
 
 
@@ -105,8 +105,6 @@ export const reducerCart = createSlice({
       );
     },
     actionConfirmedCart: (state: any, action) => {
-      console.log(action);
-
       state.confirmed = action.payload.state;
       state.payLink = action.payload.info;
     },
@@ -132,21 +130,28 @@ export const trashItem = (id: string) => (dispatch: Function) => {
   return dispatch(reducerCart.actions.actionTrashItem(id));
 };
 
-export const sendOrderDetail =
-  (infoProductsAndBuyer: any): any =>
-  async (dispatch: Function) => {
-    try {
-      const info = await createPayment(infoProductsAndBuyer);
-      return dispatch(reducerCart.actions.actionConfirmedCart(info));
-    } catch (error) {
-      return dispatch(reducerCart.actions.actionConfirmedCart(false));
-    }
-  };
+export const sendOrderDetail = (infoProductsAndBuyer: any) => async (dispatch: Function) => {
+  try {
+    const request = await axios({
+      method: 'post',
+      url: '/api/mercadopago/createPayment',
+      data: infoProductsAndBuyer
+    })
+
+
+    return dispatch(reducerCart.actions.actionConfirmedCart(request.data));
+  } catch (error) {
+    const myMessageError = process.env.NODE_ENN === 'production' ?
+      'https://sirunnpatisserie.vercel.app/error' :
+      'http://localhost:3000/error';
+    return dispatch(reducerCart.actions.actionConfirmedCart({ info: myMessageError }));
+  }
+};
 
 export const resetCart = () => (dispatch: Function) => {
   return dispatch(reducerCart.actions.actionResetCart(false));
 };
 
-export const selectCart = (state: any) => console.log(state.products); // exporto opcion de ver que hay en el carrito
+
 
 export default reducerCart.reducer;
