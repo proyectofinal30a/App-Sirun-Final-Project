@@ -26,7 +26,7 @@ function Footer() {
           <h3 className={styles.footer__title}>Navigation</h3>
           <ul className={styles.nav__list}>
             <li className={styles.nav__item}>
-              <Link href="#" className={styles.nav__link}>
+              <Link href="/" className={styles.nav__link}>
                 Home
               </Link>
             </li>
