@@ -6,22 +6,22 @@ export default async function productAddFav(req: NextApiRequest, res: NextApiRes
   try {
     interface IidUserIdPro {
       idUser: string;
-      idProduct: string;
+      favorites: any;
     }
-
-    const { idUser, idProduct }: IidUserIdPro = req.body;
+    //{ idUser, [{},{},{}]}
+    const { idUser, favorites }: IidUserIdPro = req.body;
 
     await prisma.user.update({
       where: { id: idUser },
       data: {
-        favorites: {
-          connect: { id: idProduct },
-        },
-      },
-    });
+        favorites: { set: favorites }
+      }
+    },
+    );
     prisma.$disconnect()
     res.status(200).json({ msg: "El producto se ha agregado correctamente a favoritos" });
   } catch (error) {
+    console.log(error)
     res.status(404).json({ msg: "No se pudo vincular el producto a favoritos" });
   }
 }

@@ -11,10 +11,12 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { IconContext } from "react-icons";
-import { removeFromFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
+import { requestAddToFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { useSession } from "next-auth/react";
-
+import { signIn } from "next-auth/react";
+import { PrismaClient } from "@prisma/client";
+import { SiEightsleep } from "react-icons/si";
 
 
 const AllProductsCards = () => {
@@ -99,7 +101,7 @@ const AllProductsCards = () => {
     e.preventDefault();
     const { id }: any = product;
     dispatch(trashItem(id));
-  if (cart.length === 1 || cart.length === 0) { return setIsOpen(false); }
+    if (cart.length === 1 || cart.length === 0) { return setIsOpen(false); }
   };
 
   let total = 0;
@@ -149,25 +151,34 @@ const AllProductsCards = () => {
   useEffect(() => {
     if (filterProducts[0]) setCurrentPage(1);
     dispatch(getAllProducts());
+
   }, [filterProducts, dispatch]);
 
-
-
-  const biblioteca: any = {};
-  myProfile?.favorites.forEach(fav => {
-    if (fav.id) biblioteca[fav.id] = true;
+  //request para guardar los nuevos favs que estan en el redux del user
+  useEffect(() => {
+    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
   })
 
-  const handleFavorite = (id: any) => {
-    const userId: string = myProfile?.id;
-    const productId: string = id;
+  //check de favs
+  if (!myProfile) return <div>...Loading</div>
+  const { favorites } = myProfile
+  let favorites2 = favorites.map((e) => { return { id: e.id } })
 
-    if (biblioteca[productId]) {
-      removeFromFavorites(userId, productId);
-      return dispatch(getUserDetail(myNuEmail));
-    };
-    addToFavorites(userId, productId);
-    dispatch(getUserDetail(myNuEmail));
+  const biblioteca: any = {};
+  favorites2.forEach(fav => {
+    biblioteca[fav.id] = true;
+  })
+
+
+  const handleFavorite = (product: any) => {
+    if (!myProfile) return signIn("auth0")
+    const userId: string = myProfile?.id;
+    const { id } = product;
+
+    const productToAdd = {
+      id: id
+    }
+    dispatch(addToFavorites(productToAdd));
   }
 
   return (
@@ -179,7 +190,7 @@ const AllProductsCards = () => {
               return (
                 <div key={index} className={styles.product_card__container}>
 
-                  <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product.id)}>
+                  <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product)}>
                     <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
                       <p className={styles.wishlist_fav_btn}>
                         {biblioteca[product.id] ? <FaHeart /> : <FiHeart />}
