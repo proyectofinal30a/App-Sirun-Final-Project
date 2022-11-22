@@ -109,7 +109,7 @@ const AllProductsCards = () => {
   );
 
   let pageNumbers = [];
-  for (let i = 1; i <= Math.ceil(currentProducts.length / productsPerPage); i++) {
+  for (let i= 1; i <= Math.ceil(currentProducts.length / productsPerPage); i++) {
     pageNumbers.push(i);
   }
 
@@ -150,32 +150,44 @@ const AllProductsCards = () => {
 
   const [isFavorited, setIsFavorited] = useState(true);
 
+  const biblioteca: any = {};
+  myProfile?.favorites.forEach(fav => {
+    if (fav.id) biblioteca[fav.id] = true;
+  })
   useEffect(() => {
     if (!myInfUser?.user?.id) {
       dispatch(getUserDetail(myNuEmail));
     }
   }, [dispatch, data, myInfUser?.user?.id, myNuEmail, isFavorited]);
 
-  useEffect(() => {
-    document.addEventListener( "mousemove", () => setIsFavorited(!isFavorited))
-    return () => document.removeEventListener("mousemove", () => setIsFavorited(!isFavorited))
-  }, [isFavorited]);
+console.log(myProfile.favorites);
 
-  const biblioteca: any = {};
-  myProfile?.favorites.forEach(fav => {
-    if (fav.id) biblioteca[fav.id] = true;
-  })
 
-  const handleFavorite = (id: any) => {
+const deleteHandler = (id: any) => {
+  const userId: string = myProfile?.id;
+  const productId: string = id;
+
+  removeFromFavorites(userId, productId);
+      setIsFavorited(false)
+      return dispatch(getUserDetail(myNuEmail));
+}
+const addHandler = (id: any) => {
+  const userId: string = myProfile?.id;
+  const productId: string = id;
+ setIsFavorited(true)
+    addToFavorites(userId, productId);
+     return dispatch(getUserDetail(myNuEmail));
+}
+
+const handleFavorite = (id: any) => {
     const userId: string = myProfile?.id;
     const productId: string = id;
 
-    if (biblioteca[productId]) {
-      removeFromFavorites(userId, productId);
-      return dispatch(getUserDetail(myNuEmail));
-    };
-    addToFavorites(userId, productId);
-    dispatch(getUserDetail(myNuEmail));
+    if (myProfile.favorites.find((arr: any) => arr.id === productId)) {
+      
+    } else {
+   
+    }
   }
 
   return (
@@ -187,10 +199,10 @@ const AllProductsCards = () => {
               return (
                 <div key={index} className={styles.product_card__container}>
 
-                  <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product.id)}>
+                  <div className={styles.wishlist_fav_btn_container}>
                     <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
                       <p className={styles.wishlist_fav_btn}>
-                       {biblioteca[product.id] ? <FaHeart /> : <FiHeart />}
+                       {myProfile.favorites.find((arr: any) => arr.id === product.id) ? <FaHeart onClick={() => deleteHandler(product.id)}/> : <FiHeart onClick={() => addHandler(product.id)}/>}
                       </p>
                     </IconContext.Provider>
                   </div>

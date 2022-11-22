@@ -20,7 +20,7 @@ export default function Wishlist(): JSX.Element {
   const myNuEmail = data?.user?.email;
   const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
 
-  // const [isFavorited, setIsFavorited] = useState({ id: "", favorited: true });
+  const [isFavorited, setIsFavorited] = useState({ id: "", favorited: true });
 
   useEffect(() => {
     if (!myInfUser?.user?.id) {
