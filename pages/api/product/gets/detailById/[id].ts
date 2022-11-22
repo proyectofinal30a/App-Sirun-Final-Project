@@ -17,6 +17,7 @@ const getproductDetail: Function = async (req: NextApiRequest, res: NextApiRespo
           name: true,
           price: true,
           dimension: true,
+          description: true,
           available: true,
           type: true,
           category: true,

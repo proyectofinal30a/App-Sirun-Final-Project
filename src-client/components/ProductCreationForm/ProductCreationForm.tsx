@@ -1,22 +1,15 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import {
-  allDeleteImg,
-  postImageServer,
-  deleteImagePreview,
   uploadFormNoRedux,
-  alfterOnsumbit,
+
 } from "../../redux/slice/product-Admin-redux/ProAdm-Redux";
-import { Iproduct, Ierror } from "../../../lib/types";
+import { IproductSumbit, Ierror } from "../../../lib/types";
 import validation from "./Validation";
 import styles from "../../styles/ProductCreationForm.module.css";
 
 
 export default function FormProduct(): JSX.Element {
-  const dispatch: any = useDispatch();
-  let myImage = useSelector((state: any) => state.reducerProductAdm.imageUrlProd);
-
   const N = Number;
   type valueSelec = React.ChangeEvent<HTMLSelectElement>;
   type valueForm =
@@ -25,7 +18,9 @@ export default function FormProduct(): JSX.Element {
     | React.ChangeEvent<HTMLSelectElement>;
 
 
-  const myForm: Iproduct = {
+
+
+  const myForm: IproductSumbit = {
     name: "",
     price: 0,
     dimension: 0,
@@ -35,7 +30,7 @@ export default function FormProduct(): JSX.Element {
     description: "",
     category: "others",
   };
-  const [formProduct, setFormProduct] = useState<Iproduct>(myForm);
+  const [formProduct, setFormProduct] = useState(myForm);
 
   const myErr: Ierror = {
     name: "",
@@ -44,11 +39,6 @@ export default function FormProduct(): JSX.Element {
     description: "",
   };
   const [formErrors, setFormErrors] = useState(myErr);
-
-  // const imagesArr: string[] = [];
-  // const [imagesArray, setImagesArray] = useState(imagesArr);
-
-  // const [select, setSelect] = useState({ selectType: "", selectCategory: "" });
 
 
   const handleOnChangeInput = (event: any) => {
@@ -75,7 +65,7 @@ export default function FormProduct(): JSX.Element {
     }
 
     setFormProduct({ ...formProduct, [name]: value });
-    setFormErrors(validation({ ...formProduct, [name]: value }));  // Form validation
+    setFormErrors(validation({ ...formProduct, [name]: value }));
   };
 
 
@@ -83,14 +73,14 @@ export default function FormProduct(): JSX.Element {
   const handleOnChangeNumber = (event: any) => {
     const { name, value } = event.target;
     setFormProduct({ ...formProduct, [name]: value });
-    setFormErrors(validation({ ...formProduct, [name]: value }));  // Form validation
+    setFormErrors(validation({ ...formProduct, [name]: value }));
   };
 
 
 
   const handelOnSelectCategory = ({ target }: valueSelec) => {
     const { name, value } = target;
-    // setSelect({ ...select, selectCategory: name });
+
     setFormProduct({ ...formProduct, [name]: value });
     setFormErrors(validation({ ...formProduct, [name]: value }));  // Form validation
   };
@@ -99,7 +89,7 @@ export default function FormProduct(): JSX.Element {
 
   const handelOnSelectType = ({ target }: valueSelec) => {
     const { name, value } = target;
-    // setSelect({ ...select, selectType: name });
+
     setFormProduct({ ...formProduct, [name]: value });
     setFormErrors(validation({ ...formProduct, [name]: value }));  // Form validation
   };
@@ -108,44 +98,36 @@ export default function FormProduct(): JSX.Element {
 
   const handleOnFile = (event: any) => {
     const imageFile: any = event.target.files;
-
-    // setImagesArray([ ...imagesArray, imageFile ]);
-    // if (imagesArray.length > 3) {
-    //   alert("Cannot upload more than 4 photos per product.");
-    // }
-
-    const formData = new FormData();
-
-    if (!imageFile[0]) return;
-    formData.append("file", imageFile[0]);
-
-    formData.append("upload_preset", `${process.env.CLOUDINARY_PRODUCTS}`);
-    dispatch(postImageServer(formData));
+    if (!imageFile || !imageFile[0]) return;
+    const [...myPrevurl] = formProduct.image
+    const myPack = {
+      image: URL.createObjectURL(imageFile[0]),
+      imageCloudinary: imageFile[0]
+    }
+    myPrevurl.push(myPack)
+    setFormProduct({ ...formProduct, image: myPrevurl });
 
   };
 
 
-
   const handleOnClickReset = () => {
-    const myIds: any = myImage.map((packIgm: any) => {
-      return { id: packIgm.id };
-    });
-    dispatch(allDeleteImg(myIds));
+    setFormProduct({ ...formProduct, image: [] });
   };
 
 
 
   const handleOnClickDelete = ({ target }: any) => {
     const { name } = target;
-    dispatch(deleteImagePreview(name));
+    const [...myPrevurl] = formProduct.image
+    const myFilter = myPrevurl.filter(e => e.image !== name)
+    setFormProduct({ ...formProduct, image: myFilter });
   };
 
 
 
-  const handleOnSubmit = (event: valueForm) => {
+  const handleOnSubmit = async (event: valueForm) => {
     event.preventDefault();
-    uploadFormNoRedux(formProduct, myImage);
-    dispatch(alfterOnsumbit());
+    await uploadFormNoRedux(formProduct);
     setFormProduct({
       name: "",
       price: 0,
@@ -156,7 +138,6 @@ export default function FormProduct(): JSX.Element {
       description: "",
       category: "others",
     });
-    // setSelect({ selectType: "", selectCategory: "" });
     alert("New product added.");
   };
 
@@ -304,7 +285,7 @@ export default function FormProduct(): JSX.Element {
 
         <div className={styles.creation_form__images_container}>
 
-          {myImage[0] &&
+          {formProduct.image[0] &&
             <>
               <p className={styles.creation_form__images_container__title}>Images control</p>
               <button
@@ -316,9 +297,9 @@ export default function FormProduct(): JSX.Element {
             </>
           }
 
-          {myImage[0] && myImage.map((e: any) => {
+          {formProduct.image[0] && formProduct.image.map((e, index) => {
             return (
-              <div key={e.id} className={styles.creation_form__img_show_container}>
+              <div key={index} className={styles.creation_form__img_show_container}>
                 <div className={styles.creation_form__img_container}>
                   <Image
                     src={e.image}
@@ -331,7 +312,7 @@ export default function FormProduct(): JSX.Element {
 
                 <input
                   type={"button"}
-                  name={e.id}
+                  name={e.image}
                   onClick={handleOnClickDelete}
                   value={"Delete"}
                   className={styles.creation_form__input_btn_delete}

@@ -1,124 +1,56 @@
-import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Iproduct } from "../../../../lib/types";
+import { IproductSumbit } from "../../../../lib/types";
 import userVerification from "../../../controllers/userVerification-controller";
-
-
 type imageAddId = {
   id: string;
   image: string;
 };
 
-interface IproductPack {
-  productsPreview: Iproduct[];
-  imageUrlProd: imageAddId[];
-}
-
-const stateInit: IproductPack = {
-  productsPreview: [],
-  imageUrlProd: [],
-};
-
-interface IpayloadDeletePrev {
-  payload: string;
-}
-
-interface IPayloadImage {
-  payload: imageAddId;
-}
-
-interface IPayloadReset {
-  payload: [];
-}
-
-export const reducerProductAdm = createSlice({
-  name: "reducerProducAdm",
-  initialState: stateInit,
-  reducers: {
-    previewProduc: () => {
-      "PROXIMAMENTE";
-    },
-    afterSubmit: (state: IproductPack, action: IPayloadReset) => {
-      state.imageUrlProd = action.payload;
-    },
-    postImage: (state: IproductPack, action: IPayloadImage) => {
-      state.imageUrlProd.push(action.payload);
-    },
-    resetImage: (state: IproductPack, action: IPayloadReset) => {
-      state.imageUrlProd = action.payload;
-    },
-    deleteImagePrev: (state: IproductPack, action: IpayloadDeletePrev) => {
-      state.imageUrlProd = state.imageUrlProd.filter(
-        (image: imageAddId) => image.id !== action.payload
-      );
-    },
-  },
-});
-
-
-/// authenticacion
-export const previewProduc = (data: Iproduct) => async (dispatch: Function) => {
-  return "PROXIMAMENTE... ";
-};
-
-export const alfterOnsumbit = () => async (dispatch: Function) => {
-  dispatch(reducerProductAdm.actions.afterSubmit([]));
-};
-
-export const uploadFormNoRedux = async (dataForm: Iproduct, image: any) => {
+export const uploadFormNoRedux = async (dataForm: IproductSumbit) => {
   const myToken: any = await userVerification("client");
-  dataForm.image = image;
-  await axios({
-    method: "post",
-    url: "/api/adminScope/post/productPostAdm",
-    data: dataForm,
-    headers: {
-      Authorization: myToken,
-    },
-  });
-};
+  const mydata= dataForm.image.map(async (e) => {
 
-export const allDeleteImg = (id: any) => async (dispatch: Function) => {
-  const myToken: any = await userVerification("client");
-  await axios({
-    method: "post",
-    url: "/api/adminScope/delete/admImgPrev/all",
-    data: id,
-    headers: {
-      Authorization: myToken,
-    },
-  });
+    const formData = new FormData();
+    formData.append("file", e.imageCloudinary);
+    formData.append("upload_preset", `${process.env.CLOUDINARY_PRODUCTS}`);
+    const { data } = await axios({
+      method: "post",
+      url: `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD}/image/upload`,
+      data: formData,
 
-  dispatch(reducerProductAdm.actions.resetImage([]));
-};
+    });
+    const { public_id, secure_url } = data;
+    const myFracmet: string = public_id.split("/")[1];
+    const myData = {
+      id: myFracmet,
+      image: secure_url,
+    }
+    return myData
+  })
 
-export const deleteImagePreview = (id: string) => async (dispatch: Function) => {
-  const myToken: any = await userVerification("client");
-  await axios({
-    method: "post",
-    url: `/api/adminScope/delete/admImgPrev/${id}`,
-    headers: {
-      Authorization: myToken,
-    },
-  });
-  dispatch(reducerProductAdm.actions.deleteImagePrev(id));
-};
+  Promise.all(mydata).then((data) => {
+    const myNewProduct = { ...dataForm, image: data }
+    axios({
+      method: "post",
+      url: "/api/adminScope/post/productPostAdm",
+      data: myNewProduct,
+      headers: {
+        Authorization: myToken,
+      },
+    });
 
-export const postImageServer = (newImage: unknown) => async (dispatch: Function) => {
-  const { data } = await axios({
-    method: "post",
-    url: `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD}/image/upload`,
-    data: newImage,
-  });
+  }).catch((error) => {
+    console.log(error)
+  })
 
-  const { public_id, secure_url } = data;
-  const myFracmet: string = public_id.split("/")[1];
-  const myPackImage: imageAddId = {
-    id: myFracmet,
-    image: secure_url,
-  };
 
-  return dispatch(reducerProductAdm.actions.postImage(myPackImage));
-};
 
-export default reducerProductAdm.reducer;
+
+
+
+
+}
+
+
+
+
