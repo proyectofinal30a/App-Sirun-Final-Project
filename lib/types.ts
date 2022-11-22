@@ -2,6 +2,7 @@ import { TypeDiet, CategoryPro, StatusType } from '@prisma/client'
 
 export interface Iimage {
     image: string
+    id?: string
 }
 
 
@@ -21,6 +22,20 @@ export interface Iproduct {
 
 
 
+interface packImage {
+    image: string
+    imageCloudinary: Blob
+}
+export interface IproductSumbit {
+    name: string;
+    price: number;
+    dimension: number;
+    available: boolean;
+    type: TypeDiet;
+    category: CategoryPro;
+    image: packImage[];
+    description: string;
+}
 
 
 export interface IallProducts {
