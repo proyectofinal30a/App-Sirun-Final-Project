@@ -15,20 +15,6 @@ const Menu = () => {
   };
 
   const { data: session, status } = useSession<boolean>();
-  
-
-  // const signOrNoSing: any = session ? (
-  //   <button
-  //     onClick={() => signOut({ redirect: true, callbackUrl: "/" })}
-  //     className={styles.nav_sign_btn}
-  //   >
-  //     Sign Out
-  //   </button>
-  // ) : (
-  //   <button onClick={() => signIn("auth0")} className={styles.nav_sign_btn}>
-  //     Sign In
-  //   </button>
-  // );
 
   const handleClick = () => {
     if (status === "unauthenticated") signIn("auth0");
@@ -63,7 +49,6 @@ const Menu = () => {
         }
       >
         <ul className={styles.nav__list}>
-          {/* <li className={styles.nav__item}>{signOrNoSing}</li> */}
           <li className={styles.nav__item}>
             <Link href="/" className={styles.nav__link}>
               <span className={styles.nav_span}>Home</span>
