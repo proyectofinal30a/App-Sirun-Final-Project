@@ -13,22 +13,22 @@ const EmailNotification = () => {
   const { query } = useRouter();
   const id = query.id;
 
+  // const initialInfo = {
+  //   client_name: "",
+  //   client_address: "",
+  //   client_zipcode: "",
+  //   client_city: "",
+  //   client_country: "Argentina",
+  //   order_number: "",
+  //   order_composition: [],
+  //   order_total: "",
+  // }
+
+  // const [orderInfo, setOrderInfo] = useState(initialInfo);
+
   useEffect(() => {
     getOrder(id);
   }, [id]);
-
-
-  const initialInfo = {
-    client_name: "",
-    client_address: "",
-    client_zipcode: "",
-    client_city: "",
-    client_country: "Argentina",
-    order_number: "",
-    order_composition: [],
-    order_total: "",
-  }
-  const [info, setInfo] = useState(initialInfo);
 
   
   const sendEmail = (e) => {
