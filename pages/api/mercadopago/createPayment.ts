@@ -23,6 +23,7 @@ export default async function createPayment(req: NextApiRequest, res: NextApiRes
                     id: prod.product.id,
                     title: prod.product.name,
                     unit_price: prod.product.price,
+                    image: prod.product.image,
                     currency_id: "ARS",
                     quantity: prod.quantity
                 }
