@@ -9,6 +9,7 @@
     "m": "prisma migrate dev --name y init",
     "s": "prisma studio",
     "P": "git add . && git commit -m 'cambio de rama a develop' && git push && git checkout develop && git pull ",
+    "M": "git add . && git commit  && git push",
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",

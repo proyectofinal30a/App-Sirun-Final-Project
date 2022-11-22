@@ -99,13 +99,33 @@ export default function FormProduct(): JSX.Element {
   const handleOnFile = (event: any) => {
     const imageFile: any = event.target.files;
     if (!imageFile || !imageFile[0]) return;
-    const [...myPrevurl] = formProduct.image
-    const myPack = {
+
+    if (formProduct.image.length >= 4) return alert('Only four images per product')
+
+    const myTO: any = [...formProduct.image]
+
+    imageFile[0] && myTO.push({
       image: URL.createObjectURL(imageFile[0]),
       imageCloudinary: imageFile[0]
-    }
-    myPrevurl.push(myPack)
-    setFormProduct({ ...formProduct, image: myPrevurl });
+    })
+
+    imageFile[1] && myTO.push({
+      image: URL.createObjectURL(imageFile[1]),
+      imageCloudinary: imageFile[1]
+    })
+
+    imageFile[2] && myTO.push({
+      image: URL.createObjectURL(imageFile[2]),
+      imageCloudinary: imageFile[2]
+    })
+
+    imageFile[3] && myTO.push({
+      image: URL.createObjectURL(imageFile[3]),
+      imageCloudinary: imageFile[3]
+    })
+
+
+    setFormProduct({ ...formProduct, image: myTO });
 
   };
 
@@ -270,6 +290,7 @@ export default function FormProduct(): JSX.Element {
               name="image"
               className={styles.creation_form__img_input}
               required
+              multiple
             />
           </div>
 
