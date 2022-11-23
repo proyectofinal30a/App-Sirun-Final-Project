@@ -5,6 +5,36 @@ export interface Iimage {
     id?: string
 }
 
+export interface IinfoBuyer {
+    email: string
+    name: string
+    address: {
+        streetName: string,
+        streetNumber: number,
+        zipCode: number
+    }
+    phone: {
+        number: number
+        area_code: number
+    }
+}
+
+export interface IbodyForMercadoPago {
+    infoBuyer: IinfoBuyer
+    products: IitemForMercadoPago[]
+}
+
+export interface IitemForMercadoPago {
+    id: string
+    name: string
+    price: number
+    image: Iimage[]
+    quantity: number
+}
+
+
+
+
 
 export interface Iproduct {
     id: string;

@@ -1,10 +1,14 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios';
 import { nanoid } from 'nanoid';
-
+import {IbodyForMercadoPago} from '../../../lib/types'
 export default async function createPayment(req: NextApiRequest, res: NextApiResponse) {
     try {
-        const { products, infoBuyer } = req.body
+
+
+
+
+        const { products, infoBuyer }:IbodyForMercadoPago = req.body
         const url = 'https://api.mercadopago.com/checkout/preferences'
         const myOrder_id = nanoid();
         const preference = {
@@ -49,6 +53,10 @@ export default async function createPayment(req: NextApiRequest, res: NextApiRes
                 Authorization: `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
             }
         })
+
+
+const IdProductArrayObj = products.map() 
+
 
         console.log(response.data);
         return res.status(200).json({ info: response.data.init_point, state: true })
