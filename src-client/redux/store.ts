@@ -13,7 +13,7 @@ import reducerAllUsers from "./slice/user-detail-redux/all-users";
 
 
 const persistConfig = {
-  key: 'a',
+  key: 'rou',
   storage,
   whilelist: []
 }

@@ -11,9 +11,10 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { IconContext } from "react-icons";
-import { removeFromFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
+import { requestAddToFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 
 
@@ -21,10 +22,11 @@ const AllProductsCards = () => {
   // GET ALL PRODUCTS
   const dispatch: Function = useDispatch();
   // FAVORITE 
-  const { data } = useSession();
+  const { data, status } = useSession<boolean>();
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const myNuEmail = data?.user?.email;
   const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
+
 
 
   useEffect(() => {
@@ -32,9 +34,9 @@ const AllProductsCards = () => {
       dispatch(getUserDetail(myNuEmail));
     }
   }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
+
   const allProducts: any = useSelector<Ireducers>((state) => state.reducerProducts.products);
   const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
-
 
 
   // FILTERS
@@ -51,7 +53,6 @@ const AllProductsCards = () => {
 
   // SHOPPING CART
   const [modalIsOpen, setIsOpen] = useState(false);
-
   function closeModal() {
     setIsOpen(false);
   }
@@ -102,11 +103,9 @@ const AllProductsCards = () => {
     dispatch(trashItem(id));
     if (cart.length === 1 || cart.length === 0) { return setIsOpen(false); }
   };
-
-  let total = 0;
-  cart.map((elem: any) => {
-    return (total += elem.subTotal);
-  });
+  
+  let total = cart.map((elem: any) => elem.subTotal).reduce((elem, acc:number)=> elem + acc)
+  let totalQuantity = cart.map((elem:any)=>elem.quantity).reduce((elem, acc:number)=> elem + acc)
 
 
 
@@ -150,26 +149,42 @@ const AllProductsCards = () => {
   useEffect(() => {
     if (filterProducts[0]) setCurrentPage(1);
     dispatch(getAllProducts());
+
   }, [filterProducts, dispatch]);
 
+  //request para guardar los nuevos favs que estan en el redux del user
 
 
-  const biblioteca: any = {};
-  myProfile?.favorites.forEach(fav => {
-    if (fav.id) biblioteca[fav.id] = true;
+  //check de favs
+  interface IproduId {
+    id: string
+  }
+
+  let favorites2: Array<IproduId> = []
+  let biblioteca: any = {}
+
+  if (myProfile) {
+    favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
+    favorites2.forEach(fav => {
+      biblioteca[fav.id] = true;
+    })
+  }
+
+  useEffect(() => {
+    if (!myProfile) return
+    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
   })
 
-  const handleFavorite = (id: any) => {
-    const userId: string = myProfile?.id;
-    const productId: string = id;
 
-    if (biblioteca[productId]) {
-      removeFromFavorites(userId, productId);
-      return dispatch(getUserDetail(myNuEmail));
-    };
-    addToFavorites(userId, productId);
-    dispatch(getUserDetail(myNuEmail));
+  const handleFavorite = (product: any) => {
+    status === "unauthenticated" && signIn("auth0")
+    const { id } = product;
+    const productToAdd = {
+      id: id
+    }
+    dispatch(addToFavorites(productToAdd));
   }
+  
 
   return (
     <div className={styles.general__container}>
@@ -180,7 +195,7 @@ const AllProductsCards = () => {
               return (
                 <div key={index} className={styles.product_card__container}>
 
-                  <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product.id)}>
+                  <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product)}>
                     <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
                       <p className={styles.wishlist_fav_btn}>
                         {biblioteca[product.id] ? <FaHeart /> : <FiHeart />}
@@ -287,7 +302,10 @@ const AllProductsCards = () => {
                     </div>
                   );
                 })}
-
+                <div className={styles.modal__total_container}>
+                  <p className={styles.modal__total}>Products in Cart </p>
+                  <p className={styles.modal__total}>{totalQuantity}</p>
+                </div>
                 <div className={styles.modal__total_container}>
                   <p className={styles.modal__total}>TOTAL </p>
                   <p className={styles.modal__total}>${total}</p>

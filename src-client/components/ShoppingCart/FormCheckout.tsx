@@ -69,14 +69,10 @@ const FormCheckout = (): JSX.Element => {
     dispatch(sendOrderDetail(info));
   }
 
-  let total = 0;
+  let total = productsInCart.map((elem: any) => elem.subTotal).reduce((elem, acc:number)=> elem + acc)
+  let totalQuantity = productsInCart.map((elem:any)=>elem.quantity).reduce((elem, acc:number)=> elem + acc)
 
-  productsInCart.map((elem: any) => {
-    return (total += elem.subTotal);
-  });
-
-
-  return (
+   return (
     <div className={styles.checkout__container}>
       <div className={styles.first__column}>
         <h2 className={styles.column__title}>Checkout</h2>
@@ -311,6 +307,10 @@ const FormCheckout = (): JSX.Element => {
         </div>
 
         <div className={styles.total__container}>
+          <div className={styles.__shipping_line}>
+            <p className={styles.__shipping}>Products in you cart</p>
+            <p className={styles.__shipping}>{totalQuantity}</p>
+          </div>
           <div className={styles.__shipping_line}>
             <p className={styles.__shipping}>Shipping </p>
             <p className={styles.__shipping}>$...</p>

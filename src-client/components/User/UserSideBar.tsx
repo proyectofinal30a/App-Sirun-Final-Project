@@ -5,10 +5,12 @@ import { useSession } from "next-auth/react";
 import { Ireducers } from "../../../lib/types";
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import styles from "../../styles/AdminSideBar.module.css";
-
+import { signIn, signOut } from "next-auth/react";
+import React from "react"
 
 const UserSideBar = () => {
   const { data, status }: any = useSession<boolean>();
+  const {session} = data
   const dispatch: Function = useDispatch();
 
   const myNuEmail = data?.user?.email;
@@ -46,6 +48,13 @@ const UserSideBar = () => {
               <span className={styles.nav_span}>My reviews</span>
             </li>
           </Link>
+          <div className={styles.nav__link}>
+            <li className={styles.nav__item}>
+              <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })}className={styles.sing__btn}>
+                 Sign Out
+              </button>
+            </li>
+          </div>
         </ul>
       </nav>
 
@@ -61,6 +70,11 @@ const UserSideBar = () => {
             <Link href="/user/wishlist" className={styles.mobile_nav__link}>My wishlist</Link>
             <Link href="/user/order" className={styles.mobile_nav__link}>My orders</Link>
             <Link href="/user/review" className={styles.mobile_nav__link}>My reviews</Link>
+            <div className={styles.mobile_nav__link}>
+              <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })}className={styles.sing__btn}>
+                 Sign Out
+              </button>
+            </div> 
           </div>
         </div>
       </div>
