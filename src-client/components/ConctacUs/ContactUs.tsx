@@ -1,11 +1,10 @@
-import React, {useState} from 'react'
+import React, {useRef, useState} from 'react'
+import emailjs from '@emailjs/browser';
 import validate from "./validateContact";
+import MessageResult from './MessageResult';
 import styles from "../../styles/ContactUs.module.css"
 
-
-
 const ContactUs = () => {
-
     interface contactData{
         name: string
         email : string
@@ -20,7 +19,8 @@ const ContactUs = () => {
 
     const [input, setInput] =useState(data)
     const [errors, setErrors] = useState(data)
-
+    const [result, showResult] =useState(false)
+    const form = useRef()
 
     const handleInputChange = (e : any) => {
         const {name, value} = e.target
@@ -28,25 +28,40 @@ const ContactUs = () => {
         setErrors(validate({...input, [name]: value}))
     }
 
-    async function handleOnSubmit(e: Event) {
+      const sendEmail = (e : any) => {
         e.preventDefault();
-       // await sendContactInfo(input));
-      }
     
+
+      if(typeof process.env.EMAILJS_SERVICES !== "string" ) return;
     
+        
+        
+        emailjs.sendForm(process.env.EMAILJS_SERVICES, 'template_mgaccc1', form.current, process.env.EMAILJS_API_KEY) 
+        .then((result) => {
+            console.log('SUCCESS!', result.status, result.text);  
+        }, (error) => {
+            console.log('FAILED...', error.text);
+        });
+        
+        e.target.reset()
+        showResult(true)
+        };
+        
+        setTimeout(()=>{
+        showResult(false);
+        }, 5000)
+
   return (
     <div className={styles.contact__container} >
         <h2 className={styles.column__title}>Contact Us</h2>
-        <div className={styles.form__column}>
+        <form ref={form} className={styles.form__column} onSubmit={sendEmail}>  
 
-     
-     
         <div className={styles.container__row_column}>
           <label className={styles.form__label} htmlFor="name">
-            Full Name
+            Name
           </label>
           <input
-             className={styles.form__input}
+            className={styles.form__input}
             type="text"
             name="name"
             value={input.name}
@@ -96,13 +111,16 @@ const ContactUs = () => {
             type = "submit"
             className={styles.form__input_btn}
             disabled={Object.values(errors).length !== 0}
-            onClick={(e: any) => handleOnSubmit(e)}
-            > Send </button>
+           > Send </button>
         </div>
-            </div>
+           {result ? <MessageResult/> : null} 
+       </form> 
     </div>
   );
 };
 
 
 export default ContactUs
+
+
+
