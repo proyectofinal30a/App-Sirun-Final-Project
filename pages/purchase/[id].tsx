@@ -1,14 +1,15 @@
 import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { getOrder } from "../../src-client/redux/slice/payment/payment";
+import { Ireducers, IitemForMercadoPago } from "../../lib/types";
+// import SirunLogo from "../../src-client/images/sirun_logo.png";
 import emailjs from "emailjs-com";
 import HEAD from "../../src-client/components/HEAD";
 import Nav from "../../src-client/components/NavBar/Nav";
 import Footer from "../../src-client/components/Footer/Footer";
 import styles from "../../src-client/styles/ApprovedPayment.module.css";
-import { useSelector } from "react-redux";
-import { Ireducers, IitemForMercadoPago } from "../../lib/types";
 
 
 export default function ApprovedPayment() {
@@ -28,6 +29,7 @@ export default function ApprovedPayment() {
   // EmailJS for approved payment
   if (orderInfo) {
     let templateParams = {
+      // sirun_logo: btoa(SirunLogo), // ver como subir imagenes
       client_name: orderInfo.user.name,
       client_email: orderInfo.user.email,
       client_phone: orderInfo.phone.area_code + "-" + orderInfo.phone.number,
