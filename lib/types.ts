@@ -63,6 +63,7 @@ export interface Ireducers {
     reducerProductsByName: IproductsByName
     reducerCart: any
     reducerFilters: IallProducts
+    reducerAdmin : IallProducts
 }
 
 
