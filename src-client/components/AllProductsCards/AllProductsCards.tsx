@@ -15,18 +15,18 @@ import { requestAddToFavorites, addToFavorites } from "../../redux/slice/user-de
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { useSession } from "next-auth/react";
 import { signIn } from "next-auth/react";
-import { PrismaClient } from "@prisma/client";
-import { SiEightsleep } from "react-icons/si";
+
 
 
 const AllProductsCards = () => {
   // GET ALL PRODUCTS
   const dispatch: Function = useDispatch();
   // FAVORITE 
-  const { data } = useSession();
+  const { data, status } = useSession<boolean>();
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const myNuEmail = data?.user?.email;
   const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
+
 
 
   useEffect(() => {
@@ -34,9 +34,9 @@ const AllProductsCards = () => {
       dispatch(getUserDetail(myNuEmail));
     }
   }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
+
   const allProducts: any = useSelector<Ireducers>((state) => state.reducerProducts.products);
   const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
-
 
 
   // FILTERS
@@ -53,7 +53,6 @@ const AllProductsCards = () => {
 
   // SHOPPING CART
   const [modalIsOpen, setIsOpen] = useState(false);
-
   function closeModal() {
     setIsOpen(false);
   }
@@ -155,26 +154,32 @@ const AllProductsCards = () => {
   }, [filterProducts, dispatch]);
 
   //request para guardar los nuevos favs que estan en el redux del user
-  useEffect(() => {
-    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
-  })
+
 
   //check de favs
-  if (!myProfile) return <div>...Loading</div>
-  const { favorites } = myProfile
-  let favorites2 = favorites.map((e) => { return { id: e.id } })
+  interface IproduId {
+    id: string
+  }
 
-  const biblioteca: any = {};
-  favorites2.forEach(fav => {
-    biblioteca[fav.id] = true;
+  let favorites2: Array<IproduId> = []
+  let biblioteca: any = {}
+
+  if (myProfile) {
+    favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
+    favorites2.forEach(fav => {
+      biblioteca[fav.id] = true;
+    })
+  }
+
+  useEffect(() => {
+    if (!myProfile) return
+    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
   })
 
 
   const handleFavorite = (product: any) => {
-    if (!myProfile) return signIn("auth0")
-    const userId: string = myProfile?.id;
+    status === "unauthenticated" && signIn("auth0")
     const { id } = product;
-
     const productToAdd = {
       id: id
     }
