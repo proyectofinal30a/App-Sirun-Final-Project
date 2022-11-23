@@ -1,14 +1,89 @@
 .about__container {
   min-height: 100vh;
   padding-top: 8em;
+  font-family: var(--font-paragraph);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.about__title {
-  font-family: var(--font-paragraph);
-  font-size: 2em;
-  color: var(--color-dark-blue);
+.about__title,
+.newsletter__title,
+.shipping__title {
+  font-family: var(--font-title);
+  font-size: 4em;
+  color: var(--color-dark-pink);
   text-align: center;
 }
+
+.newsletter__title,
+.shipping__title {
+  margin-bottom: .5em;
+}
+
+.about_us__container {
+  margin-bottom: 0
+}
+
+.newsletter__container {
+  margin: 2em 1em 7em 1em;
+  margin-top: 2em;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.newsletter__container > p {
+  padding-bottom: .5em;
+}
+
+.newsletter__form {
+  margin-top: 1em;
+  align-self: center;
+  width: 350px;
+}
+
+.newsletter__form_input {
+  padding: .3em .5em;
+  border: none;
+  box-shadow: 0 0 2px grey;
+  width: 15em;
+}
+
+.newsletter__form_btn {
+  padding: .3em .5em;
+  border: none;
+  box-shadow: 0 0 2px grey;
+}
+
+.shipping__container {
+  margin: 5em 1em;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.shipping__container > p {
+  padding-bottom: .5em;
+}
+
+.shipping_dates__container {
+  margin: auto;
+  margin-top: 1em;
+  background-color: rgb(248, 246, 246);
+  padding: .5em;
+  border-radius: .3em;
+  width: 400px;
+}
+
+.shipping_dates__title {
+  font-weight: bold;
+}
+
+.shipping_dates {
+  font-size: .9em;
+}
+
 
 @media (max-width: 1540px) {
   .about__container {
@@ -25,5 +100,33 @@
 @media (max-width: 780px) {
   .about__container {
     padding-top: 11em;
+  }
+}
+
+@media (max-width: 500px) {
+  .about__title,
+  .newsletter__title,
+  .shipping__title {
+    font-size: 3em;
+  }
+}
+
+@media (max-width: 450px) {
+  .shipping_dates__container {
+    width: 90%;
+  }
+}
+
+@media (max-width: 400px) {
+  .newsletter__form {
+    width: 300px;
+  }
+
+  .newsletter__form_input {
+    width: 12em;
+  }
+
+  .about__container {
+    font-size: .9em;
   }
 }
