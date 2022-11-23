@@ -3,8 +3,6 @@ import axios from 'axios';
 export default async function createPayment(req: NextApiRequest, res: NextApiResponse) {
     try {
         const { products, infoBuyer } = req.body
-
-
         const url = 'https://api.mercadopago.com/checkout/preferences'
         const preference = {
             external_reference:new Date(),
@@ -43,9 +41,7 @@ export default async function createPayment(req: NextApiRequest, res: NextApiRes
                 Authorization: `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
             }
         })
-
         console.log(response.data);
-
         return res.status(200).json({ info: response.data.init_point, state: true })
     } catch (error) {
         res.status(400).json({ msg: 'Error formProduct' })
