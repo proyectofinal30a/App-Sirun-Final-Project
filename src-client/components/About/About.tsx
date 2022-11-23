@@ -41,6 +41,7 @@ const About = () => {
           <p className={styles.shipping_dates}>For personalized cakes: 14 working days.</p>  
           <p className={styles.shipping_dates}>For catering: 14 working days.</p>
           <p className={styles.shipping_dates}>For others: 7 working days.</p>
+          <p className={[styles.shipping_dates, styles.shipping_dates_bold].join(" ")}>LAST ORDER DATE for Christmas is 22nd December. Last delivery date is 24th December.</p>
         </div>
       </div>
 

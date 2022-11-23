@@ -71,17 +71,24 @@
   margin: auto;
   margin-top: 1em;
   background-color: rgb(248, 246, 246);
-  padding: .5em;
+  padding: 1em;
   border-radius: .3em;
   width: 400px;
+  color: var(--color-dark-blue);
 }
 
 .shipping_dates__title {
   font-weight: bold;
+  margin-bottom: 1em;
 }
 
 .shipping_dates {
   font-size: .9em;
+}
+
+.shipping_dates_bold {
+  margin-top: 1em;
+  font-weight: bold;
 }
 
 
