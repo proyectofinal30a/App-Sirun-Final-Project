@@ -308,12 +308,12 @@ const FormCheckout = (): JSX.Element => {
 
         <div className={styles.total__container}>
           <div className={styles.__shipping_line}>
-            <p className={styles.__shipping}>Shipping </p>
-            <p className={styles.__shipping}>$...</p>
-          </div>
-          <div className={styles.__shipping_line}>
             <p className={styles.__shipping}>Products in you cart</p>
             <p className={styles.__shipping}>{totalQuantity}</p>
+          </div>
+          <div className={styles.__shipping_line}>
+            <p className={styles.__shipping}>Shipping </p>
+            <p className={styles.__shipping}>$...</p>
           </div>
           <div className={styles.__total_line}>
             <h2 className={styles.__total}>TOTAL </h2>
