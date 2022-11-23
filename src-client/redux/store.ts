@@ -12,7 +12,7 @@ import reducerCart from "./slice/cart-redux/cart";
 
 
 const persistConfig = {
-  key: 'rooyu',
+  key: 'rou',
   storage,
   whilelist: ['reducerCart']
 }
