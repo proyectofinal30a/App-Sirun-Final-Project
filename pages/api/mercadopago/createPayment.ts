@@ -1,56 +1,74 @@
-import type {NextApiRequest, NextApiResponse} from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios';
-export default async function createPayment(req: NextApiRequest, res: NextApiResponse){
+import { nanoid } from 'nanoid';
+import {IbodyForMercadoPago} from '../../../lib/types'
+export default async function createPayment(req: NextApiRequest, res: NextApiResponse) {
     try {
-        const {products, infoBuyer} = req.body
+
+
+
+
+        const { products, infoBuyer }:IbodyForMercadoPago = req.body
         const url = 'https://api.mercadopago.com/checkout/preferences'
-        const preference=  {
-            payer:{
+        const myOrder_id = nanoid();
+        const preference = {
+            external_reference: myOrder_id,
+            payer: {
                 email: infoBuyer.email,
-                name:infoBuyer.name,
-                adress:{
+                name: infoBuyer.name,
+                address: {
                     street_name: infoBuyer.streetName,
                     street_number: infoBuyer.streetNumber,
-                    zipCode: infoBuyer.zipCode
+                    zip_code: infoBuyer.zipCode
                 },
-                phone:{
+                phone: {
                     number: infoBuyer.phone,
                     area_code: infoBuyer.areaCode
                 }
             },
-            items: products.map((prod:any) => {
+            items: products.map((prod: any) => {
                 return {
                     id: prod.product.id,
                     title: prod.product.name,
                     unit_price: prod.product.price,
+                    picture_url: prod.product.image[0].image,
                     currency_id: "ARS",
                     quantity: prod.quantity
                 }
             }),
-            back_urls:{
-                success: 'http://localhost:3000/',
-                failure: 'http://localhost:3000/',
-                pending: 'http://localhost:3000/'
+            back_urls: {
+                success: process.env.NODE_ENN === 'production'
+                    ? `https://sirunnpatisserie.vercel.app/purchase/${myOrder_id}`
+                    : `http://localhost:3000/purchase/${myOrder_id}`,
+                failure: process.env.NODE_ENN === 'production' 
+                    ? 'https://sirunnpatisserie.vercel.app'
+                    : 'http://localhost:3000',
+                pending: process.env.NODE_ENN === 'production' 
+                    ? 'https://sirunnpatisserie.vercel.app'
+                    : 'http://localhost:3000',
             },
         }
-        const response = await axios.post(url , preference, {
-            headers:{
-                'Content-Type':"application/json",
-                Authorization: `Bearer APP_USR-1385912062963638-111422-e1e1168b94be269d55d7cbca8fcaf186-1239200986`
+        const response = await axios({
+            method: 'post',
+            url,
+            data: preference,
+            headers: {
+                'Content-Type': "application/json",
+                Authorization: `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
             }
         })
-        let responseData: any
-        if(response.data.state){
-            responseData = {
-                link: response.data.init_point,
-                date: response.data.date_created,
-                items: response.data.items,
-                payer: response.data.payer
-            }
-        }
-        return res.status(200).json(response.data.init_point)
+
+
+const IdProductArrayObj = products.map() 
+
+
+        console.log(response.data);
+        return res.status(200).json({ info: response.data.init_point, state: true })
     } catch (error) {
-        res.status(400).json(error)
-        
+        res.status(400).json({ msg: 'Error formProduct' })
+
     }
 }
+
+
+

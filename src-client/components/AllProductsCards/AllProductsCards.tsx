@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
 import { Iproduct, Ireducers } from "../../../lib/types";
-import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart";
+import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
 import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
 import styles from "../../styles/AllProductsCards.module.css";
 import Modal from "react-modal";
@@ -67,6 +67,7 @@ const AllProductsCards = () => {
       price: price,
       image: image,
     };
+
     dispatch(addToCart(productToAdd));
   };
 
