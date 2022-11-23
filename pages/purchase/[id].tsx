@@ -8,7 +8,7 @@ import Nav from "../../src-client/components/NavBar/Nav";
 import Footer from "../../src-client/components/Footer/Footer";
 import styles from "../../src-client/styles/ApprovedPayment.module.css";
 import { useSelector } from "react-redux";
-import { Ireducers, ImyOrder } from "../../lib/types";
+import { Ireducers, IitemForMercadoPago } from "../../lib/types";
 
 
 export default function ApprovedPayment() {
@@ -27,8 +27,28 @@ export default function ApprovedPayment() {
 
   // EmailJS for approved payment
   if (orderInfo) {
+    let templateParams = {
+      client_name: orderInfo.user.name,
+      client_email: orderInfo.user.email,
+      client_phone: orderInfo.phone.area_code + "-" + orderInfo.phone.number,
+      client_address: orderInfo.address.streetName + " " + orderInfo.address.streetNumber,
+      client_zipcode: orderInfo.address.zipCode,
+      order_number: orderInfo.external_reference,
+      order_date: orderInfo.date,
+      order_delivery_time: orderInfo.delivery_time,
+      order_products: orderInfo.purchasedProducts.map((product: IitemForMercadoPago) => {
+        return {
+          product_image: product.image,
+          product_name: product.name,
+          product_quantity: product.quantity,
+          product_price: product.price,
+        }
+      }),
+      order_total: orderInfo.total,
+    }
+
     emailjs
-      .send("gmail", "template_r17yb7u", orderInfo, "6kBWW7c7buxjytyG6")
+      .send("gmail", "template_r17yb7u", templateParams, "6kBWW7c7buxjytyG6")
       .then(
         (result) => console.log("Email successfully sent!: " + result.text),
         (error) => console.log("There's been an error while sending the email: " + error.text)
