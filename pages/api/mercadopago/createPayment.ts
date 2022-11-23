@@ -40,8 +40,12 @@ export default async function createPayment(req: NextApiRequest, res: NextApiRes
                 success: process.env.NODE_ENN === 'production'
                     ? `https://sirunnpatisserie.vercel.app/purchase/${myOrder_id}`
                     : `http://localhost:3000/purchase/${myOrder_id}`,
-                failure: 'http://localhost:3000/',
-                pending: 'http://localhost:3000/'
+                failure: process.env.NODE_ENN === 'production' 
+                    ? 'https://sirunnpatisserie.vercel.app'
+                    : 'http://localhost:3000',
+                pending: process.env.NODE_ENN === 'production' 
+                    ? 'https://sirunnpatisserie.vercel.app'
+                    : 'http://localhost:3000',
             },
         }
         const response = await axios({

@@ -1,34 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import emailjs from "emailjs-com";
-import { useRouter } from "next/router";
-import { getOrder } from "../../redux/slice/payment/payment";
-// import { useDispatch } from "react-redux";
 import styles from "../../styles/EmailNotification.module.css";
 import Image from "next/image";
 
 
 const EmailNotification = () => {
-  // const dispatch = useDispatch();
-
-  const { query } = useRouter();
-  const id = query.id;
-
-  // const initialInfo = {
-  //   client_name: "",
-  //   client_address: "",
-  //   client_zipcode: "",
-  //   client_city: "",
-  //   client_country: "Argentina",
-  //   order_number: "",
-  //   order_composition: [],
-  //   order_total: "",
-  // }
-
-  // const [orderInfo, setOrderInfo] = useState(initialInfo);
-
-  useEffect(() => {
-    
-  }, []);
+  useEffect(() => {}, []);
 
   
   const sendEmail = (e) => {
