@@ -7,7 +7,7 @@ const OrderAdmin: any = async (req: NextApiRequest, res: NextApiResponse) => {
 
         const requestOrder = await axios({
             method: 'get',
-            url: 'https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=2022-11-23T13:02:16.233Z',
+            url: 'https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=2022-11-23T13:18:04.793Z',
             headers: {
                 'Content-Type': "application/json",
                 Authorization: `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
