@@ -1,0 +1,19 @@
+.approved_payment__container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    font-family: var(--font-paragraph);
+    background-color: rgb(248, 246, 246);
+    color: black;
+  }
+  
+  .approved_payment__message {
+    font-size: 1.1em;
+  }
+  
+  .approved_payment__sub_message {
+    font-size: 1em;
+    color: grey;
+  }
