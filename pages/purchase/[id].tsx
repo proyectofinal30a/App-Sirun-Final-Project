@@ -48,7 +48,7 @@ export default function ApprovedPayment() {
     }
 
     emailjs
-      .send("gmail", "template_r17yb7u", templateParams, "6kBWW7c7buxjytyG6")
+      .send("service_59eb21u", "template_r17yb7u", templateParams, "6kBWW7c7buxjytyG6")
       .then(
         (result) => console.log("Email successfully sent!: " + result.text),
         (error) => console.log("There's been an error while sending the email: " + error.text)
