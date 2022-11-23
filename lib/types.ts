@@ -96,6 +96,11 @@ export interface ImyOrder {
     };
 }
 
+interface IallUsers {
+    allUsers: Iuser[];
+    usersByName: Iuser[];
+}
+
 export interface Ireducers {
     reducerProduct?: null
     reducerProducts: IallProducts
@@ -105,6 +110,7 @@ export interface Ireducers {
     reducerCart: any
     reducerFilters: IallProducts
     reducerAfterPayment: ImyOrder
+    reducerAllUsers: IallUsers
 }
 
 
