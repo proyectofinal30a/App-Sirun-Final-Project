@@ -1,10 +1,12 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import axios from 'axios';
+import { nanoid } from 'nanoid';
+
 export default async function createPayment(req: NextApiRequest, res: NextApiResponse) {
     try {
         const { products, infoBuyer } = req.body
         const url = 'https://api.mercadopago.com/checkout/preferences'
-        const myOrder_id = new Date();
+        const myOrder_id = nanoid();
         const preference = {
             external_reference: myOrder_id,
             payer: {

@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import emailjs from "emailjs-com";
-import { nanoid } from 'nanoid';
 import { useRouter } from "next/router";
 import { getOrder } from "../../redux/slice/payment/payment";
 // import { useDispatch } from "react-redux";
