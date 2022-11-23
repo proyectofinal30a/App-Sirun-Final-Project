@@ -13,6 +13,362 @@ axios({
 })
 
 
+//request Example
+
+
+//datos que necesito para crear Order
+const order = {
+    external_reference: '2022-11-22T20:31:58.556Z',
+    items: [{
+        id: '836e7c7c-8d0a-41d4-bc60-380ff179dff2',
+        category_id: '',
+        currency_id: 'ARS',
+        description: '',
+        picture_url: 'https://izzycooking.com/wp-content/uploads/2021/05/Tres-Leches-Cake-683x1024.jpg',
+        title: 'TRES LECHES CAKE',
+        quantity: 1,
+        unit_price: 500
+    }],
+    payer: {
+        phone: { area_code: '1121', number: '1231212' },
+        address: {
+            zip_code: '5521',
+            street_name: 'calle cerro arco',
+            street_number: '1'
+        },
+        email: 'test_user_16943485@testuser.com',
+    },
+    
+}
+//
+
+
+//datos datos de confirmacion
+    const adminData = {
+        "money_release_status": "pending",
+        "status_detail": "accredited",
+        "status": "approved",
+        "transaction_amount_refunded": 0,
+        "transaction_amount": 1300,
+    }
+
+
+
+
+const dataUser = {
+    additional_info: '',
+    auto_return: '',
+    back_urls: {
+        failure: 'http://localhost:3000/',
+        pending: 'http://localhost:3000/',
+        success: 'http://localhost:3000/'
+    },
+    binary_mode: false,
+    client_id: '1385912062963638',
+    collector_id: 1239200986,
+    coupon_code: null,
+    coupon_labels: null,
+    date_created: '2022-11-22T17:17:58.324-04:00',
+    date_of_expiration: null,
+    expiration_date_from: null,
+    expiration_date_to: null,
+    expires: false,
+    external_reference: '2022-11-22T21:17:57.432Z',
+    id: '1239200986-5f3aff28-ba00-4178-a969-15d789279b98',
+    init_point: 'https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=1239200986-5f3aff28-ba00-4178-a969-15d789279b98',
+    internal_metadata: null,
+    items: [
+        {
+            id: '836e7c7c-8d0a-41d4-bc60-380ff179dff2',
+            category_id: '',
+            currency_id: 'ARS',
+            description: '',
+            picture_url: 'https://izzycooking.com/wp-content/uploads/2021/05/Tres-Leches-Cake-683x1024.jpg',
+            title: 'TRES LECHES CAKE',
+            quantity: 1,
+            unit_price: 500
+        },
+        {
+            id: '0fcfd1c9-0ef5-4e86-ba3f-1e2488c0df15',
+            category_id: '',
+            currency_id: 'ARS',
+            description: '',
+            picture_url: 'https://izzycooking.com/wp-content/uploads/2021/05/Tres-Leches-Cake-683x1024.jpg',
+            title: 'CHURROS WITH CHOCOLATE SAUCE',
+            quantity: 1,
+            unit_price: 300
+        },
+        {
+            id: '3f258d01-4fd9-4165-a7ef-0143e135d423',
+            category_id: '',
+            currency_id: 'ARS',
+            description: '',
+            picture_url: 'https://izzycooking.com/wp-content/uploads/2021/05/Tres-Leches-Cake-683x1024.jpg',
+            title: 'SPANISH SPONGE CAKE',
+            quantity: 1,
+            unit_price: 500
+        }
+    ],
+    marketplace: 'NONE',
+    marketplace_fee: 0,
+    metadata: {},
+    notification_url: null,
+    operation_type: 'regular_payment',
+    payer: {
+        phone: { area_code: '1121', number: '1231212' },
+        address: {
+            zip_code: '5521',
+            street_name: 'calle cerro arco',
+            street_number: '1'
+        },
+        email: 'test_user_16943485@testuser.com',
+        identification: { number: '', type: '' },
+        name: 'Ezequiel sosa',
+        surname: '',
+        date_created: null,
+        last_purchase: null
+    },
+    payment_methods: {
+        default_card_id: null,
+        default_payment_method_id: null,
+        excluded_payment_methods: [[Object]],
+        excluded_payment_types: [[Object]],
+        installments: null,
+        default_installments: null
+    },
+    processing_modes: null,
+    product_id: null,
+    redirect_urls: { failure: '', pending: '', success: '' },
+    sandbox_init_point: 'https://sandbox.mercadopago.com.ar/checkout/v1/redirect?pref_id=1239200986-5f3aff28-ba00-4178-a969-15d789279b98',
+    site_id: 'MLA',
+    shipments: {
+        default_shipping_method: null,
+        receiver_address: {
+            zip_code: '',
+            street_name: '',
+            street_number: null,
+            floor: '',
+            apartment: '',
+            city_name: null,
+            state_name: null,
+            country_name: null
+        }
+    },
+    total_amount: null,
+    last_updated: null
+}
+
+
+
+//
+
+//lo que nesecito del admin
+
+
+
+
+//request Admin
+
+const dataAdmin = {
+    "results": [
+        {
+            "metadata": {},
+            "corporation_id": null,
+            "operation_type": "regular_payment",
+            "point_of_interaction": {
+                "business_info": {
+                    "unit": "online_payments",
+                    "sub_unit": "checkout_pro"
+                },
+                "type": "UNSPECIFIED"
+            },
+            "fee_details": [
+                {
+                    "amount": 339.95,
+                    "fee_payer": "payer",
+                    "type": "financing_fee"
+                },
+                {
+                    "amount": 53.3,
+                    "fee_payer": "collector",
+                    "type": "mercadopago_fee"
+                }
+            ],
+            "notification_url": null,
+            "date_approved": "2022-11-22T16:37:32.000-04:00",
+            "money_release_schema": null,
+            "payer": {
+                "entity_type": null,
+                "identification": {
+                    "number": "23011111114",
+                    "type": "CUIL"
+                },
+                "phone": {
+                    "number": null,
+                    "extension": null,
+                    "area_code": null
+                },
+                "operator_id": null,
+                "last_name": null,
+                "id": "1239201892",
+                "type": null,
+                "first_name": null,
+                "email": "test_user_58997563@testuser.com"
+            },
+            "transaction_details": {
+                "total_paid_amount": 1639.95,
+                "acquirer_reference": null,
+                "installment_amount": 546.65,
+                "financial_institution": null,
+                "net_received_amount": 1246.7,
+                "overpaid_amount": 0,
+                "external_resource_url": null,
+                "payable_deferral_period": null,
+                "payment_method_reference_id": null
+            },
+            "statement_descriptor": "Mercadopago*fake",
+            "call_for_authorize_id": null,
+            "installments": 3,
+            "pos_id": null,
+            "external_reference": "2022-11-22T20:31:58.556Z",
+            "date_of_expiration": null,
+            "charges_details": [
+                {
+                    "refund_charges": [],
+                    "last_updated": "2022-11-22T16:37:31.000-04:00",
+                    "metadata": {},
+                    "amounts": {
+                        "original": 53.3,
+                        "refunded": 0
+                    },
+                    "date_created": "2022-11-22T16:37:31.000-04:00",
+                    "name": "mercadopago_fee",
+                    "reserve_id": null,
+                    "accounts": {
+                        "from": "collector",
+                        "to": "mp"
+                    },
+                    "id": "51785037066-001",
+                    "type": "fee",
+                    "client_id": 0
+                }
+            ],
+            "id": 51785037066,
+            "payment_type_id": "credit_card",
+            "payment_method": {
+                "id": "master",
+                "type": "credit_card"
+            },
+            "order": {
+                "id": "6586363723",
+                "type": "mercadopago"
+            },
+            "counter_currency": null,
+            "money_release_status": "pending",
+            "brand_id": null,
+            "status_detail": "accredited",
+            "differential_pricing_id": null,
+            "additional_info": {
+                "authentication_code": null,
+                "ip_address": "186.158.236.32",
+                "nsu_processadora": null,
+                "available_balance": null,
+                "items": [
+                    {
+                        "quantity": "1",
+                        "category_id": null,
+                        "picture_url": null,
+                        "description": null,
+                        "id": "836e7c7c-8d0a-41d4-bc60-380ff179dff2",
+                        "title": "TRES LECHES CAKE",
+                        "unit_price": "500.0"
+                    },
+                    {
+                        "quantity": "1",
+                        "category_id": null,
+                        "picture_url": null,
+                        "description": null,
+                        "id": "0fcfd1c9-0ef5-4e86-ba3f-1e2488c0df15",
+                        "title": "CHURROS WITH CHOCOLATE SAUCE",
+                        "unit_price": "300.0"
+                    },
+                    {
+                        "quantity": "1",
+                        "category_id": null,
+                        "picture_url": null,
+                        "description": null,
+                        "id": "3f258d01-4fd9-4165-a7ef-0143e135d423",
+                        "title": "SPANISH SPONGE CAKE",
+                        "unit_price": "500.0"
+                    }
+                ],
+                "payer": {
+                    "phone": {
+                        "number": "1231212",
+                        "area_code": "1121"
+                    },
+                    "first_name": "Ezequiel sosa"
+                }
+            },
+            "live_mode": true,
+            "marketplace_owner": null,
+            "card": {
+                "first_six_digits": "503175",
+                "expiration_year": 2025,
+                "bin": "50317557",
+                "date_created": "2022-11-22T16:37:31.000-04:00",
+                "expiration_month": 11,
+                "id": null,
+                "cardholder": {
+                    "identification": {
+                        "number": "11111111",
+                        "type": "DNI"
+                    },
+                    "name": "APRO"
+                },
+                "last_four_digits": "0604",
+                "date_last_updated": "2022-11-22T16:37:31.000-04:00"
+            },
+            "integrator_id": null,
+            "status": "approved",
+            "transaction_amount_refunded": 0,
+            "transaction_amount": 1300,
+            "description": "TRES LECHES CAKE",
+            "financing_group": null,
+            "money_release_date": "2022-12-10T16:37:32.000-04:00",
+            "merchant_number": null,
+            "refunds": [],
+            "authorization_code": "301299",
+            "captured": true,
+            "collector_id": 1239200986,
+            "merchant_account_id": null,
+            "taxes_amount": 0,
+            "date_last_updated": "2022-11-22T16:38:43.000-04:00",
+            "coupon_amount": 0,
+            "store_id": null,
+            "build_version": "2.120.2",
+            "date_created": "2022-11-22T16:37:31.000-04:00",
+            "acquirer_reconciliation": [],
+            "sponsor_id": null,
+            "shipping_amount": 0,
+            "issuer_id": "3",
+            "payment_method_id": "master",
+            "binary_mode": false,
+            "platform_id": null,
+            "deduction_schema": null,
+            "processing_mode": "aggregator",
+            "currency_id": "ARS",
+            "shipping_cost": 0
+        }
+    ],
+    "paging": {
+        "total": 1,
+        "limit": 30,
+        "offset": 0
+    }
+}
+///
+
 
 //USER VENDEDORRR
 
