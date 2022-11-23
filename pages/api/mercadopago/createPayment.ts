@@ -4,8 +4,9 @@ export default async function createPayment(req: NextApiRequest, res: NextApiRes
     try {
         const { products, infoBuyer } = req.body
         const url = 'https://api.mercadopago.com/checkout/preferences'
+        const myOrder_id = new Date();
         const preference = {
-            external_reference:new Date(),
+            external_reference: myOrder_id,
             payer: {
                 email: infoBuyer.email,
                 name: infoBuyer.name,
@@ -30,7 +31,9 @@ export default async function createPayment(req: NextApiRequest, res: NextApiRes
                 }
             }),
             back_urls: {
-                success: 'http://localhost:3000/',
+                success: process.env.NODE_ENN === 'production' 
+                    ? `https://sirunnpatisserie.vercel.app/purchase/${myOrder_id}` 
+                    : `http://localhost:3000/purchase/${myOrder_id}`,
                 failure: 'http://localhost:3000/',
                 pending: 'http://localhost:3000/'
             },
