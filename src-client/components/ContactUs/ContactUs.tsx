@@ -36,7 +36,7 @@ const ContactUs = () => {
     
         
         
-        emailjs.sendForm(process.env.EMAILJS_SERVICES, 'template_mgaccc1', form.current, process.env.EMAILJS_API_KEY) 
+        emailjs.sendForm(process.env.EMAILJS_SERVICES, 'template_diqzxgu', form.current, process.env.EMAILJS_API_KEY) 
         .then((result) => {
             console.log('SUCCESS!', result.status, result.text);  
         }, (error) => {
@@ -49,7 +49,7 @@ const ContactUs = () => {
         
         setTimeout(()=>{
         showResult(false);
-        }, 5000)
+        }, 10000)
 
   return (
     <div className={styles.contact__container} >
