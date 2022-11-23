@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import { addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart";
+import { addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
 import { Iproduct, Ireducers } from "../../../lib/types";
 import { BsFillTrashFill } from "react-icons/bs";
 import styles from "../../styles/ShoppingCart.module.css";
@@ -13,7 +13,6 @@ const ShoppingCart = () => {
   const router = useRouter();
   const dispatch: Function = useDispatch();
 
-  const product: any = useSelector<Ireducers>((state) => state.reducerProductDetail.productDetail);
   const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
 
 

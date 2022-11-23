@@ -5,6 +5,36 @@ export interface Iimage {
     id?: string
 }
 
+export interface IinfoBuyer {
+    email: string
+    name: string
+    address: {
+        streetName: string,
+        streetNumber: number,
+        zipCode: number
+    }
+    phone: {
+        number: number
+        area_code: number
+    }
+}
+
+export interface IbodyForMercadoPago {
+    infoBuyer: IinfoBuyer
+    products: IitemForMercadoPago[]
+}
+
+export interface IitemForMercadoPago {
+    id: string
+    name: string
+    price: number
+    image: Iimage[]
+    quantity: number
+}
+
+
+
+
 
 export interface Iproduct {
     id: string;
@@ -54,6 +84,22 @@ export interface PackProducDetailRating {
     rating: number
 }
 
+export interface ImyOrder {
+    myOrder: {
+      external_reference: string;
+      total: string;
+      status: string;
+      date: string;
+      delivery_time: string;
+      user: IinfoBuyer;
+      purchasedProducts: IitemForMercadoPago[];
+    };
+}
+
+interface IallUsers {
+    allUsers: Iuser[];
+    usersByName: Iuser[];
+}
 
 export interface Ireducers {
     reducerProduct?: null
@@ -63,7 +109,10 @@ export interface Ireducers {
     reducerProductsByName: IproductsByName
     reducerCart: any
     reducerFilters: IallProducts
+    reducerAfterPayment: ImyOrder
+    reducerAllUsers: IallUsers
     reducerAdmin : IallProducts
+
 }
 
 
