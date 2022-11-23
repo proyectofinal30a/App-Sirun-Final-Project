@@ -66,6 +66,7 @@ const AllProductsCards = () => {
       price: price,
       image: image,
     };
+
     dispatch(addToCart(productToAdd));
   };
 
@@ -99,7 +100,7 @@ const AllProductsCards = () => {
     e.preventDefault();
     const { id }: any = product;
     dispatch(trashItem(id));
-  if (cart.length === 1 || cart.length === 0) { return setIsOpen(false); }
+    if (cart.length === 1 || cart.length === 0) { return setIsOpen(false); }
   };
 
   let total = 0;

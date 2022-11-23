@@ -33,12 +33,14 @@ interface Iproducts {
   products: quantityy[];
   confirmed: Boolean;
   payLink: string;
+  image:string
 }
 
 const initialState: Iproducts = {
   products: [],
   confirmed: false,
-  payLink: ''
+  payLink: '',
+  image:''
 }
 
 

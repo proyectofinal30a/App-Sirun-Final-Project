@@ -11,7 +11,7 @@ import { symlink } from "fs";
 // PARA DATOS DE ENTREGA
 
 const FormCheckout = (): JSX.Element => {
-  const dispatch:Function = useDispatch();
+  const dispatch: Function = useDispatch();
 
   const productsInCart = useSelector((state: any) => state.reducerCart.products);
   const confirmedCart = useSelector((state: any) => state.reducerCart.confirmed);
@@ -61,7 +61,7 @@ const FormCheckout = (): JSX.Element => {
   // Submitea cuando se cliquea el botón del modal (el form esta dentro del modal)
   async function handleSubmit(e: Event) {
     e.preventDefault();
-    const info:any = {
+    const info: any = {
       products: productsInCart,
       infoBuyer: inputUser,
     };
