@@ -101,11 +101,9 @@ const AllProductsCards = () => {
     dispatch(trashItem(id));
   if (cart.length === 1 || cart.length === 0) { return setIsOpen(false); }
   };
-
-  let total = 0;
-  cart.map((elem: any) => {
-    return (total += elem.subTotal);
-  });
+  
+  let total = cart.map((elem: any) => elem.subTotal).reduce((elem, acc:number)=> elem + acc)
+  let totalQuantity = cart.map((elem:any)=>elem.quantity).reduce((elem, acc:number)=> elem + acc)
 
 
 
@@ -169,6 +167,7 @@ const AllProductsCards = () => {
     addToFavorites(userId, productId);
     dispatch(getUserDetail(myNuEmail));
   }
+  
 
   return (
     <div className={styles.general__container}>
@@ -286,7 +285,10 @@ const AllProductsCards = () => {
                     </div>
                   );
                 })}
-
+                <div className={styles.modal__total_container}>
+                  <p className={styles.modal__total}>Products in Cart </p>
+                  <p className={styles.modal__total}>{totalQuantity}</p>
+                </div>
                 <div className={styles.modal__total_container}>
                   <p className={styles.modal__total}>TOTAL </p>
                   <p className={styles.modal__total}>${total}</p>
