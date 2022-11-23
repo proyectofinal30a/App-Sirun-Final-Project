@@ -1,10 +1,11 @@
 import React, { useEffect } from "react";
 import styles from "../../styles/AdminManageProducts.module.css";
-import {AiFillEyeInvisible, AiFillEye, AiFillEdit} from 'react-icons/ai'
-import {useSelector, useDispatch} from 'react-redux'
+import { AiFillEyeInvisible, AiFillEye, AiFillEdit } from 'react-icons/ai'
+import { useSelector, useDispatch } from 'react-redux'
 import { Iproduct, Ireducers } from "../../../lib/types";
-import {getProducts} from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
+import { getProducts } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import SearchBar from "../SearchBar/SearchBar";
+import { current } from "@reduxjs/toolkit";
 // 1) DEBERIA TENER UNA SERACHBAR
 //2) DEBERIA renderizar filtros
 //3) Deberia verse carts con iconos para editar ----> link form para editar
@@ -13,34 +14,54 @@ import SearchBar from "../SearchBar/SearchBar";
 
 const AdminManageProducts = () => {
 
-  
-  const allProducts = useSelector((state:Ireducers)=> state.reducerAdmin.products)
-  const dispatch : Function = useDispatch()
+
+  const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products)
+  const dispatch: Function = useDispatch()
+  const filteredProducts = useSelector((state: Ireducers) => state.reducerAdmin.productsToFilter)
 
 
-useEffect(()=>{
-  dispatch(getProducts())
-})
+  let currentProducts: Iproduct[];
+
+  if (filteredProducts) {
+    currentProducts = filteredProducts
+  } else {
+    currentProducts = allProducts
+  }
+
+
+  useEffect(() => {
+    dispatch(getProducts())
+  })
 
   return (
     <div className={styles.products_form__container}>
-        <h1 className={styles.products_form__title}>Administration Product Managing</h1>
-{/* /// ZONA SEARCHBAR */}
-<SearchBar/>
-{/* // ZONA FILTROS */}
+      <h1 className={styles.products_form__title}>Administration Product Managing</h1>
+      {/* /// ZONA SEARCHBAR */}
+      <SearchBar />
+      {/* // ZONA FILTROS */}
+      {currentProducts.map((product: any, index: number) => {
+        return (
+          <div>
+            <p>{product.name}</p>
+            <p>{product.price}</p>
+          </div>
 
-{/* //ZONA AUMENTO MASIVO */}
-{/* // boton + checkobox + input +/-  */}
+        )
+      })}
+      {/* //ZONA AUMENTO MASIVO */}
+      {/* // boton + checkobox + input +/-  */}
 
-{/* // ZONA RENDER DE CARTS */}
-
-
-
-
+      {/* // ZONA RENDER DE CARTS */}
 
 
 
-{/* // get all products sin el filtro de la function is available,
+
+
+
+
+
+
+      {/* // get all products sin el filtro de la function is available,
         para eso hacer un reducer get y una ruta get ? en back o se puede reutilizar
 //      comprobar si se puede reutilizar los types de getallproducts
 /       use selector  + map con solo foto, nombre y precio en la card y 
