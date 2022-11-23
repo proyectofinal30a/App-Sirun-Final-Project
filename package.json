@@ -18,6 +18,7 @@
   },
   "dependencies": {
     "@auth0/nextjs-auth0": "^1.9.2",
+    "@emailjs/browser": "^3.9.1",
     "@next-auth/prisma-adapter": "^1.0.5",
     "@prisma/client": "^4.6.1",
     "@reduxjs/toolkit": "^1.9.0",
