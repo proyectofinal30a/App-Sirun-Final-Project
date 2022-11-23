@@ -102,9 +102,15 @@ const AllProductsCards = () => {
     dispatch(trashItem(id));
     if (cart.length === 1 || cart.length === 0) { return setIsOpen(false); }
   };
-  
-  let total = cart.map((elem: any) => elem.subTotal).reduce((elem, acc:number)=> elem + acc)
-  let totalQuantity = cart.map((elem:any)=>elem.quantity).reduce((elem, acc:number)=> elem + acc)
+
+  let total = 0
+  let totalQuantity = 0
+  if (cart.length === 0) {
+    total = 0
+  } else {
+    total = cart.map((elem: any) => elem.subTotal).reduce((elem, acc: number) => elem + acc)
+    totalQuantity = cart.map((elem: any) => elem.quantity).reduce((elem, acc: number) => elem + acc)
+  }
 
 
 
@@ -183,7 +189,7 @@ const AllProductsCards = () => {
     }
     dispatch(addToFavorites(productToAdd));
   }
-  
+
 
   return (
     <div className={styles.general__container}>
