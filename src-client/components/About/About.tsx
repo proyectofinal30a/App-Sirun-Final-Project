@@ -11,12 +11,17 @@ const About = () => {
 
   return (
     <div className={styles.about__container}>
+
       <div className={styles.newsletter__container}>
         <h1 className={styles.newsletter__title}>Newsletter</h1>
         <p>Be a part of the dreamy world of Sirun Pâtisserie.</p>
         <p>Sign up to be kept in the know with all our launches, keep up with our latests news and get exclusive offers!</p>
         <form className={styles.newsletter__form}>
-          <input type="text" placeholder="Email address" className={styles.newsletter__form_input} />
+          <input 
+            type="text" 
+            placeholder="Email address" 
+            className={styles.newsletter__form_input} 
+          />
           <button onClick={handleSubscription}  className={styles.newsletter__form_btn}>Subscribe</button>
         </form>
       </div>

@@ -44,14 +44,14 @@
 }
 
 .newsletter__form_input {
-  padding: .3em .5em;
+  padding: .5em .7em;
   border: none;
   box-shadow: 0 0 2px grey;
   width: 15em;
 }
 
 .newsletter__form_btn {
-  padding: .3em .5em;
+  padding: .5em .7em;
   border: none;
   box-shadow: 0 0 2px grey;
 }
