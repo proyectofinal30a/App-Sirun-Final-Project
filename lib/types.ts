@@ -84,6 +84,17 @@ export interface PackProducDetailRating {
     rating: number
 }
 
+export interface ImyOrder {
+    myOrder: {
+      external_reference: string;
+      total: string;
+      status: string;
+      date: string;
+      delivery_time: string;
+      user: IinfoBuyer;
+      purchasedProducts: IitemForMercadoPago[];
+    };
+}
 
 export interface Ireducers {
     reducerProduct?: null
@@ -93,6 +104,7 @@ export interface Ireducers {
     reducerProductsByName: IproductsByName
     reducerCart: any
     reducerFilters: IallProducts
+    reducerAfterPayment: ImyOrder
 }
 
 

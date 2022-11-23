@@ -31,7 +31,7 @@ const testMercadoPago = async (req: NextApiRequest, res: NextApiResponse) => {
                 }
             }),
             back_urls: {
-                success: 'http://localhost:3000/${id}',
+                success: 'http://localhost:3000/',
                 failure: 'http://localhost:3000/',
                 pending: 'http://localhost:3000/'
             },

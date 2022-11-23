@@ -1,74 +1,48 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-// import userVerification from "../../../controllers/userVerification-controller";
+import { IinfoBuyer, IitemForMercadoPago } from "../../../../lib/types";
+import userVerification from "../../../controllers/userVerification-controller";
 
-
-interface Istate {
-  myOrder: {},
+interface IidOrder {
+  orderId: string;
+  userEmail: string;
 }
 
 interface ImyOrder {
   myOrder: {
-    external_reference: "", // necesario // nanoid() que recibimos por query
-    id_user: "",            
-    description: "",        
-    total: "", // necesario              
-    status: "", // necesario     
-    date: "", // necesario       
-    delivery_time: "", // necesario     
-    user: Iuser,       
-    product: [],   
-    purchasedProducts: IpurchasedProducts[], // necesario     
-    id_address: "",   
-    address: Iaddress, // necesario     
-  },
-};
-
-interface Iuser {
-  user: {
-    id: "",
-    name: "", // necesario
-    email: "", // necesario
-    emailVerified: "",
-    image: "",
-    role: "",
-    accounts: [],
-    addresses: [],
-    evaluations: [],
-    orders: [],
-    sessions: "",
-    favorites: [],
-  }
-}
-
-interface IpurchasedProducts {
-  purchasedPorducts: {
-    title: "", // necesario
-    picture_url: "", // necesario
-    unit_price: number, // necesario
-    quantity: number, // necesario
-    id_order: "",
-    order: ImyOrder,
-  }
-}
-
-interface Iaddress {
-  address: {
-    id: "",
-    id_user: "",
-    name_address: "", 
-    zip_code: number, // necesario
-    street_name: "", // necesario
-    street_number: number, // necesario
-    user: Iuser, 
-    phone: number, // necesario
-    order: ImyOrder,
-  }
+    external_reference: string;
+    total: string;
+    status: string;
+    date: string;
+    delivery_time: string;
+    user: IinfoBuyer;
+    purchasedProducts: IitemForMercadoPago[];
+  };
 }
 
 
 const initialState: ImyOrder = {
-  myOrder: {},
+  myOrder: {
+    external_reference: "",
+    total: "",
+    status: "",
+    date: "",
+    delivery_time: "",
+    user: {
+      email: "",
+      name: "",
+      address: {
+        streetName: "",
+        streetNumber: 0,
+        zipCode: 0,
+      },
+      phone: {
+        number: 0,
+        area_code: 0,
+      }
+    },
+    purchasedProducts: [],
+  }
 };
 
 
@@ -76,14 +50,22 @@ export const reducerAfterPayment = createSlice({
   name: "reducerAfterPayment",
   initialState: initialState,
   reducers: {
-    getOrder: (state, action) => {},
+    getOrder: (state, action) => {
+      state.myOrder = action.payload;
+    },
   },
 });
 
-export const getOrder = (id) => async (dispatch: Function) => {
-  const { data }: any = await axios.get(`/${id}`);
+
+export const getOrder = (orderInfo: IidOrder) => async (dispatch: Function) => {
+  const { data } = await axios({
+    method: "get",
+    url: "/userScope/get/order", // revisar url cuando Eze termine
+    data: orderInfo,
+  });
   console.log(data);
   dispatch(reducerAfterPayment.actions.getOrder(data));
 };
+
 
 export default reducerAfterPayment.reducer;

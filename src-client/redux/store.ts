@@ -8,7 +8,7 @@ import reducerProductDetail from "./slice/products-client/Product-detail-redux";
 import reducerFilters from "./slice/filter-product-client/filters-redux";
 import reducerProductsByName from "./slice/products-client/ProductByName-redux";
 import reducerCart from "./slice/cart-redux/cart-redux";
-
+import reducerAfterPayment from "./slice/payment/payment";
 
 
 const persistConfig = {
@@ -24,6 +24,7 @@ const myReducers = combineReducers({
   reducerProductsByName,
   reducerCart,
   reducerFilters,
+  reducerAfterPayment,
 })
 
 
