@@ -1,5 +1,5 @@
 -- CreateEnum
-CREATE TYPE "StatusType" AS ENUM ('pending', 'in_progress', 'canceled', 'fullfiled');
+CREATE TYPE "StatusType" AS ENUM ('pending', 'confirmed', 'canceled', 'in_process', 'fulfilled');
 
 -- CreateEnum
 CREATE TYPE "TypeDiet" AS ENUM ('vegan', 'celiac', 'vegan_celiac', 'none');
@@ -55,12 +55,45 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "Direccion" (
+CREATE TABLE "Address" (
     "id" TEXT NOT NULL,
     "id_user" TEXT NOT NULL,
-    "dir" TEXT NOT NULL,
+    "name_address" TEXT NOT NULL DEFAULT 'my Address',
+    "zip_code" INTEGER NOT NULL,
+    "street_name" TEXT NOT NULL,
+    "street_number" INTEGER NOT NULL,
 
-    CONSTRAINT "Direccion_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Phone" (
+    "area_code" INTEGER NOT NULL,
+    "phone_number" INTEGER NOT NULL,
+    "id_address" TEXT NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Order" (
+    "external_reference" TEXT NOT NULL,
+    "id_user" TEXT NOT NULL,
+    "description" TEXT NOT NULL,
+    "total" INTEGER NOT NULL,
+    "status" "StatusType" NOT NULL,
+    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "delivery_time" TEXT NOT NULL,
+    "id_address" TEXT NOT NULL,
+
+    CONSTRAINT "Order_pkey" PRIMARY KEY ("external_reference")
+);
+
+-- CreateTable
+CREATE TABLE "purchasedProducts" (
+    "title" TEXT NOT NULL,
+    "picture_url" TEXT NOT NULL,
+    "unit_price" INTEGER NOT NULL,
+    "quantity" INTEGER NOT NULL,
+    "id_order" TEXT NOT NULL
 );
 
 -- CreateTable
@@ -72,19 +105,6 @@ CREATE TABLE "Evaluation" (
     "rating" INTEGER NOT NULL,
 
     CONSTRAINT "Evaluation_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "Order" (
-    "id" TEXT NOT NULL,
-    "id_user" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "total" INTEGER NOT NULL,
-    "status" "StatusType" NOT NULL,
-    "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "delivery_time" TEXT NOT NULL,
-
-    CONSTRAINT "Order_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable
@@ -144,13 +164,19 @@ CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Direccion_id_key" ON "Direccion"("id");
+CREATE UNIQUE INDEX "Address_id_key" ON "Address"("id");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Phone_id_address_key" ON "Phone"("id_address");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "Order_external_reference_key" ON "Order"("external_reference");
+
+-- CreateIndex
+CREATE UNIQUE INDEX "purchasedProducts_id_order_key" ON "purchasedProducts"("id_order");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Evaluation_id_key" ON "Evaluation"("id");
-
--- CreateIndex
-CREATE UNIQUE INDEX "Order_id_key" ON "Order"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Product_id_key" ON "Product"("id");
@@ -174,7 +200,19 @@ ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Direccion" ADD CONSTRAINT "Direccion_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Address" ADD CONSTRAINT "Address_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Phone" ADD CONSTRAINT "Phone_id_address_fkey" FOREIGN KEY ("id_address") REFERENCES "Address"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Order" ADD CONSTRAINT "Order_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Order" ADD CONSTRAINT "Order_id_address_fkey" FOREIGN KEY ("id_address") REFERENCES "Address"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "purchasedProducts" ADD CONSTRAINT "purchasedProducts_id_order_fkey" FOREIGN KEY ("id_order") REFERENCES "Order"("external_reference") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Evaluation" ADD CONSTRAINT "Evaluation_id_product_fkey" FOREIGN KEY ("id_product") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -183,13 +221,10 @@ ALTER TABLE "Evaluation" ADD CONSTRAINT "Evaluation_id_product_fkey" FOREIGN KEY
 ALTER TABLE "Evaluation" ADD CONSTRAINT "Evaluation_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "Order_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
 ALTER TABLE "ImageProdu" ADD CONSTRAINT "ImageProdu_id_product_fkey" FOREIGN KEY ("id_product") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_OrderToProduct" ADD CONSTRAINT "_OrderToProduct_A_fkey" FOREIGN KEY ("A") REFERENCES "Order"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_OrderToProduct" ADD CONSTRAINT "_OrderToProduct_A_fkey" FOREIGN KEY ("A") REFERENCES "Order"("external_reference") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_OrderToProduct" ADD CONSTRAINT "_OrderToProduct_B_fkey" FOREIGN KEY ("B") REFERENCES "Product"("id") ON DELETE CASCADE ON UPDATE CASCADE;
