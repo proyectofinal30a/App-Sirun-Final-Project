@@ -9,8 +9,8 @@ const nextConfig = {
     "CLOUDINARY_PRODUCTS": "r94njzcs",
     "CLOUDINARY_SLIDER": "slider",
     "CLOUDINARY_USER_PROFILE": "mfrtuke4",
-    "EMAILJS_API_KEY" : "wFh_Z1YLlso9SqHw0",
-    "EMAILJS_SERVICES" : "service_bi4qxyc",
+    "EMAILJS_API_KEY" : "6kBWW7c7buxjytyG6",
+    "EMAILJS_SERVICES" : "service_59eb21u",
   }
   ,
   images: {
