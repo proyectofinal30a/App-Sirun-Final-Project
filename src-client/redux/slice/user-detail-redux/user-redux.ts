@@ -31,6 +31,7 @@ export const reducerUser = createSlice({
             return;
         },
         addToFavoritess: (state: Iuser, action: any) => {
+            if (!state.user) return
             const foundProduct = state.user.favorites.find(product => product.id === action.payload.id);
             if (foundProduct) {
                 const newState = state.user.favorites.filter((fav) => fav.id !== action.payload.id);
