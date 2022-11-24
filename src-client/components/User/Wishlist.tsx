@@ -1,16 +1,15 @@
-import React, { useEffect, useState } from "react";
+import styles from "../../styles/Wishlist.module.css";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
-import { removeFromFavorites } from "../../redux/slice/user-detail-redux/user-redux";
-import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
-import { Ireducers } from "../../../lib/types";
-import { FaHeart } from "react-icons/fa";
-import { FiHeart } from "react-icons/fi";
 import { IconContext } from "react-icons";
-import { useSession } from "next-auth/react";
-import styles from "../../styles/Wishlist.module.css";
+import { FaHeart } from "react-icons/fa";
+import { FiHeart } from "react-icons/fi"; // falta no borrar
+import { Ireducers } from "../../../lib/types";
+import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 
 
 export default function Wishlist(): JSX.Element {
@@ -22,7 +21,6 @@ export default function Wishlist(): JSX.Element {
   const myNuEmail = data?.user?.email;
   const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
 
-  // const [isFavorited, setIsFavorited] = useState({ id: "", favorited: true });
 
   useEffect(() => {
     if (!myInfUser?.user?.id) {
@@ -31,18 +29,19 @@ export default function Wishlist(): JSX.Element {
   }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
 
 
-  if (!myProfile) return (<div className={styles.wishlist__loading}>Loading...</div>);
+  if (!myProfile.name || !data) return (<div className={styles.wishlist__loading}>Loading...</div>);
+
+  console.log(data)
+  console.log(myProfile)
 
   const handleClick = (id: any) => {
     const userId: string = myProfile.id;
     const productId = id;
 
-    // setIsFavorited({ id: userId, favorited: false ? true : false });
-
     // Deleting from wishlist confirmation
     let deleteConfirmation = confirm("Are you sure you want to delete this product from your wishlist?");
     if (deleteConfirmation === false) return;
-    removeFromFavorites(userId, productId);
+    // removeFromFavorites(userId, productId);
   }
 
 
@@ -52,6 +51,8 @@ export default function Wishlist(): JSX.Element {
 
       {myProfile.favorites[0] ? 
         myProfile.favorites.map((elem) => {
+          if (!elem.name) return null
+
           const myImage: string = typeof elem?.image?.[0].image === "string" ? elem.image[0].image : "Loading...";
 
           return (

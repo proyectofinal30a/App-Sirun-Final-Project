@@ -1,12 +1,9 @@
 import React, { useState } from "react";
 import Image from "next/image";
-import {
-  uploadFormNoRedux,
-
-} from "../../redux/slice/product-Admin-redux/ProAdm-Redux";
-import { IproductSumbit, Ierror } from "../../../lib/types";
+import { uploadFormNoRedux } from "../../../redux/slice/product-Admin-redux/ProAdm-Redux";
+import { IproductSumbit, Ierror } from "../../../../lib/types";
 import validation from "./Validation";
-import styles from "../../styles/ProductCreationForm.module.css";
+import styles from "../../../styles/ProductCreationForm.module.css";
 
 
 export default function FormProduct(): JSX.Element {

@@ -35,6 +35,11 @@ const AdminSideBar = () => {
               <span className={styles.nav_span}>Manage users</span>
             </li>
           </Link>
+          <Link href="/admin/adminOrders" className={styles.nav__link}>
+            <li className={styles.nav__item}>
+              <span className={styles.nav_span}>Manage orders</span>
+            </li>
+          </Link>
         </ul>
       </nav>
       
@@ -51,6 +56,7 @@ const AdminSideBar = () => {
             <Link href="/admin/productCreationForm" className={styles.mobile_nav__link}>Add new product</Link>
             <Link href="/admin/adminProducts" className={styles.mobile_nav__link}>Manage existing products</Link>
             <Link href="/admin/adminUsers" className={styles.mobile_nav__link}>Manage users</Link>
+            <Link href="/admin/adminOrders" className={styles.mobile_nav__link}>Manage orders</Link>
           </div>
         </div>
       </div>
