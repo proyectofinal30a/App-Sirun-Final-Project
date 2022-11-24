@@ -1,226 +1,203 @@
-import { TypeDiet, CategoryPro, StatusType } from '@prisma/client'
-import { Interface } from 'readline'
+import { TypeDiet, CategoryPro, StatusType } from "@prisma/client";
+import { Interface } from "readline";
 
 export interface Iimage {
-    image: string
-    id?: string
+  image: string;
+  id?: string;
 }
 
 ///For Form Mercado pago
 export interface IUserBuyer {
-    email: string
-    name: string
-    address: {
-        street_name: string
-        street_number: string
-        zip_code: string
-    }
-    phone: {
-        number: string
-        area_code: string
-    }
+  email: string;
+  name: string;
+  address: {
+    street_name: string;
+    street_number: string;
+    zip_code: string;
+  };
+  phone: {
+    number: string;
+    area_code: string;
+  };
 }
 
 export interface Ipreference {
-    external_reference: string
-    payer: IUserBuyer
-    items: IproductModelCart[]
-    back_urls: {
-        success: string
-        failure: string
-        pending: string
-    }
-
+  external_reference: string;
+  payer: IUserBuyer;
+  items: IproductModelCart[];
+  back_urls: {
+    success: string;
+    failure: string;
+    pending: string;
+  };
 }
 export interface IproductModelCart {
-    id: string
-    title: string
-    unit_price: number
-    picture_url: string
-    quantity: number
-    subTotal: number
-    currency_id: "ARS"
-};
-
+  id: string;
+  title: string;
+  unit_price: number;
+  picture_url: string;
+  quantity: number;
+  subTotal: number;
+  currency_id: "ARS";
+}
 
 export interface IproductsCardModel {
-    products: IproductModelCart[]
-    confirmed: Boolean
-    payLink: string
+  products: IproductModelCart[];
+  confirmed: Boolean;
+  payLink: string;
 }
 
 ///
 
-
-
-
-
 export interface Iproduct {
-    id: string;
-    name: string;
-    price: number;
-    dimension: number;
-    available: boolean;
-    type: TypeDiet;
-    category: CategoryPro;
-    image: Iimage[];
-    description: string;
-    evaluation: Ievaluations[]
+  id: string;
+  name: string;
+  price: number;
+  dimension: number;
+  available: boolean;
+  type: TypeDiet;
+  category: CategoryPro;
+  image: Iimage[];
+  description: string;
+  evaluation: Ievaluations[];
 }
 
 interface packImage {
-    image: string
-    imageCloudinary: Blob
+  image: string;
+  imageCloudinary: Blob;
 }
 export interface IproductSumbit {
-    name: string;
-    price: number;
-    dimension: number;
-    available: boolean;
-    type: TypeDiet;
-    category: CategoryPro;
-    image: packImage[];
-    description: string;
+  name: string;
+  price: number;
+  dimension: number;
+  available: boolean;
+  type: TypeDiet;
+  category: CategoryPro;
+  image: packImage[];
+  description: string;
 }
 
-
 export interface IallProducts {
-    products: Iproduct[]
-    productsToFilter: Iproduct[]
-    productPrevState: Iproduct[]
+  products: Iproduct[];
+  productsToFilter: Iproduct[];
+  productPrevState: Iproduct[];
 }
 
 export interface IproductsByName {
-    products: Iproduct[]
+  products: Iproduct[];
 }
 
 export interface PackProducDetailRating {
-    detail: Iproduct
-    rating: number
+  detail: Iproduct;
+  rating: number;
 }
 
 export interface ImyOrder {
-    myOrder: {
-      external_reference: string;
-      total: string;
-      status: string;
-      date: string;
-      delivery_time: string;
-      user:{
-        id:string
-      };
-      purchasedProducts: IitemForMercadoPago[];
+  myOrder: {
+    external_reference: string;
+    total: string;
+    status: string;
+    date: string;
+    delivery_time: string;
+    user: {
+      id: string;
     };
+    purchasedProducts: IitemForMercadoPago[];
+  };
 }
 
 interface IallUsers {
-    allUsers: Iuser[];
-    usersByName: Iuser[];
+  allUsers: userData[];
+  usersByName: userData[];
 }
-
-
 
 export interface Ireducers {
-    reducerProduct?: null
-    reducerProducts: IallProducts
-    reducerUser: Iuser
-    reducerProductDetail: PackProducDetailRating
-    reducerProductsByName: IproductsByName
-    reducerCart: IproductsCardModel
-    reducerFilters: IallProducts
-    reducerAfterPayment: ImyOrder
-    reducerAllUsers: IallUsers
+  reducerProduct?: null;
+  reducerProducts: IallProducts;
+  reducerUser: Iuser;
+  reducerProductDetail: PackProducDetailRating;
+  reducerProductsByName: IproductsByName;
+  reducerCart: IproductsCardModel;
+  reducerFilters: IallProducts;
+  reducerAfterPayment: ImyOrder;
+  reducerAllUsers: IallUsers;
 }
-
 
 export interface Ierror {
-    name: string,
-    price: string,
-    dimension: string,
-    description: string,
-};
-
+  name: string;
+  price: string;
+  dimension: string;
+  description: string;
+}
 
 declare module "next-auth" {
-    interface Session {
-        user: {
-            name: string
-            email: string
-            image: string
-            role: string
-        }
-    }
+  interface Session {
+    user: {
+      name: string;
+      email: string;
+      image: string;
+      role: string;
+    };
+  }
 }
-
 
 interface Idirecciones {
-    dir: string
-    id?: string
+  dir: string;
+  id?: string;
 }
-
 
 interface IimageProduc {
-    image: string
+  image: string;
 }
-
 
 interface IobjProduct {
-    name: string
-    id: string
-    image: IimageProduc[]
+  name: string;
+  id: string;
+  image: IimageProduc[];
 }
 
-export interface IitemForMercadoPago{
-    image:string
-    name:string
-    quantity:string
-    price:string
+export interface IitemForMercadoPago {
+  image: string;
+  name: string;
+  quantity: string;
+  price: string;
 }
-
 
 interface Iorder {
-    total: number
-    description: string
-    delivery_time: string
-    date: string
-    product: IobjProduct[]
-    status: StatusType
+  total: number;
+  description: string;
+  delivery_time: string;
+  date: string;
+  product: IobjProduct[];
+  status: StatusType;
 }
-
 
 export interface IReview {
-    id: string
-    review: string
-    rating: number
-    user: userData
+  id: string;
+  review: string;
+  rating: number;
+  user: userData;
 }
-
 
 export interface Ievaluations {
-    id: string
-    review: string
-    rating: number
-    product: IobjProduct
-    user: userData
+  id: string;
+  review: string;
+  rating: number;
+  product: IobjProduct;
+  user: userData;
 }
 
-
-type userData = {
-    id: string
-    name: string
-    email: string
-    image: string
-    favorites: Iproduct[]
-    direcciones: Idirecciones[]
-    orders: Iorder[]
-    evaluations: Ievaluations[]
+export interface userData {
+  id: string;
+  name: string;
+  email: string;
+  image: string;
+  favorites: Iproduct[];
+  direcciones: Idirecciones[];
+  orders: Iorder[];
+  evaluations: Ievaluations[];
 }
-
-
-
 
 export interface Iuser {
-    user: userData
+  user: userData;
 }
-
-

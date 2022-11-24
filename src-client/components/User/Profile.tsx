@@ -33,12 +33,11 @@ const Profile = () => {
 
   const { name, email, image, direcciones } = myProfide;
 
-  const myimage = cloudinaryOrUrl(image, "client");
+  const defaultImage = cloudinaryOrUrl(image, "client");
 
 
   const handleOnFile = (event: any) => {
     const imageFile = event.target.files;
-
     setImageUser(imageFile[0]);
     if (!imageFile || !imageFile[0]) return;
     const imgURL: any = URL.createObjectURL(imageFile[0]);
@@ -52,7 +51,6 @@ const Profile = () => {
   };
 
 
-
   const handleOnsubmit = async (event: valueForm) => {
     event.preventDefault();
     const packFormUserUpdate = {
@@ -61,14 +59,14 @@ const Profile = () => {
       email,
       deleteImage: image,
     };
-
+    
     await postImageServerUsert(packFormUserUpdate);
     setPreviewFrom(myStateForm);
     dispatch(getUserDetail(email));
   };
 
 
-  const myImage: any = previewForm.image || myimage;
+  const myImage: string | undefined | false = previewForm.image || defaultImage;
   const myName: string = previewForm.name || name;
 
 
