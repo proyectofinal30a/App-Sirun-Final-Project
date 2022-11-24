@@ -1,9 +1,10 @@
 import HEAD from "../../src-client/components/HEAD";
 import Nav from "../../src-client/components/NavBar/Nav";
 import Footer from "../../src-client/components/Footer/Footer";
-import FormProduct from "../../src-client/components/ProductCreationForm/ProductCreationForm";
+import FormProduct from "../../src-client/components/Administration/ProductCreationForm/ProductCreationForm";
 import AdminSideBar from "../../src-client/components/Administration/AdminSideBar";
 import styles from "../../src-client/styles/AdminSideBar.module.css";
+import React from "react";
 
 export default function ProductCreationFormPage() {
   return (
