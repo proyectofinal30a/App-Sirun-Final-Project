@@ -1,8 +1,8 @@
-.loading {
+.users_management__loading {
   margin: auto;
   min-height: 100vh;
   font-family: var(--font-paragraph);
-  font-size: 1em;
+  font-size: 1.5em;
   font-weight: bold;
   color: var(--colo-dark-blue);
 }

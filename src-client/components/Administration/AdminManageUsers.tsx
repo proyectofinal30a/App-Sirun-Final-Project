@@ -8,14 +8,13 @@ import styles from "../../styles/AdminManageUsers.module.css";
 
 const AdminManageUsers = () => {
   const dispatch: Function = useDispatch();
-  const allUsers: any = useSelector<Ireducers>((state) => state.reducerAllUsers.allUsers);
-  // console.log(allUsers)
+  const allUsers: any = useSelector<Ireducers>((state) => state.reducerAllUsers.allUsers); // EZE SEND HELP! :)
 
   useEffect(() => {
     dispatch(getAllUsers());
   }, [dispatch]);
   
-  if (!allUsers) return <div className={styles.loading}>Loading...</div>
+  if (!allUsers) return <div className={styles.users_management__loading}>Loading...</div>
 
 
   return (
