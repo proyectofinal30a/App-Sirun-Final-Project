@@ -47,6 +47,7 @@ const AdminManageUsers = () => {
     updUser ? setUpdUser(false) : setUpdUser(true);
   }
 
+  // Change user role to admin or to user (client)
   const userChangeRole = async (id: any, role: string) => {
     await activeUser(id, role);
     dispatch(getAllUsers());
