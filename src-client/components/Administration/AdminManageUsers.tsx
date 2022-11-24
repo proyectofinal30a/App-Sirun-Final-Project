@@ -1,22 +1,32 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { Ireducers, Iuser } from "../../../lib/types";
 import { getAllUsers } from "../../redux/slice/user-detail-redux/all-users";
 import styles from "../../styles/AdminManageUsers.module.css";
+import { activeUser } from "../../../src-back/admin-users/putUsers";
 
 
 const AdminManageUsers = () => {
   const dispatch: Function = useDispatch();
   const allUsers: any = useSelector<Ireducers>((state) => state.reducerAllUsers.allUsers);
   // console.log(allUsers)
+  const [updUser, setUpdUser] = useState(true)
 
   useEffect(() => {
     dispatch(getAllUsers());
-  }, [dispatch]);
+  }, [dispatch, updUser]);
   
   if (!allUsers) return <div className={styles.loading}>Loading...</div>
 
+  //DESACTIVAR USERS
+  const userChange = async (id: any, status: string) => {
+    console.log('estoy aca');
+    
+   await activeUser(id, status)
+   dispatch(getAllUsers)
+    updUser ? setUpdUser(false) : setUpdUser(true)
+  }
 
   return (
     <div className={styles.users_management__container}>
@@ -56,6 +66,8 @@ const AdminManageUsers = () => {
                   </p>
                 </div>
 
+                {user.role === 'user' && <button onClick={() => userChange(user.id,'inactive')}>Desactivar</button>}
+                {user.role === 'inactive' && <button onClick={() => userChange(user.id,'user')}>Activar</button>}
               </div>
             )
           })}
