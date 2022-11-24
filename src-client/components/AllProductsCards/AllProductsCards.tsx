@@ -276,10 +276,9 @@ const AllProductsCards = () => {
                     </div>
                   );
                 })}
-                <div className={styles.modal__total_container}>
-                  <p className={styles.modal__total}>Products in Cart </p>
-                  <p className={styles.modal__total}>{"totalQuantity"}</p>
-                </div>
+                
+                <p className={styles.modal__quantity_total}>Items in shopping cart ({cart.length})</p>
+
                 <div className={styles.modal__total_container}>
                   <p className={styles.modal__total}>TOTAL </p>
                   <p className={styles.modal__total}>${total}</p>

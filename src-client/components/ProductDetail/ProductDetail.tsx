@@ -286,6 +286,8 @@ const ProductDetail = () => {
             );
           })}
 
+          <p className={styles.modal__quantity_total}>Items in shopping cart ({cart.length})</p>
+
           <div className={styles.modal__total_container}>
             <p className={styles.modal__total}>TOTAL </p>
             <p className={styles.modal__total}>${total}</p>

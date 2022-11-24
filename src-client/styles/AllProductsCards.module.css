@@ -278,6 +278,17 @@
   cursor: pointer;
 }
 
+.modal__quantity_total_container {
+  display: flex;
+  justify-content: space-between;
+  font-weight: 400;
+}
+
+.modal__quantity_total {
+  margin-bottom: .5em;
+  color: grey;
+}
+
 .modal__total_container {
   display: flex;
   justify-content: space-between;

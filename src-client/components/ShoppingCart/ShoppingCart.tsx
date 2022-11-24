@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import styles from "../../styles/ShoppingCart.module.css";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import { addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
-import { Ireducers } from "../../../lib/types";
 import { BsFillTrashFill } from "react-icons/bs";
-import styles from "../../styles/ShoppingCart.module.css";
+import { Ireducers } from "../../../lib/types";
+import { addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
+
+
 const ShoppingCart = () => {
   const router = useRouter();
   const dispatch: Function = useDispatch();
@@ -90,6 +92,8 @@ const ShoppingCart = () => {
               </div>
             );
           })}
+
+          <p className={styles.modal__quantity_total}>Items in shopping cart ({cart.length})</p>
 
           <div className={styles.modal__total_container}>
             <p className={styles.modal__total}>TOTAL </p>
