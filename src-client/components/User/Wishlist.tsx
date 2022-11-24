@@ -7,9 +7,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { IconContext } from "react-icons";
 import { FaHeart } from "react-icons/fa";
-import { FiHeart } from "react-icons/fi";
+import { FiHeart } from "react-icons/fi"; // falta no borrar
 import { Ireducers } from "../../../lib/types";
-import { removeFromFavorites, getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 
 
 export default function Wishlist(): JSX.Element {
@@ -29,7 +29,10 @@ export default function Wishlist(): JSX.Element {
   }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
 
 
-  if (!myProfile) return (<div className={styles.wishlist__loading}>Loading...</div>);
+  if (!myProfile.name || !data) return (<div className={styles.wishlist__loading}>Loading...</div>);
+
+  console.log(data)
+  console.log(myProfile)
 
   const handleClick = (id: any) => {
     const userId: string = myProfile.id;
@@ -38,7 +41,7 @@ export default function Wishlist(): JSX.Element {
     // Deleting from wishlist confirmation
     let deleteConfirmation = confirm("Are you sure you want to delete this product from your wishlist?");
     if (deleteConfirmation === false) return;
-    removeFromFavorites(userId, productId);
+    // removeFromFavorites(userId, productId);
   }
 
 
@@ -48,6 +51,8 @@ export default function Wishlist(): JSX.Element {
 
       {myProfile.favorites[0] ? 
         myProfile.favorites.map((elem) => {
+          if (!elem.name) return null
+
           const myImage: string = typeof elem?.image?.[0].image === "string" ? elem.image[0].image : "Loading...";
 
           return (

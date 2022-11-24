@@ -19,6 +19,8 @@ import { requestAddToFavorites, addToFavorites, getUserDetail } from "../../redu
 const AllProductsCards = () => {
   // GET ALL PRODUCTS
   const dispatch: Function = useDispatch();
+
+
   // FAVORITE 
   const { data, status } = useSession<boolean>();
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
@@ -44,6 +46,8 @@ const AllProductsCards = () => {
 
 
   // SHOPPING CART
+  const totalQuantity = cart[0] ? cart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
+
   const [modalIsOpen, setIsOpen] = useState(false);
   function closeModal() {
     setIsOpen(false);
@@ -66,7 +70,6 @@ const AllProductsCards = () => {
 
 
   const handlerTrash = (id: string) => {
-
     dispatch(trashItem(id));
     if (cart.length === 1 || cart.length === 0) { return setIsOpen(false); }
   };
@@ -148,9 +151,8 @@ const AllProductsCards = () => {
 
 
 
-  const handleFavorite = (product: any) => {
-    status === "unauthenticated" && signIn("auth0")
-    const { id } = product;
+  const handleFavorite = (id: string) => {
+    status === "unauthenticated" && signIn("auth0");
     const productToAdd = {
       id: id
     }
@@ -163,11 +165,11 @@ const AllProductsCards = () => {
       <div className={styles.products__container}>
         {paginatedProducts[0] ? (
           <>
-            {paginatedProducts.map((product: any, index: number) => {
+            {paginatedProducts.map((product, index: number) => {
               return (
                 <div key={index} className={styles.product_card__container}>
 
-                  <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product)}>
+                  <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product.id)}>
                     <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
                       <p className={styles.wishlist_fav_btn}>
                         {biblioteca[product.id] ? <FaHeart /> : <FiHeart />}
@@ -222,6 +224,8 @@ const AllProductsCards = () => {
                 <h2>Shopping Cart</h2>
 
                 {cart?.map((elem, index: number) => {
+                  if (!elem.title) return null
+                  
                   return (
                     <div key={index} className={styles.modal__product_container}>
                       <p className={styles.modal__product_name}>
@@ -277,7 +281,7 @@ const AllProductsCards = () => {
                   );
                 })}
                 
-                <p className={styles.modal__quantity_total}>Items in shopping cart ({cart.length})</p>
+                <p className={styles.modal__quantity_total}>Items in shopping cart ({totalQuantity})</p>
 
                 <div className={styles.modal__total_container}>
                   <p className={styles.modal__total}>TOTAL </p>

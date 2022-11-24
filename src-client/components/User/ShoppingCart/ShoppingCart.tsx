@@ -1,12 +1,12 @@
-import styles from "../../styles/ShoppingCart.module.css";
+import styles from "../../../styles/ShoppingCart.module.css";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
 import { BsFillTrashFill } from "react-icons/bs";
-import { Ireducers } from "../../../lib/types";
-import { addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
+import { Ireducers } from "../../../../lib/types";
+import { addOne, removeOne, trashItem } from "../../../redux/slice/cart-redux/cart-redux";
 
 
 const ShoppingCart = () => {
