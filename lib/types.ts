@@ -196,6 +196,7 @@ export interface userData {
   direcciones: Idirecciones[];
   orders: Iorder[];
   evaluations: Ievaluations[];
+  role: string;
 }
 
 export interface Iuser {
