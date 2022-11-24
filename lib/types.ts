@@ -99,6 +99,24 @@ export interface PackProducDetailRating {
     rating: number
 }
 
+export interface ImyOrder {
+    myOrder: {
+      external_reference: string;
+      total: string;
+      status: string;
+      date: string;
+      delivery_time: string;
+      user:{
+        id:string
+      };
+      purchasedProducts: IitemForMercadoPago[];
+    };
+}
+
+interface IallUsers {
+    allUsers: Iuser[];
+    usersByName: Iuser[];
+}
 
 
 
@@ -110,6 +128,8 @@ export interface Ireducers {
     reducerProductsByName: IproductsByName
     reducerCart: IproductsCardModel
     reducerFilters: IallProducts
+    reducerAfterPayment: ImyOrder
+    reducerAllUsers: IallUsers
 }
 
 
@@ -150,7 +170,12 @@ interface IobjProduct {
     image: IimageProduc[]
 }
 
-
+export interface IitemForMercadoPago{
+    image:string
+    name:string
+    quantity:string
+    price:string
+}
 
 
 interface Iorder {

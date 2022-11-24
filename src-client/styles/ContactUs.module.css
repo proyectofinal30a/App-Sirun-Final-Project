@@ -1,0 +1,88 @@
+.contact__container {
+    min-height: 100vh;
+    padding-top: 8em;
+    font-family: var(--font-paragraph);
+    width: 70%;
+    margin: auto;
+    padding-top: 11em;
+    
+  }
+
+  .form__column {
+    width: 70%;
+  }
+
+
+  .column__title {
+    font-size: 2em;
+    margin-bottom: .5em;
+    color: var(--color-dark-blue);
+  }
+
+
+  .container__row_column {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .form__label {
+    text-align: center;
+    background-color: rgb(230, 226, 226);
+  }
+  
+  .form__input {
+    padding: 0.3em;
+    margin-bottom: 1.5em; 
+  }
+
+.textarea {
+    resize: none;
+    width: 100%;
+    height: 10em;
+    border-radius: 0.2em;
+    border: 1px solid var(--color-dark-blue);
+    margin-bottom: 1em;
+  }
+
+  .btn__align {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .form__input_btn,
+.input[type="button"] {
+  padding: 0.3em;
+  margin-bottom: 1em;
+  background-color: var(--color-light-pink);
+  border: none;
+  width: 7em;
+  border: 1px solid grey;
+  border-radius: 5px;
+  font-family: var(--font-paragraph);
+  font-size: 0.9em;
+  color: var(--color-dark-blue);
+}
+
+.form__input_btn:hover,
+.input[type="button"]:hover {
+  background-color: rgb(246, 226, 226);
+  cursor: pointer;
+}
+
+
+.error {
+    color: red;
+    text-align: center;
+    font-size: .8em;
+    margin-top: -1.2em;
+    margin-bottom: 1em;
+  }
+
+  .send {
+    color: green;
+    text-align: center;
+    font-size: .8em;
+    margin-top: -1.2em;
+    margin-bottom: 1em;
+  }

@@ -9,6 +9,7 @@ import HomeInfo from "../src-client/components/Home/HomeInfo";
 import Footer from "../src-client/components/Footer/Footer";
 import styles from "../src-client/styles/Home.module.css";
 import React from "react";
+import { getUserDetail } from "../src-client/redux/slice/user-detail-redux/user-redux";
 
 export default function Home() {
   const dispatch: Function = useDispatch();
@@ -16,6 +17,7 @@ export default function Home() {
   const { data, status } = useSession<boolean>();
   useEffect(() => {
     dispatch(getAllProducts());
+    status === "authenticated" && dispatch(getUserDetail(data.user.email))
   }, [dispatch, status, data]);
 
   return (

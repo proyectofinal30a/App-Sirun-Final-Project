@@ -26,21 +26,19 @@ export const reducerUser = createSlice({
     name: "reducerUser",
     initialState: template,
     reducers: {
-        getProducts: (state: Iuser, action: any) => {
+        getUserDetaill: (state: Iuser, action: any) => {
             state.user = action.payload;
             return;
         },
-
-        addToFavorites: (state: Iuser, action) => {
-            const foundProduct = state.user.favorites.find(product => product.id === action.payload.idProduct);
-            if (foundProduct) return;
-            state.user.favorites = action.payload;
-        },
-
-        removeFromFavorites: (state: Iuser, action) => {
-            const foundProduct = state.user.favorites.find(product => product.id === action.payload.idProduct);
-            if (!foundProduct) return;
-            state.user.favorites = state.user.favorites.filter(product => product.id !== action.payload.idProduct);
+        addToFavoritess: (state: Iuser, action: any) => {
+            if (!state.user) return
+            const foundProduct = state.user.favorites.find(product => product.id === action.payload.id);
+            if (foundProduct) {
+                const newState = state.user.favorites.filter((fav) => fav.id !== action.payload.id);
+                state.user.favorites = newState
+                return
+            };
+            state.user.favorites.push(action.payload);
         },
         deleteOneReview: (state: Iuser, action: IidString) => {
             state.user.evaluations = state.user.evaluations.filter((elem) => elem.id !== action.payload)
@@ -58,12 +56,13 @@ export const getUserDetail = (email: string | undefined) => async (dispatch: Fun
             url: `/api/userScope/get/userAll/${email}`,
         });
 
-        dispatch(reducerUser.actions.getProducts(data));
+        dispatch(reducerUser.actions.getUserDetaill(data));
 
     } catch (error) {
         console.log(error);
 
     }
+
 
 };
 
@@ -85,14 +84,17 @@ export const deleteReview = (id: string) => async (dispatch: Function) => {
 };
 
 
+export const addToFavorites = (productToAdd: any) => (dispatch: Function) => {
+    return dispatch(reducerUser.actions.addToFavoritess(productToAdd));
+};
 
-export const addToFavorites = async (idUser: string, idProduct: string) => {
+export const requestAddToFavorites = async (idUser: string, favorites: any) => {
     try {
         const myToken: any = userVerification("client");
         const { data }: any = await axios({
             method: "post",
             url: "/api/userScope/post/productAddFav",
-            data: { idUser, idProduct },
+            data: { idUser, favorites },
             headers: { Authorization: myToken },
         });
 
@@ -141,23 +143,5 @@ export const postImageServerUsert = async ({ email, name, newImage, deleteImage 
 
     }
 }
-
-
-export const removeFromFavorites = async (idUser: string, idProduct: string) => {
-    try {
-        const myToken: any = userVerification("client");
-        const { data } = await axios({
-            method: "delete",
-            url: "/api/userScope/delete/productLessFav",
-            data: { idUser, idProduct },
-            headers: { Authorization: myToken },
-        });
-
-    } catch (error) {
-        console.log(error);
-    }
-
-};
-
 
 export default reducerUser.reducer;
