@@ -7,13 +7,26 @@ import userVerification from '../../../controllers/userVerification-controller'
 
 interface Iproducts {
   products: Iproduct[],
-  productsToFilter: any
+  productsToFilter: Iproduct[],
+  productEdit : any
 }
 
 
 const stateInitial: Iproducts = {
   products: [],
   productsToFilter: [],
+  productEdit : {
+    id: "",
+    name: "",
+    price: 0,
+    dimension: 0,
+    available: false,
+    type: "vegan",
+    category: "cakes",
+    image: [],
+    description: "",
+    evaluation: [],
+  },
 }
 
 
@@ -26,13 +39,29 @@ export const reducerAdmin = createSlice({
     },
     getByName: (state, action) => {
       state.productsToFilter = filteredByName(state.products, action.payload)
+    },
+    confirmEdit : (state, action)=>{
+      state.productEdit = action.payload;
+    },
+    updateProduct : (state, action)=> {
+      state.productEdit = action.payload;
     }
   },
 });
 
+export const editProduct = (object : Iproduct) => (dispatch: Function)=>{
+  return dispatch(reducerAdmin.actions.confirmEdit(object))
+}
+
+export const setProduct = (object : Iproduct)=> (dispatch : Function) => {
+  return dispatch(reducerAdmin.actions.updateProduct(object))
+}
+
 //functions para el reducer - pasar a un controller. 
 const filteredByName = (state, name) => {
-  let arr = state.map((product) => {
+  console.log(current(state));
+  
+  let arr = state?.map((product) => {
     if (product.name.toLowerCase().includes(name.toLowerCase())) return product
   })
   return arr.filter((product: any) => product !== undefined);

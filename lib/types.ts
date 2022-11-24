@@ -111,7 +111,7 @@ export interface Ireducers {
     reducerFilters: IallProducts
     reducerAfterPayment: ImyOrder
     reducerAllUsers: IallUsers
-    reducerAdmin : IallProducts
+    reducerAdmin : any
 
 }
 

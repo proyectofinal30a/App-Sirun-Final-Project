@@ -1,24 +1,47 @@
-import React, { useEffect } from "react";
-import styles from "../../styles/AdminManageProducts.module.css";
+import React, { useEffect, useState } from "react";
+import Image from "next/image";
 import { AiFillEyeInvisible, AiFillEye, AiFillEdit } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux'
 import { Iproduct, Ireducers } from "../../../lib/types";
-import { getProducts } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
+import { getProducts, editProduct, setProduct } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import SearchBar from "../SearchBar/SearchBar";
 import { current } from "@reduxjs/toolkit";
-// 1) DEBERIA TENER UNA SERACHBAR
-//2) DEBERIA renderizar filtros
-//3) Deberia verse carts con iconos para editar ----> link form para editar
-//4) Deberian las carts tener un icono de si estan disponibles o no ------> alert avisando
-//5) Deberia tener una boton + input para aumento masivo de precios
+import Modal from "react-modal";
+import styles from "../../styles/AdminManageProducts.module.css";
+import validation from "../ProductCreationForm/Validation"
+
 
 const AdminManageProducts = () => {
+  const myForm = {
+    price: 0,
+    image: [],
+    description: "",
+  };
+  const [formProduct, setFormProduct] = useState(myForm);
 
+  const myErr = {
+    price: "",
+    description: "",
+  };
+  const [formErrors, setFormErrors] = useState(myErr);
 
   const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products)
   const dispatch: Function = useDispatch()
   const filteredProducts = useSelector((state: Ireducers) => state.reducerAdmin.productsToFilter)
+  const productModal = useSelector ((state:Ireducers)=>state.reducerAdmin.productEdit)
+console.log(productModal);
 
+  // let currentProducts: Iproduct[];
+  // let currentProduct : Iproduct;
+
+  // if (filteredProducts.length === 1) {
+  //   currentProduct = filteredProducts;
+
+  // } else if (filteredProducts.length > 1){
+  //   currentProducts = filteredProducts
+  // }else{
+  //   currentProducts = allProducts
+  // }
 
   let currentProducts: Iproduct[];
 
@@ -28,56 +51,233 @@ const AdminManageProducts = () => {
     currentProducts = allProducts
   }
 
-
   useEffect(() => {
     dispatch(getProducts())
   })
 
+
+  const [modalIsOpen, setIsOpen] = useState(false);
+  function closeModal() {
+    setIsOpen(false);
+  }
+
+
+  const editOpenModal = (e: Event, product : Iproduct)=> {
+    e.preventDefault()
+    console.log(product);
+    setIsOpen(true);
+    dispatch(setProduct(product))
+  }
+
+  const handleOnChangeInput = (event: any) => {
+    const { name, value } = event.target;
+
+    if (name === "textarea") {
+      return setFormProduct({
+        ...formProduct,
+        [name]: value.charAt(0).toUpperCase() + value.slice(1),
+      });
+    }
+    if (name === "text") {
+      return setFormProduct({
+        ...formProduct,
+        [name]: value.charAt(0).toUpperCase() + value.slice(1),
+      });
+    }
+
+    setFormProduct({ ...formProduct, [name]: value });
+    setFormErrors(validation({ ...formProduct, [name]: value }));
+  };
+
+  
+  const handleOnChangeNumber = (event: any) => {
+    const { name, value } = event.target;
+    setFormProduct({ ...formProduct, [name]: value });
+    setFormErrors(validation({ ...formProduct, [name]: value }));
+  };
+
+  const handleOnFile = (event: any) => {
+    const imageFile: any = event.target.files;
+    if (!imageFile || !imageFile[0]) return;
+
+    if (formProduct.image.length >= 4) return alert('Only four images per product')
+
+    const myTO: any = [...formProduct.image]
+
+    imageFile[0] && myTO.push({
+      image: URL.createObjectURL(imageFile[0]),
+      imageCloudinary: imageFile[0]
+    })
+
+    imageFile[1] && myTO.push({
+      image: URL.createObjectURL(imageFile[1]),
+      imageCloudinary: imageFile[1]
+    })
+
+    imageFile[2] && myTO.push({
+      image: URL.createObjectURL(imageFile[2]),
+      imageCloudinary: imageFile[2]
+    })
+
+    imageFile[3] && myTO.push({
+      image: URL.createObjectURL(imageFile[3]),
+      imageCloudinary: imageFile[3]
+    })
+
+
+    setFormProduct({ ...formProduct, image: myTO });
+
+  };
+
+  // const handleOnClickReset = () => {
+  //   setFormProduct({ ...formProduct, image: [] });
+  // };
+
+
+
+  // const handleOnClickDelete = ({ target }: any) => {
+  //   const { name } = target;
+  //   const [...myPrevurl] = formProduct.image
+  //   const myFilter = myPrevurl.filter(e => e.image !== name)
+  //   setFormProduct({ ...formProduct, image: myFilter });
+  // };
+
   return (
-    <div className={styles.products_form__container}>
-      <h1 className={styles.products_form__title}>Administration Product Managing</h1>
-      {/* /// ZONA SEARCHBAR */}
-      <SearchBar />
-      {/* // ZONA FILTROS */}
+    <div className={styles.products_manage__container}>
+      <h1 className={styles.products_manage__title}>Administration Product Managing</h1>
+    
+    <div className={styles.product__manage_search_and_change}>
+        <SearchBar />
+        <input className={styles.change__price__input} placeholder="Masive Change Price"></input>
+        <button className={styles.change__price__btn}>Change</button>
+    </div>
+
+                  
+   
+     
       {currentProducts.map((product: any, index: number) => {
         return (
-          <div>
-            <p>{product.name}</p>
-            <p>{product.price}</p>
+          <div className={styles.product__card_container} key={index}>
+            <div className={styles.product_card__img_container}>
+                      <Image
+                        key={index}
+                        src={product.image?.[0]?.image}
+                        width={200}
+                        alt={product.name}
+                        height={200}
+                        priority
+                        className={styles.product_card__img}
+                        />
+              </div>
+              <div className={styles.product__card__info_container}>
+                        <p>{product.name.toUpperCase()}</p>
+                        <p>${product.price}</p>
+              </div>
+              <div className={styles.product__card__icons}>
+                <button  className={styles.product__card__icon_edit} onClick={(e:any)=> editOpenModal(e, product)} >  <AiFillEdit/></button>
+                <AiFillEyeInvisible/> 
+                <AiFillEye/>
+              </div>
           </div>
+
+
 
         )
       })}
-      {/* //ZONA AUMENTO MASIVO */}
-      {/* // boton + checkobox + input +/-  */}
 
-      {/* // ZONA RENDER DE CARTS */}
+        <Modal
+              ariaHideApp={false}
+              isOpen={modalIsOpen}
+              onRequestClose={closeModal}
+              className={styles.modal}
+              contentLabel="Example Modal"
+            >
+              <form className={styles.modal__container}>
+                <div className={styles.modal__btn_right_container}>
+                  <button className={styles.modal__close_modal_btn} onClick={closeModal}>x</button>
+                </div>
+                <h2>Edit Product</h2>
 
+                <div className={styles.creation_form__section_container}>
+            <label className={styles.creation_form__label}>Price</label>
+            <input
+              type="number"
+              onChange={handleOnChangeNumber}
+              name="price"
+              value={formProduct.price}
+              placeholder={"Price"}
+              className={styles.creation_form__input}
+              required
+            />
+            <span className={styles.creation_form__error_message}>{formErrors.price}</span>
+          </div>
 
+          <div className={styles.creation_form__section_container}>
+            <label className={styles.creation_form__label}>Description</label>
+            <textarea
+              name="description"
+              placeholder="Description"
+              onChange={handleOnChangeInput}
+              value={formProduct.description}
+              className={styles.creation_form__textarea}
+              required
+            />
+            <span className={styles.creation_form__error_message}>{formErrors.description}</span>
+          </div>
 
+          
+          <div className={styles.creation_form__section_container}>
+            <label className={styles.creation_form__label}>Images</label>
+            <input
+              type="file"
+              accept=".jpg , .png , .jpeg"
+              onChange={handleOnFile}
+              name="image"
+              className={styles.creation_form__img_input}
+              required
+              multiple
+            />
+          </div>
+{/* 
+          {formProduct.image[0] &&
+            <>
+              <p className={styles.creation_form__images_container__title}>Images control</p>
+              <button
+                onClick={handleOnClickReset}
+                className={[styles.creation_form__input_btn, styles.creation_form__reset_btn].join(" ")}
+              >
+                Reset all image/s
+              </button>
+            </>
+          } */}
 
+          {/* {formProduct.image[0] && formProduct.image.map((e, index) => {
+            return (
+              <div key={index} className={styles.creation_form__img_show_container}>
+                <div className={styles.creation_form__img_container}>
+                  <Image
+                    src={e.image}
+                    alt=""
+                    width="1000"
+                    height="300"
+                    className={styles.creation_form__img}
+                  />
+                </div>
 
-
-
-
-
-      {/* // get all products sin el filtro de la function is available,
-        para eso hacer un reducer get y una ruta get ? en back o se puede reutilizar
-//      comprobar si se puede reutilizar los types de getallproducts
-/       use selector  + map con solo foto, nombre y precio en la card y 
-//      en el form selector de todos los datos y update de 
-  name?? price       available    type(select)     category    description   image      
- // no cambiar el nombre del producto
- // para la parte de description (simular docs y no textarea )
- //https://www.sanity.io/guides/top-5-rich-text-react-components 
- // para la edicion de AVAILABLE ---> validar la edicion con un boton de confirmacion final
- // agregar un alert validation
- // 
- */}
-
-
-
-
+                <input
+                  type={"button"}
+                  name={e.image}
+                  onClick={handleOnClickDelete}
+                  value={"Delete"}
+                  className={styles.creation_form__input_btn_delete}
+                />
+              </div>
+            )
+          })} */}
+            
+                  <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
+              </form>
+            </Modal>
     </div>
   );
 };
