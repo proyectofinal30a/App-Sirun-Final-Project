@@ -50,13 +50,20 @@ export const reducerUser = createSlice({
 });
 
 
-export const getUserDetail = (email: any) => async (dispatch: Function) => {
-    const { data }: any = await axios({
-        method: "get",
-        url: `/api/userScope/get/userAll/${email}`,
-    });
+export const getUserDetail = (email: string | undefined) => async (dispatch: Function) => {
+    try {
+        if (email === undefined) return
+        const { data }: any = await axios({
+            method: "get",
+            url: `/api/userScope/get/userAll/${email}`,
+        });
 
-    dispatch(reducerUser.actions.getProducts(data));
+        dispatch(reducerUser.actions.getProducts(data));
+
+    } catch (error) {
+        console.log(error);
+
+    }
 
 };
 

@@ -10,8 +10,6 @@ export default function ApprovedPayment() {
   const { query } = useRouter();
   const orderId = query.id;
 
-  console.log(query);
-  console.log(orderId);
 
 
   useEffect(() => {

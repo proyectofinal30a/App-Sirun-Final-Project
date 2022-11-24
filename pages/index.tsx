@@ -13,8 +13,7 @@ import React from "react";
 export default function Home() {
   const dispatch: Function = useDispatch();
 
-  const { data, status }: any = useSession<boolean>();
-
+  const { data, status } = useSession<boolean>();
   useEffect(() => {
     dispatch(getAllProducts());
   }, [dispatch, status, data]);
