@@ -105,7 +105,9 @@ const AdminManageUsers = () => {
                   </div>
 
                   <div className={styles.user__btns_container}>
-                    <button className={styles.user__reset_password_btn}>Request password reset</button>
+                    <button className={styles.user__reset_password_btn}>
+                      Request password reset
+                    </button>
                     {user.role === 'admin' ? 
                       <button onClick={() => userChangeRole(user.id, 'user')} className={styles.user__role_btn}>
                         Set user role
