@@ -1,7 +1,8 @@
-import React, {useState} from 'react'
-import {ResponsiveContainer, Bar, XAxis, YAxis, Line, Tooltip, CartesianGrid, ComposedChart, Legend} from 'recharts'
-import { convertMonth } from '../../controllers/adminGraphs'
-import { data } from './salesData'
+import React, {useState} from 'react';
+import {ResponsiveContainer, Bar, XAxis, YAxis, Line, Tooltip, CartesianGrid, ComposedChart, Legend} from 'recharts';
+import { convertMonth } from '../../../controllers/adminGraphs';
+import { data } from './salesData';
+
 const Sales = () => {
   const thisMonthAcorted = Date().split(' ')[1]
   const thisMonth = convertMonth(thisMonthAcorted)

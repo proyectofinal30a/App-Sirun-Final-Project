@@ -2,6 +2,10 @@
   display: flex;
 }
 
+.general__container_first_col {
+  width: 425px;
+}
+
 .general__container_second_col {
   width: 100%;
   height: 100%;
@@ -90,6 +94,10 @@
 }
 
 @media (max-width: 880px) {
+  .general__container_first_col {
+    width: 100%;
+  }
+
   .general__container {
     width: 100%;
     display: flex;

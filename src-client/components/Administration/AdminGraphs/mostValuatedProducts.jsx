@@ -1,6 +1,6 @@
-import React from 'react'
-import {ResponsiveContainer, Bar, XAxis, YAxis, Line, Tooltip, CartesianGrid, ComposedChart, Legend, BarChart} from 'recharts'
-import { Products } from './mostValuated'
+import React from 'react';
+import { ResponsiveContainer, Bar, XAxis, YAxis, Line, Tooltip, CartesianGrid, ComposedChart, Legend, BarChart } from 'recharts';
+import { Products } from './mostValuated';
 
  export const MostValuatedProducts = () => {
   

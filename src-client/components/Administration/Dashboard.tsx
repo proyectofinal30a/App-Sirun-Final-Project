@@ -1,17 +1,13 @@
-import React, {useState} from "react";
-import Image from "next/image";
+import React, { useState } from "react";
 import styles from "../../styles/Dashboard.module.css";
-import Sales from "../AdminGraphs/sales";
-import MostSoldProduct from "../AdminGraphs/mostSoldProduct";
-import {MostValuatedProducts} from "../AdminGraphs/mostValuatedProducts";
-
+import Sales from "../Administration/AdminGraphs/sales";
+import MostSoldProduct from "../Administration/AdminGraphs/mostSoldProduct";
+import { MostValuatedProducts} from "../Administration/AdminGraphs/mostValuatedProducts";
 
 
 const AdminDashboard = () => {
 const [Dashboard, setDashboard] = useState('sales')
-const changeDashboard = (e: any) => {
-  setDashboard(e.target.value)
-}
+const changeDashboard = (e: any) => setDashboard(e.target.value);
 
   return (
     <div className={styles.dashboard__container}>
