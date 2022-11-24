@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from "react";
-import styles from "../../styles/FormCheckout.module.css";
+import React, { useState } from "react";
+import styles from "../../../styles/FormCheckout.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Modal from "react-modal";
-import { sendOrderDetail, resetCart } from "../../redux/slice/cart-redux/cart-redux";
-import validate from "../../controllers/validateFormCheckout";
-import { IUserBuyer, Ireducers } from '../../../lib/types'
-import vericationSubminObj from "../../controllers/verificationFormCart";
+import { sendOrderDetail, resetCart } from "../../../redux/slice/cart-redux/cart-redux";
+import validate from "../../../controllers/validateFormCheckout";
+import { IUserBuyer, Ireducers } from '../../../../lib/types'
+import vericationSubminObj from "../../../controllers/verificationFormCart";
 
 // PARA DATOS DE ENTREGA
 
@@ -341,12 +341,9 @@ const FormCheckout = (): JSX.Element => {
         </div>
 
         <div className={styles.total__container}>
+          <p className={styles.__shipping}>Items in shopping cart ({totalQuantity})</p>
           <div className={styles.__shipping_line}>
-            <p className={styles.__shipping}>Products in you cart</p>
-            <p className={styles.__shipping}>{totalQuantity}</p>
-          </div>
-          <div className={styles.__shipping_line}>
-            <p className={styles.__shipping}>Shipping </p>
+            <p className={styles.__shipping}>Shipping cost</p>
             <p className={styles.__shipping}>$...</p>
           </div>
           <div className={styles.__total_line}>

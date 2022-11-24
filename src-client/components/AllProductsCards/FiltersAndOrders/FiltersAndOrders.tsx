@@ -7,15 +7,12 @@ import {
   actionFilterByCategoryOrType,
   cleanFilters,
   IactionPayload,
-} from "../../redux/slice/filter-product-client/filters-redux";
-import { Iproduct, Ireducers } from "../../../lib/types";
-import styles from "../../styles/FiltersAndOrders.module.css";
-import { selectCart } from '../../redux/slice/cart-redux/cart';
+} from "../../../redux/slice/filter-product-client/filters-redux";
+import { Iproduct, Ireducers } from "../../../../lib/types";
+import styles from "../../../styles/FiltersAndOrders.module.css";
 
 
 const FilterAndOrder = () => {
-
-
   const dispatch: Function = useDispatch()
   const products: any = useSelector<Ireducers>((state) => state.reducerProducts.products)
   const productsFilters: any = useSelector<Ireducers>((state) => state.reducerFilters.productsToFilter)

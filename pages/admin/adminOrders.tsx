@@ -1,12 +1,12 @@
 import HEAD from "../../src-client/components/HEAD";
 import Nav from "../../src-client/components/NavBar/Nav";
 import Footer from "../../src-client/components/Footer/Footer";
-import FormProduct from "../../src-client/components/Administration/ProductCreationForm/ProductCreationForm";
-import AdminSideBar from "../../src-client/components/Administration/AdminSideBar";
+import AdminSideBar from "../../src-client/components/Administration/AdminSideBar"; 
 import styles from "../../src-client/styles/AdminSideBar.module.css";
+import AdminManageOrders from "../../src-client/components/Administration/AdminManageOrders";
 import React from "react";
 
-export default function ProductCreationFormPage() {
+export default function AdminProductsPage() {
   return (
     <div>
       <HEAD />
@@ -17,7 +17,7 @@ export default function ProductCreationFormPage() {
           <AdminSideBar />
         </div>
         <div className={styles.general__container_second_col}>
-          <FormProduct />
+          <AdminManageOrders />
         </div>
       </main>
 
