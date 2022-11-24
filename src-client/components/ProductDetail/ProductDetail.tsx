@@ -1,25 +1,22 @@
+import styles from "../../styles/ProductDetail.module.css";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getProductDetail, cleanProductDetail } from "../../redux/slice/products-client/Product-detail-redux";
-import { Iproduct, Ireducers } from "../../../lib/types";
-import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
 import { useRouter } from "next/router";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import Modal from "react-modal";
+import { IconContext } from "react-icons";
 import { BsFillTrashFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
-import { IconContext } from "react-icons";
-import { removeFromFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
-import { useSession } from "next-auth/react";
-import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import { Iproduct, Ireducers } from "../../../lib/types";
+import { getProductDetail, cleanProductDetail } from "../../redux/slice/products-client/Product-detail-redux";
+import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
+import { removeFromFavorites, addToFavorites, getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { UserReview } from "./UserReview";
-import styles from "../../styles/ProductDetail.module.css";
-import Average from "./StarsAverage"
-import styless from "../../styles/UserReview.module.css";
-import { Ievaluations } from '../../../lib/types';
-import { FaStar } from "react-icons/fa";
+import Average from "./StarsAverage";
+
 
 const ProductDetail = () => {
   const { query } = useRouter();

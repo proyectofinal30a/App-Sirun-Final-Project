@@ -1,20 +1,18 @@
+import styles from "../../styles/AllProductsCards.module.css";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useSession, signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
-import { Iproduct, Ireducers, IproductModelCart } from "../../../lib/types";
-import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
-import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
-import styles from "../../styles/AllProductsCards.module.css";
 import Modal from "react-modal";
+import { IconContext } from "react-icons";
 import { BsFillTrashFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
-import { IconContext } from "react-icons";
-import { requestAddToFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
-import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
-import { useSession } from "next-auth/react";
-import { signIn } from "next-auth/react";
+import { Iproduct, Ireducers, IproductModelCart } from "../../../lib/types";
+import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
+import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
+import { requestAddToFavorites, addToFavorites, getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 
 
 
