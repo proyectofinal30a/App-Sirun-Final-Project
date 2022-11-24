@@ -222,6 +222,7 @@
 
 @media (max-width: 660px) {
   .nav__container {
+    padding-top: 0em;
     height: 10em;
   }
 }
