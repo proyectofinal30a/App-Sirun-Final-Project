@@ -23,7 +23,7 @@ const AdminManageUsers = () => {
   
   const [updUser, setUpdUser] = useState(true)
   const [name, setName] = useState("");
-
+ 
   
   useEffect(() => {
     dispatch(clearUserSearch()); 
@@ -41,10 +41,10 @@ const AdminManageUsers = () => {
   };
 
 
-  // Deactivate accounts
+  // Deactivate or activate accounts
   const userChange = async (id: any, status: string) => {
     await activeUser(id, status);
-    dispatch(getAllUsers);
+    dispatch(getAllUsers());
     updUser ? setUpdUser(false) : setUpdUser(true);
   }
 

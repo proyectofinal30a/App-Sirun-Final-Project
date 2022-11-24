@@ -158,8 +158,8 @@ export const UserReview = () => {
             <Image src={cloudinaryOrUrl(elem.user.image, 'client') || "https://media.tenor.com/On7kvXhzml4AAAAj/loading-gif.gif"} className={styles.listReviews__avatar} alt={elem.user.name} width={200} height={200} />
 
             <div className={styles.listReview__info}>
-              <p>{elem.user.name.toUpperCase()}</p>
-              <p>{elem.review}</p>
+              <p className={styles.listReview__name}>{elem.user.name.toLowerCase()}</p>
+              <p className={styles.listReview__text}>{elem.review}</p>
             </div>
 
             <div className={styles.listReviews__rating_container}>

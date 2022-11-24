@@ -39,9 +39,14 @@ export const getAllUsers = () => async (dispatch: Function) => {
   dispatch(reducerAllUsers.actions.getAllUsers(data));
 };
 
-export const getUsersByName = (userName: string, allUsers: userData[]) => async (dispatch: Function) => {
+export const getUsersByName = (searchedString: string, allUsers: userData[]) => async (dispatch: Function) => {
   let filterSearchedUser = allUsers.map((user: userData) => {
-    if (user.name.toLowerCase().includes(userName.toLowerCase())) return user;
+    if (
+      user.name.toLowerCase().includes(searchedString.toLowerCase()) || 
+      user.role.toLowerCase().includes(searchedString.toLowerCase()) ||
+      user.email.toLowerCase().includes(searchedString.toLowerCase()) ||
+      user.id.toLowerCase().includes(searchedString.toLowerCase())
+      ) return user;
   }
   );
   filterSearchedUser = filterSearchedUser.filter(user => user !== undefined);
