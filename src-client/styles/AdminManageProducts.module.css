@@ -59,6 +59,16 @@
   object-fit: cover;
 }
 
+
+
+/*modal, se puede cmabiar/borrar todo, es forma de test*/
+.modal {
+  margin-top: 5%;
+  background-color: grey;
+}
+
+/*End modal*/
+
 /* Responsive layout */
 @media (max-width: 1540px) {
   .products_form__container {
