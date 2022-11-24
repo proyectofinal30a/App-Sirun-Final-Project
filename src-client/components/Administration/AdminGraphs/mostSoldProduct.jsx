@@ -1,7 +1,7 @@
-import React from 'react'
-import {ResponsiveContainer, Bar, XAxis, YAxis, Line, Tooltip, CartesianGrid, ComposedChart, Legend, BarChart} from 'recharts'
-import { convertMonth } from '../../controllers/adminGraphs'
-import { Products } from './mostSoldData'
+import React from 'react';
+import { ResponsiveContainer, Bar, XAxis, YAxis, Line, Tooltip, CartesianGrid, ComposedChart, Legend, BarChart } from 'recharts';
+import { convertMonth } from '../../../controllers/adminGraphs';
+import { Products } from './mostSoldData';
 
 const MostSoldProduct = () => {
   return (
