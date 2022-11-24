@@ -9,47 +9,42 @@ const Menu = () => {
   const router = useRouter();
 
   const [isActive, setIsActive] = useState(false);
+  const { data: session, status } = useSession<boolean>();
+
+
+  const signOrNoSing: any = session ? (
+    <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })} className={styles.nav_sign_btn_hidden}>Sign out</button>
+  ) : (
+    <button onClick={() => signIn("auth0")} className={styles.nav_sign_btn}>Sign in</button>
+  );
+
 
   const handleNavToggle = () => {
     setIsActive((current) => !current);
   };
 
-  const { data: session, status } = useSession<boolean>();
 
   const handleClick = () => {
     if (status === "unauthenticated") signIn("auth0");
   }
 
+
   return (
     <>
       <button
         onClick={handleNavToggle}
-        className={
-          isActive
-            ? [styles.nav_toggle, styles.nav_open].join(" ")
-            : styles.nav_toggle
-        }
+        className={isActive ? [styles.nav_toggle, styles.nav_open].join(" ") : styles.nav_toggle} 
         aria-label="toggle navigation"
       >
-        <span
-          className={
-            isActive
-              ? [styles.hamburger, styles.nav_open].join(" ")
-              : styles.hamburger
-          }
-        ></span>
+        <span className={isActive ? [styles.hamburger, styles.nav_open].join(" "): styles.hamburger}></span>
       </button>
 
-      <nav
-        id="nav"
-        className={
-          isActive
-            ? [styles.nav, styles.nav_open].join(" ")
-            : [styles.nav, styles.nav_close].join(" ")
-        }
-      >
+      <nav id="nav" className={isActive ? [styles.nav, styles.nav_open].join(" ") : [styles.nav, styles.nav_close].join(" ")}>
         <ul className={styles.nav__list}>
           <li className={styles.nav__item}>
+            {signOrNoSing}
+          </li>
+          <li className={session ? [styles.nav__item, styles.nav__item_home].join(" ") : styles.nav__item}>
             <Link href="/" className={styles.nav__link}>
               <span className={styles.nav_span}>Home</span>
             </Link>
@@ -65,20 +60,12 @@ const Menu = () => {
             </Link>
           </li>
           <li className={styles.nav__item}>
-            <Link
-              href="/user/profile"
-              className={styles.nav__link}
-              onClick={handleClick}
-            >
+            <Link href="/user/profile" className={styles.nav__link} onClick={handleClick}>
               <span className={styles.nav_span}>Account</span>
             </Link>
           </li>
           <li className={styles.nav__item}>
-            <Link
-              href="/user/wishlist"
-              className={styles.nav__link}
-              onClick={handleClick}
-            >
+            <Link href="/user/wishlist" className={styles.nav__link} onClick={handleClick}>
               <span className={styles.nav_span}>Wishlist</span>
             </Link>
           </li>

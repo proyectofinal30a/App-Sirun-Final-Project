@@ -15,7 +15,6 @@ export default function Home() {
   const dispatch: Function = useDispatch();
 
   const { data, status } = useSession<boolean>();
-
   useEffect(() => {
     dispatch(getAllProducts());
     status === "authenticated" && dispatch(getUserDetail(data.user.email))

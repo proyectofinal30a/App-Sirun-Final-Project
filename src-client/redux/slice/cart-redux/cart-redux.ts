@@ -1,130 +1,96 @@
-import { StatusType } from "@prisma/client";
 import axios from "axios";
-import userVerification from "../../../controllers/userVerification-controller";
-import { Iproduct } from "../../../../lib/types";
-import { AnyAction, createSlice } from "@reduxjs/toolkit";
-import { createPayment } from "../../../controllers/controllerMP";
-
-export interface IactionPayload2 {
-  id: string;
-  name: string;
-  price: number;
-  image: string[];
-}
-export interface Iuser {
-  name: string;
-  email: string;
-  phone: string;
-  areaCode: string;
-  zipCode: string;
-  streetName: string;
-  streetNumber: string;
-}
-
-
-type quantityy = {
-  product: IactionPayload2;
-  quantity: number;
-  subTotal: number;
-  infoUser: any;
-};
-
-interface Iproducts {
-  products: quantityy[];
-  confirmed: Boolean;
-  payLink: string;
-  image:string
-}
-
-const initialState: Iproducts = {
+import { IproductsCardModel, IproductModelCart, IUserBuyer } from "../../../../lib/types";
+import { createSlice } from "@reduxjs/toolkit";
+import createPreferenceMP from "../../../controllers/createPreferenceMP";
+const initialState: IproductsCardModel = {
   products: [],
   confirmed: false,
   payLink: '',
-  image:''
 }
 
+interface IpayloadProcuct {
+  payload: IproductModelCart
+}
 
+interface IpayloadSubmit {
+  payload: {
+    confirmed: boolean
+    payLink: string
+  }
+}
+
+interface IresetForm {
+  payload: {
+    confirmed: boolean
+    payLink: string
+  }
+}
+
+interface IpaylodId {
+  payload: string
+}
 
 export const reducerCart = createSlice({
   name: "reducerCart",
   initialState: initialState,
   reducers: {
-    actionAddToCart: (state: Iproducts, action) => {
-      if (!state.products[0]) {
-        state.products.push({
-          product: action.payload,
-          quantity: 1,
-          subTotal: action.payload.price,
-          infoUser: {},
-        });
-        return;
-      }
-      const { id, price } = action.payload;
-      const itemInCart: any = state.products.find(
-        (item) => item.product.id === id
-      );
+    actionAddToCart: (state: IproductsCardModel, action: IpayloadProcuct) => {
+      let mySwitch = true
+      state.products = state.products.map((item) => {
+        if (item.id === action.payload.id) {
+          item.quantity = item.quantity + 1
+          item.subTotal = item.subTotal += item.unit_price
+          mySwitch = false
+        }
+        return item
+      });
 
-      if (itemInCart) {
-        itemInCart.quantity++;
-        itemInCart.subTotal += price;
-      } else {
-        state.products.push({
-          product: action.payload,
-          quantity: 1,
-          subTotal: price,
-          infoUser: {},
-        });
-      }
-    },
-    actionAddOne: (state: Iproducts, action) => {
-      const { id, price } = action.payload;
-      const itemInCart: any = state.products.find(
-        (item) => item.product.id === id
-      );
+      mySwitch && state.products.push({ ...action.payload, subTotal: action.payload.unit_price })
 
-      if (itemInCart) {
-        itemInCart.quantity++;
-        itemInCart.subTotal += price;
-      }
     },
-    actionRemoveOne: (state: Iproducts, action) => {
-      const { id, price } = action.payload;
-      const itemInCart: any = state.products.find(
-        (item) => item.product.id === id
-      );
 
-      if (itemInCart.quantity <= 1) {
-        itemInCart.quantity = 0;
-        itemInCart.subTotal = 0;
-      } else {
-        itemInCart.quantity--;
-        itemInCart.subTotal -= price;
-      }
+    actionAddOne: (state: IproductsCardModel, action: IpaylodId) => {
+      state.products = state.products.map((item) => {
+        if (item.id === action.payload) {
+          item.quantity = item.quantity + 1
+          item.subTotal = item.subTotal += item.unit_price
+        }
+        return item
+      });
     },
-    actionTrashItem: (state: Iproducts, action) => {
-      state.products = state.products.filter(
-        (elem) => elem.product.id !== action.payload
-      );
+    actionRemoveOne: (state: IproductsCardModel, action: IpaylodId) => {
+      state.products = state.products.map((item) => {
+        if (item.id === action.payload) {
+          if (item.quantity <= 1) return item
+          item.quantity = item.quantity - 1
+          item.subTotal = item.subTotal -= item.unit_price
+        }
+        return item
+      });
     },
-    actionConfirmedCart: (state: any, action) => {
-      state.confirmed = action.payload.state;
-      state.payLink = action.payload.info;
+    actionTrashItem: (state: IproductsCardModel, action: IpaylodId) => {
+      state.products = state.products.filter((elem) => elem.id !== action.payload);
     },
-    actionResetCart: (state: any, action) => {
-      state.confirmed = action.payload;
+    actionConfirmedCart: (state: IproductsCardModel, action: IpayloadSubmit) => {
+      state.confirmed = action.payload.confirmed;
+      state.payLink = action.payload.payLink;
+    },
+    actionResetCart: (state: IproductsCardModel, action: IresetForm) => {
+      state.confirmed = action.payload.confirmed;
+      state.payLink = action.payload.payLink
     },
   },
 });
 
-export const addToCart = (objeto: IactionPayload2) => (dispatch: Function) => {
+export const addToCart = (objeto: IproductModelCart) => (dispatch: Function) => {
   return dispatch(reducerCart.actions.actionAddToCart(objeto));
 };
 
-export const addOne = (objeto: IactionPayload2) => (dispatch: Function) => {
+export const addOne = (objeto: string) => (dispatch: Function) => {
   return dispatch(reducerCart.actions.actionAddOne(objeto));
 };
 
-export const removeOne = (objeto: IactionPayload2) => (dispatch: Function) => {
+export const removeOne = (objeto: string) => (dispatch: Function) => {
   return dispatch(reducerCart.actions.actionRemoveOne(objeto));
 };
 
@@ -132,26 +98,26 @@ export const trashItem = (id: string) => (dispatch: Function) => {
   return dispatch(reducerCart.actions.actionTrashItem(id));
 };
 
-export const sendOrderDetail = (infoProductsAndBuyer: any) => async (dispatch: Function) => {
+export const sendOrderDetail = (user: IUserBuyer, productArray: IproductModelCart[]) => async (dispatch: Function) => {
   try {
+    const myPrerencia = createPreferenceMP(user, productArray)
     const request = await axios({
       method: 'post',
       url: '/api/mercadopago/createPayment',
-      data: infoProductsAndBuyer
+      data: myPrerencia
     })
-
-
-    return dispatch(reducerCart.actions.actionConfirmedCart(request.data));
+    const myData: string = request.data.url
+    return dispatch(reducerCart.actions.actionConfirmedCart({ payLink: myData, confirmed: true }));
   } catch (error) {
     const myMessageError = process.env.NODE_ENN === 'production' ?
       'https://sirunnpatisserie.vercel.app/error' :
       'http://localhost:3000/error';
-    return dispatch(reducerCart.actions.actionConfirmedCart({ info: myMessageError }));
+    return dispatch(reducerCart.actions.actionConfirmedCart({ payLink: myMessageError, confirmed: true }));
   }
 };
 
 export const resetCart = () => (dispatch: Function) => {
-  return dispatch(reducerCart.actions.actionResetCart(false));
+  return dispatch(reducerCart.actions.actionResetCart({ confirmed: false, payLink: '' }));
 };
 
 

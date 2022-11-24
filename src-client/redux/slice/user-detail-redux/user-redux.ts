@@ -3,6 +3,7 @@ import axios from "axios";
 import { Iuser } from "../../../../lib/types";
 import userVerification from "../../../controllers/userVerification-controller";
 
+
 const template: Iuser = {
     user: {
         id: "",
@@ -30,7 +31,7 @@ export const reducerUser = createSlice({
             state.user = action.payload;
             return;
         },
-        addToFavoritess: (state: Iuser, action: any) => {
+        addToFavorites: (state: Iuser, action: any) => {
             if (!state.user) return
             const foundProduct = state.user.favorites.find(product => product.id === action.payload.id);
             if (foundProduct) {
@@ -48,13 +49,21 @@ export const reducerUser = createSlice({
 });
 
 
-export const getUserDetail = (email: any) => async (dispatch: Function) => {
-    const { data }: any = await axios({
-        method: "get",
-        url: `/api/userScope/get/userAll/${email}`,
-    });
+export const getUserDetail = (email: string | undefined) => async (dispatch: Function) => {
+    try {
+        if (email === undefined) return
+        const { data }: any = await axios({
+            method: "get",
+            url: `/api/userScope/get/userAll/${email}`,
+        });
 
-    dispatch(reducerUser.actions.getUserDetaill(data));
+        dispatch(reducerUser.actions.getUserDetaill(data));
+
+    } catch (error) {
+        console.log(error);
+
+    }
+
 
 };
 
@@ -77,8 +86,9 @@ export const deleteReview = (id: string) => async (dispatch: Function) => {
 
 
 export const addToFavorites = (productToAdd: any) => (dispatch: Function) => {
-    return dispatch(reducerUser.actions.addToFavoritess(productToAdd));
+    return dispatch(reducerUser.actions.addToFavorites(productToAdd));
 };
+
 
 export const requestAddToFavorites = async (idUser: string, favorites: any) => {
     try {
@@ -95,14 +105,13 @@ export const requestAddToFavorites = async (idUser: string, favorites: any) => {
     }
 };
 
-////edit user
+
 interface IuserUpdate {
     email: string
     name: string
     newImage: unknown
     deleteImage: string
 }
-
 
 
 export const postImageServerUsert = async ({ email, name, newImage, deleteImage }: IuserUpdate) => {
@@ -135,5 +144,6 @@ export const postImageServerUsert = async ({ email, name, newImage, deleteImage 
 
     }
 }
+
 
 export default reducerUser.reducer;

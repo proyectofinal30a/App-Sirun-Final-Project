@@ -12,7 +12,8 @@
   text-align: center;
 }
 
-.product__manage_search_and_change{
+
+.product__manage_search_and_change {
   display: flex;
   justify-content: space-between;
 }
@@ -43,7 +44,7 @@
   background-color: var(--color-light-pink);
 }
 
-.product__card_container{
+.product__card_container {
   margin-bottom: 1.5em;
   display: flex;
   justify-content: space-between;
@@ -52,30 +53,13 @@
 }
 
 
-.product_card__img_container{
+.product_card__img_container {
   height: 8em;
   width: 8em;
   object-fit: cover;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+/* Responsive layout */
 @media (max-width: 1540px) {
   .products_form__container {
     padding-top: 11em;

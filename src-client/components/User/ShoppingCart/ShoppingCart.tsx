@@ -1,59 +1,22 @@
-import React, { useState } from "react";
+import styles from "../../../styles/ShoppingCart.module.css";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";
-import { addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
-import { Iproduct, Ireducers } from "../../../lib/types";
 import { BsFillTrashFill } from "react-icons/bs";
-import styles from "../../styles/ShoppingCart.module.css";
+import { Ireducers } from "../../../../lib/types";
+import { addOne, removeOne, trashItem } from "../../../redux/slice/cart-redux/cart-redux";
 
 
 const ShoppingCart = () => {
   const router = useRouter();
   const dispatch: Function = useDispatch();
 
-  const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
-
-
-  const handlerAddOne = (e: Event, product: Iproduct) => {
-    e.preventDefault();
-    const { id, name, price, image }: any = product;
-
-    const productToAdd = {
-      id: id,
-      name: name,
-      price: price,
-      image: image,
-    };
-    dispatch(addOne(productToAdd));
-  };
-
-
-  const handlerRemoveOne = (e: Event, product: Iproduct) => {
-    e.preventDefault();
-    const { id, name, price, image }: any = product;
-
-    const productToAdd = {
-      id: id,
-      name: name,
-      price: price,
-      image: image,
-    };
-    dispatch(removeOne(productToAdd));
-  };
-
-
-  const handlerTrash = (e: Event, product: Iproduct) => {
-    e.preventDefault();
-    const { id }: any = product;
-
-    dispatch(trashItem(id));
-  };
-
+  const cart = useSelector((state: Ireducers) => state.reducerCart.products);
 
   let total = 0;
-  cart.map((elem: any) => {
+  cart.map((elem) => {
     return (total += elem.subTotal);
   });
 
@@ -64,21 +27,21 @@ const ShoppingCart = () => {
         <form className={styles.modal__container}>
           <h2>Shopping Cart</h2>
 
-          {cart?.map((elem: any, index: number) => {
-            const myUrl = elem.product?.image?.[0]?.image
+          {cart?.map((elem, index: number) => {
+
             return (
               <div key={index} className={styles.modal__product_container}>
                 <p className={styles.modal__product_name}>
-                  {elem.product.name.toLowerCase()}
+                  {elem.title.toLowerCase()}
                 </p>
 
                 <div className={styles.modal_info_container}>
                   <div className={styles.modal__product_img_container}>
                     <Image
                       key={index}
-                      src={myUrl}
+                      src={elem.picture_url}
                       width={400}
-                      alt={elem.product.name}
+                      alt={elem.picture_url}
                       height={400}
                       priority
                       className={styles.modal__product_img}
@@ -91,7 +54,7 @@ const ShoppingCart = () => {
                         Quantity: {elem.quantity}
                       </p>
                       <p className={styles.modal__product_data}>
-                        Price: {elem.product.price}
+                        Price: {elem.quantity}
                       </p>
                       <p className={styles.modal__product_data}>
                         Subtotal: {elem.subTotal}
@@ -99,26 +62,27 @@ const ShoppingCart = () => {
                     </div>
 
                     <div className={styles.modal__product_btns_container}>
-                      <button
+                      <input
                         className={styles.modal__product_btn}
-                        onClick={(e: any) => handlerAddOne(e, elem.product)}
-                      >
-                        {" "}
-                        +{" "}
-                      </button>
-                      <button
+                        onClick={() => dispatch(addOne(elem.id))}
+                        value='+'
+                        type='button'
+                      />
+                      <input
                         className={styles.modal__product_btn}
-                        onClick={(e: any) => handlerRemoveOne(e, elem.product)}
-                      >
-                        {" "}
-                        -{" "}
-                      </button>
+                        onClick={() => dispatch(removeOne(elem.id))}
+                        value='-'
+                        type='button'
+                      />
                       <button
                         className={[
                           styles.modal__product_btn,
                           styles.modal__product_btn_trash,
                         ].join(" ")}
-                        onClick={(e: any) => handlerTrash(e, elem.product)}
+                        onClick={(e) => {
+                          e.preventDefault()
+                          dispatch(trashItem(elem.id))
+                        }}
                       >
                         <BsFillTrashFill />
                       </button>
@@ -128,6 +92,8 @@ const ShoppingCart = () => {
               </div>
             );
           })}
+
+          <p className={styles.modal__quantity_total}>Items in shopping cart ({cart.length})</p>
 
           <div className={styles.modal__total_container}>
             <p className={styles.modal__total}>TOTAL </p>
