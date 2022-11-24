@@ -25,9 +25,9 @@ const AdminSideBar = () => {
               <span className={styles.nav_span}>Add new product</span>
             </li>
           </Link>
-          <Link href="/admin/adminProducts" className={styles.nav__link}>
+          <Link href="/admin/productManage" className={styles.nav__link}>
             <li className={styles.nav__item}>
-              <span className={styles.nav_span}>Manage existing products</span>
+              <span className={styles.nav_span}>Manage existing Products</span>
             </li>
           </Link>
           <Link href="/admin/adminUsers" className={styles.nav__link}>

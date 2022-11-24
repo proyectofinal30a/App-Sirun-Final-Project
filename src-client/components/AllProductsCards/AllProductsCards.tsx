@@ -77,10 +77,12 @@ const AllProductsCards = () => {
   };
 
 
+
   let total = 0;
   cart.map((elem) => {
     return (total += elem.subTotal);
   });
+
 
 
 
@@ -160,7 +162,7 @@ const AllProductsCards = () => {
     }
     dispatch(addToFavorites(productToAdd));
   }
-  
+
 
   return (
     <div className={styles.general__container}>
@@ -227,7 +229,7 @@ const AllProductsCards = () => {
 
                 {cart?.map((elem, index: number) => {
                   if (!elem.title) return null
-                  
+
                   return (
                     <div key={index} className={styles.modal__product_container}>
                       <p className={styles.modal__product_name}>
@@ -282,7 +284,7 @@ const AllProductsCards = () => {
                     </div>
                   );
                 })}
-                
+
                 <p className={styles.modal__quantity_total}>Items in shopping cart ({totalQuantity})</p>
 
                 <div className={styles.modal__total_container}>

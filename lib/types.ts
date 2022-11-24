@@ -112,15 +112,16 @@ interface IallUsers {
 }
 
 export interface Ireducers {
-  reducerProduct?: null;
-  reducerProducts: IallProducts;
-  reducerUser: Iuser;
-  reducerProductDetail: PackProducDetailRating;
-  reducerProductsByName: IproductsByName;
-  reducerCart: IproductsCardModel;
-  reducerFilters: IallProducts;
-  reducerAfterPayment: ImyOrder;
-  reducerAllUsers: IallUsers;
+  reducerProduct?: null
+  reducerProducts: IallProducts
+  reducerUser: Iuser
+  reducerProductDetail: PackProducDetailRating
+  reducerProductsByName: IproductsByName
+  reducerCart: IproductsCardModel
+  reducerFilters: IallProducts
+  reducerAfterPayment: ImyOrder
+  reducerAllUsers: IallUsers
+  reducerAdmin: any
 }
 
 export interface Ierror {

@@ -7,13 +7,15 @@ import reducerProducts from "./slice/products-client/Products-all-redux";
 import reducerProductDetail from "./slice/products-client/Product-detail-redux";
 import reducerFilters from "./slice/filter-product-client/filters-redux";
 import reducerProductsByName from "./slice/products-client/ProductByName-redux";
+import reducerAdmin from "./slice/product-Admin-redux/GetProAdm-Redux";
 import reducerCart from "./slice/cart-redux/cart-redux";
 import reducerAfterPayment from "./slice/payment/payment";
 import reducerAllUsers from "./slice/user-detail-redux/all-users";
 
 
+
 const persistConfig = {
-  key: 'chau',
+  key: 'tuuuukinesiiiiia',
   storage,
   whilelist: []
 }
@@ -25,8 +27,10 @@ const myReducers = combineReducers({
   reducerProductsByName,
   reducerCart,
   reducerFilters,
+  reducerAdmin,
   reducerAfterPayment,
   reducerAllUsers,
+
 })
 
 

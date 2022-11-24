@@ -1,22 +1,75 @@
-.products_form__container {
+.products_manage__container {
   min-height: 100vh;
   padding-top: 8em;
   display: flex;
   flex-direction: column;
-  align-items: center;
   font-family: var(--font-paragraph);
 }
 
-.products_form__title {
+.products_manage__title {
   font-size: 2em;
   color: var(--color-dark-blue);
   text-align: center;
 }
 
 
+.product__manage_search_and_change {
+  display: flex;
+  justify-content: space-between;
+}
+
+.change__price__input {
+  width: 23em;
+  border: none;
+  border-radius: 5px 0 0 5px;
+  padding: .5em;
+  padding-left: 1em;
+}
+
+.change__price__input::-webkit-input-placeholder {
+  color: var(--color-dark-blue);
+  font-size: 1em;
+}
+
+.change__price__input:focus {
+  outline: none;
+}
+
+.change__price__btn {
+  width: 6em;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  padding: .5em;
+  color: var(--color-light-blue);
+  background-color: var(--color-light-pink);
+}
+
+.product__card_container {
+  margin-bottom: 1.5em;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-shadow: 0 0 1px grey;
+}
+
+
+.product_card__img_container {
+  height: 8em;
+  width: 8em;
+  object-fit: cover;
+}
+
+
+
+/*modal, se puede cmabiar/borrar todo, es forma de test*/
+.modal {
+  margin-top: 5%;
+  background-color: grey;
+}
+
+/*End modal*/
+
 /* Responsive layout */
-
-
 @media (max-width: 1540px) {
   .products_form__container {
     padding-top: 11em;

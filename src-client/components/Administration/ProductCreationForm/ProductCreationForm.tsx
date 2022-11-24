@@ -140,8 +140,6 @@ export default function FormProduct(): JSX.Element {
     setFormProduct({ ...formProduct, image: myFilter });
   };
 
-
-
   const handleOnSubmit = async (event: valueForm) => {
     event.preventDefault();
     await uploadFormNoRedux(formProduct);
@@ -157,8 +155,6 @@ export default function FormProduct(): JSX.Element {
     });
     alert("New product added.");
   };
-
-
 
   return (
     <div className={styles.creation_form__container}>
