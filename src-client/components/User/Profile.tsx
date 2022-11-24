@@ -129,6 +129,8 @@ const Profile = () => {
     </div>
   ));
 
+  const emptyAddresses = "There is no address associated with this account.";
+
   
   return (
     <div className={styles.profile__general_container}>
@@ -149,7 +151,7 @@ const Profile = () => {
       </div>
       <div className={styles.addresses_container}>
         <span>Addresses</span>
-        <div className={styles.addresses}>{myAdress}</div>
+        <div className={styles.addresses}>{myAdress ? myAdress : emptyAddresses}</div>
       </div>
      
 
