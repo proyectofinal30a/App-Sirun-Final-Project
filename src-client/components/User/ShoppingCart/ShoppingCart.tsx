@@ -15,6 +15,8 @@ const ShoppingCart = () => {
 
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
 
+  const totalQuantity = cart[0] ? cart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
+
   let total = 0;
   cart.map((elem) => {
     return (total += elem.subTotal);
@@ -93,7 +95,7 @@ const ShoppingCart = () => {
             );
           })}
 
-          <p className={styles.modal__quantity_total}>Items in shopping cart ({cart.length})</p>
+          <p className={styles.modal__quantity_total}>Items in shopping cart ({totalQuantity})</p>
 
           <div className={styles.modal__total_container}>
             <p className={styles.modal__total}>TOTAL </p>

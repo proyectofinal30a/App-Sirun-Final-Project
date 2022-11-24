@@ -1,11 +1,18 @@
-.loading {
+/* Loading */
+
+
+.users_management__loading {
   margin: auto;
   min-height: 100vh;
   font-family: var(--font-paragraph);
-  font-size: 1em;
+  font-size: 1.5em;
   font-weight: bold;
   color: var(--colo-dark-blue);
 }
+
+
+/* Users container */
+
 
 .users_management__container {
   min-height: 100vh;
@@ -15,7 +22,7 @@
   flex-direction: column;
   align-items: center;
   font-family: var(--font-paragraph);
-  width: 100%;
+  width: 90%;
 }
 
 .users_management__title {
@@ -25,38 +32,26 @@
   margin-bottom: .5em;
 }
 
-.users_container {
-  display: flex;
-  flex-direction: row;
-  margin: 1em 2em 4em 2em;
+
+/* Search bar */
+
+
+.search_bar__input {
+  padding: .3em .5em;
+  width: 300px;
+  border: none;
+  box-shadow: 0 0 2px grey;
+  margin-bottom: 1.5em;
 }
 
-.user__container {
-  background-color: rgb(248, 246, 246);
-  margin-bottom: 1em;
-  border-radius: .3em;
-  padding: 1em;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 200ms ease-in-out;
-}
 
-.user__container:hover {
-  transform: scale(1.05);
-  cursor: pointer;
-}
+/* User image */
 
-.user__info_container {
-  display: flex;
-  flex-direction: column;
-  width: 70%;
-}
 
 .user__image_container {
   height: 6em;
   width: 6em;
-  margin-right: 2em;
+  margin-right: 0.5em;
 }
 
 .user__image {
@@ -66,10 +61,109 @@
   object-fit: cover;
 }
 
-/* .user__info {} */
+
+/* Users info */
+
+
+.users__container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 95%;
+}
+
+.user__container {
+  font-size: .9em;
+  background-color: rgb(248, 246, 246);
+  box-shadow: 0 0 2px grey;
+  margin: .5em;
+  border-radius: .1em;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 650px;
+}
+
+.user_info_container_mobile_separator {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
+}
+
+.user__info_container {
+  display: flex;
+  flex-direction: column;
+  width: 80%;
+  margin-right: .5em;
+}
 
 .user__span {
   font-weight: bold;
+}
+
+
+/* Buttons container */
+
+
+.user__btns_container {
+  width: 30%;
+  font-size: .9em;
+  line-height: 15px;
+}
+
+.user__reset_password_btn,
+.user__role_btn {
+  padding: .3em;
+  background-color: rgb(220, 217, 217);
+  color: black;
+  border: none;
+  border: 1px solid grey;
+  border-radius: .2em;
+  margin-bottom: .5em;
+}
+
+.user__reset_password_btn:hover,
+.user__role_btn:hover {
+  cursor: pointer;
+  background-color: rgb(233, 227, 227);
+}
+
+.user__deactivate_btn {
+  padding: .3em;
+  background-color: red;
+  color: white;
+  border: none;
+  border: 1px solid grey;
+  border-radius: .2em;
+}
+
+.user__activate_btn {
+  padding: .3em;
+  background-color: rgb(7, 183, 7);
+  color: white;
+  border: none;
+  border: 1px solid grey;
+  border-radius: .2em;
+}
+
+.user__deactivate_btn:hover {
+  cursor: pointer;
+  background-color: rgb(192, 15, 15);
+}
+
+.user__activate_btn:hover {
+  cursor: pointer;
+  background-color: rgb(20, 163, 20);
+}
+
+.user__reset_password_btn,
+.user__role_btn,
+.user__deactivate_btn,
+.user__activate_btn {
+  width: 10em;
 }
 
 
@@ -88,9 +182,50 @@
   }
 }
 
+@media (max-width: 1000px) {
+  .users_management__container {
+    overflow-x: hidden;
+  }
+
+  .user__container {
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+  }
+
+  .user__image_container {
+    margin-bottom: 1em;
+    width: 10em;
+    height: 10em;
+  }
+
+  .user__image {
+    width: 10em;
+    height: 10em;
+    object-fit: cover;
+  }
+
+  .user_info_container_mobile_separator {
+    width: 95%;
+    padding-right: 0em;
+  }
+
+  .user__btns_container {
+    width: 10em;
+    margin-right: 0em;
+  }
+}
+
 @media (max-width: 880px) {
   .users_management__container  {
     padding-top: 4em;
+  }
+
+  .user_info_container_mobile_separator {
+    margin: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
 }
 
@@ -112,21 +247,51 @@
   }
 
   .user__container {
-    width: 400px;
-    margin-left: 1em;
-    margin-right: 1em;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .user__image_container {
+    margin-bottom: 1em;
+    width: 10em;
+    height: 10em;
+  }
+
+  .user__image {
+    width: 10em;
+    height: 10em;
+    object-fit: cover;
+  }
+
+  .user_info_container_mobile_separator {
+    width: 95%;
   }
 }
 
-@media (max-width: 435px) {
-  .user__container {
-    width: 350px;
+@media (max-width: 450px) {
+  .user_info_container_mobile_separator {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
   }
-}
 
-@media (max-width: 390px) {
-  .user__container {
-    width: 325px;
+  .user__info_container {
+    margin-bottom: 1em;
+    width: 95%;
   }
-}
 
+  .user__btns_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+  .user__reset_password_btn,
+  .user__role_btn,
+  .user__deactivate_btn,
+  .user__activate_btn {
+    width: 15em;
+    padding: .5em;
+  } 
+}

@@ -15,7 +15,7 @@ const AdminSideBar = () => {
               <span className={styles.nav_span}>Dashboard</span>
             </li>
           </Link>
-          <Link href="/admin/adminProfile" className={styles.nav__link}>
+          <Link href="/user/profile" className={styles.nav__link}>
             <li className={styles.nav__item}>
               <span className={styles.nav_span}>Profile</span>
             </li>

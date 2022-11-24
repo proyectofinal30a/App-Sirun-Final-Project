@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { IinfoBuyer, IitemForMercadoPago } from "../../../../lib/types";
+import { IUserBuyer, IitemForMercadoPago } from "../../../../lib/types";
 import userVerification from "../../../controllers/userVerification-controller";
 
 interface IidOrder {
@@ -15,7 +15,7 @@ interface ImyOrder {
     status: string;
     date: string;
     delivery_time: string;
-    user: IinfoBuyer;
+    user: IUserBuyer; // revisar type
     purchasedProducts: IitemForMercadoPago[];
   };
 }
