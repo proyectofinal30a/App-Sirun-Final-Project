@@ -1,4 +1,4 @@
-export const convertMonth = (month: string) => {
+export const convertMonth = (month: string) => { 
     switch(month){
         case 'Jan':
             return 'January'
