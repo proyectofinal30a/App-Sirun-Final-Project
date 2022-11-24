@@ -1,4 +1,4 @@
-.products_form__container {
+.orders_management__container {
   min-height: 100vh;
   padding-top: 8em;
   display: flex;
@@ -7,7 +7,7 @@
   font-family: var(--font-paragraph);
 }
 
-.products_form__title {
+.orders_management__title {
   font-size: 2em;
   color: var(--color-dark-blue);
   text-align: center;
@@ -18,31 +18,31 @@
 
 
 @media (max-width: 1540px) {
-  .products_form__container {
+  .orders_management__container {
     padding-top: 11em;
   }
 }
 
 @media (max-width: 1175px) {
-  .products_form__container {
+  .orders_management__container {
     padding-top: 10em;
   }
 }
 
 @media (max-width: 880px) {
-  .products_form__container {
+  .orders_management__container {
     padding-top: 4em;
   }
 }
 
 @media (max-width: 780px) {
-  .products_form__container {
+  .orders_management__container {
     padding-top: 6em;
   }
 }
 
 @media (max-width: 660px) {
-  .products_form__container {
+  .orders_management__container {
     padding-top: 3em;
   }
 }
