@@ -1,18 +1,18 @@
+import styles from "../../styles/AdminManageUsers.module.css";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
 import { Ireducers } from "../../../lib/types";
+import { activeUser } from "../../../src-back/admin-users/putUsers";
 import {getAllUsers, getUsersByName, clearUserSearch } from "../../redux/slice/user-detail-redux/all-users";
 import cloudinaryOrUrl from "../../controllers/detectionOfImage";
-import styles from "../../styles/AdminManageUsers.module.css";
+
 
 const AdminManageUsers = () => {
   const dispatch: Function = useDispatch();
-
+  
   const allUsers = useSelector((state: Ireducers) => state.reducerAllUsers.allUsers);
   const usersByName = useSelector((state: Ireducers) => state.reducerAllUsers.usersByName);
-
-  const [name, setName] = useState("");
 
   let currentUsers: any = [];
   if (usersByName.length > 0) {
@@ -20,12 +20,15 @@ const AdminManageUsers = () => {
   } else {
     currentUsers = allUsers;
   }
+  
+  const [updUser, setUpdUser] = useState(true)
+  const [name, setName] = useState("");
 
   
   useEffect(() => {
     dispatch(clearUserSearch()); 
     dispatch(getAllUsers());
-  }, [dispatch]);
+  }, [dispatch, updUser]);
 
 
   if (!allUsers) return <div className={styles.users_management__loading}>Loading...</div>;
@@ -37,6 +40,13 @@ const AdminManageUsers = () => {
     dispatch(getUsersByName(name, allUsers));
   };
 
+
+  // DESACTIVAR USERS
+  const userChange = async (id: any, status: string) => {
+    await activeUser(id, status);
+    dispatch(getAllUsers);
+    updUser ? setUpdUser(false) : setUpdUser(true);
+  }
 
   return (
     <div className={styles.users_management__container}>
@@ -87,6 +97,10 @@ const AdminManageUsers = () => {
                     {user.role}
                   </p>
                 </div>
+
+                {user.role === 'user' && <button onClick={() => userChange(user.id,'inactive')}>Deactivate account</button>}
+                {user.role === 'inactive' && <button onClick={() => userChange(user.id,'user')}>Activate account</button>}
+
               </div>
             );
           })}
