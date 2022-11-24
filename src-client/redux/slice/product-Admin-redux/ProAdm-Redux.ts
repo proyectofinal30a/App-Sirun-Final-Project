@@ -1,10 +1,6 @@
 import axios from "axios";
 import { IproductSumbit } from "../../../../lib/types";
 import userVerification from "../../../controllers/userVerification-controller";
-type imageAddId = {
-  id: string;
-  image: string;
-};
 
 export const uploadFormNoRedux = async (dataForm: IproductSumbit) => {
   const myToken: any = await userVerification("client");
@@ -42,12 +38,6 @@ export const uploadFormNoRedux = async (dataForm: IproductSumbit) => {
   }).catch((error) => {
     console.log(error)
   })
-
-
-
-
-
-
 
 }
 

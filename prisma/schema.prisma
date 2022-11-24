@@ -70,7 +70,7 @@ model Address {
 
 model Phone {
   area_code     Int
-  phone_number  Int
+  number  Int
   id_address    String  @unique
   addressFather Address @relation(fields: [id_address], references: [id])
 }

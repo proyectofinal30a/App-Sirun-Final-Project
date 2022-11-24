@@ -35,7 +35,7 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
     } catch (error) {
         console.log(error);
 
-        res.status(404).json({ msg: "usuario no encontrado" })
+        res.status(404).json({ msg: `Error al buscar review ` })
     }
 
 }

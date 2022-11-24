@@ -1,9 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../../../../lib/prisma'
 export default async function findUser(req: NextApiRequest, res: NextApiResponse) {
+    const { email } = req.query
     try {
 
-        const { email } = req.query
         if (typeof email === 'string') {
             const myUser = await prisma.user.findFirst({
                 where: {
@@ -66,7 +66,7 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                             rating: true
                         }
                     },
-                    direcciones: true
+                    addresses: true
                 },
             })
 
@@ -74,7 +74,7 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
         }
 
     } catch (error) {
-        res.status(404).json({ msg: "usuario no encontrado" })
+        res.status(404).json({ msg: `usuario no encontrado ${email}` })
     }
 
 }
