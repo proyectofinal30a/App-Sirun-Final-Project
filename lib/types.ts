@@ -1,9 +1,58 @@
 import { TypeDiet, CategoryPro, StatusType } from '@prisma/client'
+import { Interface } from 'readline'
 
 export interface Iimage {
     image: string
     id?: string
 }
+
+///For Form Mercado pago
+export interface IUserBuyer {
+    email: string
+    name: string
+    address: {
+        street_name: string
+        street_number: string
+        zip_code: string
+    }
+    phone: {
+        number: string
+        area_code: string
+    }
+}
+
+export interface Ipreference {
+    external_reference: string
+    payer: IUserBuyer
+    items: IproductModelCart[]
+    back_urls: {
+        success: string
+        failure: string
+        pending: string
+    }
+
+}
+export interface IproductModelCart {
+    id: string
+    title: string
+    unit_price: number
+    picture_url: string
+    quantity: number
+    subTotal: number
+    currency_id: "ARS"
+};
+
+
+export interface IproductsCardModel {
+    products: IproductModelCart[]
+    confirmed: Boolean
+    payLink: string
+}
+
+///
+
+
+
 
 
 export interface Iproduct {
@@ -18,9 +67,6 @@ export interface Iproduct {
     description: string;
     evaluation: Ievaluations[]
 }
-
-
-
 
 interface packImage {
     image: string
@@ -44,7 +90,6 @@ export interface IallProducts {
     productPrevState: Iproduct[]
 }
 
-
 export interface IproductsByName {
     products: Iproduct[]
 }
@@ -54,6 +99,26 @@ export interface PackProducDetailRating {
     rating: number
 }
 
+export interface ImyOrder {
+    myOrder: {
+      external_reference: string;
+      total: string;
+      status: string;
+      date: string;
+      delivery_time: string;
+      user:{
+        id:string
+      };
+      purchasedProducts: IitemForMercadoPago[];
+    };
+}
+
+interface IallUsers {
+    allUsers: Iuser[];
+    usersByName: Iuser[];
+}
+
+
 
 export interface Ireducers {
     reducerProduct?: null
@@ -61,8 +126,10 @@ export interface Ireducers {
     reducerUser: Iuser
     reducerProductDetail: PackProducDetailRating
     reducerProductsByName: IproductsByName
-    reducerCart: any
+    reducerCart: IproductsCardModel
     reducerFilters: IallProducts
+    reducerAfterPayment: ImyOrder
+    reducerAllUsers: IallUsers
 }
 
 
@@ -103,7 +170,12 @@ interface IobjProduct {
     image: IimageProduc[]
 }
 
-
+export interface IitemForMercadoPago{
+    image:string
+    name:string
+    quantity:string
+    price:string
+}
 
 
 interface Iorder {
@@ -152,21 +224,3 @@ export interface Iuser {
 }
 
 
-// declare module "next" {
-//     interface NextApiRequest {
-//         query: Partial<{ [key: string]: string | string[] }>
-//     }
-// }
-
-// const status_typee: Status_type = "pending"
-
-// export type orderr = {
-//     id: String;
-//     id_user: String;
-//     description: String;
-//     products_id: Number[];
-//     total: any;
-//     status: Status_type;
-//     date: String;
-//     delivery_time: String;
-// }

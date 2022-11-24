@@ -1,6 +1,6 @@
 / @type {import('next').NextConfig} /
 const nextConfig = {
-  reactStrictMode: true,
+  reactStrictMode: false,
   swcMinify: true,
   env: {
     "CLOUDINARY_CLOUD": "dvopyvz7r",
@@ -8,7 +8,9 @@ const nextConfig = {
     "CLOUDINARY_LOGO": "i0wjlsai",
     "CLOUDINARY_PRODUCTS": "r94njzcs",
     "CLOUDINARY_SLIDER": "slider",
-    "CLOUDINARY_USER_PROFILE": "mfrtuke4"
+    "CLOUDINARY_USER_PROFILE": "mfrtuke4",
+    "EMAILJS_API_KEY" : "6kBWW7c7buxjytyG6",
+    "EMAILJS_SERVICES" : "service_59eb21u",
   }
   ,
   images: {

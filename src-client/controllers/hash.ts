@@ -19,3 +19,13 @@ export default function hash(obj: sessionType) {
 
 
 
+
+
+
+// export default function hash(obb) {
+
+//     let miarry = obb.split('')
+//     let aUniCode = miarry.map((valor) => valor.charCodeAt(0))
+//     let sumaDelArry = Math.floor(aUniCode.reduce((acc, valor) => acc += valor) * 152312312312213)
+//     return miarry[3] + sumaDelArry + miarry[0]
+// }

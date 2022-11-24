@@ -50,13 +50,28 @@
 }
 
 .nav__item:focus,
-.nav__item:hover {
+.nav__item:hover{
   background-color: rgb(229, 234, 244);
   color: var(--color-light-blue);
   cursor: pointer;
   border-top: 2px solid var(--color-light-blue);
   border-bottom: 2px solid var(--color-light-blue);
 }
+
+
+.sing__btn{
+  color: white;
+  border: none;
+  background: none;
+}
+
+.sing__btn:hover, .sing__btn:focus {
+  cursor: pointer;
+  background-color: rgb(229, 234, 244);
+  color: var(--color-light-blue);
+}
+
+
 
 @media (max-width: 1540px) {
   .nav {
@@ -184,7 +199,7 @@
     font-weight: bold;
   }
 
-  .mobile_nav__link:hover {
+  .mobile_nav__link:hover, .mobile_nav__sing:hover {
     background-color: white;
     cursor: pointer;
   }
@@ -192,4 +207,15 @@
   .mobile_nav__dropdown:hover .mobile_nav__dropdown_content {
     display: block;
   }
+
+  .sing__btn{
+    border: none;
+    color: var(--color-light-blue);
+    text-decoration: none;
+    display: block;
+    font-weight: bold;
+
+  }
+
+
 }

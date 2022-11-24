@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Link from "next/link";
-import { Iproduct, Ireducers } from "../../../lib/types";
-import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart";
+import { Iproduct, Ireducers, IproductModelCart } from "../../../lib/types";
+import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
 import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
 import styles from "../../styles/AllProductsCards.module.css";
 import Modal from "react-modal";
@@ -11,9 +11,10 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { IconContext } from "react-icons";
-import { removeFromFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
+import { requestAddToFavorites, addToFavorites } from "../../redux/slice/user-detail-redux/user-redux";
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 
 
@@ -21,19 +22,14 @@ const AllProductsCards = () => {
   // GET ALL PRODUCTS
   const dispatch: Function = useDispatch();
   // FAVORITE 
-  const { data } = useSession();
+  const { data, status } = useSession<boolean>();
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
-  const myNuEmail = data?.user?.email;
-  const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
-
 
   useEffect(() => {
-    if (!myInfUser?.user?.id) {
-      dispatch(getUserDetail(myNuEmail));
-    }
-  }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
-  const allProducts: any = useSelector<Ireducers>((state) => state.reducerProducts.products);
-  const cart: any = useSelector<Ireducers>((state) => state.reducerCart.products);
+    data?.user && dispatch(getUserDetail(data?.user.email))
+  }, [dispatch, data]);
+  const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
+  const cart = useSelector((state: Ireducers) => state.reducerCart.products);
 
 
 
@@ -51,61 +47,38 @@ const AllProductsCards = () => {
 
   // SHOPPING CART
   const [modalIsOpen, setIsOpen] = useState(false);
-
   function closeModal() {
     setIsOpen(false);
   }
 
-  const addProductOpenModal = (e: Event, product: Iproduct) => {
-    e.preventDefault();
+  const addProductOpenModal = (product: Iproduct) => {
     setIsOpen(true);
-    const { id, name, price, image }: any = product;
-    const productToAdd = {
+    const { id, name, price, image } = product;
+    const productToAdd: IproductModelCart = {
       id: id,
-      name: name,
-      price: price,
-      image: image,
+      title: name,
+      unit_price: price,
+      picture_url: image[0].image,
+      quantity: 1,
+      subTotal: 0,
+      currency_id: 'ARS'
     };
     dispatch(addToCart(productToAdd));
   };
 
-  const handlerAddOne = (e: Event, product: Iproduct) => {
-    e.preventDefault();
-    const { id, name, price, image }: any = product;
 
-    const productToAdd = {
-      id: id,
-      name: name,
-      price: price,
-      image: image,
-    };
+  const handlerTrash = (id: string) => {
 
-    dispatch(addOne(productToAdd));
-  };
-
-  const handlerRemoveOne = (e: Event, product: Iproduct) => {
-    e.preventDefault();
-    const { id, name, price, image }: any = product;
-    const productToAdd = {
-      id: id,
-      name: name,
-      price: price,
-      image: image,
-    };
-    dispatch(removeOne(productToAdd));
-  };
-
-  const handlerTrash = (e: Event, product: Iproduct) => {
-    e.preventDefault();
-    const { id }: any = product;
     dispatch(trashItem(id));
-  if (cart.length === 1 || cart.length === 0) { return setIsOpen(false); }
+    if (cart.length === 1 || cart.length === 0) { return setIsOpen(false); }
   };
+
 
   let total = 0;
-  cart.map((elem: any) => {
+  cart.map((elem) => {
     return (total += elem.subTotal);
   });
+
 
 
 
@@ -149,26 +122,43 @@ const AllProductsCards = () => {
   useEffect(() => {
     if (filterProducts[0]) setCurrentPage(1);
     dispatch(getAllProducts());
+
   }, [filterProducts, dispatch]);
 
+  //request para guardar los nuevos favs que estan en el redux del user
 
 
-  const biblioteca: any = {};
-  myProfile?.favorites.forEach(fav => {
-    if (fav.id) biblioteca[fav.id] = true;
+  //check de favs
+  interface IproduId {
+    id: string
+  }
+
+  let favorites2: Array<IproduId> = []
+  let biblioteca: any = {}
+
+  if (myProfile) {
+    favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
+    favorites2.forEach(fav => {
+      biblioteca[fav.id] = true;
+    })
+  }
+
+  useEffect(() => {
+    if (!myProfile) return
+    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
   })
 
-  const handleFavorite = (id: any) => {
-    const userId: string = myProfile?.id;
-    const productId: string = id;
 
-    if (biblioteca[productId]) {
-      removeFromFavorites(userId, productId);
-      return dispatch(getUserDetail(myNuEmail));
-    };
-    addToFavorites(userId, productId);
-    dispatch(getUserDetail(myNuEmail));
+
+  const handleFavorite = (product: any) => {
+    status === "unauthenticated" && signIn("auth0")
+    const { id } = product;
+    const productToAdd = {
+      id: id
+    }
+    dispatch(addToFavorites(productToAdd));
   }
+  
 
   return (
     <div className={styles.general__container}>
@@ -179,7 +169,7 @@ const AllProductsCards = () => {
               return (
                 <div key={index} className={styles.product_card__container}>
 
-                  <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product.id)}>
+                  <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(product)}>
                     <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
                       <p className={styles.wishlist_fav_btn}>
                         {biblioteca[product.id] ? <FaHeart /> : <FiHeart />}
@@ -210,7 +200,7 @@ const AllProductsCards = () => {
                     <p>$ {product.price}</p>
                   </div>
 
-                  <button className={styles.add_to_cart__btn} onClick={(e: any) => addProductOpenModal(e, product)}>
+                  <button className={styles.add_to_cart__btn} onClick={() => addProductOpenModal(product)}>
                     Add to cart
                   </button>
                 </div>
@@ -233,21 +223,20 @@ const AllProductsCards = () => {
 
                 <h2>Shopping Cart</h2>
 
-                {cart?.map((elem: any, index: number) => {
-                  const myUrl = elem.product?.image?.[0]?.image
+                {cart?.map((elem, index: number) => {
                   return (
                     <div key={index} className={styles.modal__product_container}>
                       <p className={styles.modal__product_name}>
-                        {elem.product.name.toLowerCase()}
+                        {elem.title.toLowerCase()}
                       </p>
 
                       <div className={styles.modal_info_container}>
                         <div className={styles.modal__product_img_container}>
                           <Image
                             key={index}
-                            src={myUrl}
+                            src={elem.picture_url}
                             width={400}
-                            alt={elem.product.name}
+                            alt={elem.picture_url}
                             height={400}
                             priority
                             className={styles.modal__product_img}
@@ -257,26 +246,29 @@ const AllProductsCards = () => {
                         <div className={styles.modal__product_mobile_separator}>
                           <div className={styles.modal__product_info}>
                             <p className={styles.modal__product_data}>Quantity: {elem.quantity}</p>
-                            <p className={styles.modal__product_data}>Price: {elem.product.price}</p>
+                            <p className={styles.modal__product_data}>Price: {elem.unit_price}</p>
                             <p className={styles.modal__product_data}>Subtotal: {elem.subTotal}</p>
                           </div>
 
                           <div className={styles.modal__product_btns_container}>
-                            <button
+                            <input
                               className={styles.modal__product_btn}
-                              onClick={(e: any) => handlerAddOne(e, elem.product)}
-                            >
-                              {" "}+{" "}
-                            </button>
-                            <button
+                              onClick={() => dispatch(addOne(elem.id))}
+                              value='+'
+                              type='button'
+                            />
+                            <input
                               className={styles.modal__product_btn}
-                              onClick={(e: any) => handlerRemoveOne(e, elem.product)}
-                            >
-                              {" "}-{" "}
-                            </button>
+                              onClick={() => dispatch(removeOne(elem.id))}
+                              value='-'
+                              type='button'
+                            />
                             <button
                               className={[styles.modal__product_btn, styles.modal__product_btn_trash].join(" ")}
-                              onClick={(e: any) => handlerTrash(e, elem.product)}
+                              onClick={(e) => {
+                                e.preventDefault()
+                                handlerTrash(elem.id)
+                              }}
                             >
                               <BsFillTrashFill />
                             </button>
@@ -286,7 +278,10 @@ const AllProductsCards = () => {
                     </div>
                   );
                 })}
-
+                <div className={styles.modal__total_container}>
+                  <p className={styles.modal__total}>Products in Cart </p>
+                  <p className={styles.modal__total}>{"totalQuantity"}</p>
+                </div>
                 <div className={styles.modal__total_container}>
                   <p className={styles.modal__total}>TOTAL </p>
                   <p className={styles.modal__total}>${total}</p>

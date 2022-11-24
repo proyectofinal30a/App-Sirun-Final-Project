@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { getProductDetail, cleanProductDetail } from "../../redux/slice/products-client/Product-detail-redux";
 import { Iproduct, Ireducers } from "../../../lib/types";
-import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart";
+import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
 import { useRouter } from "next/router";
 import Image from "next/image";
 import Link from "next/link";

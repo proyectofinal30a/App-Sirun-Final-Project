@@ -49,18 +49,54 @@ model User {
   image         String?
   role          String       @default("user")
   accounts      Account[]
-  direcciones   Direccion[]
+  addresses     Address[]
   evaluations   Evaluation[]
   orders        Order[]
   sessions      Session[]
   favorites     Product[]
 }
 
-model Direccion {
-  id      String @id @unique @default(uuid())
-  id_user String
-  dir     String
-  user    User   @relation(fields: [id_user], references: [id])
+model Address {
+  id            String  @id @unique @default(uuid())
+  id_user       String
+  name_address  String  @default("my Address")
+  zip_code      Int
+  street_name   String
+  street_number Int
+  user          User    @relation(fields: [id_user], references: [id])
+  phone         Phone?
+  order         Order[]
+}
+
+model Phone {
+  area_code     Int
+  number  Int
+  id_address    String  @unique
+  addressFather Address @relation(fields: [id_address], references: [id])
+}
+
+model Order {
+  external_reference String              @id @unique
+  id_user            String
+  description        String
+  total              Int
+  status             StatusType
+  date               DateTime            @default(now())
+  delivery_time      String
+  user               User                @relation(fields: [id_user], references: [id])
+  product            Product[]
+  purchasedProducts  purchasedProducts[]
+  id_address         String
+  address            Address             @relation(fields: [id_address], references: [id])
+}
+
+model purchasedProducts {
+  title       String
+  picture_url String
+  unit_price  Int
+  quantity    Int
+  id_order    String @unique
+  order       Order  @relation(fields: [id_order], references: [external_reference])
 }
 
 model Evaluation {
@@ -71,18 +107,6 @@ model Evaluation {
   rating     Int
   product    Product @relation(fields: [id_product], references: [id])
   user       User    @relation(fields: [id_user], references: [id])
-}
-
-model Order {
-  id            String     @id @unique @default(uuid())
-  id_user       String
-  description   String
-  total         Int
-  status        StatusType
-  date          DateTime   @default(now())
-  delivery_time String
-  user          User       @relation(fields: [id_user], references: [id])
-  product       Product[]
 }
 
 model Product {
@@ -109,9 +133,10 @@ model ImageProdu {
 
 enum StatusType {
   pending
-  in_progress
+  confirmed
   canceled
-  fullfiled
+  in_process
+  fulfilled
 }
 
 enum TypeDiet {

@@ -1,0 +1,41 @@
+{
+    "items": [
+        {
+            "id": 23,
+            "title": "casa",
+            "unit_price": 12,
+            "picture_url": "dadasdads",
+            "quantity": 12,
+            "subTotal": 232,
+            "currency_id": "ARS"
+        },
+        {
+            "id": 23,
+            "title": "c32asa",
+            "unit_price": 12,
+            "picture_url": "dadasdads",
+            "quantity": 12,
+            "subTotal": 232,
+            "currency_id": "ARS"
+        }
+    ],
+    "payer": {
+        "name": "Ezequiel sosa",
+        "email": "test_user_16943485@testuser.com",
+        "phone": {
+            "number": 12,
+            "area_code": 12
+        },
+        "address": {
+            "street_name": "string",
+            "street_number": 34,
+            "zip_code": 2
+        }
+    },
+    "back_urls": {
+        "success": "string",
+        "failure": "string",
+        "pending": "string"
+    },
+    "external_reference": "EZEQUIE:::::"
+}

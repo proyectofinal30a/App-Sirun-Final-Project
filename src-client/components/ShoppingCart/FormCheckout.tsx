@@ -3,40 +3,75 @@ import styles from "../../styles/FormCheckout.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
 import Modal from "react-modal";
-import { sendOrderDetail, resetCart } from "../../redux/slice/cart-redux/cart";
+import { sendOrderDetail, resetCart } from "../../redux/slice/cart-redux/cart-redux";
 import validate from "../../controllers/validateFormCheckout";
-
-import { symlink } from "fs";
+import { IUserBuyer, Ireducers } from '../../../lib/types'
+import vericationSubminObj from "../../controllers/verificationFormCart";
 
 // PARA DATOS DE ENTREGA
 
 const FormCheckout = (): JSX.Element => {
-  const dispatch = useDispatch();
+  const dispatch: Function = useDispatch();
+  const { confirmed, payLink, products } = useSelector((state: Ireducers) => state.reducerCart);
 
-  const productsInCart = useSelector((state: any) => state.reducerCart.products);
-  const confirmedCart = useSelector((state: any) => state.reducerCart.confirmed);
-  const payLink = useSelector((state: any) => state.reducerCart.payLink);
+  type buttonEvenOnclik = React.MouseEvent<HTMLButtonElement, MouseEvent>
+  type EventInputChange = React.ChangeEvent<HTMLInputElement>
 
-  const personInfo = {
-    name: "",
-    email: "",
-    phone: "",
-    areaCode: "",
-    zipCode: "",
-    streetName: "",
-    streetNumber: "",
+  const personInfo: IUserBuyer = {
+    email: '',
+    name: '',
+    address: {
+      street_name: '',
+      street_number: '',
+      zip_code: ''
+    },
+    phone: {
+      number: '',
+      area_code: ''
+    }
   };
-
-  useEffect(() => { }, [confirmedCart]);
-
 
   const [inputUser, setInputUser] = useState(personInfo);
   const [errors, setErrors] = useState(personInfo);
 
-  const handleInputChange = (e: any) => {
-    const { name, value } = e.target;
-    setInputUser({ ...inputUser, [name]: value });
-    setErrors(validate({ ...inputUser, [name]: value }));
+  const handleInputChange = (event: EventInputChange) => {
+    const { name, value } = event.target;
+    if (name === 'email' || name === 'name') {
+      setInputUser({ ...inputUser, [name]: value });
+      setErrors(validate({ ...inputUser, [name]: value }));
+      return
+    }
+    if (name === 'number' || name === 'area_code') {
+      setInputUser({
+        ...inputUser,
+        ["phone"]: {
+          ...inputUser.phone,
+          [name]: value
+        }
+      });
+
+      setErrors(validate({
+        ...inputUser, ["phone"]: {
+          ...inputUser.phone,
+          [name]: value
+        }
+      }));
+      return
+    }
+
+    setInputUser({
+      ...inputUser, ["address"]: {
+        ...inputUser.address,
+        [name]: value
+      }
+    });
+    setErrors(validate({
+      ...inputUser, ["address"]: {
+        ...inputUser.address,
+        [name]: value
+      }
+    }))
+
   };
 
 
@@ -46,37 +81,33 @@ const FormCheckout = (): JSX.Element => {
     setIsOpen(false);
   }
 
-  const openCheckModal = (e: Event, person: any) => {
+  const openCheckModal = (e: buttonEvenOnclik, person: IUserBuyer) => {
     e.preventDefault();
     setIsOpen(true);
-    const errorSave = validate(person);
+    console.log(vericationSubminObj(person)[0], 'dasdsad');
 
-    if (Object.values(errorSave).length !== 0) {
-      alert("Please complete the form correctly");
+    if (vericationSubminObj(person)[0]) {
+      return alert("Please complete the form correctly");
     }
   };
 
 
 
   // Submitea cuando se cliquea el botón del modal (el form esta dentro del modal)
-  async function handleSubmit(e: Event) {
+  async function handleSubmit(e: buttonEvenOnclik) {
     e.preventDefault();
-    const info = {
-      products: productsInCart,
-      infoBuyer: inputUser,
-    };
+    console.log('hp;a');
 
-    dispatch(sendOrderDetail(info));
+    dispatch(sendOrderDetail(inputUser, products));
   }
 
-  let total = 0;
+  const total = products.map((elem) => elem.subTotal).reduce((elem, acc: number) => elem + acc)
+  const totalQuantity = products.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc)
 
-  productsInCart.map((elem: any) => {
-    return (total += elem.subTotal);
-  });
 
 
   return (
+
     <div className={styles.checkout__container}>
       <div className={styles.first__column}>
         <h2 className={styles.column__title}>Checkout</h2>
@@ -89,7 +120,7 @@ const FormCheckout = (): JSX.Element => {
             type="text"
             name="name"
             value={inputUser.name}
-            onChange={(e: any) => handleInputChange(e)}
+            onChange={handleInputChange}
             placeholder="Name"
             autoComplete="on"
             required
@@ -104,7 +135,7 @@ const FormCheckout = (): JSX.Element => {
             type="email"
             name="email"
             value={inputUser.email}
-            onChange={(e: any) => handleInputChange(e)}
+            onChange={handleInputChange}
             placeholder="Email"
             autoComplete="on"
             required
@@ -121,15 +152,15 @@ const FormCheckout = (): JSX.Element => {
               <input
                 className={styles.form__input}
                 type="text"
-                name="areaCode"
-                value={inputUser.areaCode}
-                onChange={(e: any) => handleInputChange(e)}
+                name="area_code"
+                value={inputUser.phone.area_code}
+                onChange={handleInputChange}
                 placeholder="Area Code"
                 autoComplete="on"
                 required
               />
-              {errors.areaCode && (
-                <p className={styles.error}>{errors.areaCode}</p>
+              {errors.phone.area_code && (
+                <p className={styles.error}>{errors.phone.area_code}</p>
               )}
             </div>
 
@@ -139,15 +170,15 @@ const FormCheckout = (): JSX.Element => {
               </label>
               <input
                 className={styles.form__input}
-                type="tel"
-                name="phone"
-                value={inputUser.phone}
-                onChange={(e: any) => handleInputChange(e)}
+                type="text"
+                name="number"
+                value={inputUser.phone.number}
+                onChange={handleInputChange}
                 placeholder="Phone"
                 autoComplete="on"
                 required
               />
-              {errors.phone && <p className={styles.error}>{errors.phone}</p>}
+              {errors.phone.number && <p className={styles.error}>{errors.phone.number}</p>}
             </div>
           </div>
         </fieldset>
@@ -161,15 +192,15 @@ const FormCheckout = (): JSX.Element => {
               <input
                 className={styles.form__input}
                 type="text"
-                name="streetName"
-                value={inputUser.streetName}
-                onChange={(e: any) => handleInputChange(e)}
+                name="street_name"
+                value={inputUser.address.street_name}
+                onChange={handleInputChange}
                 placeholder="Street Name"
                 autoComplete="on"
                 required
               />
-              {errors.streetName && (
-                <p className={styles.error}>{errors.streetName}</p>
+              {errors.address.street_name && (
+                <p className={styles.error}>{errors.address.street_name}</p>
               )}
             </div>
             <div className={styles.container__row_column}>
@@ -179,15 +210,15 @@ const FormCheckout = (): JSX.Element => {
               <input
                 className={styles.form__input}
                 type="text"
-                name="streetNumber"
-                value={inputUser.streetNumber}
-                onChange={(e: any) => handleInputChange(e)}
+                name="street_number"
+                value={inputUser.address.street_number}
+                onChange={handleInputChange}
                 placeholder="Street Number"
                 autoComplete="on"
                 required
               />
-              {errors.streetNumber && (
-                <p className={styles.error}>{errors.streetNumber}</p>
+              {errors.address.street_number && (
+                <p className={styles.error}>{errors.address.street_number}</p>
               )}
             </div>
             <div className={styles.container__row_column}>
@@ -197,15 +228,15 @@ const FormCheckout = (): JSX.Element => {
               <input
                 className={styles.form__input}
                 type="text"
-                name="zipCode"
-                value={inputUser.zipCode}
-                onChange={(e: any) => handleInputChange(e)}
+                name="zip_code"
+                value={inputUser.address.zip_code}
+                onChange={handleInputChange}
                 placeholder="Zip Code"
                 autoComplete="on"
                 required
               />
-              {errors.zipCode && (
-                <p className={styles.error}>{errors.zipCode}</p>
+              {errors.address.zip_code && (
+                <p className={styles.error}>{errors.address.zip_code}</p>
               )}
             </div>
           </div>
@@ -235,27 +266,27 @@ const FormCheckout = (): JSX.Element => {
               <div className={styles.modal__client_phone}>
                 <p>
                   <span className={styles.client_info_span}>Phone number: </span>
-                  {inputUser.areaCode}
+                  {inputUser.phone.area_code}
                 </p>
-                <p>{inputUser.phone}</p>
+                <p>{inputUser.phone.number}</p>
               </div>
 
               <p>
-                <span className={styles.client_info_span}>Zip code: </span>{inputUser.zipCode}
+                <span className={styles.client_info_span}>Zip code: </span>{inputUser.address.zip_code}
               </p>
               <div className={styles.modal__client_address_container}>
                 <p className={styles.modal__client_street}>
-                  <span className={styles.client_info_span}>Address: </span>{inputUser.streetName.toLowerCase()}
+                  <span className={styles.client_info_span}>Address: </span>{inputUser.address.street_name.toLowerCase()}
                 </p>
-                <p>, {inputUser.streetNumber}</p>
+                <p>, {inputUser.address.street_number}</p>
               </div>
             </div>
 
-            {!confirmedCart && !payLink &&
+            {!confirmed && !payLink &&
               <div className={styles.modal__confirm_btn_container}>
                 <button
                   type="submit"
-                  onClick={(e: any) => handleSubmit(e)}
+                  onClick={handleSubmit}
                   className={styles.modal__confirm_btn}
                 >
                   Confirm information
@@ -263,11 +294,11 @@ const FormCheckout = (): JSX.Element => {
               </div>
             }
 
-            {confirmedCart && payLink && (
+            {confirmed && payLink && (
               <div className={styles.modal__pay_btn_container}>
                 <button
                   className={styles.modal__pay_btn}
-                  onClick={() => resetCart()}
+                  onClick={() => dispatch(resetCart())}
                 >
                   <a href={payLink}>Continue to MercadoPago</a>
                 </button>
@@ -280,16 +311,15 @@ const FormCheckout = (): JSX.Element => {
       <div className={styles.second__column}>
         <h2 className={styles.column__title}>Order Summary</h2>
         <div className={styles.item__container}>
-          {productsInCart?.map((elem: any) => {
-            const myUrl = elem?.product?.image?.[0]?.image
+          {products.map((elem) => {
             return (
-              <div className={styles.item} key={elem.product.id}>
+              <div className={styles.item} key={elem.id}>
                 <div className={styles.product__img_container}>
                   <Image
-                    key={myUrl}
-                    src={myUrl}
+                    key={elem.picture_url}
+                    src={elem.picture_url}
                     width={100}
-                    alt={elem.product.name.toLowerCase()}
+                    alt={elem.picture_url}
                     height={100}
                     priority
                     className={styles.product_card__img}
@@ -297,9 +327,9 @@ const FormCheckout = (): JSX.Element => {
                 </div>
 
                 <div className={styles.item__info}>
-                  <h3>{elem.product.name.toLowerCase()}</h3>
+                  <h3>{elem.title.toLowerCase()}</h3>
                   <p>Quantity: {elem.quantity}</p>
-                  <p>Price x 1: ${elem.product.price}</p>
+                  <p>Price x 1: ${elem.unit_price}</p>
                 </div>
 
                 <h2 className={styles.item__subtotal}>
@@ -311,6 +341,10 @@ const FormCheckout = (): JSX.Element => {
         </div>
 
         <div className={styles.total__container}>
+          <div className={styles.__shipping_line}>
+            <p className={styles.__shipping}>Products in you cart</p>
+            <p className={styles.__shipping}>{totalQuantity}</p>
+          </div>
           <div className={styles.__shipping_line}>
             <p className={styles.__shipping}>Shipping </p>
             <p className={styles.__shipping}>$...</p>
@@ -324,8 +358,8 @@ const FormCheckout = (): JSX.Element => {
         <div className={styles.btn__align}>
           <button
             className={styles.form__input_btn}
-            disabled={Object.values(errors).length !== 0}
-            onClick={(e: any) => openCheckModal(e, inputUser)}
+            disabled={vericationSubminObj(errors)[0]}
+            onClick={(e) => openCheckModal(e, errors)}
           >
             Continue to payment
           </button>

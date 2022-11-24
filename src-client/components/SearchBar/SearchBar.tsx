@@ -8,7 +8,7 @@ import styles from "../../styles/SearchBar.module.css";
 
 const SearchBar = () => {
   const dispatch: Function = useDispatch();
-  const allProducts: any = useSelector<Ireducers>((state) => state.reducerProducts.products);
+  const allProducts: any = useSelector<Ireducers>((state) => state.reducerProducts.products);  
   
   const [name, setName] = useState("");
 
@@ -42,3 +42,5 @@ const SearchBar = () => {
 };
 
 export default SearchBar;
+
+
