@@ -13,7 +13,7 @@ a {
   --color-light-grey: rgba(215, 215, 217, 1);
   --color-lightblue-grey: rgba(148, 166, 159, 1);
   --color-light-blue: rgba(79, 111, 140, 1);
-  --color-dark-blue: rgba(60, 84, 115, 1);
+  --color-dark-blue: #3c5473;
 }
 
 /* Color Theme Swatches in RGBA */
