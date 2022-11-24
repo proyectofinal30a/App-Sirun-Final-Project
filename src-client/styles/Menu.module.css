@@ -1,4 +1,5 @@
 /* Fullscreen menu */
+
 .nav {
   color: white;
   display: flex;
@@ -26,6 +27,10 @@
   transform: scale(1.05);
 }
 
+.nav__item_home {
+  margin-left: -1.5em;
+}
+
 .nav_toggle {
   display: none;
 }
@@ -49,8 +54,17 @@
   transform: scale(1.05);
 }
 
+.nav_sign_btn_hidden {
+  margin: 0;
+  padding: 0;
+  position: fixed;
+  visibility: hidden;
+}
+
 
 /* Small sizes menu */
+
+
 @media (max-width: 1175px) {
   .nav {
     position: fixed;
@@ -88,6 +102,13 @@
     cursor: pointer;
     color: white;
     text-decoration: underline;
+  }
+
+  .nav__item_home {
+    margin: 0;
+    margin-left: -1.5em;
+    margin-top: -3em;
+    /* background-color: red; */
   }
 
   .nav_toggle {

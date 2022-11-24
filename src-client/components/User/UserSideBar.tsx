@@ -50,8 +50,8 @@ const UserSideBar = () => {
           </Link>
           <div className={styles.nav__link}>
             <li className={styles.nav__item}>
-              <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })}className={styles.sing__btn}>
-                 Sign Out
+              <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })}className={styles.sign__btn}>
+                 Sign out
               </button>
             </li>
           </div>
