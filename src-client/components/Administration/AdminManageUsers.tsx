@@ -2,7 +2,7 @@ import styles from "../../styles/AdminManageUsers.module.css";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { Ireducers } from "../../../lib/types";
+import { Ireducers, userData } from "../../../lib/types";
 import { activeUser } from "../../../src-back/admin-users/putUsers";
 import {getAllUsers, getUsersByName, clearUserSearch } from "../../redux/slice/user-detail-redux/all-users";
 import cloudinaryOrUrl from "../../controllers/detectionOfImage";
@@ -14,14 +14,14 @@ const AdminManageUsers = () => {
   const allUsers = useSelector((state: Ireducers) => state.reducerAllUsers.allUsers);
   const usersByName = useSelector((state: Ireducers) => state.reducerAllUsers.usersByName);
 
-  let currentUsers: any = [];
+  let currentUsers: userData[] = [];
   if (usersByName.length > 0) {
     currentUsers = usersByName;
   } else {
     currentUsers = allUsers;
   }
   
-  const [updUser, setUpdUser] = useState(true)
+  const [updUser, setUpdUser] = useState(true);
   const [name, setName] = useState("");
  
   
@@ -32,7 +32,6 @@ const AdminManageUsers = () => {
 
 
   if (!allUsers) return <div className={styles.users_management__loading}>Loading...</div>;
-  console.log(usersByName)
 
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -42,8 +41,14 @@ const AdminManageUsers = () => {
 
 
   // Deactivate or activate accounts
-  const userChange = async (id: any, status: string) => {
+  const userOnOffSwitch = async (id: any, status: string) => {
     await activeUser(id, status);
+    dispatch(getAllUsers());
+    updUser ? setUpdUser(false) : setUpdUser(true);
+  }
+
+  const userChangeRole = async (id: any, role: string) => {
+    await activeUser(id, role);
     dispatch(getAllUsers());
     updUser ? setUpdUser(false) : setUpdUser(true);
   }
@@ -102,21 +107,21 @@ const AdminManageUsers = () => {
                   <div className={styles.user__btns_container}>
                     <button className={styles.user__reset_password_btn}>Request password reset</button>
                     {user.role === 'admin' ? 
-                      <button onClick={() => userChange(user.id,'user')} className={styles.user__role_btn}>
+                      <button onClick={() => userChangeRole(user.id, 'user')} className={styles.user__role_btn}>
                         Change to user
                       </button>
                       : 
-                      <button onClick={() => userChange(user.id,'user')} className={styles.user__role_btn}>
+                      <button onClick={() => userChangeRole(user.id, 'admin')} className={styles.user__role_btn}>
                         Change to admin
                       </button>
                     }
                     {user.role !== 'inactive' && 
-                      <button onClick={() => userChange(user.id,'inactive')} className={styles.user__deactivate_btn}>
+                      <button onClick={() => userOnOffSwitch(user.id, 'inactive')} className={styles.user__deactivate_btn}>
                         Deactivate account
                     </button>
                     }
                     {user.role === 'inactive' && 
-                      <button onClick={() => userChange(user.id,'user')} className={styles.user__activate_btn}>
+                      <button onClick={() => userOnOffSwitch(user.id, 'user')} className={styles.user__activate_btn}>
                         Activate account
                       </button>
                     }
