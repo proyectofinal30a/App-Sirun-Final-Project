@@ -40,6 +40,7 @@ export const reducerFilters = createSlice({
 });
 
 
+
 export const getProductsByName = (name: any, allProducts: any) => async (dispatch: Function) => {
   let filterSearchedProduct = allProducts.map((product: any) => {
     if (product.name.toLowerCase().includes(name.toLowerCase())) return product;

@@ -8,7 +8,8 @@ import userVerification from '../../../controllers/userVerification-controller'
 interface Iproducts {
   products: Iproduct[],
   productsToFilter: Iproduct[],
-  productEdit: any
+  productEdit: any,
+  productsUpdate: any
 }
 
 
@@ -27,6 +28,7 @@ const stateInitial: Iproducts = {
     description: "",
     evaluation: [],
   },
+  productsUpdate: []
 }
 
 
@@ -38,7 +40,7 @@ export const reducerAdmin = createSlice({
       state.products = action.payload;
     },
     getByName: (state, action) => {
-      state.productsToFilter = filteredByName(state.products, action.payload)
+      state.productsToFilter = action.payload
     },
     confirmEdit: (state, action) => {
       state.productEdit = action.payload;
@@ -46,11 +48,33 @@ export const reducerAdmin = createSlice({
     updateProduct: (state, action) => {
       state.productEdit = action.payload;
     },
+    updateAvailability: (state: any, action) => {
+      state.productsUpdate = state.products.map((product) => {
+        if (product.id === action.payload.id) {
+          if (product.available === true) { product.available === false }
+          product.available === true
+        }
+      })
+    },
+    updateProducts: (state, action) => { }
+
     // cleanState: (state, action) => {
     //   console.log(action.payload)
     // }
   },
 });
+
+//updateAllproduts
+export const updateAll = (product: any) => (dispatch: Function) => {
+  return dispatch(reducerAdmin.actions.updateProducts(product));
+};
+
+
+//Disponibilidad de productos
+export const changeAvailability = (obj) => (dispatch: Function) => {
+  return dispatch(reducerAdmin.actions.updateAvailability(obj));
+};
+//
 
 export const editProduct = (object: Iproduct) => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.confirmEdit(object))
@@ -80,16 +104,22 @@ export const setProduct = (object: Iproduct) => (dispatch: Function) => {
 //   return dispatch(reducerAdmin.actions.cleanState(obj))
 // }
 
-//functions para el reducer - pasar a un controller. 
-const filteredByName = (state, name) => {
-  console.log(current(state));
 
-  let arr = state?.map((product) => {
-    if (product.name.toLowerCase().includes(name.toLowerCase())) return product
-  })
-  return arr.filter((product: any) => product !== undefined);
+export const getProductByName: any = (objeto: any) => async (dispatch: Function) => {
+  const arr = filteredByName(objeto)
+  dispatch(reducerAdmin.actions.getByName(arr))
 }
-//end functions
+
+const filteredByName = (objeto) => {
+  const { allProducts, name } = objeto
+  let filteredSearchedProduct = allProducts?.map((product: any) => {
+    let productName = product.name.toLowerCase()
+    name.toLocaleLowerCase()
+    if (productName.includes(name)) return product
+  })
+  return filteredSearchedProduct.filter((product: any) => product !== undefined);
+}
+
 
 
 export const getProducts: any = () => async (dispatch: Function) => {
@@ -128,10 +158,7 @@ export const updateProduct: Function = async (dataForm) => {
   }
 };
 
-export const getProductByName: any = (name: string) => (dispatch: Function) => {
-  console.log(name)
-  return dispatch(reducerAdmin.actions.getByName(name))
-}
+
 
 
 export default reducerAdmin.reducer;

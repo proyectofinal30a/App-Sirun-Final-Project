@@ -23,7 +23,12 @@ const SearchBar = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
     if (router.pathname === "/admin/productManage") {
-      dispatch(getProductByName(name.toLowerCase()))
+      name.toLocaleLowerCase()
+      const obj: any = {
+        name: name,
+        allProducts: allProducts,
+      }
+      dispatch(getProductByName(obj))
       return;
     }
     dispatch(getProductsByName(name.toLowerCase(), allProducts));
@@ -43,12 +48,15 @@ const SearchBar = () => {
           onChange={(e) => handleChange(e)}
         />
         {/* //ocultar boton de search en adminManageProducts en busqueda dejar porque redirecciona */}
-        <Link
+
+        {router.pathname === "/admin/productManage" ? null : <Link
           href={`${url}`}
           className={name ? styles.search_bar__link : styles.search_bar__disabled_link}
         >
           Search
         </Link>
+        }
+
       </div>
     </div>
   );
