@@ -47,14 +47,23 @@
 
 .addresses {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
   margin: auto;
+  width: 100%;
 }
 
 .address {
   text-transform: capitalize;
+  width: 250px;
+  margin: .5em;
+  padding: 1em;
+  background-color: rgb(248, 246, 246);
+  border-radius: .3em;
+}
+
+.address_name {
+  font-weight: bold;
 }
 
 .email__container > span,
@@ -78,7 +87,7 @@
 }
 
 .btn__aling {
-  margin-top: 1.5em;
+  margin: 1.5em 0 4em 0;
   display: flex;
   justify-content: flex-end;
 }
