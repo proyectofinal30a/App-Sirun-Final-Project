@@ -265,7 +265,7 @@ const FormCheckout = (): JSX.Element => {
                 </button>
               </div>
             }
-            <input type="button" value="dda" name="delete" onClick={() => dispatch(resetCart())} />
+            <input type="button" value="TEST PARA PROBAR CUANTO AGUANTA LA BASE DE DATOSSS" name="delete" onClick={() => dispatch(resetCart())} />
             {confirmed && payLink && (
               <div className={styles.modal__pay_btn_container}>
                 <button
