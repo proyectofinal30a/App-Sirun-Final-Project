@@ -74,6 +74,7 @@ const nextConfig = {
       "thumbs.gfycat.com",
       "media.tenor.com",
       "www.genusdei.it",
+      "upload.wikimedia.org",
       "**"
     ],
     async redirects() {
