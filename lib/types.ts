@@ -11,6 +11,7 @@ export interface IUserBuyer {
     email: string
     name: string
     address: {
+        id?: string
         street_name: string
         street_number: string
         zip_code: string
@@ -50,10 +51,6 @@ export interface IproductsCardModel {
 }
 
 ///
-
-
-
-
 
 export interface Iproduct {
     id: string;
@@ -101,21 +98,21 @@ export interface PackProducDetailRating {
 
 export interface ImyOrder {
     myOrder: {
-      external_reference: string;
-      total: string;
-      status: string;
-      date: string;
-      delivery_time: string;
-      user:{
-        id:string
-      };
-      purchasedProducts: IitemForMercadoPago[];
+        external_reference: string;
+        total: string;
+        status: string;
+        date: string;
+        delivery_time: string;
+        user: {
+            id: string
+        };
+        purchasedProducts: IitemForMercadoPago[];
     };
 }
 
 interface IallUsers {
-    allUsers: Iuser[];
-    usersByName: Iuser[];
+    allUsers: userData[];
+    usersByName: userData[];
 }
 
 
@@ -123,7 +120,7 @@ interface IallUsers {
 export interface Ireducers {
     reducerProduct?: null
     reducerProducts: IallProducts
-    reducerUser: Iuser
+    reducerUser: IUserDetail
     reducerProductDetail: PackProducDetailRating
     reducerProductsByName: IproductsByName
     reducerCart: IproductsCardModel
@@ -153,9 +150,15 @@ declare module "next-auth" {
 }
 
 
-interface Idirecciones {
-    dir: string
-    id?: string
+interface Iaddresses {
+    name_address: string
+    zip_code: string
+    street_name: string
+    street_number: string
+    phone: {
+        area_code: number
+        number: number
+    }
 }
 
 
@@ -170,11 +173,11 @@ interface IobjProduct {
     image: IimageProduc[]
 }
 
-export interface IitemForMercadoPago{
-    image:string
-    name:string
-    quantity:string
-    price:string
+export interface IitemForMercadoPago {
+    image: string
+    name: string
+    quantity: string
+    price: string
 }
 
 
@@ -183,10 +186,12 @@ interface Iorder {
     description: string
     delivery_time: string
     date: string
-    product: IobjProduct[]
+    address: Iaddresses
+    purchasedProducts: IproductModelCart[]
     status: StatusType
-}
+    purchase_link: string
 
+}
 
 export interface IReview {
     id: string
@@ -205,13 +210,13 @@ export interface Ievaluations {
 }
 
 
-type userData = {
+export interface userData {
     id: string
     name: string
     email: string
     image: string
     favorites: Iproduct[]
-    direcciones: Idirecciones[]
+    addresses: Iaddresses[]
     orders: Iorder[]
     evaluations: Ievaluations[]
 }
@@ -219,8 +224,14 @@ type userData = {
 
 
 
-export interface Iuser {
+export interface IUserDetail {
     user: userData
 }
 
+//Order
+export interface IbodoyPreferenceLink {
+    order: Ipreference
+    purchase_link: string
+}
 
+//

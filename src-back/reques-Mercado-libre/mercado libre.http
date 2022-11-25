@@ -29,7 +29,7 @@ Content-Type: application/json
     ],
     "payer": {
         "name": "Ezequiel sosa",
-        "email": "test_user_16943485@testuser.com",
+        "email": "ezequiel.",
         "phone": {
             "number": 12,
             "area_code": 12

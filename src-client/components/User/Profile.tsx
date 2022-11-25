@@ -26,12 +26,13 @@ const Profile = () => {
     | React.FormEvent<HTMLFormElement>
     | React.ChangeEvent<HTMLInputElement>
     | React.ChangeEvent<HTMLSelectElement>;
-    
+
 
   const myProfide = useSelector((state: Ireducers) => state.reducerUser.user);
+
   if (!myProfide) return <div className={styles.loading}>Loading...</div>;
 
-  const { name, email, image, direcciones } = myProfide;
+  const { name, email, image, addresses } = myProfide;
 
   const myimage = cloudinaryOrUrl(image, "client");
 
@@ -106,9 +107,9 @@ const Profile = () => {
         <button className={styles.btn} onClick={handleOnclikSwich}>
           Revert changes
         </button>
-        <input 
-          className={styles.btn__submit} 
-          type="submit" 
+        <input
+          className={styles.btn__submit}
+          type="submit"
           value="Change profile"
         />
       </div>
@@ -123,15 +124,30 @@ const Profile = () => {
     myForm
   );
 
-  const myAdress = direcciones?.map((ele, index: number) => (
+  const myAdress = addresses?.map((ele, index: number) => (
     <div className={styles.address} key={index}>
       <p>
-        Address {index + 1}: {ele.dir.toLowerCase()}{" "}
+        Address {index + 1}: {ele?.name_address.toLowerCase()}{" "}
+      </p>
+      <p>
+        Streer Number {index + 1}: {ele?.street_number}{" "}
+      </p>
+      <p>
+        Streer Name {index + 1}: {ele?.street_name.toLowerCase()}{" "}
+      </p>
+      <p>
+        Phone
+      </p>
+      <p>
+        Area Code {index + 1}: {ele.phone.area_code}{" "}
+      </p>
+      <p>
+        Number {index + 1}: {ele.phone.number}{" "}
       </p>
     </div>
   ));
 
-  
+
   return (
     <div className={styles.profile__general_container}>
       <div className={styles.profile__container}>
@@ -153,7 +169,7 @@ const Profile = () => {
         <span>Addresses</span>
         <div className={styles.addresses}>{myAdress}</div>
       </div>
-     
+
 
       <div className={styles.btn__aling}>{myButtonSwith}</div>
     </div>

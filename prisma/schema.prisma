@@ -57,46 +57,68 @@ model User {
 }
 
 model Address {
-  id            String  @id @unique @default(uuid())
+  id            String
+  idDB          String  @id @unique @default(uuid())
   id_user       String
   name_address  String  @default("my Address")
   zip_code      Int
   street_name   String
+  available     Boolean @default(true)
   street_number Int
   user          User    @relation(fields: [id_user], references: [id])
   phone         Phone?
-  order         Order[]
 }
 
 model Phone {
   area_code     Int
-  number  Int
-  id_address    String  @unique
-  addressFather Address @relation(fields: [id_address], references: [id])
+  number        Int
+  id_address    String  @id @default(uuid())
+  addressFather Address @relation(fields: [id_address], references: [idDB])
 }
 
 model Order {
-  external_reference String              @id @unique
-  id_user            String
-  description        String
-  total              Int
-  status             StatusType
-  date               DateTime            @default(now())
-  delivery_time      String
-  user               User                @relation(fields: [id_user], references: [id])
-  product            Product[]
-  purchasedProducts  purchasedProducts[]
-  id_address         String
-  address            Address             @relation(fields: [id_address], references: [id])
+  id                String
+  idDB              String              @id @unique @default(uuid())
+  addressOrder      AddressOrder        @relation(fields: [id_address], references: [idAdressDB])
+  date              DateTime            @default(now())
+  purchasedProducts purchasedProducts[]
+  product           Product[]
+  status            StatusType
+  id_user           String
+  purchase_link     String
+  delivery_time     String
+  user              User                @relation(fields: [id_user], references: [id])
+  id_address        String
+  total             Int
+}
+
+model AddressOrder {
+  idAdressDB    String      @id @default(uuid())
+  id            String      @unique
+  zip_code      Int
+  street_name   String
+  available     Boolean     @default(true)
+  street_number Int
+  phone         PhoneOrder?
+  order         Order[]
+}
+
+model PhoneOrder {
+  area_code  Int
+  number     Int
+  id_address String       @id @default(uuid())
+  address    AddressOrder @relation(fields: [id_address], references: [idAdressDB])
 }
 
 model purchasedProducts {
+  id          String
+  idPurcha    String @id @default(uuid())
   title       String
   picture_url String
   unit_price  Int
   quantity    Int
-  id_order    String @unique
-  order       Order  @relation(fields: [id_order], references: [external_reference])
+  id_order    String
+  order       Order  @relation(fields: [id_order], references: [idDB])
 }
 
 model Evaluation {

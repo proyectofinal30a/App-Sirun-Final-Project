@@ -28,23 +28,32 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                     },
                     orders: {
                         select: {
-                            total: true,
-                            description: true,
-                            delivery_time: true,
-                            date: true,
                             status: true,
-                            product: {
+                            addressOrder: {
                                 select: {
                                     id: true,
-                                    name: true,
-                                    image: {
+                                    zip_code: true,
+                                    street_name: true,
+                                    phone: {
                                         select: {
-                                            image: true
+                                            number: true,
+                                            area_code: true,
                                         }
-                                    },
-
+                                    }
                                 }
-                            }
+                            },
+                            purchasedProducts: {
+                                select: {
+                                    id: true,
+                                    title: true,
+                                    unit_price: true,
+                                    picture_url: true,
+                                    quantity: true,
+                                }
+                            },
+                            date: true,
+                            total: true
+
                         }
                     },
                     evaluations: {
@@ -66,7 +75,20 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                             rating: true
                         }
                     },
-                    addresses: true
+                    addresses: {
+                        select: {
+                            id: true,
+                            zip_code: true,
+                            name_address: true,
+                            street_name: true,
+                            phone: {
+                                select: {
+                                    number: true,
+                                    area_code: true,
+                                }
+                            }
+                        }
+                    }
                 },
             })
 
@@ -74,6 +96,8 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
         }
 
     } catch (error) {
+        console.log(error);
+
         res.status(404).json({ msg: `usuario no encontrado ${email}` })
     }
 

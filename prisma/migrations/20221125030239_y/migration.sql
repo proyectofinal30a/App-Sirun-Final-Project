@@ -57,43 +57,73 @@ CREATE TABLE "User" (
 -- CreateTable
 CREATE TABLE "Address" (
     "id" TEXT NOT NULL,
+    "idDB" TEXT NOT NULL,
     "id_user" TEXT NOT NULL,
     "name_address" TEXT NOT NULL DEFAULT 'my Address',
     "zip_code" INTEGER NOT NULL,
     "street_name" TEXT NOT NULL,
+    "available" BOOLEAN NOT NULL DEFAULT true,
     "street_number" INTEGER NOT NULL,
 
-    CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "Address_pkey" PRIMARY KEY ("idDB")
 );
 
 -- CreateTable
 CREATE TABLE "Phone" (
     "area_code" INTEGER NOT NULL,
     "number" INTEGER NOT NULL,
-    "id_address" TEXT NOT NULL
+    "id_address" TEXT NOT NULL,
+
+    CONSTRAINT "Phone_pkey" PRIMARY KEY ("id_address")
 );
 
 -- CreateTable
 CREATE TABLE "Order" (
-    "external_reference" TEXT NOT NULL,
-    "id_user" TEXT NOT NULL,
-    "description" TEXT NOT NULL,
-    "total" INTEGER NOT NULL,
-    "status" "StatusType" NOT NULL,
+    "id" TEXT NOT NULL,
+    "idDB" TEXT NOT NULL,
     "date" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "status" "StatusType" NOT NULL,
+    "id_user" TEXT NOT NULL,
+    "purchase_link" TEXT NOT NULL,
     "delivery_time" TEXT NOT NULL,
     "id_address" TEXT NOT NULL,
+    "total" INTEGER NOT NULL,
 
-    CONSTRAINT "Order_pkey" PRIMARY KEY ("external_reference")
+    CONSTRAINT "Order_pkey" PRIMARY KEY ("idDB")
+);
+
+-- CreateTable
+CREATE TABLE "AddressOrder" (
+    "idAdressDB" TEXT NOT NULL,
+    "id" TEXT NOT NULL,
+    "zip_code" INTEGER NOT NULL,
+    "street_name" TEXT NOT NULL,
+    "available" BOOLEAN NOT NULL DEFAULT true,
+    "street_number" INTEGER NOT NULL,
+
+    CONSTRAINT "AddressOrder_pkey" PRIMARY KEY ("idAdressDB")
+);
+
+-- CreateTable
+CREATE TABLE "PhoneOrder" (
+    "area_code" INTEGER NOT NULL,
+    "number" INTEGER NOT NULL,
+    "id_address" TEXT NOT NULL,
+
+    CONSTRAINT "PhoneOrder_pkey" PRIMARY KEY ("id_address")
 );
 
 -- CreateTable
 CREATE TABLE "purchasedProducts" (
+    "id" TEXT NOT NULL,
+    "idPurcha" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "picture_url" TEXT NOT NULL,
     "unit_price" INTEGER NOT NULL,
     "quantity" INTEGER NOT NULL,
-    "id_order" TEXT NOT NULL
+    "id_order" TEXT NOT NULL,
+
+    CONSTRAINT "purchasedProducts_pkey" PRIMARY KEY ("idPurcha")
 );
 
 -- CreateTable
@@ -164,16 +194,13 @@ CREATE UNIQUE INDEX "User_id_key" ON "User"("id");
 CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Address_id_key" ON "Address"("id");
+CREATE UNIQUE INDEX "Address_idDB_key" ON "Address"("idDB");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Phone_id_address_key" ON "Phone"("id_address");
+CREATE UNIQUE INDEX "Order_idDB_key" ON "Order"("idDB");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Order_external_reference_key" ON "Order"("external_reference");
-
--- CreateIndex
-CREATE UNIQUE INDEX "purchasedProducts_id_order_key" ON "purchasedProducts"("id_order");
+CREATE UNIQUE INDEX "AddressOrder_id_key" ON "AddressOrder"("id");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Evaluation_id_key" ON "Evaluation"("id");
@@ -203,16 +230,19 @@ ALTER TABLE "Account" ADD CONSTRAINT "Account_userId_fkey" FOREIGN KEY ("userId"
 ALTER TABLE "Address" ADD CONSTRAINT "Address_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Phone" ADD CONSTRAINT "Phone_id_address_fkey" FOREIGN KEY ("id_address") REFERENCES "Address"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "Phone" ADD CONSTRAINT "Phone_id_address_fkey" FOREIGN KEY ("id_address") REFERENCES "Address"("idDB") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "Order" ADD CONSTRAINT "Order_id_address_fkey" FOREIGN KEY ("id_address") REFERENCES "AddressOrder"("idAdressDB") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Order" ADD CONSTRAINT "Order_id_user_fkey" FOREIGN KEY ("id_user") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "Order" ADD CONSTRAINT "Order_id_address_fkey" FOREIGN KEY ("id_address") REFERENCES "Address"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "PhoneOrder" ADD CONSTRAINT "PhoneOrder_id_address_fkey" FOREIGN KEY ("id_address") REFERENCES "AddressOrder"("idAdressDB") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "purchasedProducts" ADD CONSTRAINT "purchasedProducts_id_order_fkey" FOREIGN KEY ("id_order") REFERENCES "Order"("external_reference") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "purchasedProducts" ADD CONSTRAINT "purchasedProducts_id_order_fkey" FOREIGN KEY ("id_order") REFERENCES "Order"("idDB") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Evaluation" ADD CONSTRAINT "Evaluation_id_product_fkey" FOREIGN KEY ("id_product") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
@@ -224,7 +254,7 @@ ALTER TABLE "Evaluation" ADD CONSTRAINT "Evaluation_id_user_fkey" FOREIGN KEY ("
 ALTER TABLE "ImageProdu" ADD CONSTRAINT "ImageProdu_id_product_fkey" FOREIGN KEY ("id_product") REFERENCES "Product"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "_OrderToProduct" ADD CONSTRAINT "_OrderToProduct_A_fkey" FOREIGN KEY ("A") REFERENCES "Order"("external_reference") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "_OrderToProduct" ADD CONSTRAINT "_OrderToProduct_A_fkey" FOREIGN KEY ("A") REFERENCES "Order"("idDB") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_OrderToProduct" ADD CONSTRAINT "_OrderToProduct_B_fkey" FOREIGN KEY ("B") REFERENCES "Product"("id") ON DELETE CASCADE ON UPDATE CASCADE;

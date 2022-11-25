@@ -1,12 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Iuser } from "../../../../lib/types";
+import { userData } from "../../../../lib/types";
 // import userVerification from "../../../controllers/userVerification-controller";
 
 
 interface IallUsers {
-  allUsers: Iuser[];
-  usersByName: Iuser[];
+  allUsers: userData[];
+  usersByName: userData[];
 }
 
 const initialState: IallUsers = {
@@ -24,7 +24,7 @@ export const reducerAllUsers = createSlice({
     },
 
     getUserByName: (state, action) => {
-      const foundUser = state.allUsers.find((user) => user.user.name === action.payload.name);
+      const foundUser = state.allUsers.find((user) => user.name === action.payload.name);
       if (!foundUser) return;
       state.allUsers = action.payload;
     },
@@ -49,8 +49,6 @@ export const getUserByName = (name: string) => async (dispatch: Function) => {
       method: "get",
       url: `/api/adminScope/get/usersByName/${name}`,
     });
-
-    console.log(data)
     dispatch(reducerAllUsers.actions.getUserByName(name));
   } catch (error) {
     console.log(error);
