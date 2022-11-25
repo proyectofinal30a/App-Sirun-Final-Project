@@ -2,6 +2,7 @@ import styles from "../../../styles/ShoppingCart.module.css";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { signIn } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import { BsFillTrashFill } from "react-icons/bs";
@@ -102,9 +103,20 @@ const ShoppingCart = () => {
             <p className={styles.modal__total}>${total}</p>
           </div>
 
-          <Link href="/checkout" className={styles.modal__purchase_btn_container}>
-            <button className={styles.modal__start_purchase_btn}>Checkout</button>
-          </Link>
+          {status === "unauthenticated" ?
+            <div className={styles.modal__purchase_btn_container}>
+              <input 
+                value="Sign in to checkout" 
+                type="button" 
+                onClick={() => signIn("auth0", { redirect: true, callbackUrl: "/checkout" })} 
+                className={styles.modal__start_purchase_btn} 
+              />
+            </div>
+          :
+            <Link href="/checkout" className={styles.modal__purchase_btn_container}>
+              <button className={styles.modal__start_purchase_btn}>Checkout</button>
+            </Link>
+          }
         </form>
         :
         <div className={styles.empty_cart__container}>

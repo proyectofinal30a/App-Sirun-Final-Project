@@ -282,11 +282,22 @@ const ProductDetail = () => {
             <p className={styles.modal__total}>${total}</p>
           </div>
 
-          <Link href="/checkout" className={styles.modal__purchase_btn_container}>
-            <button className={styles.modal__start_purchase_btn}>Checkout</button>
-          </Link>
+          {status === "unauthenticated" ?
+            <div className={styles.modal__purchase_btn_container}>
+              <input 
+                value="Sign in to checkout" 
+                type="button" 
+                onClick={() => signIn("auth0", { redirect: true, callbackUrl: "/checkout" })} 
+                className={styles.modal__start_purchase_btn} 
+              />
+            </div>
+          :
+            <Link href="/checkout" className={styles.modal__purchase_btn_container}>
+              <button className={styles.modal__start_purchase_btn}>Checkout</button>
+            </Link>
+          }
 
-        </form>
+        </form> 
       </Modal>
 
       <div className={styles.reviews__container}>
