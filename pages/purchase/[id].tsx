@@ -21,12 +21,12 @@ export default function ApprovedPayment() {
 
   const { data, status } = useSession<boolean>();
   let userEmail: string | undefined = idReference && data?.user?.email;
-  // console.log(data); // ok
-  // console.log(query); // ok
+  console.log(data); // ok
+  console.log(query); // ok
 
 
   const orderInfo: any = useSelector<Ireducers>((state) => state.reducerAfterPayment.myOrder);
-  console.log(orderInfo)
+
  
   useEffect(() => {
     if (userEmail) dispatch(getOrder({ idReference, userEmail }));
@@ -34,7 +34,7 @@ export default function ApprovedPayment() {
 
   // console.log(orderId) // ok
   // console.log(userEmail) // ok
-  // console.log(orderInfo);
+  // console.log(orderInfo); // vacio por ahora, esperar a eze que termine el back
 
 
 
@@ -44,27 +44,29 @@ export default function ApprovedPayment() {
   if (orderInfo) {
     let templateParams = {
       // sirun_logo: btoa(SirunLogo), // ver como subir imagenes
-      client_name: orderInfo.user.name,
-      client_email: orderInfo.user.email,
-      client_phone: orderInfo.phone.area_code + "-" + orderInfo.phone.number,
-      client_address: orderInfo.address.street_name + " " + orderInfo.address.street_number,
-      client_zipcode: orderInfo.address.zip_code,
-      order_number: orderInfo.external_reference,
+      client_name: data?.user.name,
+      client_email: data?.user.email,
+      // client_phone: orderInfo.phone.area_code + "-" + orderInfo.phone.number,
+      // client_address: orderInfo.address.street_name + " " + orderInfo.address.street_number,
+      // client_zipcode: orderInfo.address.zip_code,
+      order_number: query.external_reference,
+      order_status: query.status,
       order_date: orderInfo.date,
       order_delivery_time: orderInfo.delivery_time,
-      order_products: orderInfo.purchased_products.map((product: IitemForMercadoPago) => {
-        return {
-          product_image: product.image,
-          product_name: product.name,
-          product_quantity: product.quantity,
-          product_price: product.price,
-        }
-      }),
+      // order_products: orderInfo.purchased_products.map((product: IitemForMercadoPago) => {
+      //   return {
+      //     product_image: product.image,
+      //     product_name: product.name,
+      //     product_quantity: product.quantity,
+      //     product_price: product.price,
+      //   }
+      // }),
       order_total: orderInfo.total,
     }
 
+    console.log(templateParams)
     emailjs
-      .send("service_59eb21u", "template_r17yb7u", templateParams, "6kBWW7c7buxjytyG6")
+      .send(process.env.EMAILJS_SERVICE_ID, process.env.EMAILJS_ORDER_CONFIRMATION_TEMPLATE_ID, templateParams)
       .then(
         (result) => console.log("Email successfully sent!: " + result.text),
         (error) => console.log("There's been an error while sending the email: " + error.text)

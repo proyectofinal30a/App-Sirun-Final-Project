@@ -44,8 +44,10 @@ export default function Orders(): JSX.Element {
                     className={styles.order__img}
                   />
                 </div>
-                <div className={styles.order__product_info}>
+                <div className={styles.order__product_info_container}>
                   <h3 className={styles.order__product_name}>{item.title.toLowerCase()}</h3>
+                  <p className={styles.order__product_info}>Quantity: {item.quantity}</p>
+                  <p className={styles.order__product_info}>Unit price: ${item.unit_price}</p>
 
                   <Link href={`/productDetail/${item.id}`} className={styles.order__product_details}>
                     View product details
