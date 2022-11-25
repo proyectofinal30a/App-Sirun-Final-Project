@@ -1,4 +1,5 @@
 import React from 'react';
+import styles from "../../../styles/Dashboard.module.css";
 import { ResponsiveContainer, Bar, XAxis, YAxis, Line, Tooltip, CartesianGrid, ComposedChart, Legend, BarChart } from 'recharts';
 import { convertMonth } from '../../../controllers/adminGraphs';
 import { Products } from './mostSoldData';
@@ -6,18 +7,18 @@ import { Products } from './mostSoldData';
 const MostSoldProduct = () => {
   return (
     <>
-    <ResponsiveContainer height='100%' width={500}>
+      <ResponsiveContainer height={400} width={500}>
         <BarChart data={Products}>
-            <Tooltip />
-            <XAxis dataKey='name' gap={40} />
-            <YAxis />
-            <Legend />
-            <CartesianGrid />
-            <Bar type='monotone' dataKey='sales' barSize={50} fill='#3c5473' />
+          <Tooltip />
+          <XAxis dataKey="name" gap={40} />
+          <YAxis />
+          <Legend />
+          <CartesianGrid />
+          <Bar type="monotone" dataKey="sales" barSize={50} fill="#3c5473" />
         </BarChart>
-    </ResponsiveContainer>
+      </ResponsiveContainer>
     </>
-  )
-}
+  );
+};
 
-export default MostSoldProduct
+export default MostSoldProduct;
