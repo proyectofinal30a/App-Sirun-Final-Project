@@ -1,9 +1,9 @@
-import { TypeDiet, CategoryPro, StatusType } from '@prisma/client'
-import { Interface } from 'readline'
+import { TypeDiet, CategoryPro, StatusType } from "@prisma/client";
+import { Interface } from "readline";
 
 export interface Iimage {
-    image: string
-    id?: string
+  image: string;
+  id?: string;
 }
 
 ///For Form Mercado pago
@@ -20,80 +20,78 @@ export interface IUserBuyer {
         number: string
         area_code: string
     }
+
 }
 
 export interface Ipreference {
-    external_reference: string
-    payer: IUserBuyer
-    items: IproductModelCart[]
-    back_urls: {
-        success: string
-        failure: string
-        pending: string
-    }
-
+  external_reference: string;
+  payer: IUserBuyer;
+  items: IproductModelCart[];
+  back_urls: {
+    success: string;
+    failure: string;
+    pending: string;
+  };
 }
 export interface IproductModelCart {
-    id: string
-    title: string
-    unit_price: number
-    picture_url: string
-    quantity: number
-    subTotal: number
-    currency_id: "ARS"
-};
-
+  id: string;
+  title: string;
+  unit_price: number;
+  picture_url: string;
+  quantity: number;
+  subTotal: number;
+  currency_id: "ARS";
+}
 
 export interface IproductsCardModel {
-    products: IproductModelCart[]
-    confirmed: Boolean
-    payLink: string
+  products: IproductModelCart[];
+  confirmed: Boolean;
+  payLink: string;
 }
 
 ///
 
 export interface Iproduct {
-    id: string;
-    name: string;
-    price: number;
-    dimension: number;
-    available: boolean;
-    type: TypeDiet;
-    category: CategoryPro;
-    image: Iimage[];
-    description: string;
-    evaluation: Ievaluations[]
+  id: string;
+  name: string;
+  price: number;
+  dimension: number;
+  available: boolean;
+  type: TypeDiet;
+  category: CategoryPro;
+  image: Iimage[];
+  description: string;
+  evaluation: Ievaluations[];
 }
 
 interface packImage {
-    image: string
-    imageCloudinary: Blob
+  image: string;
+  imageCloudinary: Blob;
 }
 export interface IproductSumbit {
-    name: string;
-    price: number;
-    dimension: number;
-    available: boolean;
-    type: TypeDiet;
-    category: CategoryPro;
-    image: packImage[];
-    description: string;
+  name: string;
+  price: number;
+  dimension: number;
+  available: boolean;
+  type: TypeDiet;
+  category: CategoryPro;
+  image: packImage[];
+  description: string;
 }
 
-
 export interface IallProducts {
-    products: Iproduct[]
-    productsToFilter: Iproduct[]
-    productPrevState: Iproduct[]
+  products: Iproduct[];
+  productsToFilter: Iproduct[];
+  productPrevState: Iproduct[];
 }
 
 export interface IproductsByName {
-    products: Iproduct[]
+  products: Iproduct[];
 }
 
 export interface PackProducDetailRating {
-    detail: Iproduct
-    rating: number
+  detail: Iproduct;
+  rating: number;
 }
 
 export interface ImyOrder {
@@ -107,15 +105,17 @@ export interface ImyOrder {
             id: string
         };
         purchasedProducts: IitemForMercadoPago[];
+
     };
-}
+    purchasedProducts: IitemForMercadoPago[];
+  };
+
 
 interface IallUsers {
-    allUsers: userData[];
-    usersByName: userData[];
+  allUsers: userData[];
+  usersByName: userData[];
+
 }
-
-
 
 export interface Ireducers {
     reducerProduct?: null
@@ -129,24 +129,22 @@ export interface Ireducers {
     reducerAllUsers: IallUsers
 }
 
-
 export interface Ierror {
-    name: string,
-    price: string,
-    dimension: string,
-    description: string,
-};
-
+  name: string;
+  price: string;
+  dimension: string;
+  description: string;
+}
 
 declare module "next-auth" {
-    interface Session {
-        user: {
-            name: string
-            email: string
-            image: string
-            role: string
-        }
-    }
+  interface Session {
+    user: {
+      name: string;
+      email: string;
+      image: string;
+      role: string;
+    };
+  }
 }
 
 
@@ -159,29 +157,30 @@ interface Iaddresses {
         area_code: number
         number: number
     }
-}
 
+}
 
 interface IimageProduc {
-    image: string
+  image: string;
 }
 
-
 interface IobjProduct {
-    name: string
-    id: string
-    image: IimageProduc[]
+  name: string;
+  id: string;
+  image: IimageProduc[];
 }
 
 export interface IitemForMercadoPago {
+
     image: string
     name: string
     quantity: string
     price: string
+
 }
 
-
 interface Iorder {
+
     total: number
     description: string
     delivery_time: string
@@ -193,20 +192,20 @@ interface Iorder {
 
 }
 
+
 export interface IReview {
-    id: string
-    review: string
-    rating: number
-    user: userData
+  id: string;
+  review: string;
+  rating: number;
+  user: userData;
 }
 
-
 export interface Ievaluations {
-    id: string
-    review: string
-    rating: number
-    product: IobjProduct
-    user: userData
+  id: string;
+  review: string;
+  rating: number;
+  product: IobjProduct;
+  user: userData;
 }
 
 
@@ -219,6 +218,7 @@ export interface userData {
     addresses: Iaddresses[]
     orders: Iorder[]
     evaluations: Ievaluations[]
+    role: string;
 }
 
 

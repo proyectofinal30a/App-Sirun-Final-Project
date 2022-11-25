@@ -62,7 +62,7 @@ const ProductDetail = () => {
 
   // SHOPPING CART
   const totalQuantity = cart[0] ? cart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
-  
+
   function closeModal() {
     setIsOpen(false);
   }
@@ -107,23 +107,23 @@ const ProductDetail = () => {
 
 
   // FAVORITE 
-    
-    let biblioteca: any = {}
-  
-    if (myProfile) {
-      favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
-      favorites2.forEach(fav => {
-        biblioteca[fav.id] = true;
-      })
+
+  let biblioteca: any = {}
+
+  if (myProfile) {
+    favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
+    favorites2.forEach(fav => {
+      biblioteca[fav.id] = true;
+    })
+  }
+
+  const handleFavorite = (id: string) => {
+    status === "unauthenticated" && signIn("auth0");
+    const productToAdd = {
+      id: id
     }
-  
-    const handleFavorite = (id: string) => {
-      status === "unauthenticated" && signIn("auth0");
-      const productToAdd = {
-        id: id
-      }
-      dispatch(addToFavorites(productToAdd));
-    }
+    dispatch(addToFavorites(productToAdd));
+  }
 
 
 
@@ -247,12 +247,12 @@ const ProductDetail = () => {
                     </div>
 
                     <div className={styles.modal__product_btns_container}>
-                        <input
-                          className={styles.modal__product_btn}
-                          onClick={() => dispatch(addOne(elem.id))}
-                          value='+'
-                          type='button'
-                        />
+                      <input
+                        className={styles.modal__product_btn}
+                        onClick={() => dispatch(addOne(elem.id))}
+                        value='+'
+                        type='button'
+                      />
                       <input
                         className={styles.modal__product_btn}
                         onClick={() => dispatch(removeOne(elem.id))}

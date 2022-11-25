@@ -13,12 +13,17 @@ import { Iproduct, Ireducers, IproductModelCart } from "../../../lib/types";
 import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
 import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
 import { requestAddToFavorites, addToFavorites, getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import { cleanFilters } from "../../redux/slice/filter-product-client/filters-redux";
 
 
 
 const AllProductsCards = () => {
   // GET ALL PRODUCTS
   const dispatch: Function = useDispatch();
+
+  useEffect(() => {
+    return () => dispatch(cleanFilters());
+  }, [dispatch])
 
 
   // FAVORITE 
@@ -32,11 +37,8 @@ const AllProductsCards = () => {
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
 
 
-
   // FILTERS
-  const filterProducts: any = useSelector<Ireducers>(
-    (state) => state.reducerFilters.productsToFilter
-  );
+  const filterProducts = useSelector((state: Ireducers) => state.reducerFilters.productsToFilter);
 
   let currentProducts = allProducts;
   if (filterProducts.length >= 1) {
@@ -75,10 +77,12 @@ const AllProductsCards = () => {
   };
 
 
+
   let total = 0;
   cart.map((elem) => {
     return (total += elem.subTotal);
   });
+
 
 
 
@@ -158,7 +162,7 @@ const AllProductsCards = () => {
     }
     dispatch(addToFavorites(productToAdd));
   }
-  
+
 
   return (
     <div className={styles.general__container}>
@@ -225,7 +229,7 @@ const AllProductsCards = () => {
 
                 {cart?.map((elem, index: number) => {
                   if (!elem.title) return null
-                  
+
                   return (
                     <div key={index} className={styles.modal__product_container}>
                       <p className={styles.modal__product_name}>
@@ -280,7 +284,7 @@ const AllProductsCards = () => {
                     </div>
                   );
                 })}
-                
+
                 <p className={styles.modal__quantity_total}>Items in shopping cart ({totalQuantity})</p>
 
                 <div className={styles.modal__total_container}>

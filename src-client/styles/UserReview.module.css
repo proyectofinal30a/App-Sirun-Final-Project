@@ -126,6 +126,14 @@
   word-wrap: break-word;
 }
 
+.listReview__name {
+  font-weight: bold;
+  text-transform: capitalize;
+  margin-bottom: .3em;
+}
+
+/* .listReview__text {} */
+ 
 .review__info{
   display: flex;
   flex-direction: row;

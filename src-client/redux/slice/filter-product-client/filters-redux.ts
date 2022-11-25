@@ -53,6 +53,7 @@ export const prepState = (objeto: IactionPayload) => (dispatch: Function) => {
   const o = arrfilterCategoryOrType(objeto);
   dispatch(reducerFilters.actions.prevState(o));
 }
+
 export const orderByAscDesc = (objeto: IactionPayload) => (dispatch: Function) => {
   dispatch(reducerFilters.actions.orderByAscDesc(objeto));
 }

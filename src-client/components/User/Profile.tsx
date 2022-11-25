@@ -34,12 +34,11 @@ const Profile = () => {
 
   const { name, email, image, addresses } = myProfide;
 
-  const myimage = cloudinaryOrUrl(image, "client");
+  const defaultImage = cloudinaryOrUrl(image, "client");
 
 
   const handleOnFile = (event: any) => {
     const imageFile = event.target.files;
-
     setImageUser(imageFile[0]);
     if (!imageFile || !imageFile[0]) return;
     const imgURL: any = URL.createObjectURL(imageFile[0]);
@@ -53,7 +52,6 @@ const Profile = () => {
   };
 
 
-
   const handleOnsubmit = async (event: valueForm) => {
     event.preventDefault();
     const packFormUserUpdate = {
@@ -62,14 +60,14 @@ const Profile = () => {
       email,
       deleteImage: image,
     };
-
+    
     await postImageServerUsert(packFormUserUpdate);
     setPreviewFrom(myStateForm);
     dispatch(getUserDetail(email));
   };
 
 
-  const myImage: any = previewForm.image || myimage;
+  const myImage: string | undefined | false = previewForm.image || defaultImage;
   const myName: string = previewForm.name || name;
 
 
@@ -148,6 +146,8 @@ const Profile = () => {
   ));
 
 
+  const emptyAddresses = "There is no address associated with this account.";
+
   return (
     <div className={styles.profile__general_container}>
       <div className={styles.profile__container}>
@@ -167,7 +167,7 @@ const Profile = () => {
       </div>
       <div className={styles.addresses_container}>
         <span>Addresses</span>
-        <div className={styles.addresses}>{myAdress}</div>
+        <div className={styles.addresses}>{myAdress ? myAdress : emptyAddresses}</div>
       </div>
 
 

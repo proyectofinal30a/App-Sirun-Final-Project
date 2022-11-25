@@ -10,6 +10,7 @@ import React from "react"
 
 const UserSideBar = () => {
   const { data, status }: any = useSession<boolean>();
+
   const dispatch: Function = useDispatch();
 
   const myNuEmail = data?.user?.email;
@@ -49,8 +50,10 @@ const UserSideBar = () => {
           </Link>
           <div className={styles.nav__link}>
             <li className={styles.nav__item}>
-              <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })}className={styles.sign__btn}>
-                 Sign out
+
+              <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })} className={styles.sign__btn}>
+                Sign out
+
               </button>
             </li>
           </div>
@@ -70,10 +73,10 @@ const UserSideBar = () => {
             <Link href="/user/order" className={styles.mobile_nav__link}>My orders</Link>
             <Link href="/user/review" className={styles.mobile_nav__link}>My reviews</Link>
             <div className={styles.mobile_nav__link}>
-              <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })}className={styles.sing__btn}>
-                 Sign Out
+              <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })} className={styles.sing__btn}>
+                Sign Out
               </button>
-            </div> 
+            </div>
           </div>
         </div>
       </div>

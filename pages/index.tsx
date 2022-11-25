@@ -10,6 +10,8 @@ import Footer from "../src-client/components/Footer/Footer";
 import styles from "../src-client/styles/Home.module.css";
 import React from "react";
 import { getUserDetail } from "../src-client/redux/slice/user-detail-redux/user-redux";
+import {signOut} from "next-auth/react";
+
 
 export default function Home() {
   const dispatch: Function = useDispatch();
@@ -22,12 +24,21 @@ export default function Home() {
 
   return (
     <>
+      
       {status === "loading" ? (
         <div className={styles.admin__loader}>
           <h1>Loading...</h1>
         </div>
       ) : (
-        <div className={styles.container}>
+        data?.user.role === 'inactive' ? 
+        (
+          <div>
+            <h1>Tu cuenta ha sido suspendida</h1>
+            <button onClick={()=> signOut()}>Sign out</button>
+          </div>
+        )
+        :
+        (<div className={styles.container}>
           <HEAD />
           <Nav />
 
@@ -38,7 +49,7 @@ export default function Home() {
             <HomeInfo />
             <Footer />
           </main>
-        </div>
+        </div>)
       )}
     </>
   );
