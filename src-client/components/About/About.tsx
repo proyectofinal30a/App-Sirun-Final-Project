@@ -1,4 +1,4 @@
-import React, { ReactEventHandler, useState } from "react";
+import React, { useState } from "react";
 import HomeInfo from "../Home/HomeInfo";
 import emailjs from '@emailjs/browser';
 import styles from "../../styles/About.module.css";
@@ -6,12 +6,6 @@ import styles from "../../styles/About.module.css";
 
 const About = () => {
   const validEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-  
-  // type valueForm =
-  // | React.FormEvent<HTMLFormElement>
-  // | React.ChangeEvent<HTMLInputElement>
-
-  
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
 
@@ -27,7 +21,12 @@ const About = () => {
     if (!emailValid) return setEmailError("Email not valid");
     setEmailError("");
     
-    emailjs.sendForm("service_hys4ifl", "template_gpd7ahi", e.target, "5FIkK-QM1cvwFbl44").then(
+    emailjs.sendForm(
+      "service_hys4ifl" /*process.env.EMAILJS_SERVICE_ID*/, 
+      "template_gpd7ahi", 
+      e.target, 
+      "5FIkK-QM1cvwFbl44" /*process.env.EMAILJS_PUBLIC_KEY*/
+    ).then(
       (result) => console.log("Email succesfully sent! " + result.text), 
       (error) => console.log("There's been an error while trying to send the confirmation email: " + error.text)
     );

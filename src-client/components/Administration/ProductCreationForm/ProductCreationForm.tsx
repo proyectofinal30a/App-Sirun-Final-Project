@@ -15,8 +15,6 @@ export default function FormProduct(): JSX.Element {
     | React.ChangeEvent<HTMLSelectElement>;
 
 
-
-
   const myForm: IproductSumbit = {
     name: "",
     price: 0,
