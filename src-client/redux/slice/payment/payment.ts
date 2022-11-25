@@ -1,12 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { IUserBuyer, IitemForMercadoPago } from "../../../../lib/types";
+import { IUserBuyer, IitemForMercadoPago, Iorder } from "../../../../lib/types";
 import userVerification from "../../../controllers/userVerification-controller";
 
-interface IidOrder {
-  orderId: string;
-  userEmail: string;
-}
 
 interface ImyOrder {
   myOrder: {
@@ -15,7 +11,7 @@ interface ImyOrder {
     status: string;
     date: string;
     delivery_time: string;
-    user: IUserBuyer; // revisar type
+    user: IUserBuyer; 
     purchasedProducts: IitemForMercadoPago[];
   };
 }
@@ -32,13 +28,13 @@ const initialState: ImyOrder = {
       email: "",
       name: "",
       address: {
-        streetName: "",
-        streetNumber: 0,
-        zipCode: 0,
+        street_name: "",
+        street_number: "",
+        zip_code: "",
       },
       phone: {
-        number: 0,
-        area_code: 0,
+        number: "",
+        area_code: "",
       }
     },
     purchasedProducts: [],
@@ -57,13 +53,20 @@ export const reducerAfterPayment = createSlice({
 });
 
 
+interface IidOrder {
+  orderId: string;
+  userEmail: string;
+}
+
 export const getOrder = (orderInfo: IidOrder) => async (dispatch: Function) => {
   const { data } = await axios({
     method: "get",
-    url: "/userScope/get/order", // revisar url cuando Eze termine
+    url: "/userScope/get/email/searchReference",
     data: orderInfo,
   });
+  
   console.log(data);
+
   dispatch(reducerAfterPayment.actions.getOrder(data));
 };
 
