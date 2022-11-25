@@ -27,8 +27,8 @@ const HomeInfo = () => {
           <h3>Specialists in personalized cakes</h3>
           <p>
             We&apos;ve been specialists in personalized cakes for 3 years now. If you want to order yours do not hesitate! Send us an email to:
-            {" "}<a className={styles.home_info__a} href="mailto:sirun_patisserie@sirun.com">
-              sirun_patisserie@sirun.com
+            {" "}<a className={styles.home_info__a} href="mailto:sirun.patisserie@gmail.com">
+              sirun.patisserie@gmail.com
             </a>{" "}
             telling us how you would like the cake of your next event to be and please don&apos;t forget to specify the date of the event!
             Please remember that the orders must be performed at least 7 days in advance.
@@ -76,9 +76,9 @@ const HomeInfo = () => {
             problem you have while making online purchases of our products. You also can reach us by email:
             {" "}<a
               className={styles.home_info__a}
-              href="mailto:sirun_patisserie@sirun.com"
+              href="mailto:sirun.patisserie@gmail.com"
             >
-              sirun_patisserie@sirun.com
+              sirun.patisserie@gmail.com
             </a>{" "}
             or by telephone:
             {" "}<span className={styles.home_info__span} onClick={handleCopyPhone}>

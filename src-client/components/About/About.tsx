@@ -1,13 +1,40 @@
-import React from "react";
+import React, { ReactEventHandler, useState } from "react";
 import HomeInfo from "../Home/HomeInfo";
+import emailjs from '@emailjs/browser';
 import styles from "../../styles/About.module.css";
 
+
 const About = () => {
+  const validEmail = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  
+  // type valueForm =
+  // | React.FormEvent<HTMLFormElement>
+  // | React.ChangeEvent<HTMLInputElement>
 
-  const handleSubscription = (e) => {
-    e.preventDefault();
+  
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
 
+
+  const handleChange = (e: any) => {
+    setEmail(e.target.value);
   }
+
+
+  const handleSubscription = (e: any) => {
+    e.preventDefault();
+    const emailValid = validEmail.test(email);
+    if (!emailValid) return setEmailError("Email not valid");
+    setEmailError("");
+    
+    emailjs.sendForm("service_hys4ifl", "template_gpd7ahi", e.target, "5FIkK-QM1cvwFbl44").then(
+      (result) => console.log("Email succesfully sent! " + result.text), 
+      (error) => console.log("There's been an error while trying to send the confirmation email: " + error.text)
+    );
+
+    setEmail("");
+  }
+  
 
   return (
     <div className={styles.about__container}>
@@ -16,13 +43,23 @@ const About = () => {
         <h1 className={styles.newsletter__title}>Newsletter</h1>
         <p>Be a part of the dreamy world of Sirun Pâtisserie.</p>
         <p>Sign up to be kept in the know with all our launches, our latests news and get exclusive offers!</p>
-        <form className={styles.newsletter__form}>
+        <form className={styles.newsletter__form} onSubmit={handleSubscription}>
           <input 
-            type="text" 
+            type="email" 
             placeholder="Email address" 
+            value={email}
+            name="email"
+            required
             className={styles.newsletter__form_input} 
+            onChange={handleChange}
           />
-          <button onClick={handleSubscription}  className={styles.newsletter__form_btn}>Subscribe</button>
+          <button 
+            type="submit"
+            className={styles.newsletter__form_btn}
+          >
+            Subscribe
+          </button>
+          <span className={styles.newsletter__form_error}>{emailError}</span>
         </form>
       </div>
 

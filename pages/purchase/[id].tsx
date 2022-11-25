@@ -48,7 +48,7 @@ export default function ApprovedPayment() {
       client_email: data?.user.email,
       // client_phone: orderInfo.phone.area_code + "-" + orderInfo.phone.number,
       // client_address: orderInfo.address.street_name + " " + orderInfo.address.street_number,
-      // client_zipcode: orderInfo.address.zip_code,
+      // client_zip_code: orderInfo.address.zip_code,
       order_number: query.external_reference,
       order_status: query.status,
       order_date: orderInfo.date,
