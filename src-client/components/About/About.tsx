@@ -20,12 +20,14 @@ const About = () => {
     const emailValid = validEmail.test(email);
     if (!emailValid) return setEmailError("Email not valid");
     setEmailError("");
+
+    if (typeof process.env.EMAILJS_SERVICE_ID !== "string") return;
     
     emailjs.sendForm(
-      "service_hys4ifl" /*process.env.EMAILJS_SERVICE_ID*/, 
+      process.env.EMAILJS_SERVICE_ID, 
       "template_gpd7ahi", 
       e.target, 
-      "5FIkK-QM1cvwFbl44" /*process.env.EMAILJS_PUBLIC_KEY*/
+      process.env.EMAILJS_PUBLIC_KEY,
     ).then(
       (result) => console.log("Email succesfully sent! " + result.text), 
       (error) => console.log("There's been an error while trying to send the confirmation email: " + error.text)

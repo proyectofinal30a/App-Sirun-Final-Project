@@ -6,7 +6,7 @@ import { getOrder } from "../../src-client/redux/slice/payment/payment";
 import { Ireducers, IitemForMercadoPago } from "../../lib/types";
 // import SirunLogo from "../../src-client/images/sirun_logo.png";
 import Image from "next/image";
-import emailjs from "emailjs-com";
+import emailjs from '@emailjs/browser';
 import HEAD from "../../src-client/components/HEAD";
 import Nav from "../../src-client/components/NavBar/Nav";
 import Footer from "../../src-client/components/Footer/Footer";
@@ -38,8 +38,6 @@ export default function ApprovedPayment() {
 
 
 
-
-
   // EmailJS for approved payment
   if (orderInfo) {
     let templateParams = {
@@ -65,14 +63,19 @@ export default function ApprovedPayment() {
     }
 
     console.log(templateParams)
-    emailjs
-      .send(process.env.EMAILJS_SERVICE_ID, process.env.EMAILJS_ORDER_CONFIRMATION_TEMPLATE_ID, templateParams)
-      .then(
-        (result) => console.log("Email successfully sent!: " + result.text),
-        (error) => console.log("There's been an error while sending the email: " + error.text)
-      );
-  }
 
+    if (typeof process.env.EMAILJS_SERVICE_ID !== "string") return;
+
+    emailjs.send(
+      process.env.EMAILJS_SERVICE_ID, 
+      "template_vtu302r", 
+      templateParams,
+      process.env.EMAILJS_PUBLIC_KEY // no se si es necesaria
+    ).then(
+      (result) => console.log("Email successfully sent!: " + result.text),
+      (error) => console.log("There's been an error while sending the email: " + error.text)
+    );
+  }
 
 
 
