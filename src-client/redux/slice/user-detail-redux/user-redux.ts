@@ -14,6 +14,7 @@ const template: IUserDetail = {
         orders: [],
         favorites: [],
         addresses: [],
+        role:''
     }
 };
 
