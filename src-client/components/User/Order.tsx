@@ -7,48 +7,48 @@ import { Ireducers } from "../../../lib/types";
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import formatDate from "../../controllers/format-date";
 import styles from "../../styles/Order.module.css";
-
+import { useSession } from "next-auth/react";
 
 export default function Orders(): JSX.Element {
   const router = useRouter()
   const dispatch: Function = useDispatch();
-  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
-
+  const orderAll = useSelector((state: Ireducers) => state.reducerUser.user.orders);
+  const { data, status } = useSession()
 
   useEffect(() => {
-    if (myProfile?.email) dispatch(getUserDetail(myProfile.email));
-  }, [dispatch, myProfile]);
+    data?.user.email && dispatch(getUserDetail(data?.user.email));
+  }, []);
 
+  if (status === 'unauthenticated') router.push('/')
+  console.log(orderAll);
 
-  if (!myProfile) return <div className={styles.order__loading}>Loading...</div>;
+  if (!Array.isArray(orderAll) ||   !orderAll[0]) return <div className={styles.order__loading}>Loading...</div>;
 
 
   return (
     <div className={styles.order__container}>
-      <h3 className={myProfile.orders[0] ? styles.order__title : styles.order_title_hidden}>My Orders</h3>
-      {myProfile.orders[0] ?
-        myProfile.orders?.map((elem) => {
-          const { product } = elem;
+      <h3 className={orderAll?.[0] ? styles.order__title : styles.order_title_hidden}>My Orders</h3>
+      {orderAll ?
+        orderAll?.map((elem) => {
+          const { purchasedProducts } = elem;
 
-          const myProductOrder = product?.map((elem) => {
-            const myImage: string = typeof elem?.image?.[0].image === "string" ? elem.image[0].image : "loading";
-
+          const myProductOrder = purchasedProducts?.map((item) => {
             return (
-              <div key={elem.id} className={styles.order__product_container}>
+              <div key={item.id} className={styles.order__product_container}>
                 <div className={styles.order__img_container}>
-                  <Image 
-                      src={myImage} 
-                      width="300" 
-                      height="300" 
-                      alt={elem.name} 
-                      className={styles.order__img}
+                  <Image
+                    src={item.picture_url}
+                    width="300"
+                    height="300"
+                    alt={item.title}
+                    className={styles.order__img}
                   />
                 </div>
                 <div className={styles.order__product_info}>
-                  <h3 className={styles.order__product_name}>{elem.name.toLowerCase()}</h3>
+                  <h3 className={styles.order__product_name}>{item.title.toLowerCase()}</h3>
 
-                  <Link href={`/productDetail/${elem.id}`} className={styles.order__product_details}>
-                      View product details
+                  <Link href={`/productDetail/${item.id}`} className={styles.order__product_details}>
+                    View product details
                   </Link>
                 </div>
               </div>
@@ -62,18 +62,18 @@ export default function Orders(): JSX.Element {
               <h3 className={styles.order__description}>{elem.description}</h3>
 
               <div className={styles.order__status}>
-                  <span className={styles.order__span}>Status: </span>
-                  {elem.status}
+                <span className={styles.order__span}>Status: </span>
+                {elem.status}
               </div>
 
               <div className={styles.order__date}>
-                  <span className={styles.order__span}>Date: </span>
-                  {mydate}
+                <span className={styles.order__span}>Date: </span>
+                {mydate}
               </div>
-              
+
               <div className={styles.order__total}>
-                  <span className={styles.order__span}>Total: </span>
-                  ${elem.total}
+                <span className={styles.order__span}>Total: </span>
+                ${elem.total}
               </div>
 
               <div className={styles.order__product_center}>
@@ -83,7 +83,7 @@ export default function Orders(): JSX.Element {
           );
         })
 
-        : 
+        :
         <div className={styles.empty_cart__container}>
           <p className={styles.empty_cart__message}>You haven&apos;t made a purchase yet.</p>
           <button

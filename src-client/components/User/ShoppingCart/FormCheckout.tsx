@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styles from "../../../styles/FormCheckout.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import Image from "next/image";
@@ -7,6 +7,8 @@ import { sendOrderDetail, resetCart } from "../../../redux/slice/cart-redux/cart
 import validate from "../../../controllers/validateFormCheckout";
 import { IUserBuyer, Ireducers } from '../../../../lib/types'
 import vericationSubminObj from "../../../controllers/verificationFormCart";
+import { useSession } from "next-auth/react";
+
 
 // PARA DATOS DE ENTREGA
 
@@ -14,12 +16,16 @@ const FormCheckout = (): JSX.Element => {
   const dispatch: Function = useDispatch();
   const { confirmed, payLink, products } = useSelector((state: Ireducers) => state.reducerCart);
 
+  const { data } = useSession()
+  useEffect(() => {
+    return () => dispatch(resetCart())
+  }, [])
   type buttonEvenOnclik = React.MouseEvent<HTMLButtonElement, MouseEvent>
   type EventInputChange = React.ChangeEvent<HTMLInputElement>
 
   const personInfo: IUserBuyer = {
-    email: '',
-    name: '',
+    email: data?.user.email || "",
+    name: data?.user.image || "",
     address: {
       street_name: '',
       street_number: '',
@@ -36,11 +42,6 @@ const FormCheckout = (): JSX.Element => {
 
   const handleInputChange = (event: EventInputChange) => {
     const { name, value } = event.target;
-    if (name === 'email' || name === 'name') {
-      setInputUser({ ...inputUser, [name]: value });
-      setErrors(validate({ ...inputUser, [name]: value }));
-      return
-    }
     if (name === 'number' || name === 'area_code') {
       setInputUser({
         ...inputUser,
@@ -84,6 +85,7 @@ const FormCheckout = (): JSX.Element => {
   const openCheckModal = (e: buttonEvenOnclik, person: IUserBuyer) => {
     e.preventDefault();
     setIsOpen(true);
+    setInputUser({ ...inputUser, email: data?.user.email || '', name: data?.user.name || "" })
     console.log(vericationSubminObj(person)[0], 'dasdsad');
 
     if (vericationSubminObj(person)[0]) {
@@ -96,8 +98,6 @@ const FormCheckout = (): JSX.Element => {
   // Submitea cuando se cliquea el botón del modal (el form esta dentro del modal)
   async function handleSubmit(e: buttonEvenOnclik) {
     e.preventDefault();
-    console.log('hp;a');
-
     dispatch(sendOrderDetail(inputUser, products));
   }
 
@@ -112,37 +112,9 @@ const FormCheckout = (): JSX.Element => {
       <div className={styles.first__column}>
         <h2 className={styles.column__title}>Checkout</h2>
         <fieldset className={styles.fieldset__conteiner}>
-          <label className={styles.form__label} htmlFor="name">
-            Full Name
-          </label>
-          <input
-            className={styles.form__input}
-            type="text"
-            name="name"
-            value={inputUser.name}
-            onChange={handleInputChange}
-            placeholder="Name"
-            autoComplete="on"
-            required
-          />
-          {errors.name && <p className={styles.error}>{errors.name}</p>}
-
-          <label className={styles.form__label} htmlFor="email">
-            Email
-          </label>
-          <input
-            className={styles.form__input}
-            type="email"
-            name="email"
-            value={inputUser.email}
-            onChange={handleInputChange}
-            placeholder="Email"
-            autoComplete="on"
-            required
-          />
-          {errors.email && <p className={styles.error}>{errors.email}</p>}
+          <p>Name: {data?.user.name}</p>
+          <p>Email: {data?.user.email}</p>
         </fieldset>
-
         <fieldset className={styles.fieldset__conteiner}>
           <div className={styles.conteiner__2col_row}>
             <div className={styles.container__row_column}>
@@ -293,7 +265,7 @@ const FormCheckout = (): JSX.Element => {
                 </button>
               </div>
             }
-
+            <input type="button" value="TEST PARA PROBAR CUANTO AGUANTA LA BASE DE DATOSSS" name="delete" onClick={() => dispatch(resetCart())} />
             {confirmed && payLink && (
               <div className={styles.modal__pay_btn_container}>
                 <button
@@ -355,7 +327,7 @@ const FormCheckout = (): JSX.Element => {
         <div className={styles.btn__align}>
           <button
             className={styles.form__input_btn}
-            disabled={vericationSubminObj(errors)[0]}
+            //disabled={vericationSubminObj(errors)[0]}
             onClick={(e) => openCheckModal(e, errors)}
           >
             Continue to payment

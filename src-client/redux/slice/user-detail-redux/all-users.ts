@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { userData } from "../../../../lib/types";
 
+
 interface IallUsers {
   allUsers: userData[];
   usersByName: userData[];
@@ -19,7 +20,6 @@ export const reducerAllUsers = createSlice({
     getAllUsers: (state, action) => {
       state.allUsers = action.payload;
     },
-
     getUsersByName: (state, action) => {
       state.usersByName = action.payload;
     },

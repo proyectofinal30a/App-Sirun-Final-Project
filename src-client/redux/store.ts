@@ -15,9 +15,10 @@ import reducerAllUsers from "./slice/user-detail-redux/all-users";
 
 
 const persistConfig = {
+
   key: 'tuuuukinesiiiiia',
+
   storage,
-  whilelist: []
 }
 
 const myReducers = combineReducers({

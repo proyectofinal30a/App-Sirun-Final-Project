@@ -8,17 +8,19 @@ export interface Iimage {
 
 ///For Form Mercado pago
 export interface IUserBuyer {
-  email: string;
-  name: string;
-  address: {
-    street_name: string;
-    street_number: string;
-    zip_code: string;
-  };
-  phone: {
-    number: string;
-    area_code: string;
-  };
+    email: string
+    name: string
+    address: {
+        id?: string
+        street_name: string
+        street_number: string
+        zip_code: string
+    }
+    phone: {
+        number: string
+        area_code: string
+    }
+
 }
 
 export interface Ipreference {
@@ -93,35 +95,38 @@ export interface PackProducDetailRating {
 }
 
 export interface ImyOrder {
-  myOrder: {
-    external_reference: string;
-    total: string;
-    status: string;
-    date: string;
-    delivery_time: string;
-    user: {
-      id: string;
+    myOrder: {
+        external_reference: string;
+        total: string;
+        status: string;
+        date: string;
+        delivery_time: string;
+        user: {
+            id: string
+        };
+        purchasedProducts: IitemForMercadoPago[];
+
     };
     purchasedProducts: IitemForMercadoPago[];
   };
-}
+
 
 interface IallUsers {
   allUsers: userData[];
   usersByName: userData[];
+
 }
 
 export interface Ireducers {
-  reducerProduct?: null
-  reducerProducts: IallProducts
-  reducerUser: Iuser
-  reducerProductDetail: PackProducDetailRating
-  reducerProductsByName: IproductsByName
-  reducerCart: IproductsCardModel
-  reducerFilters: IallProducts
-  reducerAfterPayment: ImyOrder
-  reducerAllUsers: IallUsers
-  reducerAdmin: any
+    reducerProduct?: null
+    reducerProducts: IallProducts
+    reducerUser: IUserDetail
+    reducerProductDetail: PackProducDetailRating
+    reducerProductsByName: IproductsByName
+    reducerCart: IproductsCardModel
+    reducerFilters: IallProducts
+    reducerAfterPayment: ImyOrder
+    reducerAllUsers: IallUsers
 }
 
 export interface Ierror {
@@ -142,9 +147,17 @@ declare module "next-auth" {
   }
 }
 
-interface Idirecciones {
-  dir: string;
-  id?: string;
+
+interface Iaddresses {
+    name_address: string
+    zip_code: string
+    street_name: string
+    street_number: string
+    phone: {
+        area_code: number
+        number: number
+    }
+
 }
 
 interface IimageProduc {
@@ -158,20 +171,27 @@ interface IobjProduct {
 }
 
 export interface IitemForMercadoPago {
-  image: string;
-  name: string;
-  quantity: string;
-  price: string;
+
+    image: string
+    name: string
+    quantity: string
+    price: string
+
 }
 
 interface Iorder {
-  total: number;
-  description: string;
-  delivery_time: string;
-  date: string;
-  product: IobjProduct[];
-  status: StatusType;
+
+    total: number
+    description: string
+    delivery_time: string
+    date: string
+    address: Iaddresses
+    purchasedProducts: IproductModelCart[]
+    status: StatusType
+    purchase_link: string
+
 }
+
 
 export interface IReview {
   id: string;
@@ -188,18 +208,30 @@ export interface Ievaluations {
   user: userData;
 }
 
+
 export interface userData {
-  id: string;
-  name: string;
-  email: string;
-  image: string;
-  favorites: Iproduct[];
-  direcciones: Idirecciones[];
-  orders: Iorder[];
-  evaluations: Ievaluations[];
-  role: string;
+    id: string
+    name: string
+    email: string
+    image: string
+    favorites: Iproduct[]
+    addresses: Iaddresses[]
+    orders: Iorder[]
+    evaluations: Ievaluations[]
+    role: string;
 }
 
-export interface Iuser {
-  user: userData;
+
+
+
+export interface IUserDetail {
+    user: userData
 }
+
+//Order
+export interface IbodoyPreferenceLink {
+    order: Ipreference
+    purchase_link: string
+}
+
+//

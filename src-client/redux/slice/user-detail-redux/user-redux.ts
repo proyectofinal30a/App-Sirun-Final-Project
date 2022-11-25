@@ -1,10 +1,10 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Iuser } from "../../../../lib/types";
+import { userData, IUserDetail } from "../../../../lib/types";
 import userVerification from "../../../controllers/userVerification-controller";
 
 
-const template: Iuser = {
+const template: IUserDetail = {
     user: {
         id: "",
         name: "",
@@ -13,12 +13,17 @@ const template: Iuser = {
         evaluations: [],
         orders: [],
         favorites: [],
-        direcciones: [],
-    },
+        addresses: [],
+        role:''
+    }
 };
 
 interface IidString {
     payload: string
+}
+
+interface IpayloadUserdata {
+    payload: userData
 }
 
 
@@ -27,11 +32,12 @@ export const reducerUser = createSlice({
     name: "reducerUser",
     initialState: template,
     reducers: {
-        getUserDetaill: (state: Iuser, action: any) => {
+        getUserDetaill: (state: IUserDetail, action: IpayloadUserdata) => {
+            console.log(action.payload);
             state.user = action.payload;
             return;
         },
-        addToFavorites: (state: Iuser, action: any) => {
+        addToFavorites: (state: IUserDetail, action: any) => {
             if (!state.user) return
             const foundProduct = state.user.favorites.find(product => product.id === action.payload.id);
             if (foundProduct) {
@@ -41,7 +47,7 @@ export const reducerUser = createSlice({
             };
             state.user.favorites.push(action.payload);
         },
-        deleteOneReview: (state: Iuser, action: IidString) => {
+        deleteOneReview: (state: IUserDetail, action: IidString) => {
             state.user.evaluations = state.user.evaluations.filter((elem) => elem.id !== action.payload)
         },
 
@@ -52,12 +58,16 @@ export const reducerUser = createSlice({
 export const getUserDetail = (email: string | undefined) => async (dispatch: Function) => {
     try {
         if (email === undefined) return
-        const { data }: any = await axios({
+        const data = await axios({
             method: "get",
             url: `/api/userScope/get/userAll/${email}`,
         });
 
-        dispatch(reducerUser.actions.getUserDetaill(data));
+
+        const myUser: userData = data.data
+        console.log(myUser);
+
+        dispatch(reducerUser.actions.getUserDetaill(myUser));
 
     } catch (error) {
         console.log(error);
@@ -93,7 +103,7 @@ export const addToFavorites = (productToAdd: any) => (dispatch: Function) => {
 export const requestAddToFavorites = async (idUser: string, favorites: any) => {
     try {
         const myToken: any = userVerification("client");
-        const { data }: any = await axios({
+        await axios({
             method: "post",
             url: "/api/userScope/post/productAddFav",
             data: { idUser, favorites },
