@@ -42,104 +42,68 @@ export const reducerAdmin = createSlice({
     getByName: (state, action) => {
       state.productsToFilter = action.payload
     },
-    confirmEdit: (state, action) => {
-      state.productEdit = action.payload;
-    },
     updateProduct: (state, action) => {
       state.productEdit = action.payload;
     },
     updateAvailability: (state: any, action) => {
-      state.productsUpdate = state.products.map((product) => {
-        if (product.id === action.payload.id) {
-          if (product.available === true) { product.available === false }
-          product.available === true
+      state.products = state.products.map((product: Iproduct) => {
+        const { id } = product
+        if (id === action.payload) {
+          const produUpdateado = { ...product, available: !product.available }
+          state.productsUpdate.push(produUpdateado)
+          return produUpdateado
         }
+        return product
       })
-    },
-    updateProducts: (state, action) => { }
 
-    // cleanState: (state, action) => {
-    //   console.log(action.payload)
-    // }
+    },
+    updateProducts: (state, action) => { },
+
+    cleanState: (state, action) => {
+      state.productsUpdate = []
+      state.productsToFilter = []
+    }
   },
 });
+//cleanstate
+export const clean = () => (dispatch: Function) => {
+  return dispatch(reducerAdmin.actions.cleanState([]));
+};
 
-//updateAllproduts
+//updateAllproduts - FALTA DESARROLLAR 
 export const updateAll = (product: any) => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.updateProducts(product));
 };
-
-
-//Disponibilidad de productos
-export const changeAvailability = (obj) => (dispatch: Function) => {
-  return dispatch(reducerAdmin.actions.updateAvailability(obj));
-};
 //
 
-export const editProduct = (object: Iproduct) => (dispatch: Function) => {
-  return dispatch(reducerAdmin.actions.confirmEdit(object))
-}
-
-export const setProduct = (object: Iproduct) => (dispatch: Function) => {
-  return dispatch(reducerAdmin.actions.updateProduct(object))
-}
-
-// const obj = {
-//   productsToFilter: [],
-//   productEdit: {
-//     id: "",
-//     name: "",
-//     price: 0,
-//     dimension: 0,
-//     available: false,
-//     type: "vegan",
-//     category: "cakes",
-//     image: [],
-//     description: "",
-//     evaluation: [],
-//   }
-// }
-
-// export const cleanRedux: any = () => (dispatch: Function) => {
-//   return dispatch(reducerAdmin.actions.cleanState(obj))
-// }
+//availability 
+export const changeAvailability = (id: string) => (dispatch: Function) => {
+  return dispatch(reducerAdmin.actions.updateAvailability(id));
+};
 
 
-export const getProductByName: any = (objeto: any) => async (dispatch: Function) => {
-  const arr = filteredByName(objeto)
-  dispatch(reducerAdmin.actions.getByName(arr))
-}
-
-const filteredByName = (objeto) => {
-  const { allProducts, name } = objeto
-  let filteredSearchedProduct = allProducts?.map((product: any) => {
-    let productName = product.name.toLowerCase()
-    name.toLocaleLowerCase()
-    if (productName.includes(name)) return product
-  })
-  return filteredSearchedProduct.filter((product: any) => product !== undefined);
-}
-
-
-
-export const getProducts: any = () => async (dispatch: Function) => {
+//envio de availability a la api
+export const requestUpdateStatusProducts: any = async (obj: any) => {
   try {
-    const myToken: any = await userVerification('client')
-    const { data } = await axios({
-      method: 'get',
-      url: '/api/product/gets/products',
+    const myToken: any = await userVerification('server')
+    await axios({
+      method: 'post',
+      url: '/api/adminScope/put/updateAllProducts',
+      data: { obj },
       headers: {
         "Authorization": myToken
       }
     });
-    const allProducts = data
-
-    dispatch(reducerAdmin.actions.getAllProducts(allProducts));
   } catch (error) {
-    console.log(error)
+    console.log(error);
   }
-};
+}
+//end availability
 
+//setea producto en estado para verlo en el modal y editarlo. Posteriormente hacer la request a la api con la info.
+export const setProduct = (object: Iproduct) => (dispatch: Function) => {
+  return dispatch(reducerAdmin.actions.updateProduct(object))
+}
 export const updateProduct: Function = async (dataForm) => {
   console.log(dataForm)
   try {
@@ -157,6 +121,48 @@ export const updateProduct: Function = async (dataForm) => {
     console.log(error)
   }
 };
+
+//END EDIT PRODUCT
+
+//Get by name
+export const getProductByName: any = (objeto: any) => async (dispatch: Function) => {
+  const arr = filteredByName(objeto)
+  dispatch(reducerAdmin.actions.getByName(arr))
+}
+
+const filteredByName = (objeto) => {
+  const { allProducts, name } = objeto
+  let filteredSearchedProduct = allProducts?.map((product: any) => {
+    let productName = product.name.toLowerCase()
+    name.toLocaleLowerCase()
+    if (productName.includes(name)) return product
+  })
+  return filteredSearchedProduct.filter((product: any) => product !== undefined);
+}
+//end get by name
+
+
+//get all products
+export const getProducts: any = () => async (dispatch: Function) => {
+  try {
+    const myToken: any = await userVerification('client')
+    const { data } = await axios({
+      method: 'get',
+      url: '/api/product/gets/products',
+      headers: {
+        "Authorization": myToken
+      }
+    });
+    const allProducts = data
+
+    dispatch(reducerAdmin.actions.getAllProducts(allProducts));
+  } catch (error) {
+    console.log(error)
+  }
+};
+//end get all products
+
+
 
 
 

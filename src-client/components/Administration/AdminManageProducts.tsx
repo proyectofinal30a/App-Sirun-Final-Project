@@ -3,7 +3,7 @@ import Image from "next/image";
 import { AiFillEyeInvisible, AiFillEye, AiFillEdit } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux'
 import { Iproduct, Ireducers } from "../../../lib/types";
-import { getProducts, updateProduct, changeAvailability, updateAll, editProduct, setProduct } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
+import { getProducts, updateProduct, changeAvailability, requestUpdateStatusProducts, clean, setProduct } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import SearchBar from "../SearchBar/SearchBar";
 import { current } from "@reduxjs/toolkit";
 import Modal from "react-modal";
@@ -28,15 +28,19 @@ const AdminManageProducts = () => {
   };
   const [formErrors, setFormErrors] = useState(myErr);
 
+  useEffect(() => {
+    dispatch(clean())
+    dispatch(getProducts())
+    return () => dispatch(clean())
+  }, [])
+
   const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products)
   const dispatch: Function = useDispatch()
   const filteredProducts = useSelector((state: Ireducers) => state.reducerAdmin.productsToFilter)
   const productModal = useSelector((state: Ireducers) => state.reducerAdmin.productEdit)
+  const productsToUpdate = useSelector((state: Ireducers) => state.reducerAdmin.productsUpdate)
 
 
-  useEffect(() => {
-    dispatch(getProducts())
-  })
 
 
   let currentProducts: Iproduct[] = allProducts;
@@ -75,33 +79,57 @@ const AdminManageProducts = () => {
     e.preventDefault()
     alert(percent)
   }
-
-  let availables: any = []
-  let biblioteca: any = {}
-
-  availables = allProducts?.map((product) => { return { id: product.id } })
-  availables.forEach(p => {
-    biblioteca[p.id] = true;
-  })
-
-  const u = useSelector((state: any) => state.reducerAdmin.productsUpdate)
-  console.log(u)
-
-  const handleVisibility = (productId) => {
-    const objVisibility = {
-      id: productId
-    }
-    dispatch(changeAvailability(objVisibility))
-  }
   //END MODAL UPDATE PRODUCTS
 
+  //Visibilidad
+  const handleVisibility = (e, product) => {
+    e.preventDefault()
+    const { id } = product
+    dispatch(changeAvailability(id))
+  }
+  // console.log(allProducts)
+  // useEffect(() => {
+  //   if (productsToUpdate.length) {
+  //     (async () => { await requestUpdateStatusProducts(productsToUpdate) })()
+  //   }
+  // }, [])
 
-  //modal-  edit produt
+  const aplicarCambios = async () => {
+    await requestUpdateStatusProducts(productsToUpdate)
+    alert(`Se actualizo: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
+  }
+
+
+  //end visibilidad
+
+  //MODAL - EDIT PRODUCT
   const editOpenModal = (e: Event, product: Iproduct) => {
     e.preventDefault()
     setIsOpen(true);
     dispatch(setProduct(product))
   }
+
+
+  const submitHandler = (e, product: any) => {
+    e.preventDefault()
+    const { id, name } = product
+    const newPrice = Number(formProduct.price)
+    const newDescription = formProduct.description
+
+    const prouctToUpdate = {
+      id: id,
+      price: newPrice,
+      description: newDescription
+      //faltan las imagenes
+    }
+    updateProduct(prouctToUpdate)
+    setIsOpen(false)
+    alert(`se actualizo el producto ${name}`)
+    dispatch(getProducts())
+  }
+  //END EDICT PRODUCT 
+
+
 
   const handleOnChangeInput = (event: any) => {
     const { name, value } = event.target;
@@ -120,14 +148,14 @@ const AdminManageProducts = () => {
     }
 
     setFormProduct({ ...formProduct, [name]: value });
-    setFormErrors(Validation({ ...formProduct, [name]: value }));
+    // setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
 
 
   const handleOnChangeNumber = (event: any) => {
     const { name, value } = event.target;
     setFormProduct({ ...formProduct, [name]: value });
-    setFormErrors(Validation({ ...formProduct, [name]: value }));
+    // setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
 
   const handleOnFile = (event: any) => {
@@ -161,24 +189,6 @@ const AdminManageProducts = () => {
   };
 
 
-  const submitHandler = (e, product: any) => {
-    e.preventDefault()
-    const { id, name } = product
-    const newPrice = Number(formProduct.price)
-    const newDescription = formProduct.description
-
-    const obj = {
-      id: id,
-      price: newPrice,
-      description: newDescription
-      //faltan las imagenes
-    }
-    updateProduct(obj)
-    setIsOpen(false)
-    alert(`se actualizo el producto ${name}`)
-    dispatch(getProducts())
-  }
-
   // const handleOnClickReset = () => {
   //   setFormProduct({ ...formProduct, image: [] });
   // };
@@ -198,10 +208,10 @@ const AdminManageProducts = () => {
       <div className={styles.product__manage_search_and_change}>
         <SearchBar />
         <button className={styles.change__price__btn} onClick={(e: any) => openMasiveModal(e)}>Update masive prices</button>
+        <input type="button" value="Aplicar Cambios de visibilidad" onClick={aplicarCambios} />
       </div>
 
       {/* onClick={(e: any) => editOpenModal(e, product)} */}
-
 
       {currentProducts?.map((product: any, index: number) => {
         return (
@@ -224,16 +234,11 @@ const AdminManageProducts = () => {
             <div className={styles.product__card__icons}>
               <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
 
-
-              <div className={styles.wishlist_fav_btn_container} onClick={() => handleVisibility(product.id)}>
+              <div className={styles.wishlist_fav_btn_container} onClick={(e: any) => handleVisibility(e, product)} >
                 <p className={styles.wishlist_fav_btn}>
-                  {biblioteca[product.id] ? <AiFillEye /> : <AiFillEyeInvisible />}
+                  {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}
                 </p>
               </div>
-
-
-
-
             </div>
           </div>
         )
@@ -335,7 +340,7 @@ const AdminManageProducts = () => {
       </Modal>
 
 
-    </div>
+    </div >
   );
 };
 
