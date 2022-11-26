@@ -1,14 +1,26 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSession, signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import styles from "../../styles/Menu.module.css";
+import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 
 
 const Menu = () => {
+  const router = useRouter();
+  const dispatch: Function = useDispatch();
   const [isActive, setIsActive] = useState(false);
   const { data: session, status } = useSession<boolean>();
 
+
+  useEffect(() => {
+    status === "authenticated" && session?.user.role === "inactive"
+    ? router.push("/error/deactivated")
+    : dispatch(getUserDetail(session?.user.email))
+  }, [router, dispatch, session?.user.email, session?.user.role, status])
   
+
   const signOrNoSing: any = session ? (
     <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })} className={styles.nav_sign_btn_hidden}>Sign out</button>
   ) : (

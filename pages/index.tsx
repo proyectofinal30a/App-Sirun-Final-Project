@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import HEAD from "../src-client/components/HEAD";
 import Nav from "../src-client/components/NavBar/Nav";
@@ -14,17 +13,13 @@ import styles from "../src-client/styles/Home.module.css";
 
 
 export default function Home() {
-  const router = useRouter();
   const dispatch: Function = useDispatch();
   const { data, status } = useSession<boolean>();
 
   useEffect(() => {
     dispatch(getAllProducts());
-    
-    status === "authenticated" && data?.user.role === "inactive"
-      ? router.push("/error/deactivated")
-      : dispatch(getUserDetail(data?.user.email))
-  }, [dispatch, status, data, router]);
+    status === "authenticated" && dispatch(getUserDetail(data?.user.email));
+  }, [dispatch, status, data]);
 
 
   return (
