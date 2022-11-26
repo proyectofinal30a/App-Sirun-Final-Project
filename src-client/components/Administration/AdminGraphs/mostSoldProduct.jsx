@@ -6,7 +6,7 @@ import { Products } from './mostSoldData';
 
 const MostSoldProduct = () => {
   return (
-    <>
+    <div className={styles.dashboard__graphic}>
       <ResponsiveContainer height={400} width={500}>
         <BarChart data={Products}>
           <Tooltip />
@@ -17,7 +17,7 @@ const MostSoldProduct = () => {
           <Bar type="monotone" dataKey="sales" barSize={50} fill="#3c5473" />
         </BarChart>
       </ResponsiveContainer>
-    </>
+    </div>
   );
 };
 
