@@ -16,8 +16,8 @@
   width: 20%;
   border: none;
   border-right: .5em solid transparent;
-  border-radius: .3em;
-  box-shadow: 0 0 1px black;
+  border-radius: .2em;
+  box-shadow: 0 0 2px grey;
 }
 
 .filter__select:hover {

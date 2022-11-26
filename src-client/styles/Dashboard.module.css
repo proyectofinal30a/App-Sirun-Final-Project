@@ -10,17 +10,23 @@
 }
 
 .dashboard__select {
-  /* margin-right: auto;
-  margin-left: 3em; */
   width: 15em;
   padding: .3em;
   margin-bottom: 2em;
+  border: none;
+  border-right: .3em solid transparent;
+  border-radius: .2em;
+  box-shadow: 0 0 2px grey;
 }
 
 .dashboard__secondary_select {
   width: 10em;
   padding: .3em;
   margin-bottom: 1em;
+  border: none;
+  border-right: .3em solid transparent;
+  border-radius: .2em;
+  box-shadow: 0 0 2px grey;
 }
 
 .dashboard__individual_container {
