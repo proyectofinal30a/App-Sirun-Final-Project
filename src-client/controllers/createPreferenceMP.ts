@@ -1,8 +1,9 @@
 
 import { IUserBuyer, IproductModelCart, Ipreference, } from '../../lib/types'
 export default function createPreferenceMP(user: IUserBuyer, productArray: IproductModelCart[]): Ipreference {
-   console.log(user,'estoy en usecreate');
-   
+    console.log(user, 'estoy en usecreate');
+    console.log(productArray, "es el array");
+
     return {
         payer: user,
         items: productArray,

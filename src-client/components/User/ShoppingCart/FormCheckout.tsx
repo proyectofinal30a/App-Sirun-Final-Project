@@ -66,7 +66,7 @@ const FormCheckout = (): JSX.Element => {
     name: data.user.name,
     email: data.user.email
   }
-
+  const forButtonMercadoPago = { confirmed, payLink }
   return (
     <div className={styles.checkout__container}>
 
@@ -99,6 +99,8 @@ const FormCheckout = (): JSX.Element => {
         addressRef={mySelect}
         isOpenModal={isOpenModal}
         modalIsOpen={modalIsOpen}
+        forButtonMercadoPago={forButtonMercadoPago}
+        product={products}
       />
       <ButtonConfirmInf
         errors={errors}
