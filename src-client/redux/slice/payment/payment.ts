@@ -28,6 +28,7 @@ const initialState: ImyOrder = {
       email: "",
       name: "",
       address: {
+        name_address: "",
         street_name: "",
         street_number: "",
         zip_code: "",
@@ -54,18 +55,16 @@ export const reducerAfterPayment = createSlice({
 
 
 interface IidOrder {
-  idReference: string | string[] | undefined;
-  userEmail: string;
+  idReference: string;
+  email: string;
 }
 
 export const getOrder = (orderInfo: IidOrder) => async (dispatch: Function) => {
   const { data } = await axios({
-    method: "get",
-    url: "api/userScope/get/email/searchReferencia",
+    method: "post",
+    url: "api/userScope/post/email/searchReferencia",
     data: orderInfo,
   });
-  
-  console.log(data);
 
   dispatch(reducerAfterPayment.actions.getOrder(data));
 };
