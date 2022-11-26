@@ -7,14 +7,13 @@ import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del ro
 const updatePrices: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     const { percent } = req.body
     const percent2 = percent / 100
-    console.log(percent2);
+
 
     try {
         const allProducts = await prisma.product.findMany()
         allProducts.forEach(async (p) => {
             const price = Number(p.price)
             let newPrice = Math.round(price + (price * percent2))
-            console.log(newPrice);
 
             await prisma.product.update({
                 where: { id: p.id },

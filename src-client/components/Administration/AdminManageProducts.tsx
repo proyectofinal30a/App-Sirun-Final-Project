@@ -64,7 +64,7 @@ const AdminManageProducts = () => {
     setmodalUpdateIsOpen(false)
   }
 
-  // MODAL- MASIVE UPDATE
+  // MODAL- MASIVE prices UPDATE
   const openMasiveModal = (e: Event) => {
     e.preventDefault()
     setmodalUpdateIsOpen(true);
@@ -79,7 +79,7 @@ const AdminManageProducts = () => {
     e.preventDefault()
     // alert(percent)
     await updateAllPrices(percent)
-    dispatch(getProducts())
+    await dispatch(getProducts())
     setmodalUpdateIsOpen(false)
   }
   //END MODAL UPDATE PRODUCTS
@@ -101,7 +101,7 @@ const AdminManageProducts = () => {
 
   //end visibilidad
 
-  //MODAL - EDIT PRODUCT
+  //MODAL - EDIT ONE PRODUCT
   const editOpenModal = (e: Event, product: Iproduct) => {
     e.preventDefault()
     setIsOpen(true);
