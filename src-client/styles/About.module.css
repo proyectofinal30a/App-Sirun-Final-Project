@@ -48,12 +48,27 @@
   border: none;
   box-shadow: 0 0 2px grey;
   width: 15em;
+  margin-right: .1em;
 }
 
 .newsletter__form_btn {
   padding: .5em .7em;
   border: none;
   box-shadow: 0 0 2px grey;
+}
+
+.newsletter__form_btn:hover {
+  cursor: pointer;
+  background-color: var(--color-light-pink);
+}
+
+.newsletter__form_error {
+  font-size: .85em;
+  font-family: var(--font-formal);
+  color: red;
+  display: flex;
+  justify-content: center;
+  padding-top: .5em;
 }
 
 .shipping__container {

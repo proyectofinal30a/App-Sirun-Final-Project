@@ -109,22 +109,22 @@ const AdminManageUsers = () => {
                     <button className={styles.user__reset_password_btn}>
                       Request password reset
                     </button>
-                    {user.role === 'admin' ? 
-                      <button onClick={() => userChangeRole(user.id, 'user')} className={styles.user__role_btn}>
+                    {user.role === "admin" ? 
+                      <button onClick={() => userChangeRole(user.id, "user")} className={styles.user__role_btn}>
                         Set user role
                       </button>
                       : 
-                      <button onClick={() => userChangeRole(user.id, 'admin')} className={styles.user__role_btn}>
+                      <button onClick={() => userChangeRole(user.id, "admin")} className={styles.user__role_btn}>
                         Set admin role
                       </button>
                     }
-                    {user.role !== 'inactive' && 
-                      <button onClick={() => userOnOffSwitch(user.id, 'inactive')} className={styles.user__deactivate_btn}>
+                    {user.role !== "inactive" && 
+                      <button onClick={() => userOnOffSwitch(user.id, "inactive")} className={styles.user__deactivate_btn}>
                         Deactivate account
                     </button>
                     }
-                    {user.role === 'inactive' && 
-                      <button onClick={() => userOnOffSwitch(user.id, 'user')} className={styles.user__activate_btn}>
+                    {user.role === "inactive" && 
+                      <button onClick={() => userOnOffSwitch(user.id, "user")} className={styles.user__activate_btn}>
                         Activate account
                       </button>
                     }

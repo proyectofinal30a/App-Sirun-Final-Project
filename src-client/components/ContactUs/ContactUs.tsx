@@ -1,62 +1,60 @@
-import React, {useRef, useState} from 'react'
-// import emailjs from '@emailjs/browser';
-import emailjs from "emailjs-com";
+import React, { useRef, useState } from "react";
+import emailjs from "@emailjs/browser";
 import validate from "./validateContact";
-import MessageResult from './MessageResult';
-import styles from "../../styles/ContactUs.module.css"
+import MessageResult from "./MessageResult";
+import styles from "../../styles/ContactUs.module.css";
 
 const ContactUs = () => {
-    interface contactData{
-        name: string
-        email : string
-        message:string
-    }
+  interface contactData {
+    name: string;
+    email: string;
+    message: string;
+  }
 
-    const data : contactData = {
-        name: '',
-        email: '', 
-        message: ''
-    }
+  const data: contactData = {
+    name: "",
+    email: "",
+    message: "",
+  };
 
-    const [input, setInput] =useState(data)
-    const [errors, setErrors] = useState(data)
-    const [result, showResult] =useState(false)
-    const form = useRef()
+  const [input, setInput] = useState(data);
+  const [errors, setErrors] = useState(data);
+  const [result, showResult] = useState(false);
 
-    const handleInputChange = (e : any) => {
-        const {name, value} = e.target
-        setInput({...input, [name] : value})
-        setErrors(validate({...input, [name]: value}))
-    }
+  const form = useRef();
 
-      const sendEmail = (e : any) => {
-        e.preventDefault();
-    
 
-      if(typeof process.env.EMAILJS_SERVICES !== "string" ) return;
-    
-        
-        
-        emailjs.sendForm(process.env.EMAILJS_SERVICES, 'template_diqzxgu', form.current, process.env.EMAILJS_API_KEY) 
-        .then((result) => {
-            console.log('SUCCESS!', result.status, result.text);  
-        }, (error) => {
-            console.log('FAILED...', error.text);
-        });
-        
-        e.target.reset()
-        showResult(true)
-        };
-        
-        setTimeout(()=>{
-        showResult(false);
-        }, 10000)
+  const handleInputChange = (e: any) => {
+    const { name, value } = e.target;
+    setInput({ ...input, [name]: value });
+    setErrors(validate({ ...input, [name]: value }));
+  };
+
+  const sendEmail = (e: any) => {
+    e.preventDefault();
+
+    if (typeof process.env.EMAILJS_SERVICE_ID !== "string") return;
+
+    emailjs.sendForm(
+      process.env.EMAILJS_SERVICE_ID,
+      "template_diqzxgu", // modificar cuando este el template en la nueva cuenta
+      form.current,
+      process.env.EMAILJS_PUBLIC_KEY
+    ).then(
+      (result) => console.log("SUCCESS!", result.status, result.text),
+      (error) => console.log("FAILED...", error.text)
+    );
+
+    e.target.reset();
+    showResult(true);
+  };
+
+  setTimeout(() => showResult(false), 10000);
 
   return (
-    <div className={styles.contact__container} >
-        <h2 className={styles.column__title}>Contact Us</h2>
-        <form ref={form} className={styles.form__column} onSubmit={sendEmail}>  
-
+    <div className={styles.contact__container}>
+      <h2 className={styles.column__title}>Contact Us</h2>
+      <form ref={form} className={styles.form__column} onSubmit={sendEmail}>
         <div className={styles.container__row_column}>
           <label className={styles.form__label} htmlFor="name">
             Name
@@ -72,9 +70,9 @@ const ContactUs = () => {
             required
           />
           {errors.name && <p className={styles.error}>{errors.name}</p>}
-          </div>
+        </div>
 
-          <div className={styles.container__row_column}>
+        <div className={styles.container__row_column}>
           <label className={styles.form__label} htmlFor="email">
             Email
           </label>
@@ -91,37 +89,35 @@ const ContactUs = () => {
           {errors.email && <p className={styles.error}>{errors.email}</p>}
         </div>
 
-          <div className={styles.container__row_column}>
-            <label className={styles.form__label} htmlFor="message">
-                Message
-            </label>
-            <textarea
-                className={styles.textarea}
-                name="message"
-                value={input.message}
-                onChange={(e: any) => handleInputChange(e)}
-                placeholder="Message"
-                required
-            />
-            {errors.message && <p className={styles.error}>{errors.message}</p>}
-            </div>
-        
+        <div className={styles.container__row_column}>
+          <label className={styles.form__label} htmlFor="message">
+            Message
+          </label>
+          <textarea
+            className={styles.textarea}
+            name="message"
+            value={input.message}
+            onChange={(e: any) => handleInputChange(e)}
+            placeholder="Message"
+            required
+          />
+          {errors.message && <p className={styles.error}>{errors.message}</p>}
+        </div>
 
         <div className={styles.btn__align}>
           <button
-            type = "submit"
+            type="submit"
             className={styles.form__input_btn}
             disabled={Object.values(errors).length !== 0}
-           > Send </button>
+          >
+            {" "}
+            Send{" "}
+          </button>
         </div>
-           {result ? <MessageResult/> : null} 
-       </form> 
+        {result ? <MessageResult /> : null}
+      </form>
     </div>
   );
 };
 
-
-export default ContactUs
-
-
-
+export default ContactUs;

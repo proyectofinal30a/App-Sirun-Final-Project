@@ -184,24 +184,12 @@ const Profile = () => {
 
   const myAdress = addresses?.map((ele, index: number) => (
     <div className={styles.address} key={index}>
-      <p>
-        Address {index + 1}: {ele?.name_address.toLowerCase()}{" "}
-      </p>
-      <p>
-        Streer Number {index + 1}: {ele?.street_number}{" "}
-      </p>
-      <p>
-        Streer Name {index + 1}: {ele?.street_name.toLowerCase()}{" "}
-      </p>
-      <p>
-        Phone
-      </p>
-      <p>
-        Area Code {index + 1}: {ele.phone.area_code}{" "}
-      </p>
-      <p>
-        Number {index + 1}: {ele.phone.number}{" "}
-      </p>
+      <p className={styles.address_name}>Address {index + 1}: {ele?.name_address.toLowerCase()}{" "}</p>
+      <p>Streer Number {index + 1}: {ele?.street_number}{" "}</p>
+      <p>Streer Name {index + 1}: {ele?.street_name.toLowerCase()}{" "}</p>
+      <p>Phone</p>
+      <p>Area Code {index + 1}: {ele.phone.area_code}{" "}</p>
+      <p>Number {index + 1}: {ele.phone.number}{" "}</p>
     </div>
   ));
 
@@ -227,7 +215,7 @@ const Profile = () => {
       </div>
       <div className={styles.addresses_container}>
         <span>Addresses</span>
-        <div className={styles.addresses}>{myAdress ? myAdress : emptyAddresses}</div>
+        <div className={styles.addresses}>{myAdress || emptyAddresses}</div>
       </div>
 
 
