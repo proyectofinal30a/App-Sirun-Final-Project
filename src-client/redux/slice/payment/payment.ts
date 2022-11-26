@@ -28,6 +28,7 @@ const initialState: ImyOrder = {
       email: "",
       name: "",
       address: {
+        name_address: "",
         street_name: "",
         street_number: "",
         zip_code: "",
@@ -55,7 +56,7 @@ export const reducerAfterPayment = createSlice({
 
 interface IidOrder {
   idReference: string | string[] | undefined;
-  userEmail: string;
+  email: string;
 }
 
 export const getOrder = (orderInfo: IidOrder) => async (dispatch: Function) => {

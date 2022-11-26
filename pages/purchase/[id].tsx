@@ -21,17 +21,15 @@ export default function ApprovedPayment() {
 
 
   const { data, status } = useSession<boolean>();
-  let userEmail: string | undefined = idReference && data?.user?.email;
+  let email: string | undefined = idReference && data?.user?.email;
   console.log(data); // ok
   console.log(query); // ok
 
 
-
   const orderInfo: any = useSelector<Ireducers>((state) => state.reducerAfterPayment.myOrder);
 
-
   useEffect(() => {
-    if (userEmail) dispatch(getOrder({ idReference, userEmail }));
+    if (email) dispatch(getOrder({ idReference, email }));
   });
 
   // console.log(orderId) // ok
