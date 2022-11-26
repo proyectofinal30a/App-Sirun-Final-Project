@@ -1,21 +1,30 @@
-// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+//Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del root 
 
 
 // updatea la visibilidad del producto desde el dashboard del admin.
 const updatePrices: Function = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { percentage } = req.body.percent     
+    const { percent } = req.body
+    const percent2 = percent / 100
+    console.log(percent2);
+
     try {
-        await prisma.product.updateMany({
-            data: {
-                price: {
-                    multiply: Math.round(1 * percentage)
+        const allProducts = await prisma.product.findMany()
+        allProducts.forEach(async (p) => {
+            const price = Number(p.price)
+            let newPrice = Math.round(price + (price * percent2))
+            console.log(newPrice);
+
+            await prisma.product.update({
+                where: { id: p.id },
+                data: {
+                    price: newPrice
                 }
-            }
+            })
+            prisma.$disconnect()
+            res.status(200).json({ msg: "ha sido todo actualizado" })
         })
-        prisma.$disconnect()
-        res.status(200).json({ msg: "ha sido todo actualizado" })
     } catch (error) {
         console.log(error)
         res.status(404).json({
@@ -25,8 +34,6 @@ const updatePrices: Function = async (req: NextApiRequest, res: NextApiResponse)
 }
 
 export default updatePrices
-
-
 
 
 

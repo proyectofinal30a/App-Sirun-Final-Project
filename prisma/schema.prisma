@@ -134,7 +134,7 @@ model Evaluation {
 model Product {
   id          String       @id @unique @default(uuid())
   name        String
-  price       BigInt 
+  price       Int
   dimension   Int
   available   Boolean
   type        TypeDiet
