@@ -3,7 +3,7 @@ import Image from "next/image";
 import { AiFillEyeInvisible, AiFillEye, AiFillEdit } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux'
 import { Iproduct, Ireducers } from "../../../lib/types";
-import { getProducts, updateProduct, changeAvailability, requestUpdateStatusProducts, clean, setProduct } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
+import { getProducts, updateProduct, changeAvailability, requestUpdateStatusProducts, clean, setProduct, updateAllPrices } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import SearchBar from "../SearchBar/SearchBar";
 import { current } from "@reduxjs/toolkit";
 import Modal from "react-modal";
@@ -75,9 +75,10 @@ const AdminManageProducts = () => {
     setPercent(value)
   }
 
-  const submitUpdateAllPrices = (e: Event) => {
+  const submitUpdateAllPrices = async(e: Event, percent) => {
     e.preventDefault()
     alert(percent)
+    await updateAllPrices(percent)
   }
   //END MODAL UPDATE PRODUCTS
 
@@ -95,6 +96,7 @@ const AdminManageProducts = () => {
   // }, [])
 
   const aplicarCambios = async () => {
+    if(!productsToUpdate.length) return alert('Please select product to change')
     await requestUpdateStatusProducts(productsToUpdate)
     alert(`Se actualizo: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
   }
@@ -329,11 +331,12 @@ const AdminManageProducts = () => {
         className={styles.modal}
         contentLabel="Example Modal"
       >
-        <form className={styles.modal__container} onSubmit={(e: any) => submitUpdateAllPrices(e)}>
+        <form className={styles.modal__container} onSubmit={(e: any) => submitUpdateAllPrices(e, percent)}>
           <div className={styles.modal__btn_right_container}>
             <button className={styles.modal__close_modal_btn} onClick={closeModalUpdate}>x</button>
           </div>
           <h2>Edit ALL Products</h2>
+         
           <input value={percent} onChange={handlerInput} placeholder="Add percent to update all products"></input>
           <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
         </form>

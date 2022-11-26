@@ -57,24 +57,42 @@ export const reducerAdmin = createSlice({
       })
 
     },
-    updateProducts: (state, action) => { },
-
+    // updateProducts: (state, action) => {
+      
+    //  },
     cleanState: (state, action) => {
       state.productsUpdate = []
       state.productsToFilter = []
     }
   },
 });
+
+
+
+
 //cleanstate
 export const clean = () => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.cleanState([]));
 };
 
-//updateAllproduts - FALTA DESARROLLAR 
-export const updateAll = (product: any) => (dispatch: Function) => {
-  return dispatch(reducerAdmin.actions.updateProducts(product));
+//Change all prices
+export const updateAllPrices = async(percent : number) => {  
+  try {
+    const myToken: any = await userVerification('server')
+    await axios({
+        method: 'post',
+        url: '/api/adminScope/put/updateAllPrices',
+        data: {percent},
+        headers: {
+          "Authorization": myToken
+        }
+    })
+
+  } catch (error) {
+    console.log(error);
+  }
 };
-//
+
 
 //availability 
 export const changeAvailability = (id: string) => (dispatch: Function) => {

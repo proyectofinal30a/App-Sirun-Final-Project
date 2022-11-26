@@ -28,6 +28,8 @@ const SearchBar = () => {
         name: name,
         allProducts: allProducts,
       }
+      console.log(name);
+      
       dispatch(getProductByName(obj))
       return;
     }
