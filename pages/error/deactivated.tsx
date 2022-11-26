@@ -9,7 +9,7 @@ export default function DeactivatedAccount() {
       <h1 className={styles.deactivated__title}>Your account has been deactivated.</h1>
 
       <p className={styles.deactivated__message}>
-        If you think this was a mistake please send an email to:
+        If you think this is a mistake please send an email to:
         {" "}
         <a href="mailto:sirun.patisserie@gmail.com" className={styles.deactivated__message_span}>
           sirun.patisserie@gmail.com
