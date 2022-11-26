@@ -3,7 +3,7 @@ import Image from "next/image";
 import { AiFillEyeInvisible, AiFillEye, AiFillEdit } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux'
 import { Iproduct, Ireducers } from "../../../lib/types";
-import { getProducts, updateProduct, editProduct, setProduct } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
+import { getProducts, updateProduct, changeAvailability, requestUpdateStatusProducts, clean, setProduct, updateAllPrices } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import SearchBar from "../SearchBar/SearchBar";
 import { current } from "@reduxjs/toolkit";
 import Modal from "react-modal";
@@ -20,6 +20,7 @@ const AdminManageProducts = () => {
     description: "",
   };
   const [formProduct, setFormProduct] = useState(myForm);
+  const [percent, setPercent] = useState("")
 
   const myErr = {
     price: "",
@@ -27,46 +28,107 @@ const AdminManageProducts = () => {
   };
   const [formErrors, setFormErrors] = useState(myErr);
 
+  useEffect(() => {
+    dispatch(clean())
+    dispatch(getProducts())
+    return () => dispatch(clean())
+  }, [])
+
   const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products)
   const dispatch: Function = useDispatch()
   const filteredProducts = useSelector((state: Ireducers) => state.reducerAdmin.productsToFilter)
   const productModal = useSelector((state: Ireducers) => state.reducerAdmin.productEdit)
+  const productsToUpdate = useSelector((state: Ireducers) => state.reducerAdmin.productsUpdate)
 
 
-  useEffect(() => {
-    dispatch(getProducts())
-  })
 
 
   let currentProducts: Iproduct[] = allProducts;
-  let currentProduct: Iproduct;
-
-  if (filteredProducts === 1) {
-    currentProduct = filteredProducts
-  }
+  // let currentProduct: Iproduct;
 
 
-  if (filteredProducts.length > 1) {
+  if (filteredProducts?.length >= 1) {
     currentProducts = filteredProducts
   } else {
     currentProducts = allProducts
   }
 
-
-
-
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalUpdateIsOpen, setmodalUpdateIsOpen] = useState(false);
+
   function closeModal() {
     setIsOpen(false);
   }
 
+  function closeModalUpdate() {
+    setmodalUpdateIsOpen(false)
+  }
 
+  // MODAL- MASIVE prices UPDATE
+  const openMasiveModal = (e: Event) => {
+    e.preventDefault()
+    setmodalUpdateIsOpen(true);
+  }
+
+  const handlerInput = (e: any) => {
+    const { value } = e.target
+    setPercent(value)
+  }
+
+  const submitUpdateAllPrices = async (e: Event, percent) => {
+    e.preventDefault()
+    // alert(percent)
+    await updateAllPrices(percent)
+    await dispatch(getProducts())
+    setmodalUpdateIsOpen(false)
+  }
+  //END MODAL UPDATE PRODUCTS
+
+  //Visibilidad
+  const handleVisibility = (e, product) => {
+    e.preventDefault()
+    const { id } = product
+    dispatch(changeAvailability(id))
+  }
+
+
+  const aplicarCambios = async () => {
+    if (!productsToUpdate.length) return alert('Please select product to change')
+    await requestUpdateStatusProducts(productsToUpdate)
+    alert(`Se actualizo: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
+  }
+
+
+  //end visibilidad
+
+  //MODAL - EDIT ONE PRODUCT
   const editOpenModal = (e: Event, product: Iproduct) => {
     e.preventDefault()
-
     setIsOpen(true);
     dispatch(setProduct(product))
   }
+
+
+  const submitHandler = (e, product: any) => {
+    e.preventDefault()
+    const { id, name } = product
+    const newPrice = Number(formProduct.price)
+    const newDescription = formProduct.description
+
+    const prouctToUpdate = {
+      id: id,
+      price: newPrice,
+      description: newDescription
+      //faltan las imagenes
+    }
+    updateProduct(prouctToUpdate)
+    setIsOpen(false)
+    alert(`se actualizo el producto ${name}`)
+    dispatch(getProducts())
+  }
+  //END EDICT PRODUCT 
+
+
 
   const handleOnChangeInput = (event: any) => {
     const { name, value } = event.target;
@@ -85,14 +147,14 @@ const AdminManageProducts = () => {
     }
 
     setFormProduct({ ...formProduct, [name]: value });
-    setFormErrors(Validation({ ...formProduct, [name]: value }));
+    // setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
 
 
   const handleOnChangeNumber = (event: any) => {
     const { name, value } = event.target;
     setFormProduct({ ...formProduct, [name]: value });
-    setFormErrors(Validation({ ...formProduct, [name]: value }));
+    // setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
 
   const handleOnFile = (event: any) => {
@@ -122,35 +184,15 @@ const AdminManageProducts = () => {
       image: URL.createObjectURL(imageFile[3]),
       imageCloudinary: imageFile[3]
     })
-
-
     setFormProduct({ ...formProduct, image: myTO });
-
   };
 
-
-  const submitHandler = (e, product: any) => {
-    e.preventDefault()
-    const { id, name } = product
-    const newPrice = Number(formProduct.price)
-    const newDescription = formProduct.description
-
-    const obj = {
-      id: id,
-      price: newPrice,
-      description: newDescription
-      //faltan las imagenes
-    }
-    updateProduct(obj)
-    setIsOpen(false)
-    alert(`se actualizo el producto ${name}`)
-    dispatch(getProducts())
-  }
 
   // const handleOnClickReset = () => {
   //   setFormProduct({ ...formProduct, image: [] });
   // };
 
+  //permite borrar la foto que se selecciono por error 
   // const handleOnClickDelete = ({ target }: any) => {
   //   const { name } = target;
   //   const [...myPrevurl] = formProduct.image
@@ -164,12 +206,11 @@ const AdminManageProducts = () => {
 
       <div className={styles.product__manage_search_and_change}>
         <SearchBar />
-        <input className={styles.change__price__input} placeholder="Masive Change Price"></input>
-        <button className={styles.change__price__btn}>Change</button>
+        <button className={styles.change__price__btn} onClick={(e: any) => openMasiveModal(e)}>Update masive prices</button>
+        <input type="button" value="Aplicar Cambios de visibilidad" onClick={aplicarCambios} />
       </div>
 
-
-
+      {/* onClick={(e: any) => editOpenModal(e, product)} */}
 
       {currentProducts?.map((product: any, index: number) => {
         return (
@@ -191,8 +232,12 @@ const AdminManageProducts = () => {
             </div>
             <div className={styles.product__card__icons}>
               <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
-              <AiFillEyeInvisible />
-              <AiFillEye />
+
+              <div className={styles.wishlist_fav_btn_container} onClick={(e: any) => handleVisibility(e, product)} >
+                <p className={styles.wishlist_fav_btn}>
+                  {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}
+                </p>
+              </div>
             </div>
           </div>
         )
@@ -269,47 +314,33 @@ const AdminManageProducts = () => {
               multiple
             />
           </div>
-          {/* 
-          {formProduct.image[0] &&
-            <>
-              <p className={styles.creation_form__images_container__title}>Images control</p>
-              <button
-                onClick={handleOnClickReset}
-                className={[styles.creation_form__input_btn, styles.creation_form__reset_btn].join(" ")}
-              >
-                Reset all image/s
-              </button>
-            </>
-          } */}
-
-          {/* {formProduct.image[0] && formProduct.image.map((e, index) => {
-            return (
-              <div key={index} className={styles.creation_form__img_show_container}>
-                <div className={styles.creation_form__img_container}>
-                  <Image
-                    src={e.image}
-                    alt=""
-                    width="1000"
-                    height="300"
-                    className={styles.creation_form__img}
-                  />
-                </div>
-
-                <input
-                  type={"button"}
-                  name={e.image}
-                  onClick={handleOnClickDelete}
-                  value={"Delete"}
-                  className={styles.creation_form__input_btn_delete}
-                />
-              </div>
-            )
-          })} */}
 
           <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
         </form>
       </Modal>
-    </div>
+
+
+      {/* //MODAL -UPDATE MASIVE PRICES */}
+      <Modal
+        ariaHideApp={false}
+        isOpen={modalUpdateIsOpen}
+        onRequestClose={closeModalUpdate}
+        className={styles.modal}
+        contentLabel="Example Modal"
+      >
+        <form className={styles.modal__container} onSubmit={(e: any) => submitUpdateAllPrices(e, percent)}>
+          <div className={styles.modal__btn_right_container}>
+            <button className={styles.modal__close_modal_btn} onClick={closeModalUpdate}>x</button>
+          </div>
+          <h2>Edit ALL Products</h2>
+
+          <input value={percent} onChange={handlerInput} placeholder="Add percent to update all products"></input>
+          <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
+        </form>
+      </Modal>
+
+
+    </div >
   );
 };
 
