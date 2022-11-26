@@ -75,10 +75,12 @@ const AdminManageProducts = () => {
     setPercent(value)
   }
 
-  const submitUpdateAllPrices = async(e: Event, percent) => {
+  const submitUpdateAllPrices = async (e: Event, percent) => {
     e.preventDefault()
-    alert(percent)
+    // alert(percent)
     await updateAllPrices(percent)
+    dispatch(getProducts())
+    setmodalUpdateIsOpen(false)
   }
   //END MODAL UPDATE PRODUCTS
 
@@ -88,15 +90,10 @@ const AdminManageProducts = () => {
     const { id } = product
     dispatch(changeAvailability(id))
   }
-  // console.log(allProducts)
-  // useEffect(() => {
-  //   if (productsToUpdate.length) {
-  //     (async () => { await requestUpdateStatusProducts(productsToUpdate) })()
-  //   }
-  // }, [])
+
 
   const aplicarCambios = async () => {
-    if(!productsToUpdate.length) return alert('Please select product to change')
+    if (!productsToUpdate.length) return alert('Please select product to change')
     await requestUpdateStatusProducts(productsToUpdate)
     alert(`Se actualizo: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
   }
@@ -336,7 +333,7 @@ const AdminManageProducts = () => {
             <button className={styles.modal__close_modal_btn} onClick={closeModalUpdate}>x</button>
           </div>
           <h2>Edit ALL Products</h2>
-         
+
           <input value={percent} onChange={handlerInput} placeholder="Add percent to update all products"></input>
           <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
         </form>
