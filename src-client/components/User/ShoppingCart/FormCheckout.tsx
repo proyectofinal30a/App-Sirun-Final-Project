@@ -38,6 +38,7 @@ const FormCheckout = (): JSX.Element => {
     area_code: "",
   };
 
+
   interface current {
     current: Iaddresses;
   }
@@ -56,20 +57,13 @@ const FormCheckout = (): JSX.Element => {
   const [inputAddres, setInputAddres] = useState(personInfo);
   const [errors, setErrors] = useState(personInfo);
 
-  console.log(mySelect);
+  if (!data?.user.email || !products || !products[0]) return <div>Loading</div>
 
-  const isOpenModal = () => setIsOpen((current: Boolean) => !current);
+  const isOpenModal = () => setIsOpen((current: Boolean) => !current)
+  const total = products.map((elem) => elem.subTotal).reduce((elem, acc: number) => elem + acc)
+  const totalQuantity = products.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc)
 
-  const total = products
-    .map((elem) => elem.subTotal)
-    .reduce((elem, acc: number) => elem + acc);
 
-  const totalQuantity = products
-    .map((elem) => elem.quantity)
-    .reduce((elem, acc: number) => elem + acc);
-
-  if (!data?.user.email || !products || !products[0]) return <div>Loading</div>;
-  
   const myDataUser = {
     name: data.user.name,
     email: data.user.email,
