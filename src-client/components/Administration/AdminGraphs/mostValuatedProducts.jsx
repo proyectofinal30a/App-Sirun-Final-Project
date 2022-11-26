@@ -5,7 +5,7 @@ import { Products } from './mostValuated';
 
  export const MostValuatedProducts = () => {
    return (
-     <>
+     <div className={styles.dashboard__graphic}>
        <ResponsiveContainer height={400} width={500}>
          <BarChart data={Products}>
            <XAxis dataKey="name" gap={50} />
@@ -16,6 +16,6 @@ import { Products } from './mostValuated';
            <Bar type="monotone" dataKey="rating" barSize={50} fill="#3c5473" />
          </BarChart>
        </ResponsiveContainer>
-     </>
+     </div>
    );
  };

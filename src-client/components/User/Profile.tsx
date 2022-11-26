@@ -215,7 +215,7 @@ const Profile = () => {
       </div>
       <div className={styles.addresses_container}>
         <span>Addresses</span>
-        <div className={styles.addresses}>{myAdress || emptyAddresses}</div>
+        <div className={styles.addresses}>{addresses[0] ? myAdress : emptyAddresses}</div>
       </div>
 
 
