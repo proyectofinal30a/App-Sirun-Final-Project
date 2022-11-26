@@ -15,9 +15,10 @@ import styles from "../../src-client/styles/ApprovedPayment.module.css";
 
 export default function ApprovedPayment() {
   const dispatch: Function = useDispatch();
-  
+
   const { query } = useRouter();
   const idReference: string | string[] | undefined = query.id;
+
 
   const { data, status } = useSession<boolean>();
   let userEmail: string | undefined = idReference && data?.user?.email;
@@ -25,9 +26,10 @@ export default function ApprovedPayment() {
   console.log(query); // ok
 
 
+
   const orderInfo: any = useSelector<Ireducers>((state) => state.reducerAfterPayment.myOrder);
 
- 
+
   useEffect(() => {
     if (userEmail) dispatch(getOrder({ idReference, userEmail }));
   });
@@ -67,8 +69,8 @@ export default function ApprovedPayment() {
     if (typeof process.env.EMAILJS_SERVICE_ID !== "string") return;
 
     emailjs.send(
-      process.env.EMAILJS_SERVICE_ID, 
-      "template_vtu302r", 
+      process.env.EMAILJS_SERVICE_ID,
+      "template_vtu302r",
       templateParams,
       process.env.EMAILJS_PUBLIC_KEY // no se si es necesaria
     ).then(
@@ -87,7 +89,7 @@ export default function ApprovedPayment() {
       <main>
         <div className={styles.approved_payment__container}>
           <div className={styles.approved_payment__img_container}>
-            <Image 
+            <Image
               src="https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Eo_circle_green_white_checkmark.svg/2048px-Eo_circle_green_white_checkmark.svg.png"
               height="100"
               width="100"

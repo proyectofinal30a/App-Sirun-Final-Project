@@ -72,8 +72,7 @@ model Newsletter {
 }
 
 model Address {
-  id            String
-  idDB          String  @id @unique @default(uuid())
+  id            String  @id @unique @default(uuid())
   id_user       String
   name_address  String  @default("my Address")
   zip_code      Int
@@ -88,13 +87,12 @@ model Phone {
   area_code     Int
   number        Int
   id_address    String  @id @default(uuid())
-  addressFather Address @relation(fields: [id_address], references: [idDB])
+  addressFather Address @relation(fields: [id_address], references: [id])
 }
 
 model Order {
-  id                String
-  idDB              String              @id @unique @default(uuid())
-  addressOrder      AddressOrder        @relation(fields: [id_address], references: [idAdressDB])
+  id                String              @id @unique @default(uuid())
+  addressOrder      AddressOrder        @relation(fields: [id_address], references: [id])
   date              DateTime            @default(now())
   purchasedProducts purchasedProducts[]
   product           Product[]
@@ -108,11 +106,9 @@ model Order {
 }
 
 model AddressOrder {
-  idAdressDB    String      @id @default(uuid())
-  id            String      @unique
+  id            String      @id @default(uuid())
   zip_code      Int
   street_name   String
-  available     Boolean     @default(true)
   street_number Int
   phone         PhoneOrder?
   order         Order[]
@@ -122,7 +118,7 @@ model PhoneOrder {
   area_code  Int
   number     Int
   id_address String       @id @default(uuid())
-  address    AddressOrder @relation(fields: [id_address], references: [idAdressDB])
+  address    AddressOrder @relation(fields: [id_address], references: [id])
 }
 
 model purchasedProducts {
@@ -133,7 +129,7 @@ model purchasedProducts {
   unit_price  Int
   quantity    Int
   id_order    String
-  order       Order  @relation(fields: [id_order], references: [idDB])
+  order       Order  @relation(fields: [id_order], references: [id])
 }
 
 model Evaluation {

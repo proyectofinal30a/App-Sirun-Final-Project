@@ -44,7 +44,9 @@ export default function Wishlist(): JSX.Element {
 
   if (!myProfile.name || !data) return (<div className={styles.wishlist__loading}>Loading...</div>);
 
+
   let biblioteca: any = {};
+
 
   if (myProfile) {
     favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
