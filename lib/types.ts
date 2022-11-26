@@ -155,6 +155,7 @@ export interface IDataAddress {
   area_code: string
 }
 export interface Iaddresses {
+  id?: string
   name_address: string;
   zip_code: string;
   street_name: string;
@@ -164,6 +165,9 @@ export interface Iaddresses {
     number: string;
   };
 }
+
+
+
 
 interface IimageProduc {
   image: string;

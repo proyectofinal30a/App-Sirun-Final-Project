@@ -8,10 +8,13 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
         const idAddress = nanoid()
         const idOrder = nanoid()
         const myPreference: Ipreference = req.body
+        console.log(myPreference, 'asdasdasdasdasdasdadadasd');
         const myTotal = myPreference.items.map(elem => elem.subTotal).reduce((e, acc) => e + acc)
         const idProduct = myPreference.items.map(elem => {
             return { id: elem.id }
         })
+
+
         const myItems = myPreference.items.map(product => {
             return {
                 id: product.id,

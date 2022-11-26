@@ -1,9 +1,7 @@
 import Modal from "react-modal";
-import { useState } from "react";
 import React from "react";
-import { IDataAddress, Ireducers, Iaddresses } from '../../../../lib/types'
-
-
+import { IDataAddress, Iaddresses, IproductModelCart } from '../../../../lib/types'
+import ButtonSumbitMercadoPago from "../bottonSubmitForm/submitMercadopago";
 interface myInfoUser {
     user: {
         name: string
@@ -17,11 +15,17 @@ interface myInfoUser {
 
     isOpenModal: Function
     modalIsOpen: boolean
+
+    forButtonMercadoPago: {
+        confirmed: Boolean
+        payLink: string
+    }
+    product: IproductModelCart[]
 }
 
 
 
-export default function ModalConfirm({ user, addressRef, isOpenModal, modalIsOpen, address, styles }: myInfoUser): JSX.Element {
+export default function ModalConfirm({ user, product, forButtonMercadoPago, addressRef, isOpenModal, modalIsOpen, address, styles }: myInfoUser): JSX.Element {
     const { name, email } = user
     return (
         <>
@@ -76,7 +80,14 @@ export default function ModalConfirm({ user, addressRef, isOpenModal, modalIsOpe
                         </div>
                     </div>
 
-
+                    <ButtonSumbitMercadoPago
+                        mySelect={addressRef}
+                        inputAddres={address}
+                        data={user}
+                        forButtonMercadoPago={forButtonMercadoPago}
+                        product={product}
+                        styles={styles}
+                    />
 
                 </div>
             </Modal>
