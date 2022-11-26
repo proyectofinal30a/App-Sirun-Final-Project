@@ -14,14 +14,12 @@ import styles from "../src-client/styles/ApprovedPayment.module.css";
 
 export default function ApprovedPayment() {
   const dispatch: Function = useDispatch();
-
   const { query } = useRouter();
-  let idReference: string = typeof query.external_reference === "string" ? query.external_reference : "";
-
   const { data, status } = useSession<boolean>();
+
+  let idReference: string = typeof query.external_reference === "string" ? query.external_reference : "";
   let email: string = typeof data?.user?.email === "string" ? data?.user?.email : "";
   let name: string = typeof data?.user?.name === "string" ? data?.user?.name : "";
-
   const orderInfo: any = useSelector<Ireducers>((state) => state.reducerAfterPayment.myOrder);
 
 

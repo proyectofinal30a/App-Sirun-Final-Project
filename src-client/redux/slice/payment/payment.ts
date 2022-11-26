@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { IUserBuyer, IitemForMercadoPago } from "../../../../lib/types";
-// import userVerification from "../../../controllers/userVerification-controller";
 
 
 interface ImyOrder {
