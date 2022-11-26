@@ -107,7 +107,7 @@ function Footer() {
               <SiGmail />
               <p className={styles.footer__icons_text}>
                 <a href="mailto:sirun_patisserie@sirun.com">
-                  sirun_patisserie@sirun.com
+                  sirun.patisserie@gmail.com
                 </a>
               </p>
             </div>

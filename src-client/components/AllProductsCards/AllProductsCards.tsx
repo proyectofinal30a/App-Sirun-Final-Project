@@ -33,6 +33,7 @@ const AllProductsCards = () => {
   useEffect(() => {
     data?.user && dispatch(getUserDetail(data?.user.email))
   }, [dispatch, data]);
+  
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
 

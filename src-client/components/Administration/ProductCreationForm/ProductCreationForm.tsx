@@ -15,8 +15,6 @@ export default function FormProduct(): JSX.Element {
     | React.ChangeEvent<HTMLSelectElement>;
 
 
-
-
   const myForm: IproductSumbit = {
     name: "",
     price: 0,
@@ -211,8 +209,8 @@ export default function FormProduct(): JSX.Element {
           <div className={styles.creation_form__section_container}>
             <p className={styles.creation_form__label}>Availability</p>
             <div className={styles.creation_form__available_container}>
-              <label htmlFor="availabe">
-                {formProduct.available ? "Disponible" : "No Disponible"}
+              <label htmlFor="availabe" className={styles.creation_form__available_label}>
+                {formProduct.available ? "Available" : "Not available"}
               </label>
               <input
                 type="range"

@@ -56,6 +56,21 @@ model User {
   favorites     Product[]
 }
 
+model Subscriptors {
+  id            String  @id @default(uuid())
+  email         String
+  id_newsletter String
+  newsletter    Newsletter @relation(fields: [id_newsletter], references: [id])
+}
+
+model Newsletter {
+  id            String  @id @default(uuid())
+  content       String
+  date          DateTime
+  image         String? 
+  subscriptors  Subscriptors[]
+}
+
 model Address {
   id            String  @id @unique @default(uuid())
   id_user       String

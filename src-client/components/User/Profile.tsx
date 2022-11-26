@@ -8,7 +8,7 @@ import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { Ireducers } from "../../../lib/types";
 import cloudinaryOrUrl from "../../controllers/detectionOfImage";
 import { postImageServerUsert } from "../../redux/slice/user-detail-redux/user-redux";
-
+import { useSession } from "next-auth/react"
 
 const Profile = () => {
   const dispatch: Function = useDispatch();
@@ -21,6 +21,48 @@ const Profile = () => {
 
   const [imageUser, setImageUser] = useState(null);
   const [previewForm, setPreviewFrom] = useState(myStateForm);
+
+  //CHANGE PASSWORD
+  const {data} = useSession()
+  const [newPassword, setNewPassword] = useState({
+    original: '',
+    repeat: ''
+  })
+  const [equal, setEqual] = useState(false)
+  const [permited, setPermited] = useState(false)
+
+
+  const userEmail: string | undefined = data?.user?.email
+  const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{7,15}$/
+  
+  
+  const handlerChangePassword = (e: any) => {
+    if(e.target.name === 'original'){
+    setNewPassword({
+      original: e.target.value.toString(),
+      repeat: newPassword.repeat
+    })
+    console.log(regPassword.test(newPassword.original), '!!!!!!!!!!!!!!!!!!!!!!!');
+    
+    if(regPassword.test(newPassword.original) && newPassword.original === newPassword.repeat){
+      setPermited(true)
+    } else {
+      setPermited(false)
+    }
+  
+  } else {
+      setNewPassword(
+        {
+        original:newPassword.original,
+        repeat: e.target.value.toString()
+        })
+        if(regPassword.test(newPassword.original) && newPassword.original === newPassword.repeat){
+          setPermited(true)
+        } else {
+          setPermited(false)
+        }
+    }
+  }
 
   type valueForm =
     | React.FormEvent<HTMLFormElement>
@@ -101,6 +143,24 @@ const Profile = () => {
         required
       />
 
+      <label className={styles.form__label}>Change password</label>
+      <input
+        className={permited ? styles.form__input : styles.form__input__error }
+        type="text"
+        name="original"
+        placeholder="Enter new password"
+        value={newPassword.original}
+        onChange={(e) => handlerChangePassword(e)}
+      />
+      <input
+        className={styles.form__input}
+        type="text"
+        name="repeat"
+        placeholder="Repeat new password"
+        value={newPassword.repeat}
+        onChange={(e) => handlerChangePassword(e)}
+      />
+
       <div className={styles.election__btn}>
         <button className={styles.btn} onClick={handleOnclikSwich}>
           Revert changes
@@ -124,24 +184,12 @@ const Profile = () => {
 
   const myAdress = addresses?.map((ele, index: number) => (
     <div className={styles.address} key={index}>
-      <p>
-        Address {index + 1}: {ele?.name_address.toLowerCase()}{" "}
-      </p>
-      <p>
-        Streer Number {index + 1}: {ele?.street_number}{" "}
-      </p>
-      <p>
-        Streer Name {index + 1}: {ele?.street_name.toLowerCase()}{" "}
-      </p>
-      <p>
-        Phone
-      </p>
-      <p>
-        Area Code {index + 1}: {ele.phone.area_code}{" "}
-      </p>
-      <p>
-        Number {index + 1}: {ele.phone.number}{" "}
-      </p>
+      <p className={styles.address_name}>Address {index + 1}: {ele?.name_address.toLowerCase()}{" "}</p>
+      <p>Streer Number {index + 1}: {ele?.street_number}{" "}</p>
+      <p>Streer Name {index + 1}: {ele?.street_name.toLowerCase()}{" "}</p>
+      <p>Phone</p>
+      <p>Area Code {index + 1}: {ele.phone.area_code}{" "}</p>
+      <p>Number {index + 1}: {ele.phone.number}{" "}</p>
     </div>
   ));
 
@@ -167,7 +215,7 @@ const Profile = () => {
       </div>
       <div className={styles.addresses_container}>
         <span>Addresses</span>
-        <div className={styles.addresses}>{myAdress ? myAdress : emptyAddresses}</div>
+        <div className={styles.addresses}>{addresses[0] ? myAdress : emptyAddresses}</div>
       </div>
 
 
