@@ -135,6 +135,8 @@ export interface Ierror {
   description: string;
 }
 
+
+
 declare module "next-auth" {
   interface Session {
     user: {
