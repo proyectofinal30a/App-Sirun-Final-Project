@@ -15,20 +15,21 @@ export default function Orders(): JSX.Element {
   const orderAll = useSelector((state: Ireducers) => state.reducerUser.user.orders);
   const { data, status } = useSession()
 
+
   useEffect(() => {
     data?.user.email && dispatch(getUserDetail(data?.user.email));
-  }, []);
+  }, [dispatch, data?.user.email]);
 
-  if (status === 'unauthenticated') router.push('/')
-  console.log(orderAll);
 
-  if (!Array.isArray(orderAll) ||   !orderAll[0]) return <div className={styles.order__loading}>Loading...</div>;
+  if (status === 'unauthenticated') router.push('/');
+
+  if (!Array.isArray(orderAll)) return <div className={styles.order__loading}>Loading...</div>;
 
 
   return (
     <div className={styles.order__container}>
       <h3 className={orderAll?.[0] ? styles.order__title : styles.order_title_hidden}>My Orders</h3>
-      {orderAll ?
+      {orderAll[0] ?
         orderAll?.map((elem) => {
           const { purchasedProducts } = elem;
 
