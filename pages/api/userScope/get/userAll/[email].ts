@@ -34,6 +34,7 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                                     id: true,
                                     zip_code: true,
                                     street_name: true,
+                                    street_number: true,
                                     phone: {
                                         select: {
                                             number: true,
@@ -81,6 +82,7 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                             zip_code: true,
                             name_address: true,
                             street_name: true,
+                            street_number: true,
                             phone: {
                                 select: {
                                     number: true,

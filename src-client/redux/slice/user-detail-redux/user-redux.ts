@@ -33,7 +33,6 @@ export const reducerUser = createSlice({
     initialState: template,
     reducers: {
         getUserDetaill: (state: IUserDetail, action: IpayloadUserdata) => {
-            console.log(action.payload);
             state.user = action.payload;
             return;
         },
@@ -65,7 +64,7 @@ export const getUserDetail = (email: string | undefined) => async (dispatch: Fun
 
 
         const myUser: userData = data.data
-        console.log(myUser);
+
 
         dispatch(reducerUser.actions.getUserDetaill(myUser));
 

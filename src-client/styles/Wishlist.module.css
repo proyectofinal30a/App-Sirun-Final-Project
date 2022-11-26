@@ -61,7 +61,6 @@
 }
 
 .wishlist_fav_btn {
-  padding-right: 1em;
   padding-top: 1em;
 }
 
@@ -159,14 +158,9 @@
 @media (max-width: 660px) {
   .wishlist__container {
     padding-top: 3em;
-    
   }
   
   .wishlist_product_container {
     font-size: .9em;
-  }
-
-  .wishlist_fav_btn_container {
-    margin-right: 0em;
   }
 }

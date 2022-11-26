@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { IUserBuyer, IitemForMercadoPago, Iorder } from "../../../../lib/types";
-import userVerification from "../../../controllers/userVerification-controller";
+import { IUserBuyer, IitemForMercadoPago } from "../../../../lib/types";
+// import userVerification from "../../../controllers/userVerification-controller";
 
 
 interface ImyOrder {
@@ -54,14 +54,14 @@ export const reducerAfterPayment = createSlice({
 
 
 interface IidOrder {
-  orderId: string;
+  idReference: string | string[] | undefined;
   userEmail: string;
 }
 
 export const getOrder = (orderInfo: IidOrder) => async (dispatch: Function) => {
   const { data } = await axios({
     method: "get",
-    url: "/userScope/get/email/searchReference",
+    url: "api/userScope/get/email/searchReferencia",
     data: orderInfo,
   });
   

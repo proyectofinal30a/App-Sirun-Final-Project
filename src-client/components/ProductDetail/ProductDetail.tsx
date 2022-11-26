@@ -19,6 +19,8 @@ import Average from "./StarsAverage";
 
 
 const ProductDetail = () => {
+  const dispatch: Function = useDispatch();
+
   const { query } = useRouter();
   const id = query.id;
 
@@ -28,16 +30,17 @@ const ProductDetail = () => {
   const [activeImage, setActiveImage] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
 
-  const dispatch: Function = useDispatch();
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const product = useSelector((state: Ireducers) => state.reducerProductDetail.detail);
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
+
 
   useEffect(() => {
     dispatch(cleanProductDetail());
     typeof id === 'string' && dispatch(getProductDetail(id));
   }, [dispatch, id]);
 
+  
   useEffect(() => {
     if (!myInfUser?.user?.id) {
       dispatch(getUserDetail(myNuEmail));

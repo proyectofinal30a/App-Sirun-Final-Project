@@ -4,7 +4,7 @@ import { prisma } from '../../../../lib/prisma'
 
 const updateUser: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     const {id, role} = req.body
-    console.log(id, role);
+
     
 try {
     const user: any = await prisma.user.update({

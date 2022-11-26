@@ -1,7 +1,7 @@
 .profile__general_container {
   font-family: var(--font-paragraph);
   min-height: 100vh;
-  width: 50%;
+  width: 100%;
   padding-top: 6em;
   display: flex;
   flex-direction: column;
@@ -42,19 +42,28 @@
 .addresses_container {
   display: flex;
   flex-direction: column;
-  width: 100%;
+  width: 80%;
 }
 
 .addresses {
   display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
   margin: auto;
+  width: 100%;
 }
 
 .address {
   text-transform: capitalize;
+  width: 250px;
+  margin: .5em;
+  padding: 1em;
+  background-color: rgb(248, 246, 246);
+  border-radius: .3em;
+}
+
+.address_name {
+  font-weight: bold;
 }
 
 .email__container > span,
@@ -78,7 +87,7 @@
 }
 
 .btn__aling {
-  margin-top: 1.5em;
+  margin: 1.5em 0 4em 0;
   display: flex;
   justify-content: flex-end;
 }
@@ -118,6 +127,14 @@
 }
 
 .form__input {
+  padding: 0.3em;
+  margin-bottom: 0.5em;
+  padding-left: 0.5em;
+  font-size: .9em;
+  margin-bottom: 2em;
+}
+.form__input__error {
+  background-color: red;
   padding: 0.3em;
   margin-bottom: 0.5em;
   padding-left: 0.5em;

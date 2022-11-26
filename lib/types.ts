@@ -13,6 +13,7 @@ export interface IUserBuyer {
   address: {
     id?: string;
     street_name: string;
+    name_address: string;
     street_number: string;
     zip_code: string;
   };
@@ -23,7 +24,7 @@ export interface IUserBuyer {
 }
 
 export interface Ipreference {
-  external_reference: string;
+  external_reference?: string
   payer: IUserBuyer;
   items: IproductModelCart[];
   back_urls: {
@@ -146,16 +147,28 @@ declare module "next-auth" {
   }
 }
 
-interface Iaddresses {
+export interface IDataAddress {
+  name_address: string
+  street_name: string
+  street_number: string
+  zip_code: string
+  number: string
+  area_code: string
+}
+export interface Iaddresses {
+  id?: string
   name_address: string;
   zip_code: string;
   street_name: string;
   street_number: string;
   phone: {
-    area_code: number;
-    number: number;
+    area_code: string;
+    number: string;
   };
 }
+
+
+
 
 interface IimageProduc {
   image: string;

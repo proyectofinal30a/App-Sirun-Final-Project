@@ -18,7 +18,7 @@ const Average = ({ evaluation }: IpropEva) => {
   )
 
   const totalRating = evaluation.map((elem) => elem.rating).reduce((elem, acc: number) => elem + acc)
-  console.log(totalRating, 'rating');
+
 
   const myRating = (Math.round(totalRating / evaluation.length))
   console.log(myRating);

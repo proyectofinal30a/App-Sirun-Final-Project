@@ -9,8 +9,8 @@ const nextConfig = {
     "CLOUDINARY_PRODUCTS": "r94njzcs",
     "CLOUDINARY_SLIDER": "slider",
     "CLOUDINARY_USER_PROFILE": "mfrtuke4",
-    "EMAILJS_API_KEY" : "6kBWW7c7buxjytyG6",
-    "EMAILJS_SERVICES" : "service_59eb21u",
+    "EMAILJS_SERVICE_ID": "service_hys4ifl",
+    "EMAILJS_PUBLIC_KEY": "5FIkK-QM1cvwFbl44",
   }
   ,
   images: {
@@ -74,6 +74,7 @@ const nextConfig = {
       "thumbs.gfycat.com",
       "media.tenor.com",
       "www.genusdei.it",
+      "upload.wikimedia.org",
       "**"
     ],
     async redirects() {

@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+    import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../../../../lib/prisma'
 import axios from 'axios'
 export default async function findReference(req: NextApiRequest, res: NextApiResponse) {
@@ -29,8 +29,7 @@ export default async function findReference(req: NextApiRequest, res: NextApiRes
             }
         })
 
-        console.log(requestOrder.data.results[0].status);
-        console.log(idReference, idReference);
+
 
         if (requestOrder.data?.results?.[0]?.status !== 'approved') return res.status(404).json({ msg: "no estas en la lista de Mercado Pago" })
 

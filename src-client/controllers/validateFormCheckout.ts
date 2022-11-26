@@ -1,90 +1,82 @@
-import { IUserBuyer } from '../../lib/types'
-const validate = (input: IUserBuyer) => {
-    let errors: IUserBuyer = {
-        email: '',
-        name: '',
-        address: {
-            street_name: '',
-            street_number: '',
-            zip_code: ''
-        },
-        phone: {
-            number: '',
-            area_code: ''
-        }
+import { IUserBuyer, IDataAddress } from '../../lib/types'
+const validate = (input: IDataAddress) => {
+
+    const errors: IDataAddress = {
+        name_address: '',
+        street_name: '',
+        street_number: '',
+        zip_code: '',
+        number: '',
+        area_code: ''
     };
 
     const myvalidate = {
-        errorName:
-            !input.name ||
-            input.name.length < 3 ||
-            !/^[a-zA-Z\s]+$/.test(input.name),
-
-        errorEmail: !input.email ||
-            !/\S+@\S+\.\S+/.test(input.email),
-
+        name_address:
+            !input.name_address ||
+            input.name_address.length < 3 ||
+            !/^[a-zA-Z\s]+$/.test(input.name_address),
         errorPhoneAreaCode:
-            !input.phone.area_code ||
-            !/^[0-9]+$/.test(input.phone.area_code) ||
-            input.phone.area_code.length < 2 ||
-            input.phone.area_code.length > 4 ||
-            !(/^\d+$/.test(input.phone.area_code)) ||
-            typeof Number(input.phone.area_code) !== 'number',
+            !input.area_code ||
+            !/^[0-9]+$/.test(input.area_code) ||
+            input.area_code.length < 2 ||
+            input.area_code.length > 4 ||
+            !(/^\d+$/.test(input.area_code)) ||
+            typeof Number(input.area_code) !== 'number',
 
         errorPhoneNumber:
-            !input.phone.number ||
-            !/^[0-9]+$/.test(input.phone.number) ||
-            input.phone.number.length < 7 ||
-            input.phone.number.length > 10 ||
-            !(/^\d+$/.test(input.phone.number)) ||
-            typeof Number(input.phone.number) !== 'number',
+            !input.number ||
+            !/^[0-9]+$/.test(input.number) ||
+            input.number.length < 7 ||
+            input.number.length > 10 ||
+            !(/^\d+$/.test(input.number)) ||
+            typeof Number(input.number) !== 'number',
 
         errorAddresStreetName:
-            !input.address.street_name ||
-            input.address.street_name.length < 3 ||
-            !/^[a-zA-Z0-9\s]+$/.test(input.address.street_name),
+            !input.street_name ||
+            input.street_name.length < 3 ||
+            !/^[a-zA-Z0-9\s]+$/.test(input.street_name),
 
         errorAdrresStreeNumber:
-            !input.address.street_number ||
-            !/^[0-9]+$/.test(input.address.street_number) ||
-            input.address.street_number.length > 4 ||
-            !(/^\d+$/.test(input.address.street_number)) ||
-            typeof Number(input.address.street_number) !== 'number',
+            !input.street_number ||
+            !/^[0-9]+$/.test(input.street_number) ||
+            input.street_number.length > 4 ||
+            !(/^\d+$/.test(input.street_number)) ||
+            typeof Number(input.street_number) !== 'number',
 
         errorAdrresZipCode:
-            !input.address.zip_code ||
-            !/^[0-9]+$/.test(input.address.zip_code) ||
-            input.address.zip_code.length < 4 ||
-            !(/^\d+$/.test(input.address.zip_code)) ||
-            typeof Number(input.address.zip_code) !== 'number'
+            !input.zip_code ||
+            !/^[0-9]+$/.test(input.zip_code) ||
+            input.zip_code.length < 4 ||
+            !(/^\d+$/.test(input.zip_code)) ||
+            typeof Number(input.zip_code) !== 'number'
 
     }
 
-
     switch (true) {
-        case myvalidate.errorName:
-            errors.name = 'Name is required and cannot include number and special characters.';
+        case myvalidate.name_address:
+            errors.name_address = 'Name is required and cannot include number and special characters.';
             break;
-        case myvalidate.errorEmail:
-            errors.email = 'Email is required and must be valid.';
-            break;
+            
         case myvalidate.errorPhoneAreaCode:
-            errors.phone.area_code = 'Area Code is required and must only contain numbers.';
+            errors.area_code = 'Area Code is required and must only contain numbers.';
             break;
 
         case myvalidate.errorPhoneNumber:
-            errors.phone.number = 'Phone is required and must only contain numbers.';
+            errors.number = 'Phone is required and must only contain numbers.';
             break;
 
         case myvalidate.errorAddresStreetName:
-            errors.address.street_name = 'Street Name is required and must be alphanumeric.';
+            errors.street_name = 'Street Name is required and must be alphanumeric.';
             break;
+
         case myvalidate.errorAdrresStreeNumber:
-            errors.address.street_number = 'Street Number is required and must only contain numbers.';
+            errors.street_number = 'Street Number is required and must only contain numbers.';
             break;
+
         case myvalidate.errorAdrresZipCode:
-            errors.address.zip_code = 'Zip Code is required and must only contain numbers.';
+            errors.zip_code = 'Zip Code is required and must only contain numbers.';
             break;
+
     }
     return errors;
 }

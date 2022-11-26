@@ -58,7 +58,7 @@ export const reducerAdmin = createSlice({
 
     },
     // updateProducts: (state, action) => {
-      
+
     //  },
     cleanState: (state, action) => {
       state.productsUpdate = []
@@ -69,23 +69,22 @@ export const reducerAdmin = createSlice({
 
 
 
-
 //cleanstate
 export const clean = () => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.cleanState([]));
 };
 
 //Change all prices
-export const updateAllPrices = async(percent : number) => {  
+export const updateAllPrices = async (percent: number) => {
   try {
     const myToken: any = await userVerification('server')
     await axios({
-        method: 'post',
-        url: '/api/adminScope/put/updateAllPrices',
-        data: {percent},
-        headers: {
-          "Authorization": myToken
-        }
+      method: 'post',
+      url: '/api/adminScope/put/updateAllPrices',
+      data: { percent },
+      headers: {
+        "Authorization": myToken
+      }
     })
 
   } catch (error) {
@@ -123,7 +122,6 @@ export const setProduct = (object: Iproduct) => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.updateProduct(object))
 }
 export const updateProduct: Function = async (dataForm) => {
-  console.log(dataForm)
   try {
     // const myToken: any = await userVerification('client')
     await axios({

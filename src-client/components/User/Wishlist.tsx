@@ -7,20 +7,20 @@ import Link from "next/link";
 import Image from "next/image";
 import { IconContext } from "react-icons";
 import { FaHeart } from "react-icons/fa";
-import { FiHeart } from "react-icons/fi"; // falta no borrar
+import { FiHeart } from "react-icons/fi";
 import { Ireducers } from "../../../lib/types";
-import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import { requestAddToFavorites, addToFavorites, getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 
 
 export default function Wishlist(): JSX.Element {
   const router = useRouter();
   const dispatch: Function = useDispatch();
-  const { data } = useSession();
+  const { data, status } = useSession<boolean>();
 
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const myNuEmail = data?.user?.email;
   const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
-
+  
 
   useEffect(() => {
     if (!myInfUser?.user?.id) {
@@ -29,19 +29,37 @@ export default function Wishlist(): JSX.Element {
   }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
 
 
+  interface IproduId {
+    id: string;
+  }
+
+  let favorites2: Array<IproduId> = [];
+
+
+  useEffect(() => {
+    if (!myProfile) return;
+    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
+  })
+
+
   if (!myProfile.name || !data) return (<div className={styles.wishlist__loading}>Loading...</div>);
 
-  console.log(data)
-  console.log(myProfile)
 
-  const handleClick = (id: any) => {
-    const userId: string = myProfile.id;
-    const productId = id;
+  let biblioteca: any = {};
 
-    // Deleting from wishlist confirmation
+
+  if (myProfile) {
+    favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
+    favorites2.forEach(fav => {
+      biblioteca[fav.id] = true;
+    })
+  }
+  
+  const handleFavorite = (id: string) => {
+    const productToAdd = { id: id };
     let deleteConfirmation = confirm("Are you sure you want to delete this product from your wishlist?");
     if (deleteConfirmation === false) return;
-    // removeFromFavorites(userId, productId);
+    dispatch(addToFavorites(productToAdd));
   }
 
 
@@ -75,11 +93,10 @@ export default function Wishlist(): JSX.Element {
                 </Link>
               </div>
 
-              <div className={styles.wishlist_fav_btn_container} onClick={() => handleClick(elem.id)}>
-                <IconContext.Provider value={{ color: "red", size: "1.3em" }}>
+              <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(elem.id)}>
+                <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
                   <p className={styles.wishlist_fav_btn}>
-                    <FaHeart />
-                    {/* <FiHeart /> */}
+                    {biblioteca[elem.id] ? <FaHeart /> : <FiHeart /> }
                   </p>
                 </IconContext.Provider>
               </div>
