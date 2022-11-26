@@ -29,8 +29,7 @@ export default async function findReference(req: NextApiRequest, res: NextApiRes
             }
         })
 
-        console.log(requestOrder.data.results[0].status);
-        console.log(idReference, idReference);
+
 
         if (requestOrder.data?.results?.[0]?.status !== 'approved') return res.status(404).json({ msg: "no estas en la lista de Mercado Pago" })
 

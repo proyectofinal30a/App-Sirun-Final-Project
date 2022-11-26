@@ -20,8 +20,7 @@ export default function ApprovedPayment() {
   const { data, status }: any = useSession<boolean>();
   const userEmail: string = data.email;
 
-  console.log(data, status); // null --> el usuario tiene que iniciar sesión si o si para poder pagar (hay que corregirlo)
-  console.log(query);
+;
 
 
   const orderInfo: any = useSelector<Ireducers>((state) => state.reducerAfterPayment.myOrder);

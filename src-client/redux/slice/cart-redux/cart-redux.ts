@@ -100,15 +100,19 @@ export const trashItem = (id: string) => (dispatch: Function) => {
 
 export const sendOrderDetail = (user: IUserBuyer, productArray: IproductModelCart[]) => async (dispatch: Function) => {
   try {
+ 
     const myPrerencia = createPreferenceMP(user, productArray)
     const request = await axios({
       method: 'post',
-      url: '/api/mercadopago/createPayment',
+      url: '/api/userScope/post/createOrder',
       data: myPrerencia
     })
+
     const myData: string = request.data.url
     return dispatch(reducerCart.actions.actionConfirmedCart({ payLink: myData, confirmed: true }));
   } catch (error) {
+    console.log(error);
+
     const myMessageError = process.env.NODE_ENN === 'production' ?
       'https://sirunnpatisserie.vercel.app/error' :
       'http://localhost:3000/error';

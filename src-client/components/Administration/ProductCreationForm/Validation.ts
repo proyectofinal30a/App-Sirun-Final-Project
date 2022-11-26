@@ -9,10 +9,6 @@ export default function validation(formProduct: any) {
     description: "",
   };
 
-  // console.log((formProduct))
-  // Name validation
-  // if (!validString.test(formProduct.name) || formProduct.name.length < 3)
-  //   errors.name = "Name is required. Must be longer than two characters and cannot contain numbers or special characters.";
 
   // Price validation
   if (!validNumber.test(formProduct.price) || formProduct.price <= 0 || isNaN(formProduct.price))

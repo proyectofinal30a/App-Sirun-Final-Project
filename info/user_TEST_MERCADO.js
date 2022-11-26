@@ -38,20 +38,20 @@ const order = {
         },
         email: 'test_user_16943485@testuser.com',
     },
-    
+
 }
 //
 
 
 //datos datos de confirmacion
-    const adminData = {
-        "money_release_status": "pending",
-        "status_detail": "accredited",
-        "status": "approved",
-        "transaction_amount_refunded": 0,
-        "transaction_amount": 1300,
-        "id": 51785037066,
-    }
+const adminData = {
+    "money_release_status": "pending",
+    "status_detail": "accredited",
+    "status": "approved",
+    "transaction_amount_refunded": 0,
+    "transaction_amount": 1300,
+    "id": 51785037066,
+}
 
 
 

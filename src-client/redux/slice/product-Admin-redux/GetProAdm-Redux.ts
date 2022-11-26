@@ -46,9 +46,7 @@ export const reducerAdmin = createSlice({
     updateProduct: (state, action) => {
       state.productEdit = action.payload;
     },
-    // cleanState: (state, action) => {
-    //   console.log(action.payload)
-    // }
+
   },
 });
 
@@ -82,7 +80,7 @@ export const setProduct = (object: Iproduct) => (dispatch: Function) => {
 
 //functions para el reducer - pasar a un controller. 
 const filteredByName = (state, name) => {
-  console.log(current(state));
+
 
   let arr = state?.map((product) => {
     if (product.name.toLowerCase().includes(name.toLowerCase())) return product
@@ -111,7 +109,6 @@ export const getProducts: any = () => async (dispatch: Function) => {
 };
 
 export const updateProduct: Function = async (dataForm) => {
-  console.log(dataForm)
   try {
     // const myToken: any = await userVerification('client')
     await axios({

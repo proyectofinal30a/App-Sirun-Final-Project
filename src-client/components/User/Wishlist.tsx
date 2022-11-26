@@ -31,8 +31,7 @@ export default function Wishlist(): JSX.Element {
 
   if (!myProfile.name || !data) return (<div className={styles.wishlist__loading}>Loading...</div>);
 
-  console.log(data)
-  console.log(myProfile)
+
 
   const handleClick = (id: any) => {
     const userId: string = myProfile.id;
