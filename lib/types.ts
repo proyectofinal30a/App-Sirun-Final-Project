@@ -126,6 +126,7 @@ export interface Ireducers {
   reducerFilters: IallProducts;
   reducerAfterPayment: ImyOrder;
   reducerAllUsers: IallUsers;
+  reducerAdmin: any
 }
 
 export interface Ierror {
@@ -134,6 +135,8 @@ export interface Ierror {
   dimension: string;
   description: string;
 }
+
+
 
 declare module "next-auth" {
   interface Session {
