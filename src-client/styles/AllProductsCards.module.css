@@ -19,7 +19,6 @@
   flex-direction: column;
   align-items: center;
   max-width: 20em;
-  /* background-color: var(--color-light-pink); */
   background-color: rgb(243, 238, 238);
   padding-top: 1em;
   margin: 1em;
