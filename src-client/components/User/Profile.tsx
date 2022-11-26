@@ -4,11 +4,12 @@ import styles from "../../styles/Profile.module.css";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import * as accion from "../../redux/slice/user-detail-redux/user-redux";
 import { Ireducers } from "../../../lib/types";
 import cloudinaryOrUrl from "../../controllers/detectionOfImage";
 import { postImageServerUsert } from "../../redux/slice/user-detail-redux/user-redux";
 import { useSession } from "next-auth/react"
+import { createImmediatelyInvokedArrowFunction } from "typescript";
 
 const Profile = () => {
   const dispatch: Function = useDispatch();
@@ -23,7 +24,7 @@ const Profile = () => {
   const [previewForm, setPreviewFrom] = useState(myStateForm);
 
   //CHANGE PASSWORD
-  const {data} = useSession()
+  const { data } = useSession()
   const [newPassword, setNewPassword] = useState({
     original: '',
     repeat: ''
@@ -34,35 +35,36 @@ const Profile = () => {
 
   const userEmail: string | undefined = data?.user?.email
   const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{7,15}$/
-  
-  
+
+
   const handlerChangePassword = (e: any) => {
-    if(e.target.name === 'original'){
-    setNewPassword({
-      original: e.target.value.toString(),
-      repeat: newPassword.repeat
-    })
-    console.log(regPassword.test(newPassword.original), '!!!!!!!!!!!!!!!!!!!!!!!');
-    
-    if(regPassword.test(newPassword.original) && newPassword.original === newPassword.repeat){
-      setPermited(true)
+    if (e.target.name === 'original') {
+      setNewPassword({
+        original: e.target.value.toString(),
+        repeat: newPassword.repeat
+      })
+
+      if (regPassword.test(newPassword.original) && newPassword.original === newPassword.repeat) {
+        setPermited(true)
+      } else {
+        setPermited(false)
+      }
+
     } else {
-      setPermited(false)
-    }
-  
-  } else {
       setNewPassword(
         {
-        original:newPassword.original,
-        repeat: e.target.value.toString()
+          original: newPassword.original,
+          repeat: e.target.value.toString()
         })
-        if(regPassword.test(newPassword.original) && newPassword.original === newPassword.repeat){
-          setPermited(true)
-        } else {
-          setPermited(false)
-        }
+      if (regPassword.test(newPassword.original) && newPassword.original === newPassword.repeat) {
+        setPermited(true)
+      } else {
+        setPermited(false)
+      }
     }
   }
+
+
 
   type valueForm =
     | React.FormEvent<HTMLFormElement>
@@ -102,13 +104,24 @@ const Profile = () => {
       email,
       deleteImage: image,
     };
-    
+
     await postImageServerUsert(packFormUserUpdate);
     setPreviewFrom(myStateForm);
-    dispatch(getUserDetail(email));
+    dispatch(accion.getUserDetail(email));
   };
 
+  interface myevent {
+    target: {
+      name: string
+    }
+  }
 
+
+  const handleOnclickDeleteaddress = (event: any) => {
+    const { name } = event.target
+
+    dispatch(accion.deleteAddress(name))
+  }
   const myImage: string | undefined | false = previewForm.image || defaultImage;
   const myName: string = previewForm.name || name;
 
@@ -145,7 +158,7 @@ const Profile = () => {
 
       <label className={styles.form__label}>Change password</label>
       <input
-        className={permited ? styles.form__input : styles.form__input__error }
+        className={permited ? styles.form__input : styles.form__input__error}
         type="text"
         name="original"
         placeholder="Enter new password"
@@ -184,6 +197,14 @@ const Profile = () => {
 
   const myAdress = addresses?.map((ele, index: number) => (
     <div className={styles.address} key={index}>
+      {!previewForm.status && <><input
+        type='button'
+        value="X"
+        name={ele.id}
+        onClick={handleOnclickDeleteaddress}
+      />
+      </>
+      }
       <p className={styles.address_name}>Address {index + 1}: {ele?.name_address.toLowerCase()}{" "}</p>
       <p>Streer Number {index + 1}: {ele?.street_number}{" "}</p>
       <p>Streer Name {index + 1}: {ele?.street_name.toLowerCase()}{" "}</p>

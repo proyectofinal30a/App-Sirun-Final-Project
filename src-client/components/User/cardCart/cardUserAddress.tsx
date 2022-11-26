@@ -35,7 +35,6 @@ export default function CardUserAddress({
     setInputAddres
 }: prop) {
     if (!addresses[0]) return <div>NO Address</div>
-    console.log('holis');
 
     return (
         <div className={styles.first__column}>

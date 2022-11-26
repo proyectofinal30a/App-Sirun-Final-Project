@@ -14,7 +14,7 @@ const template: IUserDetail = {
         orders: [],
         favorites: [],
         addresses: [],
-        role:''
+        role: ''
     }
 };
 
@@ -49,6 +49,9 @@ export const reducerUser = createSlice({
         deleteOneReview: (state: IUserDetail, action: IidString) => {
             state.user.evaluations = state.user.evaluations.filter((elem) => elem.id !== action.payload)
         },
+        deleteAddress: (state: IUserDetail, action: IidString) => {
+            state.user.addresses = state.user.addresses.filter((elem) => elem.id !== action.payload)
+        },
 
     },
 });
@@ -75,6 +78,27 @@ export const getUserDetail = (email: string | undefined) => async (dispatch: Fun
 
 
 };
+
+interface parameter {
+    idAdress: string
+    idUser: string
+}
+export const deleteAddress = (id: string) => async (dispatch: Function) => {
+    try {
+
+        await axios({
+            method: 'delete',
+            url: `/api/userScope/delete/deleteAddress`,
+            data: { id }
+        })
+        dispatch(reducerUser.actions.deleteAddress(id))
+    } catch (error) {
+        console.log(error);
+
+
+    }
+
+}
 
 
 export const deleteReview = (id: string) => async (dispatch: Function) => {
