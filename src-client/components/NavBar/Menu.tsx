@@ -1,17 +1,14 @@
 import React, { useState } from "react";
-import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
 import { signIn, signOut } from "next-auth/react";
 import Link from "next/link";
 import styles from "../../styles/Menu.module.css";
 
 const Menu = () => {
-  const router = useRouter();
-
   const [isActive, setIsActive] = useState(false);
   const { data: session, status } = useSession<boolean>();
 
-
+  
   const signOrNoSing: any = session ? (
     <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })} className={styles.nav_sign_btn_hidden}>Sign out</button>
   ) : (
@@ -22,7 +19,6 @@ const Menu = () => {
   const handleNavToggle = () => {
     setIsActive((current) => !current);
   };
-
 
   const handleClick = () => {
     if (status === "unauthenticated") signIn("auth0");
