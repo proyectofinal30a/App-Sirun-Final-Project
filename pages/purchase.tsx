@@ -14,23 +14,20 @@ import styles from "../src-client/styles/ApprovedPayment.module.css";
 
 export default function ApprovedPayment() {
   const dispatch: Function = useDispatch();
-
   const { query } = useRouter();
-  let idReference: string = typeof query.external_reference === "string" ? query.external_reference : "";
-
   const { data, status } = useSession<boolean>();
+
+  let idReference: string = typeof query.external_reference === "string" ? query.external_reference : "";
   let email: string = typeof data?.user?.email === "string" ? data?.user?.email : "";
   let name: string = typeof data?.user?.name === "string" ? data?.user?.name : "";
-
   const orderInfo: any = useSelector<Ireducers>((state) => state.reducerAfterPayment.myOrder);
-
 
   useEffect(() => {
     if (idReference !== "" && email !== "") dispatch(getOrder({ idReference, email }));
   }, [email, idReference, dispatch]);
 
 
-  if (orderInfo) {
+  if (orderInfo?.orders?.[0]) {
     let templateParams = {
       client_name: name,
       client_email: email,
