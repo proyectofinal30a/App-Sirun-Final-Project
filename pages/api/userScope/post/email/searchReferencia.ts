@@ -1,7 +1,7 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { prisma } from '../../../../../lib/prisma';
-import axios from 'axios';
 
+import type { NextApiRequest, NextApiResponse } from 'next'
+import { prisma } from '../../../../../lib/prisma'
+import axios from 'axios'
 export default async function findReference(req: NextApiRequest, res: NextApiResponse) {
     try {
         interface body {

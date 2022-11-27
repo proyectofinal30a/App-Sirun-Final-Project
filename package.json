@@ -50,6 +50,7 @@
   },
   "devDependencies": {
     "@types/node": "^18.11.9",
+    "@types/nodemailer": "^6.4.6",
     "@types/react-modal": "^3.13.1",
     "prisma": "^4.6.1",
     "ts-node": "^10.9.1",
