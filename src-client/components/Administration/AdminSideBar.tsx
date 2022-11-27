@@ -37,12 +37,12 @@ const AdminSideBar = () => {
           </Link>
           <Link href="/admin/adminOrders" className={styles.nav__link}>
             <li className={styles.nav__item}>
-              <span className={styles.nav_span}>Manage orders</span>
+              <span className={styles.nav_span}>Manage users orders</span>
             </li>
           </Link>
           <Link href="/admin/adminReviews" className={styles.nav__link}>
             <li className={styles.nav__item}>
-              <span className={styles.nav_span}>Manage reviews</span>
+              <span className={styles.nav_span}>Manage users reviews</span>
             </li>
           </Link>
         </ul>
@@ -61,8 +61,8 @@ const AdminSideBar = () => {
             <Link href="/admin/productCreationForm" className={styles.mobile_nav__link}>Add new product</Link>
             <Link href="/admin/adminProducts" className={styles.mobile_nav__link}>Manage existing products</Link>
             <Link href="/admin/adminUsers" className={styles.mobile_nav__link}>Manage users</Link>
-            <Link href="/admin/adminOrders" className={styles.mobile_nav__link}>Manage orders</Link>
-            <Link href="/admin/adminReviews" className={styles.mobile_nav__link}>Manage reviews</Link>
+            <Link href="/admin/adminOrders" className={styles.mobile_nav__link}>Manage users orders</Link>
+            <Link href="/admin/adminReviews" className={styles.mobile_nav__link}>Manage users reviews</Link>
           </div>
         </div>
       </div>

@@ -1,20 +1,14 @@
 import React from "react";
 import Image from "next/image";
-import styles from "../../styles/AdminProfile.module.css";
+import styles from "../../styles/AdminReviews.module.css";
 
 
-const AdminProfile = () => {
+const AdminReviews = () => {
   return (
-    <div className={styles.profile__container}>
-        <h1 className={styles.profile__title}>Administration profile</h1>
-        <Image 
-          src="https://www.genusdei.it/wp-content/uploads/2019/04/Coming-Soon.jpg"
-          alt="Coming soon"
-          width="300"
-          height="300"
-        />
+    <div className={styles.reviews_management__container}>
+      <h1 className={styles.reviews_management__title}>Reviews management</h1>
     </div>
   );
 };
 
-export default AdminProfile;
+export default AdminReviews;
