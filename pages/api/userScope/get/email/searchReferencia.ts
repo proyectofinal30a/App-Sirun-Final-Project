@@ -1,4 +1,4 @@
-    import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../../../../lib/prisma'
 import axios from 'axios'
 export default async function findReference(req: NextApiRequest, res: NextApiResponse) {
@@ -43,7 +43,7 @@ export default async function findReference(req: NextApiRequest, res: NextApiRes
         })
 
         const responseforEmail = await prisma.user.findFirst({
-            where: {email},
+            where: { email },
             select: {
                 orders: {
                     where: {
