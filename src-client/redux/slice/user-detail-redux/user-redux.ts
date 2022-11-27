@@ -69,11 +69,13 @@ export const getUserDetail = (email: string | undefined) => async (dispatch: Fun
         interface myPending {
             idReferenceArray: string[]
             email: string
+            name: string
         }
 
         const myPending: myPending = {
             idReferenceArray: [],
-            email: myUser.email
+            email: myUser.email,
+            name: myUser.name
         }
         const myStatus = myUser && myUser.orders.map((ele) => {
             if (ele.status === 'pending') {
@@ -89,7 +91,8 @@ export const getUserDetail = (email: string | undefined) => async (dispatch: Fun
 
             await axios({
                 method: "post",
-                url: '/api/userScope/'
+                url: '/api/userScope/post/email-back-order/request-status-order',
+                data: myPending,
             })
 
         }

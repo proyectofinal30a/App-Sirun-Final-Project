@@ -2,14 +2,16 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../../../../lib/prisma'
 import axios from 'axios'
 import * as nodemailer from 'nodemailer'
+import CreationOfHTML from '../../../../../src-client/controllers/email-Order-html'
 export default async function requestStatusOrder(req: NextApiRequest, res: NextApiResponse) {
     try {
         interface body {
             email: string
             idReferenceArray: string[]
+            name: string
         }
-        interface responseMP { data: { results: [{ status: string }] } }
-        const { email, idReferenceArray }: body = req.body
+        interface responseMP { data: { results: [{ status: string, id: string }] } }
+        const { email, idReferenceArray, name }: body = req.body
 
 
         const transporter = nodemailer.createTransport({
@@ -78,13 +80,13 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
                 }
             })
 
-
+            console.log(idReferenceArray);
+            const myHtml = CreationOfHTML(responseforEmail, email, name, requestOrder.data?.results?.[0]?.id)
             const mailOptions = {
                 from: process.env.EMAIL_USER,
                 to: email,
-                subject: 'A ver si anda',
-                html: ` <h1>${responseforEmail?.orders[0].status}</h1>`
-
+                subject: `Sirun Pâtisserie - Order ${requestOrder.data?.results?.[0]?.id}`,
+                html: myHtml
             }
 
             transporter.sendMail(mailOptions, function (error, info) {
