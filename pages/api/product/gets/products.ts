@@ -22,7 +22,7 @@ const products: Function = async (req: NextApiRequest, res: NextApiResponse) => 
       prisma.$disconnect()
       return res.status(200).json(products)
     }
-    res.status(200).json({ msj: 'NO ESTAS AUTORIZADO_ ruta api' })
+    res.status(200).json({ msj: 'Estas en la ruta de product' })
   } catch (error) {
     console.log(error)
     res.status(404).json({ msg: "Error al obtener Products" })

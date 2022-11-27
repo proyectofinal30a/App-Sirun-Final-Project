@@ -19,9 +19,10 @@ const AdminManageProducts = () => {
     image: [],
     description: "",
   };
-  const [formProduct, setFormProduct] = useState(myForm);
-  const [percent, setPercent] = useState("")
 
+
+  const [formProduct, setFormProduct] = useState(myForm);
+  
   const myErr = {
     price: "",
     description: "",
@@ -42,19 +43,24 @@ const AdminManageProducts = () => {
 
 
 
-
+  
   let currentProducts: Iproduct[] = allProducts;
   // let currentProduct: Iproduct;
-
-
+  
+  
   if (filteredProducts?.length >= 1) {
     currentProducts = filteredProducts
   } else {
     currentProducts = allProducts
   }
-
+  
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalUpdateIsOpen, setmodalUpdateIsOpen] = useState(false);
+  const [modalForm, setmodalForm] = useState({
+    quantity : "",
+    direction : "", 
+    type: ""
+  })
 
   function closeModal() {
     setIsOpen(false);
@@ -70,17 +76,39 @@ const AdminManageProducts = () => {
     setmodalUpdateIsOpen(true);
   }
 
-  const handlerInput = (e: any) => {
-    const { value } = e.target
-    setPercent(value)
+  // podria hacer los tres handlers en uno solo
+  const handleModalForm = (e: any) => {
+    setmodalForm({
+      ...modalForm,
+      [e.target.name]: e.target.value
+    })  
   }
 
-  const submitUpdateAllPrices = async (e: Event, percent) => {
+  const handlerInputQuantity = (e: any) => {
+    const { value } = e.target
+    console.log(value, "value");
+    setmodalForm({...modalForm, quantity : value})
+  }
+
+  
+  const handlerInputDirection = (e: any) => {
+    const { value } = e.target
+    console.log(value, "value");
+    setmodalForm({...modalForm, direction : value})
+  }
+
+  const handlerInputType = (e: any) => {
+    const { value } = e.target
+    console.log(value, "value");
+    setmodalForm({...modalForm, type : value})
+  }
+
+  const submitUpdateAllPrices = async (e: Event, modalForm) => {
     e.preventDefault()
-    // alert(percent)
-    await updateAllPrices(percent)
-    await dispatch(getProducts())
-    setmodalUpdateIsOpen(false)
+   console.log(modalForm)
+    await updateAllPrices(modalForm) 
+    setmodalUpdateIsOpen(false) 
+    await dispatch(getProducts()) 
   }
   //END MODAL UPDATE PRODUCTS
 
@@ -128,8 +156,6 @@ const AdminManageProducts = () => {
   }
   //END EDICT PRODUCT 
 
-
-
   const handleOnChangeInput = (event: any) => {
     const { name, value } = event.target;
 
@@ -145,7 +171,6 @@ const AdminManageProducts = () => {
         [name]: value.charAt(0).toUpperCase() + value.slice(1),
       });
     }
-
     setFormProduct({ ...formProduct, [name]: value });
     // setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
@@ -199,6 +224,8 @@ const AdminManageProducts = () => {
   //   const myFilter = myPrevurl.filter(e => e.image !== name)
   //   setFormProduct({ ...formProduct, image: myFilter });
   // };
+
+ 
 
   return (
     <div className={styles.products_manage__container}>
@@ -328,20 +355,29 @@ const AdminManageProducts = () => {
         className={styles.modal}
         contentLabel="Example Modal"
       >
-        <form className={styles.modal__container} onSubmit={(e: any) => submitUpdateAllPrices(e, percent)}>
+        <form className={styles.modal__container} onSubmit={(e: any) => submitUpdateAllPrices(e, modalForm)}>
           <div className={styles.modal__btn_right_container}>
             <button className={styles.modal__close_modal_btn} onClick={closeModalUpdate}>x</button>
           </div>
           <h2>Edit ALL Products</h2>
-
-          <input value={percent} onChange={handlerInput} placeholder="Add percent to update all products"></input>
+          <input name="quantity" value={modalForm.quantity} onChange={handlerInputQuantity} placeholder="Add a quantity to update all products"></input>
+           <select name="direction" onChange={handlerInputDirection} value={modalForm.direction}>
+            <option value="increase">To Increase(+)</option>
+            <option value="decrease">To Decrease(-)</option>
+          </select>
+          <select name="type" onChange={handlerInputType} value={modalForm.type}> 
+            <option value="percent">Per Percent</option>
+            <option value="fixed">Per Fixed Amount</option>
+          </select>
           <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
         </form>
       </Modal>
-
-
     </div >
   );
 };
 
 export default AdminManageProducts;
+
+
+
+

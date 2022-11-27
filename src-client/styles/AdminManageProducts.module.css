@@ -60,11 +60,17 @@
 }
 
 
-
-/*modal, se puede cmabiar/borrar todo, es forma de test*/
-.modal {
-  margin-top: 5%;
-  background-color: grey;
+.modal__container{
+  width: 40%;
+  margin: auto;
+  margin-top: 7em;
+  margin-bottom: 7em;
+  max-height: 75%;
+  overflow-y: auto;
+  border: 2px solid rgb(211, 210, 210);
+  background-color: rgb(248, 246, 248);
+  font-family: var(--font-paragraph);
+  padding: 2em 3em;
 }
 
 /*End modal*/

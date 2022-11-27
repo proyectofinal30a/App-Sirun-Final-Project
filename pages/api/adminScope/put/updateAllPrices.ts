@@ -5,25 +5,53 @@ import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del ro
 
 // updatea la visibilidad del producto desde el dashboard del admin.
 const updatePrices: Function = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { percent } = req.body
-    const percent2 = percent / 100
-
-
     try {
+        const { quantity, direction, type } = req.body.object
+        console.log(quantity, direction, type)
         const allProducts = await prisma.product.findMany()
         allProducts.forEach(async (p) => {
             const price = Number(p.price)
-            let newPrice = Math.round(price + (price * percent2))
-
+            
+            if(type === "fixed" && direction === 'increase'){
+            let newPrice = Math.round(price +  Number(quantity))
             await prisma.product.update({
                 where: { id: p.id },
                 data: {
                     price: newPrice
                 }
             })
+      
+            }else if(type === "fixed" && direction === 'decrease' && price > Number(quantity)){
+                let newPrice = Math.round(price - Number(quantity))
+                await prisma.product.update({
+                    where: { id: p.id },
+                    data: {
+                        price: newPrice
+                    }
+                })
+          
+            } else if (type === "percent" && direction === 'increase') {
+                let newPrice = Math.round(price + (price * Number(quantity) / 100))
+                await prisma.product.update({
+                    where: { id: p.id },
+                    data: {
+                        price: newPrice
+                    }
+                })
+             
+            } else if (type === "percent" && direction === 'decrease' && price > Number(quantity)) {
+                let newPrice = Math.round(price - (price * Number(quantity) / 100))
+                await prisma.product.update({
+                    where: { id: p.id },
+                    data: {
+                        price: newPrice
+                    }
+        }) 
+    }
+})
+
             prisma.$disconnect()
             res.status(200).json({ msg: "ha sido todo actualizado" })
-        })
     } catch (error) {
         console.log(error)
         res.status(404).json({

@@ -12,6 +12,11 @@ interface Iproducts {
   productsUpdate: any
 }
 
+interface IpriceEdit {
+  quantity: string,
+  direction: string
+}
+
 
 const stateInitial: Iproducts = {
   products: [],
@@ -74,16 +79,20 @@ export const clean = () => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.cleanState([]));
 };
 
+
+
 //Change all prices
-export const updateAllPrices = async (percent: number) => {
+export const updateAllPrices = async (object : IpriceEdit) => {
+  console.log(object);
+
   try {
     const myToken: any = await userVerification('server')
     await axios({
       method: 'post',
       url: '/api/adminScope/put/updateAllPrices',
-      data: { percent },
+      data: {object},
       headers: {
-        "Authorization": myToken
+      "Authorization": myToken
       }
     })
 
