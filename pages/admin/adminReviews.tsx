@@ -3,7 +3,7 @@ import Nav from "../../src-client/components/NavBar/Nav";
 import Footer from "../../src-client/components/Footer/Footer";
 import AdminSideBar from "../../src-client/components/Administration/AdminSideBar"; 
 import styles from "../../src-client/styles/AdminSideBar.module.css";
-import AdminReviews from "../../src-client/components/Administration/AdminReviews";
+import AdminManageReviews from "../../src-client/components/Administration/AdminManageReviews";
 import React from "react";
 
 export default function AdminReviewsPage() {
@@ -17,7 +17,7 @@ export default function AdminReviewsPage() {
           <AdminSideBar />
         </div>
         <div className={styles.general__container_second_col}>
-          <AdminReviews />
+          <AdminManageReviews />
         </div>
       </main>
 
