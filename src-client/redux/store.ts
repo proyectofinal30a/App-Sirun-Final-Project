@@ -15,7 +15,9 @@ import reducerAllUsers from "./slice/user-detail-redux/all-users";
 
 
 const persistConfig = {
-  key: 'tuky10000000000000000',
+
+  key: 'tutu',
+
   storage,
 }
 

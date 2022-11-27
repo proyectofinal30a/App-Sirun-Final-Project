@@ -4,6 +4,7 @@ import Footer from "../../src-client/components/Footer/Footer";
 import styles from "../../src-client/styles/AdminSideBar.module.css";
 import UserSideBar from "../../src-client/components/User/UserSideBar";
 import Orders from "../../src-client/components/User/Order";
+import React from "react";
 
 export default function AdminProfilePage() {
   return (

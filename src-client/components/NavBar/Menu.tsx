@@ -82,11 +82,6 @@ const Menu = () => {
               <span className={styles.nav_span}>Shopping Cart</span>
             </Link>
           </li>
-          <li className={styles.nav__item}>
-            <Link href="/checkout" className={styles.nav__link}>
-              <span className={styles.nav_span}>Checkout</span>
-            </Link>
-          </li>
           {session?.user?.role === "admin" && (
             <li className={styles.nav__item}>
               <Link href="/admin/adminDashboard" className={styles.nav__link}>

@@ -33,13 +33,13 @@ const ContactUs = () => {
   const sendEmail = (e: any) => {
     e.preventDefault();
 
-    if (typeof process.env.EMAILJS_SERVICE_ID !== "string") return;
+    if (typeof process.env.EMAILJS_SERVICE_ID_2 !== "string") return;
 
     emailjs.sendForm(
-      process.env.EMAILJS_SERVICE_ID,
-      "template_diqzxgu", // modificar cuando este el template en la nueva cuenta
+      process.env.EMAILJS_SERVICE_ID_2,
+      "template_diqzxgu", 
       form.current,
-      process.env.EMAILJS_PUBLIC_KEY
+      process.env.EMAILJS_PUBLIC_KEY_2
     ).then(
       (result) => console.log("SUCCESS!", result.status, result.text),
       (error) => console.log("FAILED...", error.text)

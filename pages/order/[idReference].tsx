@@ -1,12 +1,13 @@
+import React from "react";
 import HEAD from "../../src-client/components/HEAD";
 import Nav from "../../src-client/components/NavBar/Nav";
+import UserSideBar from "../../src-client/components/User/UserSideBar";
+import OrderDetail from "../../src-client/components/User/OrderDetail";
 import Footer from "../../src-client/components/Footer/Footer";
-import AdminSideBar from "../../src-client/components/Administration/AdminSideBar"; 
 import styles from "../../src-client/styles/AdminSideBar.module.css";
-import AdminProfile from "../../src-client/components/Administration/AdminProfile";
-import React from "react";
 
-export default function AdminProfilePage() {
+
+const OrderDetailPage = () => {
   return (
     <div>
       <HEAD />
@@ -14,14 +15,16 @@ export default function AdminProfilePage() {
 
       <main className={styles.general__container}>
         <div className={styles.general__container_first_col}>
-          <AdminSideBar />
+          <UserSideBar />
         </div>
         <div className={styles.general__container_second_col}>
-          <AdminProfile />
+          <OrderDetail />
         </div>
       </main>
 
       <Footer />
     </div>
-  );
-}
+  )
+};
+
+export default OrderDetailPage;
