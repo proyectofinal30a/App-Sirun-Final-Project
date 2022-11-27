@@ -184,10 +184,10 @@ interface IobjProduct {
 }
 
 export interface IitemForMercadoPago {
-  image: string;
-  name: string;
+  picture_url: string;
+  title: string;
   quantity: string;
-  price: string;
+  unit_price: string;
 }
 
 export interface Iorder {

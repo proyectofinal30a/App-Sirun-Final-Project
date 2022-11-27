@@ -1,9 +1,9 @@
+
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../../../../lib/prisma'
 import axios from 'axios'
 export default async function findReference(req: NextApiRequest, res: NextApiResponse) {
     try {
-
         interface body {
             email: string
             idReference: string
@@ -11,14 +11,11 @@ export default async function findReference(req: NextApiRequest, res: NextApiRes
         interface responseMP {
             data: {
                 results: [
-                    {
-                        status: string
-                    }
+                    { status: string }
                 ]
             }
         }
         const { email, idReference }: body = req.body
-
 
         const requestOrder: responseMP = await axios({
             method: 'get',
@@ -30,25 +27,18 @@ export default async function findReference(req: NextApiRequest, res: NextApiRes
         })
 
 
-
-        if (requestOrder.data?.results?.[0]?.status !== 'approved') return res.status(404).json({ msg: "no estas en la lista de Mercado Pago" })
+        if (requestOrder.data?.results?.[0]?.status !== 'approved') return res.status(404).json({ msg: "No estas en la lista de Mercado Pago" })
 
         await prisma.order.update({
-            where: {
-                id: idReference
-            },
-            data: {
-                status: "confirmed"
-            }
+            where: { id: idReference },
+            data: { status: "confirmed" }
         })
 
         const responseforEmail = await prisma.user.findFirst({
             where: { email },
             select: {
                 orders: {
-                    where: {
-                        id: idReference
-                    },
+                    where: { id: idReference },
                     select: {
                         addressOrder: {
                             select: {
@@ -82,7 +72,7 @@ export default async function findReference(req: NextApiRequest, res: NextApiRes
         res.status(200).json(responseforEmail)
     } catch (error) {
         console.log(error);
-        res.status(404).json({ msg: `Error al buscar OrderEmail` })
+        res.status(404).json({ msg: "Error al buscar OrderEmail" })
     }
 
 }
