@@ -64,13 +64,40 @@ export const getUserDetail = (email: string | undefined) => async (dispatch: Fun
             method: "get",
             url: `/api/userScope/get/userAll/${email}`,
         });
-
-
         const myUser: userData = data.data
 
+        interface myPending {
+            idReferenceArray: string[]
+            email: string
+        }
 
-        dispatch(reducerUser.actions.getUserDetaill(myUser));
+        const myPending: myPending = {
+            idReferenceArray: [],
+            email: myUser.email
+        }
+        const myStatus = myUser && myUser.orders.map((ele) => {
+            if (ele.status === 'pending') {
+                myPending.idReferenceArray.push(ele.id)
+                return ele
+            }
 
+            return { ...ele, purchase_link: '' }
+        })
+
+
+        if (myPending.idReferenceArray[0]) {
+
+            await axios({
+                method: "post",
+                url: '/api/userScope/'
+            })
+
+        }
+
+
+
+        const myUserOrder = { ...myUser, orders: myStatus }
+        dispatch(reducerUser.actions.getUserDetaill(myUserOrder));
     } catch (error) {
         console.log(error);
 

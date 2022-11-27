@@ -98,13 +98,14 @@ export interface PackProducDetailRating {
 
 export interface ImyOrder {
   myOrder: {
-    external_reference: string;
-    total: string;
-    status: string;
-    date: string;
-    delivery_time: string;
+    external_reference: string
+    purchase_link: true
+    total: string
+    status: string
+    date: string
+    delivery_time: string
     user: {
-      id: string;
+      id: string
     };
     purchasedProducts: IitemForMercadoPago[];
   };
@@ -190,6 +191,7 @@ export interface IitemForMercadoPago {
 }
 
 export interface Iorder {
+  id: string
   total: number;
   description: string;
   delivery_time: string;
