@@ -36,7 +36,6 @@ const AdminManageProducts = () => {
     dispatch(getProducts())
     return () => {
       dispatch(clean())
-       dispatch(cleanMsg())
       }
   }, [])
 
@@ -105,14 +104,15 @@ const AdminManageProducts = () => {
 
   const submitUpdateAllPrices = (e: Event, modalForm) => {
     e.preventDefault()
-    console.log(modalForm, "data a enviar")
+      console.log(modalForm, "data a enviar")
     if (modalError.quantity || modalError.direction || modalError.type) return alert("Please fill all the fields correctly")
     dispatch(updateAllPrices(modalForm))
       console.log(backMessage, "mensaje de back"); 
-      setmodalForm(masiveData)
-      setmodalUpdateIsOpen(false) 
-      backMessage.length && alert(backMessage) 
-       dispatch(getProducts()) 
+    backMessage.length && alert(backMessage)
+    dispatch(cleanMsg())
+    setmodalForm(masiveData)
+    setmodalUpdateIsOpen(false) 
+    dispatch(getProducts()) 
   }
   //END MODAL UPDATE PRODUCTS
 
