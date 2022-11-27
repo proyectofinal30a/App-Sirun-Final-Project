@@ -20,15 +20,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 60%;
+  width: 600px;
   height: fit-content;
+  /* background-color: burlywood; */
 }
 
 .second__column {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 40%;
+  width: 700px;
 }
 
 
@@ -42,6 +43,7 @@
   margin: 0;
   padding: 0;
   margin-top: 2em;
+  padding-right: 2em; /*ver responsive*/
   width: 100%;
 }
 
@@ -124,7 +126,7 @@
 }
 
 .column__title_secondary {
-  font-size: 1.5em;
+  font-size: 1.1em;
   margin-bottom: .7em;
   margin-top: .2em;
   color: var(--color-dark-blue);
@@ -132,6 +134,8 @@
 
 .addresses_empty_message {
   margin-bottom: .5em;
+  margin-left: -.5em;
+
 }
 
 /* Address button */
@@ -148,6 +152,7 @@
 .checkout_form__btn:hover {
   cursor: pointer;
   background-color: rgb(249, 199, 199);
+  padding-right: 2em; /*ver*/
 }
 
 /* Continue to payment button */
@@ -266,6 +271,64 @@
 /* *EXISTING ADDRESSES: * */
 
 
+.existing_addresses__container {
+  width: 100%;
+  margin-left: -1em;
+  margin-top: 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.your_info_title {
+  margin-bottom: .5em;
+  font-size: 1.1em;
+  text-decoration: underline;
+  text-transform: uppercase;
+}
+
+.addresses_container {
+  width: 100%;
+  margin-left: -1em;
+  margin-top: .5em;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-bottom: 2em;
+}
+
+.addresses_title {
+  margin-bottom: .5em;
+  color: var(--color-dark-blue);
+  font-style: italic;
+  font-weight: 500;
+}
+
+.address_selection_container {
+  display: flex;
+  width: 100%;
+}
+
+.addresses_select {
+  width: 12em;
+  height: 2em;
+  padding: .3em;
+  border: none;
+  border-right: .3em solid transparent;
+  box-shadow: 0 0 2px grey;
+  border-radius: .1em;
+  margin-bottom: 1em;
+  margin-right: 2em;
+}
+
+.addresses_select:hover {
+  cursor: pointer;
+}
+
+.addresses_title_name {
+  text-transform: uppercase;
+}
 
 
 /* *CHECKOUT FORM PRODUCTS: CARD CART* */
@@ -446,11 +509,7 @@
   }
 }
 
-
-/* Responsive layout */
-
-
-@media screen and (min-width: 998px) and (max-width: 1280px) {
+/* @media screen and (min-width: 998px) and (max-width: 1280px) {
   .checkout__container {
     margin-right: 4em;
   }
@@ -469,7 +528,7 @@
     width: 5em;
     height: 5em;
   }
-}
+} */
 
 @media (max-width: 1000px) {
   .checkout__container {

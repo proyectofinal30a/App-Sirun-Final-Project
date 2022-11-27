@@ -73,10 +73,10 @@ export default function ModalConfirm({
 
             <p className={styles.modal__client_phone}>
               <span className={styles.client_info_span}>Phone number: </span>
-              {address.area_code
+              +{address.area_code
                 ? address.area_code
                 : addressRef.current.phone.area_code}
-              {"-"}
+              {" "}
               {address.number
                 ? address.number
                 : addressRef.current.phone.number}
@@ -121,28 +121,3 @@ export default function ModalConfirm({
     </>
   );
 }
-
-// {!confirmed && !payLink &&
-//     <div className={styles.modal__confirm_btn_container}>
-//       <button
-//         type="submit"
-//         onClick={handleSubmit}
-//         className={styles.modal__confirm_btn}
-//       >
-//         Confirm information
-//       </button>
-//     </div>
-//   }
-
-//  <input type="button" value="TEST PARA PROBAR CUANTO AGUANTA LA BASE DE DATOSSS" name="delete" onClick={() => dispatch(resetCart())} />
-
-// {status&& (
-//     <div className={styles.modal__pay_btn_container}>
-//       <button
-//         className={styles.modal__pay_btn}
-//         onClick={() => dispatch(resetCart())}
-//       >
-//         <a href={payLink}>Continue to MercadoPago</a>
-//       </button>
-//     </div>
-//   )}

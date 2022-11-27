@@ -27,6 +27,7 @@ interface state {
   errors: IDataAddress;
   mySelect: any;
   personInfo: IDataAddress;
+  startNumber: number;
 }
 
 export default function MyFormAdd({
@@ -39,6 +40,7 @@ export default function MyFormAdd({
   errors,
   setButtonInput,
   setAddress,
+  startNumber
 }: state) {
   type buttonEvenOnclik = React.MouseEvent<HTMLButtonElement, MouseEvent>;
   type EventInputChange = React.ChangeEvent<HTMLInputElement>;
@@ -53,6 +55,7 @@ export default function MyFormAdd({
 
   return (
     <div>
+      {startNumber === 1000 && 
       <input
         type="button"
         value={mycondicion}
@@ -72,7 +75,7 @@ export default function MyFormAdd({
             zip_code: "",
           };
         }}
-      />
+      />}
       {buttonInput && (
         <div className={styles.fieldset__container}>
           <div className={styles.container__row_column}>

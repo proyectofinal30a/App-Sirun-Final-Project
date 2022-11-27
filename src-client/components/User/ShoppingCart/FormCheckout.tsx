@@ -56,8 +56,9 @@ const FormCheckout = (): JSX.Element => {
 
   const [inputAddres, setInputAddres] = useState(personInfo);
   const [errors, setErrors] = useState(personInfo);
+  const [startNumber, setStartNumber] = useState(1000);
 
-  if (!data?.user.email || !products || !products[0]) return <div>Loading</div>
+  if (!data?.user.email || !products || !products[0]) return <div className={styles.loading}>Loading...</div>
 
   const isOpenModal = () => setIsOpen((current: Boolean) => !current)
   const total = products.map((elem) => elem.subTotal).reduce((elem, acc: number) => elem + acc)
@@ -75,8 +76,8 @@ const FormCheckout = (): JSX.Element => {
     <div className={styles.checkout__container}>
 
       <div className={styles.address_form_container}>
-        <h1 className={styles.column__title_secondary}>
-          What address would you like the products to be sent to?
+        <h1 className={styles.column__title}>
+          Checkout
         </h1>
 
         <div className={styles.card_user_address_container}>
@@ -91,6 +92,8 @@ const FormCheckout = (): JSX.Element => {
             buttonInput={buttonInput}
             personInfo={personInfo}
             setInputAddres={setInputAddres}
+            startNumber={startNumber}
+            setStartNumber={setStartNumber}
           />
         </div>
 
@@ -104,6 +107,7 @@ const FormCheckout = (): JSX.Element => {
           errors={errors}
           mySelect={mySelect}
           personInfo={personInfo}
+          startNumber={startNumber}
         />
 
         <ButtonConfirmInf
