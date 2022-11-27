@@ -1,5 +1,4 @@
 import React from "react";
-import Link from "next/link";
 import {
   Iaddresses,
   IDataAddress,
@@ -95,13 +94,13 @@ export default function ButtonSumbitMercadoPago({
 
   return confirmed ? (
     <div className={styles.modal__pay_btn_container}>
-      <Link
+      <a
         href={payLink}
         className={styles.modal__pay_btn}
         onClick={() => action.resetCart()}
       >
         Go to MercadoPago
-      </Link>
+      </a>
     </div>
   ) : (
     <div className={styles.modal_confirmation_btn_container}>

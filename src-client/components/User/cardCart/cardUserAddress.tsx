@@ -82,8 +82,8 @@ export default function CardUserAddress({
               return index === 0 ? (
                 <>
                   <option value="" selected disabled>Select your address</option>
-                  <option key={index + 22} value={index}>{address.name_address}</option>
                   <option key={index} value={1000}>Add new address</option>
+                  <option key={index + 22} value={index}>{address.name_address}</option>
                 </>
               ) : (
                 <option key={index} value={index}>{address.name_address}</option>

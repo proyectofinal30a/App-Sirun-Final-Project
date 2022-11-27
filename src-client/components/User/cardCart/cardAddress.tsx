@@ -27,16 +27,16 @@ export default function CardAddress({addresses, mySelect, styles, index}: prop) 
     <div className={styles.addresses_info_container}>
       <h1 className={styles.addresses_title_name}>{addresses[index].name_address}</h1>
       <p>
-        <span>Phone number:{" "}</span>
-        +{addresses[index].phone.area_code}{" "}{addresses[index].phone.number}
+        <span className={styles.address_span}>Phone number:</span>
+        {" "}+{addresses[index].phone.area_code}{" "}{addresses[index].phone.number}
+      </p>
+      <p className={styles.address_street}>
+        <span className={styles.address_span}>Street:</span> 
+        {" "}{addresses[index].street_name.toLowerCase()} {addresses[index].street_number}
       </p>
       <p>
-        <span>Street:{" "}</span> 
-        {addresses[index].street_name} {addresses[index].street_number}
-      </p>
-      <p>
-        <span>Zip code:{" "}</span>
-        {addresses[index].zip_code}
+        <span className={styles.address_span}>Zip code:</span>
+        {" "}{addresses[index].zip_code}
       </p>
     </div>
   ) : (

@@ -22,13 +22,12 @@ export default function ApprovedPayment() {
   let name: string = typeof data?.user?.name === "string" ? data?.user?.name : "";
   const orderInfo: any = useSelector<Ireducers>((state) => state.reducerAfterPayment.myOrder);
 
-
   useEffect(() => {
     if (idReference !== "" && email !== "") dispatch(getOrder({ idReference, email }));
   }, [email, idReference, dispatch]);
 
 
-  if (orderInfo) {
+  if (orderInfo?.orders?.[0]) {
     let templateParams = {
       client_name: name,
       client_email: email,

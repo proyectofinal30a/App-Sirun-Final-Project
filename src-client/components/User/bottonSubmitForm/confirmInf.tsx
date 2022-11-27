@@ -12,9 +12,9 @@ export default function ButtonConfirmInf({mySelect, isOpenModal, inputAddres, st
 
   if (mySelect.current.phone.number)
     return (
-      <div className={styles.checkout_form__btn_container}>
+      <div className={styles.payment__btn_container}>
         <button
-          className={styles.checkout_form__btn}
+          className={styles.payment__btn}
           onClick={() => isOpenModal()}
         >
           Continue to payment
@@ -23,9 +23,9 @@ export default function ButtonConfirmInf({mySelect, isOpenModal, inputAddres, st
     );
   if (myError === undefined && inputAddres.name_address)
     return (
-      <div className={styles.checkout_form__btn_container}>
+      <div className={styles.payment__btn_container}>
         <button
-          className={styles.checkout_form__btn}
+          className={styles.payment__btn}
           onClick={() => isOpenModal()}
         >
           Continue to payment

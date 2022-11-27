@@ -145,21 +145,35 @@
   border: none;
   border: 1px solid var(--color-dark-blue);
   border-radius: .2em;
-  color: var(--color-dark-blue);
-  background-color: rgb(246, 219, 219);
+  color: black;
+  background-color: rgb(230, 226, 226);
 }
 
 .checkout_form__btn:hover {
   cursor: pointer;
-  background-color: rgb(249, 199, 199);
-  padding-right: 2em; /*ver*/
+  background-color: rgb(221, 218, 218);
 }
 
 /* Continue to payment button */
 
-.checkout_form__btn_container {
+.payment__btn_container {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
+  margin-right: 2em;
+}
+
+.payment__btn {
+  padding: .3em .5em;
+  border: none;
+  border: 1px solid var(--color-dark-blue);
+  border-radius: .2em;
+  color: var(--color-dark-blue);
+  background-color: rgb(246, 219, 219);
+}
+
+.payment__btn:hover {
+  cursor: pointer;
+  background-color: rgb(249, 199, 199);
 }
 
 
@@ -268,7 +282,7 @@
 }
 
 
-/* *EXISTING ADDRESSES: * */
+/* *EXISTING ADDRESSES: CARD USER ADDRESS - CARD ADDRESS* */
 
 
 .existing_addresses__container {
@@ -328,6 +342,14 @@
 
 .addresses_title_name {
   text-transform: uppercase;
+}
+
+.address_street {
+  text-transform: capitalize;
+}
+
+.address_span {
+  text-decoration: underline;
 }
 
 
