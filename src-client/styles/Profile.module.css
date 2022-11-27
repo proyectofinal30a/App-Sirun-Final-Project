@@ -274,5 +274,6 @@
 @media (max-width: 660px) {
   .profile__general_container {
     padding-top: 2em;
+    font-size: .9em;
   }
 }
