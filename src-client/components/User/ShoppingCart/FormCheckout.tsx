@@ -7,7 +7,7 @@ import { IDataAddress, Ireducers, Iaddresses } from "../../../../lib/types";
 import { useSession } from "next-auth/react";
 import ModalConfirm from "../modal/ confirmData";
 import CardCart from "../cardCart/cardCart";
-import MyFormAdd from "../formAddress/formAdres";
+import MyFormAdd from "../formAddress/formAddress";
 import { useRef } from "react";
 import ButtonConfirmInf from "../bottonSubmitForm/confirmInf";
 
@@ -73,29 +73,48 @@ const FormCheckout = (): JSX.Element => {
 
   return (
     <div className={styles.checkout__container}>
-      <CardUserAddress
-        data={data}
-        mySelect={mySelect}
-        address={address}
-        setAddress={setAddress}
-        styles={styles}
-        addresses={myFormAddress}
-        setButtonInput={setButtonInput}
-        buttonInput={buttonInput}
-        personInfo={personInfo}
-        setInputAddres={setInputAddres}
-      />
-      <MyFormAdd
-        buttonInput={buttonInput}
-        setAddress={setAddress}
-        setButtonInput={setButtonInput}
-        inputAddres={inputAddres}
-        setInputAddres={setInputAddres}
-        setErrors={setErrors}
-        errors={errors}
-        mySelect={mySelect}
-        personInfo={personInfo}
-      />
+
+      <div className={styles.address_form_container}>
+        <h1 className={styles.column__title_secondary}>
+          What address would you like the products to be sent to?
+        </h1>
+
+        <div className={styles.card_user_address_container}>
+          <CardUserAddress
+            data={data}
+            mySelect={mySelect}
+            address={address}
+            setAddress={setAddress}
+            styles={styles}
+            addresses={myFormAddress}
+            setButtonInput={setButtonInput}
+            buttonInput={buttonInput}
+            personInfo={personInfo}
+            setInputAddres={setInputAddres}
+          />
+        </div>
+
+        <MyFormAdd
+          buttonInput={buttonInput}
+          setAddress={setAddress}
+          setButtonInput={setButtonInput}
+          inputAddres={inputAddres}
+          setInputAddres={setInputAddres}
+          setErrors={setErrors}
+          errors={errors}
+          mySelect={mySelect}
+          personInfo={personInfo}
+        />
+
+        <ButtonConfirmInf
+          errors={errors}
+          mySelect={mySelect}
+          styles={styles}
+          isOpenModal={isOpenModal}
+          inputAddres={inputAddres}
+        />
+      </div>
+
       <ModalConfirm
         user={myDataUser}
         address={inputAddres}
@@ -106,13 +125,7 @@ const FormCheckout = (): JSX.Element => {
         forButtonMercadoPago={forButtonMercadoPago}
         product={products}
       />
-      <ButtonConfirmInf
-        errors={errors}
-        mySelect={mySelect}
-        styles={styles}
-        isOpenModal={isOpenModal}
-        inputAddres={inputAddres}
-      />
+
       <CardCart
         arrayCard={products}
         total={total}

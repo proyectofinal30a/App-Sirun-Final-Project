@@ -10,9 +10,9 @@
   display: flex;
   flex-direction: row;
   margin-right: auto;
-  justify-content: center;
-  padding-top: 10em;
-  margin: 0 5em 3em 0;
+  justify-content: space-around;
+  padding-top: 8em;
+  margin: 0 3em 3em 3em;
   font-family: var(--font-paragraph);
 }
 
@@ -31,36 +31,24 @@
   width: 40%;
 }
 
-.fieldset__conteiner {
+
+/* *CHECKOUT FORM: CARD USER ADDRESS - ADDRESS FORM - INFO CONFIRMATION BUTTON* */
+
+
+.fieldset__container {
   display: flex;
   flex-direction: column;
   border: none;
   margin: 0;
-  width: 85%;
-}
-
-.conteiner__2col_row {
-  display: grid;
-  grid-template-columns: 1fr 2fr;
-  gap: 0.3em;
-}
-
-.conteiner__3col_row {
-  display: grid;
-  grid-template-columns: 2fr 1fr 1fr;
-  gap: 0.3em;
+  padding: 0;
+  margin-top: 2em;
+  width: 100%;
 }
 
 .container__row_column {
   display: flex;
   flex-direction: column;
-}
-
-.column__title {
-  font-size: 2em;
-  margin-bottom: .5em;
-  color: var(--color-dark-blue);
-}
+} 
 
 .form__label {
   text-align: center;
@@ -72,31 +60,216 @@
   margin-bottom: 1.5em; 
 }
 
-.btn__align {
-  width: 100%;
+/* Rows with 2 inputs */
+
+.input__unifier {
   display: flex;
-  justify-content: flex-end;
-  padding: 0 1em;
 }
 
-.form__input_btn,
-.input[type="button"] {
+.container__row_column_two_inputs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form__label_two_inputs {
+  width: 100%;
+  text-align: center;
+  background-color: rgb(230, 226, 226);
+}
+
+.form__input_first_input,
+.form__input_second_input {
+  width: 100%;
   padding: 0.3em;
-  margin-bottom: 1em;
-  background-color: var(--color-light-pink);
-  border: none;
-  border: 1px solid grey;
-  border-radius: 5px;
-  font-family: var(--font-paragraph);
-  font-size: 0.9em;
+  margin-bottom: 1.5em; 
+}
+
+/* Rows with 3 inputs */
+
+.container__row_column_three_inputs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form__label_three_inputs {
+  width: 100%;
+  text-align: center;
+  background-color: rgb(230, 226, 226);
+}
+
+.form__input_1,
+.form__input_2,
+.form__input_3 {
+  width: 100%;
+  padding: 0.3em;
+  margin-bottom: 1.5em; 
+}
+
+/* Content */
+
+.address_form_container {
+
+}
+
+.card_user_address_container {
+  padding-left: .5em;
+}
+
+.column__title {
+  font-size: 2em;
+  margin-bottom: .5em;
   color: var(--color-dark-blue);
 }
 
-.form__input_btn:hover,
-.input[type="button"]:hover {
-  background-color: rgb(246, 226, 226);
+.column__title_secondary {
+  font-size: 1.5em;
+  margin-bottom: .7em;
+  margin-top: .2em;
+  color: var(--color-dark-blue);
+}
+
+.addresses_empty_message {
+  margin-bottom: .5em;
+}
+
+/* Address button */
+
+.checkout_form__btn {
+  padding: .3em .5em;
+  border: none;
+  border: 1px solid var(--color-dark-blue);
+  border-radius: .2em;
+  color: var(--color-dark-blue);
+  background-color: rgb(246, 219, 219);
+}
+
+.checkout_form__btn:hover {
+  cursor: pointer;
+  background-color: rgb(249, 199, 199);
+}
+
+/* Continue to payment button */
+
+.checkout_form__btn_container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+
+/* *INFO CONFIRMATION MODAL: CONFIRM DATA - BUTTON SUBMIT MERCADOPAGO* */
+
+
+.modal {
+  width: 40%;
+  margin: auto;
+  margin-top: 7em;
+  margin-bottom: 7em;
+  max-height: 75%;
+  overflow-y: auto;
+  border: 2px solid rgb(211, 210, 210);
+}
+
+.modal__container {
+  background-color: rgb(248, 246, 248);
+  font-family: var(--font-paragraph);
+  padding: 2em 3em;
+}
+
+.modal__container > h2 {
+  letter-spacing: 1px;
+  font-size: 1.2em;
+  padding-bottom: 1em;
+}
+
+.modal__btn_right_container {
+  float: right;
+}
+
+.modal__close_modal_btn {
+  border: none;
+  border-radius: .2em;
+  padding: .2em .7em;
+  background-color: rgb(250, 47, 47);
+  color: rgb(24, 24, 24);
+  font-weight: bold;
+}
+
+.modal__close_modal_btn:hover {
+  background-color: rgb(251, 77, 77);
   cursor: pointer;
 }
+
+/* Modal information */
+
+.modal__client_container {
+  margin: 1em 0 2em 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.client_info_span {
+  font-weight: bold;
+  margin-right: .1em;
+}
+
+.modal__client_name,
+.modal__client_address_name,
+.modal__client_address,
+.modal__client_phone,
+.modal__client_zipcode {
+  text-transform: capitalize;
+}
+
+/* Info confirmation modal button */
+
+.modal_confirmation_btn_container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal__confirm_btn {
+  color: black;
+  padding: .3em .7em;
+  border: none;
+  border: 1px solid grey;
+  border-radius: .2em;
+}
+
+.modal__confirm_btn:hover,
+.modal__confirm_btn:focus {
+  background-color: rgb(231, 229, 229);
+  cursor: pointer;
+}
+
+.modal__pay_btn_container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal__pay_btn {
+  color: white;
+  background-color: rgb(14, 185, 14);
+  padding: .3em .7em;
+  border: none;
+  border: 1px solid grey;
+  border-radius: .2em;
+}
+
+.modal__pay_btn:hover {
+  cursor: pointer;
+  background-color: rgb(13, 199, 13);
+}
+
+
+/* *EXISTING ADDRESSES: * */
+
+
+
+
+/* *CHECKOUT FORM PRODUCTS: CARD CART* */
+
 
 .item__container {
   display: flex;
@@ -107,19 +280,8 @@
   width: 100%;
   margin-bottom: 1em;
   background-color: rgb(248, 246, 248);
-  max-height: 22.15em;
+  max-height: 25em;
   overflow-y: scroll;
-}
-
-.product__img_container {
-  width: 8em;
-  height: 8em;
-}
-
-.product_card__img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
 }
 
 .item {
@@ -142,11 +304,35 @@
   margin-bottom: 1em;
 }
 
+/* Product image */
+
+.product__img_container {
+  width: 30%;
+  width: 8em;
+  height: 8em;
+}
+
+.product__img {
+  width: 8em;
+  height: 8em;
+  object-fit: cover;
+  border-radius: .2em;
+}
+
+/* Product info */
+
+.item__info_container {
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  padding-top: .5em;
+  margin-left: 2em;
+  margin-right: 1em;
+}
+
 .item__info {
   display: flex;
   flex-direction: column;
-  width: 70%;
-  margin-left: 2em;
   font-size: 0.9em;
 }
 
@@ -193,120 +379,7 @@
 }
 
 
-/* Confirm information modal */
-
-
-.modal {
-  width: 40%;
-  margin: auto;
-  margin-top: 7em;
-  margin-bottom: 7em;
-  max-height: 75%;
-  overflow-y: auto;
-  border: 2px solid rgb(211, 210, 210);
-}
-
-.modal__container {
-  background-color: rgb(248, 246, 248);
-  font-family: var(--font-paragraph);
-  padding: 2em 3em;
-}
-
-.modal__container > h2 {
-  letter-spacing: 1px;
-  font-size: 1.2em;
-  padding-bottom: 1em;
-}
-
-.modal__btn_right_container {
-  float: right;
-}
-
-.modal__close_modal_btn {
-  border: none;
-  border-radius: .2em;
-  padding: .2em .7em;
-  background-color: rgb(250, 47, 47);
-  color: rgb(24, 24, 24);
-  font-weight: bold;
-}
-
-.modal__close_modal_btn:hover {
-  background-color: rgb(251, 77, 77);
-  cursor: pointer;
-}
-
-.modal__client_container {
-  margin: 1em 0 2em 0;
-  display: flex;
-  flex-direction: column;
-}
-
-.client__display {
-  display: flex;
-  flex-direction: column;
-}
-
-.client_info_span {
-  font-weight: bold;
-}
-
-.modal__client_phone {
-  display: flex;
-}
-
-.modal__client_name {
-  text-transform: capitalize;
-}
-
-.modal__client_address_container {
-  display: flex;
-  text-transform: capitalize;
-}
-
-.modal__confirm_btn_container {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.modal__confirm_btn {
-  color: black;
-  margin-top: 1em;
-  padding: .3em .7em;
-  border: none;
-  border: 1px solid grey;
-  border-radius: .2em;
-  font-size: .9em;
-}
-
-.modal__confirm_btn:hover,
-.modal__confirm_btn:focus {
-  background-color: rgb(231, 229, 229);
-  cursor: pointer;
-}
-
-.modal__pay_btn_container {
-  display: flex;
-  justify-content: flex-end;
-}
-
-.modal__pay_btn {
-  color: white;
-  background-color: rgb(10, 176, 10);
-  margin-top: 1em;
-  padding: .3em .7em;
-  border: none;
-  border: 1px solid grey;
-  border-radius: .2em;
-  font-size: .9em;
-}
-
-.modal__pay_btn:hover {
-  cursor: pointer;
-  background-color: rgb(13, 199, 13);
-}
-
-
+/* *RESPONSIVE LAYOUT* */
 
 
 @media (max-width: 1540px) {

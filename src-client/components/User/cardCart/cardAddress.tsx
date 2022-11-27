@@ -24,13 +24,11 @@ export default function CardAddress({ addresses, mySelect, styles, index }: prop
 
 
     return index !== 1000 ?
-        <div>
-            <h1>{addresses[index].name_address}</h1>
-            <h3>Street Name:{addresses[index].street_name}</h3>
-            <h3>Street Number:{addresses[index].street_number}</h3>
-            <h3>zip_code:{addresses[index].zip_code}</h3>
-            <h3>Phone</h3>
-            <h4>+{addresses[index].phone.area_code} {addresses[index].phone.number}</h4>
+        <div className={styles.addresses_container}>
+            <h1>Address name: {addresses[index].name_address}</h1>
+            <h3>Street: {addresses[index].street_name} {addresses[index].street_number}</h3>
+            <h3>Zip code: {addresses[index].zip_code}</h3>
+            <h3>Phone: +{addresses[index].phone.area_code} {addresses[index].phone.number}</h3>
         </div>
         : <h2>Select Address</h2>
 } 
