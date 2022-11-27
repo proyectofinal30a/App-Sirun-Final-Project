@@ -1,15 +1,12 @@
-
-import React from "react";
-import styles from "../../styles/Profile.module.css";
-import Image from "next/image";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import * as accion from "../../redux/slice/user-detail-redux/user-redux";
+import Image from "next/image";
+import { useSession } from "next-auth/react";
 import { Ireducers } from "../../../lib/types";
 import cloudinaryOrUrl from "../../controllers/detectionOfImage";
+import * as accion from "../../redux/slice/user-detail-redux/user-redux";
 import { postImageServerUsert } from "../../redux/slice/user-detail-redux/user-redux";
-import { useSession } from "next-auth/react"
-import { createImmediatelyInvokedArrowFunction } from "typescript";
+import styles from "../../styles/Profile.module.css";
 
 const Profile = () => {
   const dispatch: Function = useDispatch();
@@ -24,47 +21,42 @@ const Profile = () => {
   const [previewForm, setPreviewFrom] = useState(myStateForm);
 
   //CHANGE PASSWORD
-  const { data } = useSession()
+  const { data } = useSession();
   const [newPassword, setNewPassword] = useState({
-    original: '',
-    repeat: ''
-  })
-  const [equal, setEqual] = useState(false)
-  const [permited, setPermited] = useState(false)
+    original: "",
+    repeat: "",
+  });
+  const [equal, setEqual] = useState(false);
+  const [permited, setPermited] = useState(false);
 
-
-  const userEmail: string | undefined = data?.user?.email
-  const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{7,15}$/
+  const userEmail: string | undefined = data?.user?.email;
+  const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{7,15}$/;
 
 
   const handlerChangePassword = (e: any) => {
-    if (e.target.name === 'original') {
+    if (e.target.name === "original") {
       setNewPassword({
         original: e.target.value.toString(),
-        repeat: newPassword.repeat
-      })
+        repeat: newPassword.repeat,
+      });
 
       if (regPassword.test(newPassword.original) && newPassword.original === newPassword.repeat) {
-        setPermited(true)
+        setPermited(true);
       } else {
-        setPermited(false)
+        setPermited(false);
       }
-
     } else {
-      setNewPassword(
-        {
-          original: newPassword.original,
-          repeat: e.target.value.toString()
-        })
+      setNewPassword({
+        original: newPassword.original,
+        repeat: e.target.value.toString(),
+      });
       if (regPassword.test(newPassword.original) && newPassword.original === newPassword.repeat) {
-        setPermited(true)
+        setPermited(true);
       } else {
-        setPermited(false)
+        setPermited(false);
       }
     }
-  }
-
-
+  };
 
   type valueForm =
     | React.FormEvent<HTMLFormElement>
@@ -73,7 +65,6 @@ const Profile = () => {
 
 
   const myProfide = useSelector((state: Ireducers) => state.reducerUser.user);
-
   if (!myProfide) return <div className={styles.loading}>Loading...</div>;
 
   const { name, email, image, addresses } = myProfide;
@@ -104,24 +95,23 @@ const Profile = () => {
       email,
       deleteImage: image,
     };
-
     await postImageServerUsert(packFormUserUpdate);
     setPreviewFrom(myStateForm);
     dispatch(accion.getUserDetail(email));
   };
 
+
   interface myevent {
     target: {
-      name: string
-    }
+      name: string;
+    };
   }
-
 
   const handleOnclickDeleteaddress = (event: any) => {
-    const { name } = event.target
+    const { name } = event.target;
+    dispatch(accion.deleteAddress(name));
+  };
 
-    dispatch(accion.deleteAddress(name))
-  }
   const myImage: string | undefined | false = previewForm.image || defaultImage;
   const myName: string = previewForm.name || name;
 
@@ -187,6 +177,7 @@ const Profile = () => {
     </form>
   );
 
+
   const myButtonSwith = previewForm.status ? (
     <button className={styles.switch__btn} onClick={handleOnclikSwich}>
       Edit profile
@@ -195,27 +186,41 @@ const Profile = () => {
     myForm
   );
 
-  const myAdress = addresses?.map((ele, index: number) => (
+
+  const myAddress = addresses?.map((ele, index: number) => (
     <div className={styles.address} key={index}>
-      {!previewForm.status && <><input
-        type='button'
-        value="X"
-        name={ele.id}
-        onClick={handleOnclickDeleteaddress}
-      />
-      </>
-      }
-      <p className={styles.address_name}>Address {index + 1}: {ele?.name_address.toLowerCase()}{" "}</p>
-      <p>Streer Number {index + 1}: {ele?.street_number}{" "}</p>
-      <p>Streer Name {index + 1}: {ele?.street_name.toLowerCase()}{" "}</p>
-      <p>Phone</p>
-      <p>Area Code {index + 1}: {ele.phone.area_code}{" "}</p>
-      <p>Number {index + 1}: {ele.phone.number}{" "}</p>
+      {!previewForm.status && (
+        <div className={styles.edition_close_btn_container}>
+          <input
+            type="button"
+            value="X"
+            name={ele.id}
+            className={styles.edition_close_btn}
+            onClick={handleOnclickDeleteaddress}
+          />
+        </div>
+      )}
+
+      <p className={styles.address_name}>
+        <span className={styles.address_span}>Address {index + 1}:{" "}</span>
+        <p className={styles.address_info}>{ele?.name_address.toLowerCase()}</p>
+      </p>
+
+      <p className={styles.address_street}>
+        <span className={styles.address_span}>Street:{" "}</span>
+        <p className={styles.address_info}>{ele?.street_name.toLowerCase()}{" "}{ele?.street_number}</p>
+      </p>
+
+      <p className={styles.address_phone}>
+        <span className={styles.address_span}>Phone:{" "}</span>
+        <p className={styles.address_info}>+{ele.phone.area_code}{" "}{ele.phone.number}</p>
+      </p>
     </div>
   ));
 
 
-  const emptyAddresses = "There is no address associated with this account.";
+  const emptyAddressesMessage = "There is no address associated with this account.";
+
 
   return (
     <div className={styles.profile__general_container}>
@@ -236,9 +241,10 @@ const Profile = () => {
       </div>
       <div className={styles.addresses_container}>
         <span>Addresses</span>
-        <div className={styles.addresses}>{addresses[0] ? myAdress : emptyAddresses}</div>
+        <div className={styles.addresses}>
+          {addresses[0] ? myAddress : emptyAddressesMessage}
+        </div>
       </div>
-
 
       <div className={styles.btn__aling}>{myButtonSwith}</div>
     </div>
@@ -246,4 +252,3 @@ const Profile = () => {
 };
 
 export default Profile;
-

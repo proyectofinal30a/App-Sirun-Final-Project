@@ -55,15 +55,55 @@
 
 .address {
   text-transform: capitalize;
-  width: 250px;
+  width: 350px;
   margin: .5em;
   padding: 1em;
   background-color: rgb(248, 246, 246);
   border-radius: .3em;
 }
 
+.address_span {
+  font-weight: bold;
+}
+
 .address_name {
   font-weight: bold;
+  text-transform: uppercase;
+  color: var(--color-dark-blue);
+  display: flex;
+}
+
+.address_street {
+  display: flex;
+}
+
+.address_phone {
+  display: flex;
+}
+
+.address_info {
+  margin-left: .3em;
+}
+
+.edition_close_btn_container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  margin-bottom: -1em;
+}
+
+.edition_close_btn {
+  background-color: red;
+  border: none;
+  border-radius: .2em;
+  padding: .1em .5em 0 .55em;
+  text-align: center;
+}
+
+.edition_close_btn:hover {
+  cursor: pointer;
+  background-color: rgb(243, 49, 49);
 }
 
 .email__container > span,

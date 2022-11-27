@@ -1,3 +1,13 @@
+.loading {
+  margin: auto;
+  margin-top: 10em;
+  height: 100vh;
+  color: var(--color-dark-blue);
+  font-family: var(--font-paragraph);
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
 .error {
   color: red;
   text-align: center;
