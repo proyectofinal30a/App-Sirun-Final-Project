@@ -87,8 +87,8 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
                 subject: `Sirun Pâtisserie - Order ${requestOrder.data?.results?.[0]?.id}`,
                 html: myHtml
             }
-
-            transporter.sendMail(mailOptions, function (error, info) {
+    
+    await transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
                     console.log(error);
                 } else {
