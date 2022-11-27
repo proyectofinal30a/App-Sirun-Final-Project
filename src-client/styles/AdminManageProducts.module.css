@@ -73,6 +73,9 @@
   padding: 2em 3em;
 }
 
+.modal__error{
+  color: red;
+}
 /*End modal*/
 
 /* Responsive layout */

@@ -115,7 +115,13 @@ interface IallUsers {
   allUsers: userData[];
   usersByName: userData[];
 }
-
+export interface Iproducts {
+  products: Iproduct[],
+  productsToFilter: Iproduct[],
+  productEdit: any,
+  productsUpdate: any
+  errorMessage: string
+}
 export interface Ireducers {
   reducerProduct?: null;
   reducerProducts: IallProducts;
@@ -126,7 +132,7 @@ export interface Ireducers {
   reducerFilters: IallProducts;
   reducerAfterPayment: ImyOrder;
   reducerAllUsers: IallUsers;
-  reducerAdmin: any
+  reducerAdmin: Iproducts;
 }
 
 export interface Ierror {

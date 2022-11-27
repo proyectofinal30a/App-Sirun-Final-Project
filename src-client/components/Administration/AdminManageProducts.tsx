@@ -3,13 +3,15 @@ import Image from "next/image";
 import { AiFillEyeInvisible, AiFillEye, AiFillEdit } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux'
 import { Iproduct, Ireducers } from "../../../lib/types";
-import { getProducts, updateProduct, changeAvailability, requestUpdateStatusProducts, clean, setProduct, updateAllPrices } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
+import { getProducts, updateProduct, changeAvailability, requestUpdateStatusProducts, clean, setProduct, updateAllPrices, cleanMsg } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import SearchBar from "../SearchBar/SearchBar";
-import { current } from "@reduxjs/toolkit";
 import Modal from "react-modal";
 import styles from "../../styles/AdminManageProducts.module.css";
+import masiveValidate from "../../controllers/masiveValidation"
+import { current } from "@reduxjs/toolkit";
 import Validation from "../Administration/ProductCreationForm/Validation"
 import { postImageServerUsert } from "../../redux/slice/user-detail-redux/user-redux";
+import { stat } from "fs";
 // import { useRouter } from "next/router";
 
 
@@ -32,35 +34,36 @@ const AdminManageProducts = () => {
   useEffect(() => {
     dispatch(clean())
     dispatch(getProducts())
-    return () => dispatch(clean())
+    return () => {
+      dispatch(clean())
+       dispatch(cleanMsg())
+      }
   }, [])
 
-  const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products)
+  const {products : allProducts, productsToFilter : filteredProducts, productEdit : productModal, productsUpdate : productsToUpdate, errorMessage : backMessage } = useSelector((state: Ireducers) => state.reducerAdmin)
+ 
+
   const dispatch: Function = useDispatch()
-  const filteredProducts = useSelector((state: Ireducers) => state.reducerAdmin.productsToFilter)
-  const productModal = useSelector((state: Ireducers) => state.reducerAdmin.productEdit)
-  const productsToUpdate = useSelector((state: Ireducers) => state.reducerAdmin.productsUpdate)
 
-
-
-  
   let currentProducts: Iproduct[] = allProducts;
   // let currentProduct: Iproduct;
-  
   
   if (filteredProducts?.length >= 1) {
     currentProducts = filteredProducts
   } else {
     currentProducts = allProducts
   }
-  
-  const [modalIsOpen, setIsOpen] = useState(false);
-  const [modalUpdateIsOpen, setmodalUpdateIsOpen] = useState(false);
-  const [modalForm, setmodalForm] = useState({
+
+  const masiveData = {
     quantity : "",
     direction : "", 
     type: ""
-  })
+  }
+  
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalUpdateIsOpen, setmodalUpdateIsOpen] = useState(false);
+  const [modalForm, setmodalForm] = useState(masiveData)
+  const [modalError, setmodalError] = useState(masiveData)
 
   function closeModal() {
     setIsOpen(false);
@@ -76,39 +79,40 @@ const AdminManageProducts = () => {
     setmodalUpdateIsOpen(true);
   }
 
-  // podria hacer los tres handlers en uno solo
-  const handleModalForm = (e: any) => {
-    setmodalForm({
-      ...modalForm,
-      [e.target.name]: e.target.value
-    })  
-  }
+ 
 
   const handlerInputQuantity = (e: any) => {
     const { value } = e.target
     console.log(value, "value");
     setmodalForm({...modalForm, quantity : value})
+    setmodalError(masiveValidate({...modalForm, quantity : value}))
   }
 
   
   const handlerInputDirection = (e: any) => {
     const { value } = e.target
-    console.log(value, "value");
+    console.log(value);
     setmodalForm({...modalForm, direction : value})
+    setmodalError(masiveValidate({...modalForm, direction : value}))
   }
 
   const handlerInputType = (e: any) => {
     const { value } = e.target
-    console.log(value, "value");
+    console.log(value);
     setmodalForm({...modalForm, type : value})
+    setmodalError(masiveValidate({...modalForm, type : value}))
   }
 
-  const submitUpdateAllPrices = async (e: Event, modalForm) => {
+  const submitUpdateAllPrices = (e: Event, modalForm) => {
     e.preventDefault()
-   console.log(modalForm)
-    await updateAllPrices(modalForm) 
-    setmodalUpdateIsOpen(false) 
-    await dispatch(getProducts()) 
+    console.log(modalForm, "data a enviar")
+    if (modalError.quantity || modalError.direction || modalError.type) return alert("Please fill all the fields correctly")
+    dispatch(updateAllPrices(modalForm))
+      console.log(backMessage, "mensaje de back"); 
+      setmodalForm(masiveData)
+      setmodalUpdateIsOpen(false) 
+      backMessage.length && alert(backMessage) 
+       dispatch(getProducts()) 
   }
   //END MODAL UPDATE PRODUCTS
 
@@ -172,7 +176,7 @@ const AdminManageProducts = () => {
       });
     }
     setFormProduct({ ...formProduct, [name]: value });
-    // setFormErrors(Validation({ ...formProduct, [name]: value }));
+    //setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
 
 
@@ -361,14 +365,20 @@ const AdminManageProducts = () => {
           </div>
           <h2>Edit ALL Products</h2>
           <input name="quantity" value={modalForm.quantity} onChange={handlerInputQuantity} placeholder="Add a quantity to update all products"></input>
+          {modalError.quantity && <p className={styles.modal__error}>{modalError.quantity}</p>}
            <select name="direction" onChange={handlerInputDirection} value={modalForm.direction}>
-            <option value="increase">To Increase(+)</option>
-            <option value="decrease">To Decrease(-)</option>
+            <option value="">Choose</option>
+            <option value="increase">Plus(+)</option>
+            <option value="decrease">Less(-)</option>
           </select>
+          {modalError.direction && <p className={styles.modal__error}>{modalError.direction}</p>}
           <select name="type" onChange={handlerInputType} value={modalForm.type}> 
+            <option value="">Choose</option>
             <option value="percent">Per Percent</option>
             <option value="fixed">Per Fixed Amount</option>
           </select>
+          {modalError.type && <p className={styles.modal__error}>{modalError.type}</p>}
+          {/* // alert: useSelector agregar un estado para el error */}
           <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
         </form>
       </Modal>
