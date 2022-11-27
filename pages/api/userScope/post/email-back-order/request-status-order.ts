@@ -80,7 +80,6 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
                 }
             })
 
-            console.log(idReferenceArray);
             const myHtml = CreationOfHTML(responseforEmail, email, name, requestOrder.data?.results?.[0]?.id)
             const mailOptions = {
                 from: process.env.EMAIL_USER,

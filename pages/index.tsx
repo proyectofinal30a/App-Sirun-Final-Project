@@ -11,15 +11,16 @@ import { getAllProducts } from "../src-client/redux/slice/products-client/Produc
 import { getUserDetail } from "../src-client/redux/slice/user-detail-redux/user-redux";
 import styles from "../src-client/styles/Home.module.css";
 
-
 export default function Home() {
   const dispatch: Function = useDispatch();
   const { data, status } = useSession<boolean>();
-
   useEffect(() => {
     dispatch(getAllProducts());
     status === "authenticated" && dispatch(getUserDetail(data?.user.email));
-  }, [dispatch, status, data]);
+  }, []);
+
+
+
 
 
   return (
