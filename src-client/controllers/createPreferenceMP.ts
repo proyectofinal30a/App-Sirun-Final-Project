@@ -1,6 +1,6 @@
 
 import { IUserBuyer, IproductModelCart, Ipreference, } from '../../lib/types'
-export default function createPreferenceMP(user: IUserBuyer, productArray: IproductModelCart[]): Ipreference {
+export default async function createPreferenceMP(user: IUserBuyer, productArray: IproductModelCart[]): Promise<Ipreference> {
     console.log(user, 'estoy en usecreate');
     console.log(productArray, "es el array");
 

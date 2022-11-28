@@ -104,7 +104,7 @@ export const trashItem = (id: string) => (dispatch: Function) => {
 export const sendOrderDetail = (user: IUserBuyer, productArray: IproductModelCart[]) => async (dispatch: Function) => {
   try {
 
-    const myPrerencia = createPreferenceMP(user, productArray)
+    const myPrerencia = await createPreferenceMP(user, productArray)
     const request = await axios({
       method: 'post',
       url: '/api/userScope/post/createOrder',
