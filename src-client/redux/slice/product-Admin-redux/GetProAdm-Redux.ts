@@ -9,7 +9,8 @@ interface Iproducts {
   products: Iproduct[],
   productsToFilter: Iproduct[],
   productEdit: any,
-  productsUpdate: any
+  productsUpdate: any,
+  productsGraph: any
 }
 
 
@@ -28,7 +29,8 @@ const stateInitial: Iproducts = {
     description: "",
     evaluation: [],
   },
-  productsUpdate: []
+  productsUpdate: [],
+  productsGraph: []
 }
 
 
@@ -177,7 +179,11 @@ export const getProducts: any = () => async (dispatch: Function) => {
   }
 };
 //end get all products
+//Get products of orders
 
+export const getOrderProducts: any = () => async (dispatch: Function) => {
+  
+}
 
 
 
