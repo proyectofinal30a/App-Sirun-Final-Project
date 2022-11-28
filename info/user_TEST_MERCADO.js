@@ -462,6 +462,53 @@ const dataAdmin = {
 
 
 
+// // Número	Código de seguridad	Fecha de caducidad
+// // Mastercard	5031 7557 3453 0604	123	11/25
+// // Visa	4509 9535 6623 3704	123	11/25
+// // American Express	3711 803032 57522	1234	11/25
+// // Para probar diferentes resultados de pago, completa el estado deseado en el nombre del titular de la tarjeta:
+
+// // Estado de pago	Descripción	Documento de identidad
+// // APRO	Pago aprobado	DNI del usuario de prueba
+// // OTHE	Rechazado por error general	DNI del usuario de prueba
+// // CONT	Pendiente de pago	-
+// // CALL	Rechazado con validación para autorizar	-
+// // FUND	Rechazado por importe insuficiente	-
+// // SECU	Rechazado por código de seguridad inválido	-
+// // EXPI	Rechazado debido a un problema de fecha de vencimiento	-
+// // FORM	Rechazado debido a un error de formulari
+
+
+
+// ///
+
+
+
+
+// curl -X GET \
+// 'https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=test_user_16943485@testuser.com' \
+// -H 'Authorization: Bearer APP_USR-1385912062963638-111422-e1e1168b94be269d55d7cbca8fcaf186-1239200986' 
+
+// data del user
+
+// binary_mode: false,
+// client_id: '1385912062963638',
+// collector_id: 1239200986,
+// coupon_code: null,
+// coupon_labels: null,
+// date_created: '2022-11-22T12:21:14.854-04:00',
+// date_of_expiration: null,
+// expiration_date_from: null,
+// expiration_date_to: null,
+// expires: false,
+// external_reference: '',
+// id: '1239200986-ae165444-6db1-4c49-89fd-d74a911af8fb',
+// init_point: 'https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=1239200986-ae165444-6db1-4c49-89fd-d74a911af8fb',
+// internal_metadata: null,
+// ///
+
+
+
 //user 1
 // idProductPrev =1239200986-0074f545-fb5f-4653-93bd-7d79390d3401
 // http://localhost:3000/?collection_id=51775810577&collection_status=approved&payment_id=51775810577&status=approved&external_reference=null&payment_type=credit_card&merchant_order_id=6583164276&preference_id=1239200986-0074f545-fb5f-4653-93bd-7d79390d3401&site_id=MLA&processing_mode=aggregator&merchant_account_id=null
@@ -582,49 +629,3 @@ const dataAdmin = {
 // //reject /?collection_id=51775452181&collection_status=rejected&payment_id=51775452181&status=rejected&external_reference=null&payment_type=credit_card&merchant_order_id=6583017027&preference_id=1239200986-ea362c68-9a83-480e-bd13-caf8c62cf598&site_id=MLA&processing_mode=aggregator&merchant_account_id=null
 
 //   http://localhost:3000/?collection_id=51774209760&collection_status=approved&payment_id=51774209760&status=approved&external_reference=null&payment_type=credit_card&merchant_order_id=6582596224&preference_id=1239200986-569dc8af-040f-4d5b-9d01-85149b8e40a4&site_id=MLA&processing_mode=aggregator&merchant_account_id=null
-// // Número	Código de seguridad	Fecha de caducidad
-// // Mastercard	5031 7557 3453 0604	123	11/25
-// // Visa	4509 9535 6623 3704	123	11/25
-// // American Express	3711 803032 57522	1234	11/25
-// // Para probar diferentes resultados de pago, completa el estado deseado en el nombre del titular de la tarjeta:
-
-// // Estado de pago	Descripción	Documento de identidad
-// // APRO	Pago aprobado	DNI del usuario de prueba
-// // OTHE	Rechazado por error general	DNI del usuario de prueba
-// // CONT	Pendiente de pago	-
-// // CALL	Rechazado con validación para autorizar	-
-// // FUND	Rechazado por importe insuficiente	-
-// // SECU	Rechazado por código de seguridad inválido	-
-// // EXPI	Rechazado debido a un problema de fecha de vencimiento	-
-// // FORM	Rechazado debido a un error de formulari
-
-
-
-// ///
-
-
-
-
-// curl -X GET \
-// 'https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=test_user_16943485@testuser.com' \
-// -H 'Authorization: Bearer APP_USR-1385912062963638-111422-e1e1168b94be269d55d7cbca8fcaf186-1239200986' 
-
-// data del user
-
-// binary_mode: false,
-// client_id: '1385912062963638',
-// collector_id: 1239200986,
-// coupon_code: null,
-// coupon_labels: null,
-// date_created: '2022-11-22T12:21:14.854-04:00',
-// date_of_expiration: null,
-// expiration_date_from: null,
-// expiration_date_to: null,
-// expires: false,
-// external_reference: '',
-// id: '1239200986-ae165444-6db1-4c49-89fd-d74a911af8fb',
-// init_point: 'https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=1239200986-ae165444-6db1-4c49-89fd-d74a911af8fb',
-// internal_metadata: null,
-// ///
-
-

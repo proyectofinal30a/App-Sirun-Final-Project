@@ -5,29 +5,66 @@ import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del ro
 
 // updatea la visibilidad del producto desde el dashboard del admin.
 const updatePrices: Function = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { percent } = req.body
-    const percent2 = percent / 100
-
-
     try {
+        const { quantity, direction, type } = req.body.object
+        console.log(quantity, direction, type)
         const allProducts = await prisma.product.findMany()
         allProducts.forEach(async (p) => {
             const price = Number(p.price)
-            let newPrice = Math.round(price + (price * percent2))
-
+            
+            if(type === "fixed" && direction === 'increase'){
+            let newPrice = Math.round(price + Number(quantity))
             await prisma.product.update({
                 where: { id: p.id },
                 data: {
                     price: newPrice
                 }
             })
-            prisma.$disconnect()
-            res.status(200).json({ msg: "ha sido todo actualizado" })
+            return res.status(200).json({ msg: `The price was increase by $${quantity}` })
+
+            }else if(type === "fixed" && direction === 'decrease' && price > Number(quantity)){
+                let newPrice = Math.round(price - Number(quantity))
+                await prisma.product.update({
+                    where: { id: p.id },
+                    data: {
+                        price: newPrice
+                    }
+                })
+                return res.status(200).json({ msg: `Already applied a disconunt of $${quantity}` })
+
+            }else if(type === "fixed" && direction === 'decrease' && price <= Number(quantity)){
+               return res.status(200).json({msg:"You can't decrease the price of the product to a negative number or zero"})
+
+            } else if (type === "percent" && direction === 'increase') {
+                let newPrice = Math.round(price + (price * Number(quantity) / 100))
+                await prisma.product.update({
+                    where: { id: p.id },
+                    data: {
+                        price: newPrice
+                    }
+                })
+                return res.status(200).json({ msg: `The increment of ${quantity}% was applied` })
+             
+            } else if (type === "percent" && direction === 'decrease' && price > Number(quantity)) {
+                let newPrice = Math.round(price - (price * Number(quantity) / 100))
+                await prisma.product.update({
+                    where: { id: p.id },
+                    data: {
+                        price: newPrice
+                    }
+        }) 
+            return res.status(200).json({ msg: `The discount of ${quantity}% was applied` })
+
+            }else if (type === "percent" && direction === 'decrease' && price <= Number(quantity)) {
+                res.status(200).json({msg:`You can't decrease 100% or more of the price of the product and you choose a discount of ${quantity}%. Please sleect a lower percentage`})
+            }
         })
+            prisma.$disconnect() 
+          // res.status(200).json({ msg: "The prices were updated" })
     } catch (error) {
         console.log(error)
         res.status(404).json({
-            msg: "Error al actualizar los productos"
+            msg: "Error updating the prices"
         })
     }
 }

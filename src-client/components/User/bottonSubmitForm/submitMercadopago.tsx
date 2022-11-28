@@ -7,7 +7,7 @@ import {
 } from "../../../../lib/types";
 import * as action from "../../../redux/slice/cart-redux/cart-redux";
 import { useDispatch } from "react-redux";
-
+import { useRouter } from 'next/router'
 interface prop {
   data: {
     name: string;
@@ -36,7 +36,7 @@ export default function ButtonSumbitMercadoPago({
   const { confirmed, payLink } = forButtonMercadoPago;
   const dispatch: Function = useDispatch();
   action.sendOrderDetail;
-
+  const router = useRouter()
   const handleOnclick = () => {
     if (mySelect.current.phone.number) {
       const { zip_code, name_address, id, street_name, street_number, phone } =
@@ -92,20 +92,26 @@ export default function ButtonSumbitMercadoPago({
     }
   };
 
+  const handleOnclik = () => {
+    dispatch(action.resetCart())
+    dispatch(action.resetProduct())
+    router.push(payLink)
+  }
+
+
   return confirmed ? (
     <div className={styles.modal__pay_btn_container}>
-      <a
-        href={payLink}
+      <button
         className={styles.modal__pay_btn}
-        onClick={() => action.resetCart()}
+        onClick={handleOnclik}
       >
         Go to MercadoPago
-      </a>
+      </button>
     </div>
   ) : (
     <div className={styles.modal_confirmation_btn_container}>
-      <button 
-        className={styles.modal__confirm_btn} 
+      <button
+        className={styles.modal__confirm_btn}
         onClick={handleOnclick}
       >
         Get the payment link

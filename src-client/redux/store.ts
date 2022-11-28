@@ -17,7 +17,7 @@ import reducerAdminManagement from "./slice/admin-management-redux/admin-managem
 
 const persistConfig = {
 
-  key: 'tutu',
+  key: 'tutu11332',
 
   storage,
 }

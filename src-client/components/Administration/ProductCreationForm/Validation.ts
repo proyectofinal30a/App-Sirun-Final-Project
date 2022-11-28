@@ -12,15 +12,15 @@ export default function validation(formProduct: any) {
 
 
   // // Name validation
-  // if (!validString.test(formProduct.name) || formProduct.name.length < 3)
-  //   errors.name = "Name is required. Must be longer than two characters and cannot contain numbers or special characters.";
+  if (!validString.test(formProduct.name) || formProduct.name.length < 3)
+    errors.name = "Name is required. Must be longer than two characters and cannot contain numbers or special characters.";
 
   // Price validation
-  if (!validNumber.test(formProduct.price) || formProduct.price <= 0 || isNaN(formProduct.price))
+  if (!validNumber.test(formProduct.price) || formProduct.price <= 0 || !(/^\d+$/.test(formProduct.price))) 
     errors.price = "Price is required and has to be higher than 0.";
 
   // Dimention validation
-  if (!validNumber.test(formProduct.dimension) || formProduct.dimension <= 0 || !(/^\d+$/.test(formProduct.dimension)) || isNaN(formProduct.dimension))
+  if (!validNumber.test(formProduct.dimension) || formProduct.dimension <= 0 || !(/^\d+$/.test(formProduct.dimension)))
     errors.dimension = "Dimention is required and has to be higher than 0.";
 
   // Description validation

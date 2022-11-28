@@ -98,13 +98,14 @@ export interface PackProducDetailRating {
 
 export interface ImyOrder {
   myOrder: {
-    external_reference: string;
-    total: string;
-    status: string;
-    date: string;
-    delivery_time: string;
+    external_reference: string
+    purchase_link: true
+    total: string
+    status: string
+    date: string
+    delivery_time: string
     user: {
-      id: string;
+      id: string
     };
     purchasedProducts: IitemForMercadoPago[];
   };
@@ -115,7 +116,13 @@ interface IallUsers {
   allUsers: userData[];
   usersByName: userData[];
 }
-
+export interface Iproducts {
+  products: Iproduct[],
+  productsToFilter: Iproduct[],
+  productEdit: any,
+  productsUpdate: any
+  errorMessage: string
+}
 export interface Ireducers {
   reducerProduct?: null;
   reducerProducts: IallProducts;
@@ -126,7 +133,7 @@ export interface Ireducers {
   reducerFilters: IallProducts;
   reducerAfterPayment: ImyOrder;
   reducerAllUsers: IallUsers;
-  reducerAdmin: any;
+  reducerAdmin: Iproducts;
   reducerAdminManagement: IadminManagement;
 }
 
@@ -191,6 +198,7 @@ export interface IitemForMercadoPago {
 }
 
 export interface Iorder {
+  id: string
   total: number;
   description: string;
   delivery_time: string;

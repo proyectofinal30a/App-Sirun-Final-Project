@@ -20,7 +20,7 @@ export default function CardCart({
       <h2 className={styles.column__title}>Order Summary</h2>
 
       <div className={styles.item__container}>
-        {arrayCard.map((elem, index) => (
+        {arrayCard.map((elem) => (
           <div className={styles.item} key={elem.id}>
             <div className={styles.product__img_container}>
               <Image

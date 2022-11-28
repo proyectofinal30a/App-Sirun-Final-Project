@@ -1,15 +1,16 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
-import { Iproduct } from "../../../../lib/types";
+import { Iproduct, Iproducts } from "../../../../lib/types";
 import userVerification from '../../../controllers/userVerification-controller'
 
 
 
-interface Iproducts {
-  products: Iproduct[],
-  productsToFilter: Iproduct[],
-  productEdit: any,
-  productsUpdate: any
+
+
+export interface IpriceEdit {
+  quantity: number
+  direction: string
+  type: string
 }
 
 
@@ -28,7 +29,9 @@ const stateInitial: Iproducts = {
     description: "",
     evaluation: [],
   },
-  productsUpdate: []
+  productsUpdate: [],
+  errorMessage: "",
+  // un nvo estado para errores (cambiar tipo del inicial state) msg : ""
 }
 
 
@@ -63,9 +66,20 @@ export const reducerAdmin = createSlice({
     cleanState: (state, action) => {
       state.productsUpdate = []
       state.productsToFilter = []
+    },
+    errorMessage: (state, action) => {
+      console.log(action.payload, "msg para actualizar el estado");
+      state.errorMessage = action.payload
+      console.log(state.errorMessage, "state.errorMessage");
+      
+    },
+    cleanMessage : (state, action) => {
+      state.errorMessage = " "
     }
   },
 });
+
+
 
 
 
@@ -74,23 +88,33 @@ export const clean = () => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.cleanState([]));
 };
 
+
+
 //Change all prices
-export const updateAllPrices = async (percent: number) => {
+export const updateAllPrices =  (object : IpriceEdit) => async (disptach: Function) => {
   try {
     const myToken: any = await userVerification('server')
-    await axios({
+    const response = await axios({
       method: 'post',
       url: '/api/adminScope/put/updateAllPrices',
-      data: { percent },
+      data: {object},
       headers: {
         "Authorization": myToken
       }
     })
-
+    console.log(response.data.msg, "respuesta del back"); 
+    disptach(reducerAdmin.actions.errorMessage(response.data.msg))
+    //return response.data.msg 
   } catch (error) {
     console.log(error);
   }
+}
+
+
+export const cleanMsg = () => (dispatch: Function) => {
+  return dispatch(reducerAdmin.actions.cleanMessage(""));
 };
+
 
 
 //availability 
