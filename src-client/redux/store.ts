@@ -15,9 +15,7 @@ import adminGraphs from "./slice/admin-graphs/admin-graphs";
 
 
 const persistConfig = {
-
   key: 'blablabla',
-
   storage,
 }
 
