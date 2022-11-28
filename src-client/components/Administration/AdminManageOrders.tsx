@@ -9,6 +9,7 @@ import { Ireducers, Iorder } from "../../../lib/types";
 
 
 const AdminManageOrders = () => {
+
   const dispatch: Function = useDispatch();
   const [selectedValue, setSelectedValue] = useState({
     statusSelection: "",
@@ -19,11 +20,10 @@ const AdminManageOrders = () => {
     dispatch(getUsersOrders());
     dispatch(getAllUsers());
   }, [dispatch]);
-  
+
   const usersOrders = useSelector((state: Ireducers) => state.reducerAdminManagement.usersOrders);
-  console.log(usersOrders)
   const users = useSelector((state: Ireducers) => state.reducerAllUsers.allUsers);
-  
+
 
   const handleStatusSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
@@ -38,7 +38,7 @@ const AdminManageOrders = () => {
     dispatch(filterOrders(value));
   }
 
- 
+
   const handleDateSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const value = e.target.value;
     setSelectedValue({
@@ -71,18 +71,18 @@ const AdminManageOrders = () => {
       </div>
 
       <div className={styles.orders_management__orders_container}>
-        {usersOrders[0] &&
-          usersOrders?.map((order: Iorder) => {
+        {usersOrders?.[0] &&
+          usersOrders?.map((order: Iorder, index) => {
 
             let userId = order.id_user;
-            let userOfTheOrder = users.filter(user =>{ 
+            let userOfTheOrder = users.filter(user => {
               if (user.id !== userId) return user;
-            }); 
+            });
             let userName = userOfTheOrder[0].name;
             let userEmail = userOfTheOrder[0].email;
 
             return (
-              <div key={order.id} className={styles.orders_management__order_container}>
+              <div key={index} className={styles.orders_management__order_container}>
                 <p className={styles.orders_management__order_info}>
                   <span className={styles.orders_management__order_span}>Order id:{" "}</span>
                   {order.id}
@@ -120,11 +120,11 @@ const AdminManageOrders = () => {
                   ${order.total}
                 </p>
 
-                {order.purchasedProducts?.map(product => {
+                {order.purchasedProducts?.map((product, index) => {
                   return (
-                    <div key={product.id} className={styles.orders_management__product_container}>
+                    <div key={index + 12} className={styles.orders_management__product_container}>
                       <div className={styles.orders_management__product_img_container}>
-                        <Image 
+                        <Image
                           src={product.picture_url}
                           alt={product.title}
                           height="200"
@@ -140,11 +140,11 @@ const AdminManageOrders = () => {
                       </div>
                     </div>
                   )
-               })}
+                })}
 
-            </div>
-          )
-        })}
+              </div>
+            )
+          })}
       </div>
     </div>
   );

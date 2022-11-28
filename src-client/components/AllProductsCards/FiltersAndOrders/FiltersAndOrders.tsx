@@ -29,7 +29,7 @@ const FilterAndOrder = () => {
     currentProducts = products;
   }
 
-  console.log(currentProducts)
+
   const stateSelects = {
     selectPrice: "",
     selectDimention: "",
@@ -80,7 +80,7 @@ const FilterAndOrder = () => {
       order: value,
     };
 
-    console.log(o)
+
 
     setSelect({ ...select, selectDimention: "", selectPrice: "" });
 
@@ -95,7 +95,7 @@ const FilterAndOrder = () => {
       dispatch(cleanFilters);
       dispatch(prepState(o));
       dispatch(actionFilterByCategoryOrType(o));
-      console.log(products, "con seleccion anterior")
+
       return;
     }
 
@@ -109,7 +109,7 @@ const FilterAndOrder = () => {
       setPrevState({ ...prev, category: value });
       dispatch(prepState(obj));
       dispatch(actionFilterByCategoryOrType(obj));
-      console.log(products)
+
       return;
     }
 
