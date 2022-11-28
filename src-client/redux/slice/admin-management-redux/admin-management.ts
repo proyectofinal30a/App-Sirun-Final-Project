@@ -29,7 +29,7 @@ export const reducerAdminManagement = createSlice({
     },
     restoreAllOrders: (state) => {
       state.usersOrders = state.usersOrdersAutoSave;
-    },  
+    },
     sortOrders: (state, action) => {
       if (action.payload === "asc") state.usersOrders.sort((a, b) => a.date > b.date ? 1 : a.date < b.date ? -1 : 0);
       if (action.payload === "desc") state.usersOrders.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
@@ -50,6 +50,7 @@ export const getUsersOrders = () => async (dispatch: Function) => {
       url: "/api/adminScope/get/orders",
     });
     data = data.filter((order: Iorder) => order.status !== "pending");
+ 
 
     dispatch(reducerAdminManagement.actions.getUsersOrders(data));
   } catch (error) {
