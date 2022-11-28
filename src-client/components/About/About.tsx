@@ -41,7 +41,7 @@ const About = () => {
     <div className={styles.about__container}>
 
       <div className={styles.newsletter__container} id="newsletter">
-        <h1 className={styles.newsletter__title}>Newsletter</h1>
+        <h2 className={styles.newsletter__title}>Newsletter</h2>
         <p>Be a part of the dreamy world of Sirun Pâtisserie.</p>
         <p>Sign up to be kept in the know with all our launches, our latests news and get exclusive offers!</p>
         <form className={styles.newsletter__form} onSubmit={handleSubscription}>
@@ -66,13 +66,13 @@ const About = () => {
 
 
       <div className={styles.about_us__container}>
-        <h1 className={styles.about__title}>About us</h1>
+        <h2 className={styles.about__title}>About us</h2>
         <HomeInfo />
       </div>
 
 
       <div className={styles.shipping__container} id="shipping">
-        <h1 className={styles.shipping__title}>Delivery & shipping</h1>
+        <h2 className={styles.shipping__title}>Delivery & shipping</h2>
         <p>At Sirun Pâtisserie we use a professional courier delivery service which can be booked online during checkout.</p>
         <div className={styles.shipping_dates__container}>
           <p className={styles.shipping_dates__title}>Shipping dates</p>
