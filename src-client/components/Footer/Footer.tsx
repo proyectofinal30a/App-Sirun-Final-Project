@@ -5,7 +5,7 @@ import { FaTiktok, FaMapMarkerAlt } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import { IconContext } from "react-icons";
 import styles from "../../styles/Footer.module.css";
-import Logo from '../../images/sirun_logo.png'
+//import Logo from '../../images/sirun_logo.png'
 import Image from "next/image";
 import Link from "next/link";
 
