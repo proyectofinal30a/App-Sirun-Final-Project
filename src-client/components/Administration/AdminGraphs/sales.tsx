@@ -1,21 +1,30 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
+import {useDispatch, useSelector} from 'react-redux'
 import styles from "../../../styles/Dashboard.module.css";
-import { ResponsiveContainer, Bar, XAxis, YAxis, Line, Tooltip, CartesianGrid, ComposedChart, Legend} from 'recharts';
+import { ResponsiveContainer, Bar, XAxis, YAxis, Line, Tooltip, CartesianGrid, ComposedChart, Legend, PieChart, Pie} from 'recharts';
 import { convertMonth } from '../../../controllers/adminGraphs';
-import { data } from './salesData';
+import { getSales, cleanState } from '../../../redux/slice/admin-graphs/admin-graphs';
 
 const Sales = () => {
   const thisMonthAcorted = Date().split(" ")[1];
   const thisMonth = convertMonth(thisMonthAcorted);
   const [selectedMonth, setSelectedMonth] = useState(thisMonth);
+  const sales = useSelector((state: any) => state.adminGraphs.salesGraph)
+  const dispatch: Function = useDispatch()
+  
 
-  const monthChange = (e) => {
+  const monthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     e.target.value === "Now"
       ? setSelectedMonth(thisMonth)
       : setSelectedMonth(e.target.value);
-  };
+  }
+  useEffect(() =>{
+    dispatch(getSales())
+  })
 
+  
   return (
+    sales &&
     <>
       <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select}>
         <option value="" selected disabled>Select period</option>
@@ -36,12 +45,11 @@ const Sales = () => {
 
       <div className={styles.dashboard__graphic}>
         <ResponsiveContainer height={400} width={500}>
-          <ComposedChart data={data[selectedMonth]}>
-            <XAxis dataKey="week" gap={50} />
+          <ComposedChart data={sales['2022'][selectedMonth?selectedMonth: '']}>
+            <XAxis dataKey="week"/>
             <YAxis />
-            <Bar type="monotone" dataKey="sales" barSize={50} fill="#3c5473" />
-            <Line type="monotone" dataKey="approved" stroke="#18d10e" />
-            <Line type="monotone" dataKey="rejected" stroke="#d1320e" />
+            <Bar type="monotone" dataKey="confirmed" barSize={30} fill="#3c7358" />
+            <Bar type="monotone" dataKey="pending" barSize={30} fill="#b03d3d" />
             <Tooltip />
             <Legend />
             <CartesianGrid />
@@ -50,6 +58,7 @@ const Sales = () => {
       </div>
     </>
   );
+  
 };
 
 export default Sales;

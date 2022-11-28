@@ -201,7 +201,11 @@ export const getProducts: any = () => async (dispatch: Function) => {
   }
 };
 //end get all products
+//Get products of orders
 
+export const getOrderProducts: any = () => async (dispatch: Function) => {
+  
+}
 
 
 
