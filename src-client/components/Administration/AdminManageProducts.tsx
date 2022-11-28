@@ -29,7 +29,6 @@ const AdminManageProducts = () => {
   const [formErrors, setFormErrors] = useState(myErr);
 
   useEffect(() => {
-    dispatch(clean())
     dispatch(getProducts())
     return () => {
       dispatch(clean())
@@ -43,6 +42,8 @@ const AdminManageProducts = () => {
 
   let currentProducts: Iproduct[] = allProducts;
   // let currentProduct: Iproduct;
+
+
 
   if (filteredProducts?.length >= 1) {
     currentProducts = filteredProducts
@@ -141,6 +142,7 @@ const AdminManageProducts = () => {
     // deberia actualizar el estado de products y de favorites???
     // impedir que agregue al carrito si ya no esta disponible
     alert(` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
+    dispatch(clean())
     setActive(false)
   }
 
@@ -236,6 +238,7 @@ const AdminManageProducts = () => {
   const [active, setActive] = useState(false)
 
 
+  if (!currentProducts[0]) return <div className={styles.products_manage__container}><h1 className={styles.products_manage__title}> Loading....</h1></div>
 
   return (
     <div className={styles.products_manage__container}>
