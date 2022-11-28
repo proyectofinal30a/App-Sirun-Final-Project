@@ -4,10 +4,12 @@ import { AiFillEyeInvisible, AiFillEye, AiFillEdit } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux'
 import { Iproduct, Ireducers } from "../../../lib/types";
 import { getProductByName } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
+import {getAllProducts} from "../../redux/slice/products-client/Products-all-redux"
 import { getProducts, updateProduct, changeAvailability, requestUpdateStatusProducts, clean, setProduct, updateAllPrices, cleanMsg } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import Modal from "react-modal";
 import styles from "../../styles/AdminManageProducts.module.css";
 import masiveValidate from "../../controllers/masiveValidation"
+import Validation from "../../components/Administration/ProductCreationForm/Validation"
 
 const AdminManageProducts = () => {
   const myForm = {
@@ -189,14 +191,14 @@ const AdminManageProducts = () => {
       });
     }
     setFormProduct({ ...formProduct, [name]: value });
-    //setFormErrors(Validation({ ...formProduct, [name]: value }));
+    setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
 
 
   const handleOnChangeNumber = (event: any) => {
     const { name, value } = event.target;
     setFormProduct({ ...formProduct, [name]: value });
-    //setFormErrors(Validation({ ...formProduct, [name]: value }));
+    setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
 
   const handleOnFile = (event: any) => {
@@ -284,6 +286,7 @@ const AdminManageProducts = () => {
                   {// es por los tipos que no toma value eze?
                   product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
             </div>
+          </div>
           )
         })}
       </div>
