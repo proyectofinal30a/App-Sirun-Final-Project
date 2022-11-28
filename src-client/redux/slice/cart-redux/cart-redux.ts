@@ -116,9 +116,9 @@ export const sendOrderDetail = (user: IUserBuyer, productArray: IproductModelCar
   } catch (error) {
     console.log(error);
 
-    const myMessageError = process.env.NODE_ENN === 'production' ?
-      'https://sirunnpatisserie.vercel.app/error' :
-      'http://localhost:3000/error';
+    const myMessageError = process.env.STATUS === 'production' ?
+      'https://sirunnpatisserie.vercel.app/' :
+      'http://localhost:3000/';
     return dispatch(reducerCart.actions.actionConfirmedCart({ payLink: myMessageError, confirmed: true }));
   }
 };
