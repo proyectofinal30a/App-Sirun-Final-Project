@@ -27,7 +27,6 @@ const AdminManageProducts = () => {
   const [formErrors, setFormErrors] = useState(myErr);
 
   useEffect(() => {
-    dispatch(clean())
     dispatch(getProducts())
     return () => {
       dispatch(clean())
@@ -41,6 +40,8 @@ const AdminManageProducts = () => {
 
   let currentProducts: Iproduct[] = allProducts;
   // let currentProduct: Iproduct;
+
+
 
   if (filteredProducts?.length >= 1) {
     currentProducts = filteredProducts
@@ -230,7 +231,7 @@ const AdminManageProducts = () => {
 
   const [active, setActive] = useState(false)
 
-
+  if (currentProducts[0]) return <div>Loanding....</div>
 
   return (
     <div className={styles.products_manage__container}>
