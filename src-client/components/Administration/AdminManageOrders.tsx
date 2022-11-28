@@ -108,10 +108,6 @@ const AdminManageOrders = () => {
                   {order.delivery_time}
                 </p>
                 <p className={styles.orders_management__order_info}>
-                  <span className={styles.orders_management__order_span}>Order description:{" "}</span>
-                  {order.description}
-                </p>
-                <p className={styles.orders_management__order_info}>
                   <span className={styles.orders_management__order_span}>Order status:{" "}</span>
                   {order.status}
                 </p>

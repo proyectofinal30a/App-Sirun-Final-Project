@@ -57,7 +57,6 @@ const testMercadoPago = async (req: NextApiRequest, res: NextApiResponse) => {
                 payer: response.data.payer
             }
         }
-        console.log(response.data);
 
         return res.status(200).json({info:response.data.init_point,status:true})
     } catch (error) {
