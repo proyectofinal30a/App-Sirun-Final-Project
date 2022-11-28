@@ -137,6 +137,7 @@ const AdminManageProducts = () => {
     // deberia actualizar el estado de products y de favorites???
     // impedir que agregue al carrito si ya no esta disponible
     alert(` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
+    dispatch(clean())
     setActive(false)
   }
 
