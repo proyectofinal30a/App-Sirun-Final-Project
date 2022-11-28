@@ -85,7 +85,6 @@ export const getUsersReviews = () => async (dispatch: Function) => {
       method: "get",
       url: "/api/adminScope/get/reviews",
     });
-    // console.log(data)
     dispatch(reducerAdminManagement.actions.getUsersReviews(data));
   } catch (error) {
     console.log(error);
@@ -98,7 +97,6 @@ export const deleteReview = (id: string) => async (dispatch: Function) => {
       method: "delete",
       url: `/api/adminScope/delete/review/${id}`,
     });
-    // console.log(data)
     dispatch(reducerAdminManagement.actions.deleteReview(id));
   } catch (error) {
     console.log(error);

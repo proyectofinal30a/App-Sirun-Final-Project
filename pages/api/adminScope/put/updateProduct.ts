@@ -20,7 +20,6 @@ const updateProduct: Function = async (req: NextApiRequest, res: NextApiResponse
                 description: description,
             }
         })
-        console.log(product)
         prisma.$disconnect()
         res.status(200).json(product)
     } catch (error) {

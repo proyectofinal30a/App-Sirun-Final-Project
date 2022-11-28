@@ -21,7 +21,6 @@ const AdminManageOrders = () => {
   }, [dispatch]);
   
   const usersOrders = useSelector((state: Ireducers) => state.reducerAdminManagement.usersOrders);
-  console.log(usersOrders)
   const users = useSelector((state: Ireducers) => state.reducerAllUsers.allUsers);
   
 
