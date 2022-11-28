@@ -23,7 +23,9 @@ const Sales = () => {
   })
 console.log(sales);
 
+
   if(sales[2022]){
+
     return (
       <>
         <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select}>
