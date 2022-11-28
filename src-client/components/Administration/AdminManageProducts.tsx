@@ -234,15 +234,11 @@ const AdminManageProducts = () => {
   return (
     <div className={styles.products_manage__container}>
       <h1 className={styles.products_manage__title}>Administration Product Managing</h1>
-
-      <div className={styles.product__manage_search_and_change}>
-        <SearchBar />
-        <button className={styles.change__price__btn} onClick={(e: any) => openMasiveModal(e)}>Update masive prices</button>
-        <input type="button" value="Aplicar Cambios de visibilidad" onClick={aplicarCambios} />
-      </div>
+      <SearchBar/>
 
       {/* onClick={(e: any) => editOpenModal(e, product)} */}
-
+      
+      <div className={styles.products__map_container}>
       {currentProducts?.map((product: any, index: number) => {
         return (
           <div className={styles.product__card_container} key={index}>
@@ -257,29 +253,32 @@ const AdminManageProducts = () => {
                 className={styles.product_card__img}
               />
             </div>
+
             <div className={styles.product__card__info_container}>
               <p>{product.name.toUpperCase()}</p>
               <p>${product.price}</p>
             </div>
+
             <div className={styles.product__card__icons}>
               <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
-
-              <div className={styles.wishlist_fav_btn_container} onClick={(e: any) => handleVisibility(e, product)} >
-                <p className={styles.wishlist_fav_btn}>
-                  {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}
-                </p>
-              </div>
+                <button className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} >
+                  {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
             </div>
+
           </div>
         )
       })}
+      </div>
+
+      <input className={styles.visibility__btn} type="button" value="Apply visibility changes" onClick={aplicarCambios} />
+      <button className={styles.change__price__btn} onClick={(e: any) => openMasiveModal(e)}>Update All Prices</button>
 
       <Modal
         ariaHideApp={false}
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
         className={styles.modal}
-        contentLabel="Example Modal"
+        contentLabel="Modal1"
       >
         <form className={styles.modal__container} onSubmit={(e) => submitHandler(e, productModal)}>
           <div className={styles.modal__btn_right_container}>
@@ -357,7 +356,7 @@ const AdminManageProducts = () => {
         isOpen={modalUpdateIsOpen}
         onRequestClose={closeModalUpdate}
         className={styles.modal}
-        contentLabel="Example Modal"
+        contentLabel="Modal2"
       >
         <form className={styles.modal__container} onSubmit={(e: any) => submitUpdateAllPrices(e, modalForm)}>
           <div className={styles.modal__btn_right_container}>

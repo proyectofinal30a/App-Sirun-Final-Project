@@ -3,6 +3,7 @@
   padding-top: 8em;
   display: flex;
   flex-direction: column;
+  align-items: center;
   font-family: var(--font-paragraph);
 }
 
@@ -10,38 +11,20 @@
   font-size: 2em;
   color: var(--color-dark-blue);
   text-align: center;
+  margin: .5em;
 }
 
-
-.product__manage_search_and_change {
-  display: flex;
-  justify-content: space-between;
-}
-
-.change__price__input {
-  width: 23em;
-  border: none;
-  border-radius: 5px 0 0 5px;
-  padding: .5em;
-  padding-left: 1em;
-}
-
-.change__price__input::-webkit-input-placeholder {
-  color: var(--color-dark-blue);
-  font-size: 1em;
-}
-
-.change__price__input:focus {
-  outline: none;
-}
-
-.change__price__btn {
-  width: 6em;
-  border: none;
-  border-radius: 0 5px 5px 0;
-  padding: .5em;
-  color: var(--color-light-blue);
-  background-color: var(--color-light-pink);
+.products__map_container{
+  overflow-y: scroll;
+  margin-bottom: 2em;
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
+  border-radius: 0.2em;
+  box-shadow: 0 0 0 1px grey;
+  width: 100%;
+  background-color: rgb(248, 246, 248);
+  max-height: 25em;
 }
 
 .product__card_container {
@@ -50,15 +33,72 @@
   justify-content: space-between;
   align-items: flex-start;
   box-shadow: 0 0 1px grey;
+  flex-direction: row;
+  margin: 0.5em;
+  border-radius: 0.2em;
+  padding: 0.5em;
+  width: 95%;
+  background-color: white; 
 }
 
 
 .product_card__img_container {
-  height: 8em;
+  width: 30%;
   width: 8em;
-  object-fit: cover;
+  height: 8em;
 }
 
+.product_card__img{
+  width: 8em;
+  height: 8em;
+  object-fit: cover;
+  border-radius: .2em;
+}
+
+.product__card__info_container{
+  display: flex;
+  justify-content: space-between;
+  width: 70%;
+  padding-top: .5em;
+  margin-left: 2em;
+  margin-right: 1em;
+}
+
+
+.product__card__icons{
+  margin-right: .5em;
+
+}
+
+.product__card__icon_edit{
+  border-radius: 50%;
+  border: none;
+  padding: .5em;
+  margin: .2em;
+}
+
+.visibility__btn{
+  background-color: green;
+  color : white;
+  width: 12em;
+  border: none;
+  border-radius: 5px;
+  padding: .5em;
+  margin-left: auto;
+  margin-top: 1em;
+  
+}
+
+.change__price__btn {
+  width: 12em;
+  margin-left: auto;
+  margin-top: 1em;
+  border: none;
+  border-radius: 5px;
+  padding: .5em;
+  color: var(--color-light-blue);
+  background-color: var(--color-light-pink);
+}
 
 .modal__container{
   width: 40%;
