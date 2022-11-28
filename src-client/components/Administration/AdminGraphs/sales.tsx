@@ -22,7 +22,7 @@ const Sales = () => {
     dispatch(getSales())
   })
 
-  if(sales){
+  if(sales && selectedMonth){
     return (
       <>
         <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select}>
