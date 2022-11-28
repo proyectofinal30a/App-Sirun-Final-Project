@@ -184,6 +184,8 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
                 purchase_link: response.data.init_point
             }
         })
+
+        
         return res.status(200).json({ url: response.data.init_point })
     } catch (error) {
         console.log(error);
