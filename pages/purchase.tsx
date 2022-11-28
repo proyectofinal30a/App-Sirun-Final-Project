@@ -17,34 +17,35 @@ export default function ApprovedPayment() {
   const { query } = useRouter();
   const { data, status } = useSession<boolean>();
 
-  let idReference: string = typeof query.external_reference === "string" ? query.external_reference : "";
-  let email: string = typeof data?.user?.email === "string" ? data?.user?.email : "";
-  let name: string = typeof data?.user?.name === "string" ? data?.user?.name : "";
+  // let idReference: string = typeof query.external_reference === "string" ? query.external_reference : "";
+  // let email: string = typeof data?.user?.email === "string" ? data?.user?.email : "";
+  // const name: string = typeof data?.user?.name === "string" ? data?.user?.name : "";
   const orderInfo: any = useSelector<Ireducers>((state) => state.reducerAfterPayment.myOrder);
 
-  useEffect(() => {
-    if (idReference !== "" && email !== "") dispatch(getOrder({ idReference, email }));
-  }, [email, idReference, dispatch]);
+  // useEffect(() => {
+  //   if (idReference !== "" && email !== "") dispatch(getOrder({ idReference, email }));
+  // }, [email, idReference, dispatch]);
+  // console.log(orderInfo)
 
 
-  if (orderInfo?.orders?.[0]) {
-    let templateParams = {
-      client_name: name,
-      client_email: email,
-      client_phone: orderInfo.orders[0].addressOrder.phone.area_code + "-" + orderInfo.orders[0].addressOrder.phone.number,
-      client_address: orderInfo.orders[0].addressOrder.street_name + " " + orderInfo.orders[0].addressOrder.street_number,
-      client_zip_code: orderInfo.orders[0].addressOrder.zip_code,
-      order_number: idReference,
-      order_status: orderInfo.orders[0].status,
-      order_date: new Date().toLocaleString(), 
-      order_delivery_time: orderInfo.orders[0].delivery_time,
-      order_detail_url: `https://sirunnpatisserie.vercel.app/order/${idReference}`,
-      order_total: orderInfo.orders[0].total,
-    }
+  // if (orderInfo?.orders?.[0]) {
+    // let templateParams = {
+    //   client_name: name,
+    //   client_email: email,
+    //   client_phone: orderInfo.orders[0].addressOrder.phone.area_code + "-" + orderInfo.orders[0].addressOrder.phone.number,
+    //   client_address: orderInfo.orders[0].addressOrder.street_name + " " + orderInfo.orders[0].addressOrder.street_number,
+    //   client_zip_code: orderInfo.orders[0].addressOrder.zip_code,
+    //   order_number: idReference,
+    //   order_status: orderInfo.orders[0].status,
+    //   order_date: new Date().toLocaleString(), 
+    //   order_delivery_time: orderInfo.orders[0].delivery_time,
+    //   order_detail_url: `https://sirunnpatisserie.vercel.app/order/${idReference}`,
+    //   order_total: orderInfo.orders[0].total,
+    // }
 
-    console.log(templateParams)
+    // console.log(templateParams)
 
-    if (typeof process.env.EMAILJS_SERVICE_ID !== "string") return;
+    // if (typeof process.env.EMAILJS_SERVICE_ID !== "string") return;
 
     // emailjs.send(
     //   process.env.EMAILJS_SERVICE_ID,
@@ -55,7 +56,7 @@ export default function ApprovedPayment() {
     //   (result) => console.log("Email successfully sent!: " + result.text),
     //   (error) => console.log("There's been an error while sending the email: " + error.text)
     // );
-  }
+  // }
 
 
   return (

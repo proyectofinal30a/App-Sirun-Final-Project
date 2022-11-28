@@ -8,17 +8,9 @@ export default async function createPreferenceMP(user: IUserBuyer, productArray:
         payer: user,
         items: productArray,
         back_urls: {
-            success: process.env.STATUS !== 'production'
-                ? `http://localhost:3000/purchase/`
-                : `https://sirunnpatisserie.vercel.app/purchase/`,
-            failure: process.env.STATUS !== 'production'
-                ? 'https://sirunnpatisserie.vercel.app'
-                : 'http://localhost:3000',
-            pending: process.env.STATUS !== 'production'
-                ? 'https://sirunnpatisserie.vercel.app'
-                : 'http://localhost:3000',
+            success: `https://sirunnpatisserie.vercel.app/purchase/`,
+            failure: 'https://sirunnpatisserie.vercel.app',
+            pending: 'https://sirunnpatisserie.vercel.app',
         },
     }
 }
-
-
