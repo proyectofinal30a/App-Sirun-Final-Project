@@ -27,7 +27,7 @@ const Sales = () => {
     sales &&
     <>
       <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select}>
-        <option value="" selected disabled>Select period</option>
+        <option value="Now" selected disabled>Select period</option>
         <option value="Now">Now</option>
         <option value="January">January</option>
         <option value="February">February</option>
