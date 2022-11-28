@@ -18,7 +18,7 @@
   border-right: .5em solid transparent;
   border-radius: .2em;
   box-shadow: 0 0 2px grey;
-  color: var(--color-dark-blue);
+  /* color: var(--color-dark-blue); */
 }
 
 .dashboard__secondary_select {

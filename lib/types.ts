@@ -134,6 +134,7 @@ export interface Ireducers {
   reducerAfterPayment: ImyOrder;
   reducerAllUsers: IallUsers;
   reducerAdmin: Iproducts;
+  reducerAdminManagement: IadminManagement;
 }
 
 export interface Ierror {
@@ -206,6 +207,7 @@ export interface Iorder {
   purchasedProducts: IproductModelCart[];
   status: StatusType;
   purchase_link: string;
+  id_user?: string  // ver que no crashee nada
 }
 
 export interface IReview {
@@ -244,5 +246,9 @@ export interface IbodoyPreferenceLink {
   order: Ipreference;
   purchase_link: string;
 }
-
 //
+
+export interface IadminManagement {
+  usersOrders: Iorder[];
+  usersReviews: IReview[];
+}

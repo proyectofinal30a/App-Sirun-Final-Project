@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { persistor } from "../src-client/redux/store";
 import { SessionProvider } from "next-auth/react";
 import { Storage } from "redux-persist";
+import React from "react";
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

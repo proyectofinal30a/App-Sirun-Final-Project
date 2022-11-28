@@ -31,9 +31,15 @@ const testMercadoPago = async (req: NextApiRequest, res: NextApiResponse) => {
                 }
             }),
             back_urls: {
-                success: 'http://localhost:3000/',
-                failure: 'http://localhost:3000/',
-                pending: 'http://localhost:3000/'
+                success: process.env.NODE_ENV !== 'production'
+                    ? 'http://localhost:3000/purchase'
+                    : 'https://sirunnpatisserie.vercel.app/purchase',
+                failure: process.env.NODE_ENV !== 'production'
+                    ? 'http://localhost:3000/'
+                    : 'https://sirunnpatisserie.vercel.app/',
+                pending: process.env.NODE_ENV !== 'production'
+                    ? 'http://localhost:3000/'
+                    : 'https://sirunnpatisserie.vercel.app/'
             },
         }
         const response = await axios.post(url, preference, {
