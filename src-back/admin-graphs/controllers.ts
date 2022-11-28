@@ -106,7 +106,7 @@ export const productMVP = async (products: any) => {
         }
     }) 
 
-    return aux2.slice(0, 4)
+    return aux2.slice(0, 5)
 }
 
 export const MSProducts = async (products: any) => {
@@ -118,9 +118,11 @@ export const MSProducts = async (products: any) => {
             name: prod.name,
             orders,
         }
+    }).sort((a: any, b: any) => {
+        return b.orders - a.orders
     })
 
     
 
-    return productsWithOrders.slice(0, 4)
+    return productsWithOrders.slice(0, 5)
 }
