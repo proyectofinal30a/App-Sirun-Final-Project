@@ -116,7 +116,7 @@ const Profile = () => {
   const myName: string = previewForm.name || name;
 
 
-  const handleOnclikSwich = () => {
+  const handleOnclikSwich = () => { 
     setPreviewFrom({
       image: "",
       name: "",

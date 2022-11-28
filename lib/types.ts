@@ -252,5 +252,4 @@ export interface IbodoyPreferenceLink {
 export interface IadminManagement {
   usersOrders: Iorder[];
   usersOrdersAutoSave: Iorder[];
-  usersReviews: IReview[];
 }

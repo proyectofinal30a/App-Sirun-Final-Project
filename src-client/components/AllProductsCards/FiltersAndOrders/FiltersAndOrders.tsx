@@ -29,6 +29,7 @@ const FilterAndOrder = () => {
     currentProducts = products;
   }
 
+  console.log(currentProducts)
   const stateSelects = {
     selectPrice: "",
     selectDimention: "",
@@ -79,6 +80,8 @@ const FilterAndOrder = () => {
       order: value,
     };
 
+    console.log(o)
+
     setSelect({ ...select, selectDimention: "", selectPrice: "" });
 
     if (prev.category && prev.type) {
@@ -92,15 +95,21 @@ const FilterAndOrder = () => {
       dispatch(cleanFilters);
       dispatch(prepState(o));
       dispatch(actionFilterByCategoryOrType(o));
+      console.log(products, "con seleccion anterior")
       return;
     }
 
     if (prev.category) {
+      const obj: IactionPayload = {
+        state: products,
+        order: value,
+      };
       dispatch(cleanFilters);
       setSelect({ ...select, selectCategory: value });
       setPrevState({ ...prev, category: value });
-      dispatch(prepState(o));
-      dispatch(actionFilterByCategoryOrType(o));
+      dispatch(prepState(obj));
+      dispatch(actionFilterByCategoryOrType(obj));
+      console.log(products)
       return;
     }
 
@@ -178,7 +187,7 @@ const FilterAndOrder = () => {
       >
         <option value="" disabled>Filter by Type</option>
         {/* <option value="all">Filter by Type</option> */}
-        {types &&types.map((type: any, index: number) => {
+        {types && types.map((type: any, index: number) => {
           return (
             <option key={index} value={type}>
               {type.charAt(0).toUpperCase() + type.slice(1)}
