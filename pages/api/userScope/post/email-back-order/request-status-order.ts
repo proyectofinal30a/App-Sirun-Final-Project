@@ -88,13 +88,16 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
             html: myHtml
         }
 
-        await transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
-        });
+
+    
+    await transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+
 
 
         res.status(200).json({ msg: "the order status check was successful" })
