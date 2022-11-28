@@ -22,42 +22,47 @@ const Sales = () => {
     dispatch(getSales())
   })
 
+  if(sales){
+    return (
+      <>
+        <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select}>
+          <option value="Now" selected disabled>Select period</option>
+          <option value="Now">Now</option>
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <option value="March">March</option>
+          <option value="April">April</option>
+          <option value="May">May</option>
+          <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
+        </select>
   
-  return (
-    sales &&
+        <div className={styles.dashboard__graphic}>
+          <ResponsiveContainer height={400} width={500}>
+            <ComposedChart data={selectedMonth? sales[2022][selectedMonth] : sales[2022]['November'] }>
+              <XAxis dataKey="week"/>
+              <YAxis />
+              <Bar type="monotone" dataKey="confirmed" barSize={30} fill="#3c7358" />
+              <Bar type="monotone" dataKey="pending" barSize={30} fill="#b03d3d" />
+              <Tooltip />
+              <Legend />
+              <CartesianGrid />
+            </ComposedChart>
+          </ResponsiveContainer>
+        </div>
+      </>
+    );
+  } else {
     <>
-      <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select}>
-        <option value="Now" selected disabled>Select period</option>
-        <option value="Now">Now</option>
-        <option value="January">January</option>
-        <option value="February">February</option>
-        <option value="March">March</option>
-        <option value="April">April</option>
-        <option value="May">May</option>
-        <option value="June">June</option>
-        <option value="July">July</option>
-        <option value="August">August</option>
-        <option value="September">September</option>
-        <option value="October">October</option>
-        <option value="November">November</option>
-        <option value="December">December</option>
-      </select>
-
-      <div className={styles.dashboard__graphic}>
-        <ResponsiveContainer height={400} width={500}>
-          <ComposedChart data={selectedMonth? sales[2022][selectedMonth] : sales[2022]['November'] }>
-            <XAxis dataKey="week"/>
-            <YAxis />
-            <Bar type="monotone" dataKey="confirmed" barSize={30} fill="#3c7358" />
-            <Bar type="monotone" dataKey="pending" barSize={30} fill="#b03d3d" />
-            <Tooltip />
-            <Legend />
-            <CartesianGrid />
-          </ComposedChart>
-        </ResponsiveContainer>
-      </div>
+    <h2>Loading</h2>
     </>
-  );
+  }
+
   
 };
 
