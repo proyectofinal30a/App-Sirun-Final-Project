@@ -195,6 +195,7 @@ export interface IitemForMercadoPago {
   title: string;
   quantity: string;
   unit_price: string;
+  id?: string;
 }
 
 export interface Iorder {

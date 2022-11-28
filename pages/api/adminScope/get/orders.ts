@@ -19,6 +19,7 @@ const orders: Function = async (req: NextApiRequest, res: NextApiResponse) => {
             picture_url: true,
             unit_price: true,
             quantity: true,
+            id: true,
           }
         },
         addressOrder: {

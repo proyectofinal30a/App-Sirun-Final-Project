@@ -35,8 +35,8 @@ export const reducerAdminManagement = createSlice({
       if (action.payload === "desc") state.usersOrders.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
     },
     changeOrderStatus: (state, action) => {
-      state.usersOrders = state.usersOrders.map(order => order.status = action.payload);
-      state.usersOrdersAutoSave = state.usersOrdersAutoSave.map(order => order.status = action.payload);
+      state.usersOrders = action.payload;
+      state.usersOrdersAutoSave = action.payload;
     },
   },
 });

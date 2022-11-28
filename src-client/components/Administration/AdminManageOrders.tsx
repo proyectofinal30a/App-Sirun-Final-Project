@@ -10,6 +10,7 @@ import styles from "../../styles/AdminManageOrders.module.css";
 const AdminManageOrders = () => {
   const dispatch: Function = useDispatch();
   const usersOrders = useSelector((state: Ireducers) => state.reducerAdminManagement.usersOrders);
+  console.log(usersOrders)
   const [selectedValue, setSelectedValue] = useState({
     statusSelection: "",
     dateSort: "",
@@ -17,7 +18,7 @@ const AdminManageOrders = () => {
 
 
   useEffect(() => {
-    dispatch(getUsersOrders());
+    if (!usersOrders[0]) dispatch(getUsersOrders());
   }, []);
   
 
@@ -27,7 +28,7 @@ const AdminManageOrders = () => {
       statusSelection: value,
       dateSort: "",
     });
-    if (value === "") {
+    if (value === "" || value === "all") {
       return dispatch(restoreAllOrders());
     };
     dispatch(filterOrders(value));
@@ -53,9 +54,9 @@ const AdminManageOrders = () => {
   }
 
 
-  const handleStatusChange = (e) => {
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>, id: string) => {
     const { value } = e.target;
-    dispatch(changeOrderStatus());
+    dispatch(changeOrderStatus({ orderId: id, orderStatus: value}));
     dispatch(getUsersOrders());
   }
 
@@ -72,6 +73,7 @@ const AdminManageOrders = () => {
           className={styles.orders_management__select}
         >
           <option value="" disabled>Filter by status</option>
+          <option value="all">All</option>
           <option value="confirmed">Confirmed</option>
           <option value="in_process">In process</option>
           <option value="canceled">Canceled</option>
@@ -85,8 +87,8 @@ const AdminManageOrders = () => {
           className={styles.orders_management__select}
         >
           <option value="" disabled>Order by date</option>
-          <option value="asc">Ascending</option>
-          <option value="desc">Descending</option>
+          <option value="asc">Older first</option>
+          <option value="desc">Newer first</option>
         </select>
 
         <button className={styles.clear_filters_btn} onClick={clearFilters}>Clear filters</button>
@@ -107,7 +109,8 @@ const AdminManageOrders = () => {
                     <span className={styles.orders_management__order_span}>Order status:{" "}</span>
                     <p className={styles.status}>{order.status}</p>
                   </div>
-                  <select value="" className={styles.change_status_btn} onChange={handleStatusChange}> 
+
+                  <select value="" className={styles.change_status_btn} onChange={(e) => handleStatusChange(e, order.id)}> 
                     <option value="" disabled>Change status to:</option>
                     <option value="confirmed">Confirmed</option>
                     <option value="in_process">In process</option>
@@ -151,7 +154,7 @@ const AdminManageOrders = () => {
 
                 {order.purchasedProducts?.map(product => {
                   return (
-                    <div key={product.id} className={styles.orders_management__product_container}>
+                    <div key={product?.id} className={styles.orders_management__product_container}>
                       <div className={styles.orders_management__product_img_container}>
                         <Image 
                           src={product.picture_url}
@@ -178,7 +181,6 @@ const AdminManageOrders = () => {
                     </div>
                   )
                })}
-
             </div>
           )
         })}
