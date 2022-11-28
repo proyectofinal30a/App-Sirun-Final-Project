@@ -21,29 +21,6 @@ const Sales = () => {
   useEffect(() =>{
     dispatch(getSales())
   })
-<<<<<<< HEAD
-  
-  if(sales){
-    return (
-      <>
-        <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select}>
-          <option value="Now" selected disabled>Select period</option>
-          <option value="Now">Now</option>
-          <option value="January">January</option>
-          <option value="February">February</option>
-          <option value="March">March</option>
-          <option value="April">April</option>
-          <option value="May">May</option>
-          <option value="June">June</option>
-          <option value="July">July</option>
-          <option value="August">August</option>
-          <option value="September">September</option>
-          <option value="October">October</option>
-          <option value="November">November</option>
-          <option value="December">December</option>
-        </select>
-  
-=======
 
   if(sales){
     return (
@@ -65,7 +42,6 @@ const Sales = () => {
           <option value="December">December</option>
         </select>
   
->>>>>>> 869f51973af11e75beff0315a19155e951550e66
         <div className={styles.dashboard__graphic}>
           <ResponsiveContainer height={400} width={500}>
             <ComposedChart data={selectedMonth? sales[2022][selectedMonth] : sales[2022]['November'] }>
