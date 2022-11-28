@@ -6,9 +6,9 @@ import { getSolds } from '../../../redux/slice/admin-graphs/admin-graphs';
 
 
 const MostSoldProduct = () => {
-  const products = useSelector((state) => state.adminGraphs.productMS)
+  const products = useSelector((state : any) => state.adminGraphs.productMS)
   const [type, setType] = useState('all')
-  const dispatch = useDispatch()
+  const dispatch : Function = useDispatch()
 
   useEffect(() => {
     dispatch(getSolds(type))
@@ -16,7 +16,7 @@ const MostSoldProduct = () => {
   const changeType = (e) => {
     setType(e.target.value)
   }
-  if(products){
+  if(products.length > 0){
     return (
       <>
       <select onChange={(e)=> changeType(e)}>
@@ -32,7 +32,7 @@ const MostSoldProduct = () => {
       <ResponsiveContainer height={400} width={700}>
         <BarChart data={products.slice(0, 5)}>
           <Tooltip />
-          <XAxis dataKey="name" gap={70} />
+          <XAxis dataKey="name" />
           <YAxis />
           <Legend />
           <CartesianGrid />

@@ -4,11 +4,10 @@ import { MSProducts } from '../../../../src-back/admin-graphs/controllers'
 
 const soldsData: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
-        const {type} = req.query
-    
-        
+        const { type } = req.query
+
         const products: any = await prisma.product.findMany({
-            include:{
+            include: {
                 order: true
             }
         })

@@ -6,8 +6,8 @@ import { getMVP } from '../../../redux/slice/admin-graphs/admin-graphs';
 
 
  export const MostValuatedProducts = () => {
-  const products = useSelector((state) => state.adminGraphs.MVProduct)
-  const dispatch = useDispatch()
+  const products = useSelector((state: any) => state.adminGraphs.MVProduct)
+  const dispatch: Function= useDispatch()
   const [type, setType] = useState('all')
 
   useEffect(() => {
@@ -32,7 +32,7 @@ import { getMVP } from '../../../redux/slice/admin-graphs/admin-graphs';
      <div className={styles.dashboard__graphic}>
        <ResponsiveContainer height={400} width={500}>
          <BarChart data={products}>
-           <XAxis dataKey="name" gap={50} />
+           <XAxis dataKey="name" />
            <YAxis domain={[1, 5]} />
            <Tooltip />
            <Legend />
