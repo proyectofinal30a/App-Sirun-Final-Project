@@ -112,7 +112,7 @@ const ShoppingCart = () => {
                 className={styles.modal__start_purchase_btn}
               />
             </div>
-            :
+            : 
             <Link href="/checkout" className={styles.modal__purchase_btn_container}>
               <button className={styles.modal__start_purchase_btn}>Checkout</button>
             </Link>

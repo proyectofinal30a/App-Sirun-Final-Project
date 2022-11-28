@@ -132,6 +132,7 @@ const AdminManageProducts = () => {
     e.preventDefault()
     const { id } = product
     dispatch(changeAvailability(id))
+    setActive(true)
   }
 
 
@@ -141,7 +142,10 @@ const AdminManageProducts = () => {
     // ACA NO SOLAMENTE DEBERIA INFORMAR AL BACK DE LOS CAMBIOS
     // TAMBIEN DEBERIA ACTUALIZAR EL ESTADO DE LOS PRODUCTOS EN EL FRONT
     //Y ASI FILTRAR EL ESTADO DEL CARRITO Y DE LA WHISLIST, eliminando los productos que no esten disponibles
+    // deberia actualizar el estado de products y de favorites???
+    // impedir que agregue al carrito si ya no esta disponible
     alert(` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
+    setActive(false)
   }
 
 
@@ -243,15 +247,15 @@ const AdminManageProducts = () => {
   //   const myFilter = myPrevurl.filter(e => e.image !== name)
   //   setFormProduct({ ...formProduct, image: myFilter });
   // };
-
-
- 
-
+  
+  const [active, setActive] = useState(false)
+  
+  
   return (
     <div className={styles.products_manage__container}>
       <h1 className={styles.products_manage__title}>Administration Product Managing</h1>
      
-     
+     <div  className={styles.products_manage_comands}>
       <div className={styles.users_management__searchbar}>
         <input
           type="search"
@@ -261,8 +265,11 @@ const AdminManageProducts = () => {
           name="name"
           value={name}
           onChange={handleChange}
-        />
+          />
       </div>
+    <button className={styles.change__price__btn} onClick={(e: any) => openMasiveModal(e)}>Update All Prices</button>
+     </div>
+          {active ? <input className={styles.visibility__btn} type="button" value="Apply visibility changes" onClick={aplicarCambios} /> : null}
 
       {/* onClick={(e: any) => editOpenModal(e, product)} */}
       
@@ -289,7 +296,7 @@ const AdminManageProducts = () => {
 
             <div className={styles.product__card__icons}>
               <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
-                <button className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} >
+                <button value={active} className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} >  
                   {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
             </div>
 
@@ -298,8 +305,8 @@ const AdminManageProducts = () => {
       })}
       </div>
 
-      <input className={styles.visibility__btn} type="button" value="Apply visibility changes" onClick={aplicarCambios} />
-      <button className={styles.change__price__btn} onClick={(e: any) => openMasiveModal(e)}>Update All Prices</button>
+
+
 
       <Modal
         ariaHideApp={false}
@@ -325,7 +332,7 @@ const AdminManageProducts = () => {
               value={formProduct.price}
               defaultValue={productModal.price} 
               className={styles.new_price__input}
-              placeholder="New Price"
+              placeholder="Add a new Price"
               required
             />
             <span className={styles.creation_form__error_message}>{formErrors.price}</span>
@@ -336,7 +343,7 @@ const AdminManageProducts = () => {
 
             <textarea
               name="description"
-              placeholder="New Description"
+              placeholder="Add a new Description"
               onChange={handleOnChangeInput}
               value={formProduct.description}
               className={styles.creation_form__textarea}
@@ -394,18 +401,21 @@ const AdminManageProducts = () => {
           </div>
           <h2>Edit All Products</h2>
           <div className={styles.modal__selects__container}>
+            <label className={styles.current__data}>How much do yo want you update your price product?</label>
           <input className={styles.search_bar__input} name="quantity" value={modalForm.quantity} onChange={handlerInputQuantity} placeholder="Add a quantity to update all products"></input>
           {modalError.quantity && <p className={styles.modal__error}>{modalError.quantity}</p>}
+          <label className={styles.current__data}>Do you want to make a discount or an increase?</label>
            <select className={styles.filter__select} name="direction" onChange={handlerInputDirection} value={modalForm.direction}>
             <option value="">Choose</option>
-            <option value="increase">Plus(+)</option>
-            <option value="decrease">Less(-)</option>
+            <option value="increase">Increase(+)</option>
+            <option value="decrease">Discount(-)</option>
           </select>
           {modalError.direction && <p className={styles.modal__error}>{modalError.direction}</p>}
+          <label className={styles.current__data}>How much do you want to update your price product? <br/> By percentage or by amount?</label>
           <select className={styles.filter__select} name="type" onChange={handlerInputType} value={modalForm.type}> 
             <option value="">Choose</option>
-            <option value="percent">Per Percent</option>
-            <option value="fixed">Per Fixed Amount</option>
+            <option value="percent">Per Percent(%)</option>
+            <option value="fixed">Per Fixed Amount($)</option>
           </select>
           {modalError.type && <p className={styles.modal__error}>{modalError.type}</p>}
           </div>
