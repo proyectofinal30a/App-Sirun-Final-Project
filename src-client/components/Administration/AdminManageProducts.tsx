@@ -231,7 +231,8 @@ const AdminManageProducts = () => {
 
   const [active, setActive] = useState(false)
 
-  if (currentProducts[0]) return <div>Loanding....</div>
+
+  if (!currentProducts[0]) return <div className={styles.products_manage__container}><h1 className={styles.products_manage__title}> Loading....</h1></div>
 
   return (
     <div className={styles.products_manage__container}>
