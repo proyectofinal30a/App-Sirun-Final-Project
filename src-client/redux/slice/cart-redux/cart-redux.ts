@@ -77,8 +77,11 @@ export const reducerCart = createSlice({
     },
     actionResetCart: (state: IproductsCardModel, action: IresetForm) => {
       state.confirmed = action.payload.confirmed;
-      state.payLink = action.payload.payLink
+      state.payLink = action.payload.payLink;
     },
+    accionResetProduct: (state: IproductsCardModel) => {
+      state.products = []
+    }
   },
 });
 
@@ -100,7 +103,7 @@ export const trashItem = (id: string) => (dispatch: Function) => {
 
 export const sendOrderDetail = (user: IUserBuyer, productArray: IproductModelCart[]) => async (dispatch: Function) => {
   try {
- 
+
     const myPrerencia = createPreferenceMP(user, productArray)
     const request = await axios({
       method: 'post',
@@ -124,6 +127,9 @@ export const resetCart = () => (dispatch: Function) => {
   return dispatch(reducerCart.actions.actionResetCart({ confirmed: false, payLink: '' }));
 };
 
+export const resetProduct = () => (dispatch: Function) => {
+  return dispatch(reducerCart.actions.accionResetProduct());
+};
 
 
 export default reducerCart.reducer;
