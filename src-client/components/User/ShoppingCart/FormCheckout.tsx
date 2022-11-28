@@ -23,6 +23,7 @@ const FormCheckout = (): JSX.Element => {
   const { data } = useSession();
 
   useEffect(() => {
+    if (payLink) dispatch(resetCart())
     return () => dispatch(resetCart());
   }, []);
 
