@@ -89,32 +89,75 @@ export const orderToSales = async (orders: any) => {
     return years
 }
 
-export const productMVP = async (products: any) => {
-    const MVPs = []
-    const aux = await products.filter((prod : any) => prod.evaluation.length > 0).sort((a: any, b:any) => {
-       return b.evaluation.length - a.evaluation.length
-    })
+export const productMVP = async (products: any, type: any) => {
+    if(type){
+        const aux = await products.filter((prod : any) => prod.evaluation.length > 0 && prod.category === type ).sort((a: any, b:any) => {
+           return b.evaluation.length - a.evaluation.length
+        })
+    
+        const aux2: any = await aux.map(prod => {
+            let rating = 0
+            prod.evaluation.forEach((ev: any) => rating = rating + ev.rating)
+            const cuantity = prod.evaluation.length 
+            const prom: any = rating / cuantity
+            return {
+                name: prod.name,
+                rating: prom
+            }
+        }).sort((a: any, b: any) => {
+            return b.rating - a.rating
+    
+        })
+    
+        return aux2
 
-    const aux2: any = await aux.map(prod => {
-        let rating = 0
-        prod.evaluation.forEach((ev: any) => rating = rating + ev.rating)
-        const cuantity = prod.evaluation.length 
-        const prom: any = rating / cuantity
-        return {
-            name: prod.name,
-            rating: prom
-        }
-    }).sort((a: any, b: any) => {
-        return b.rating - a.rating
-    })
-
-    return aux2.slice(0, 5)
+    } else {
+        const aux = await products.filter((prod : any) => prod.evaluation.length > 0 ).sort((a: any, b:any) => {
+            return b.evaluation.length - a.evaluation.length
+         })
+     
+         const aux2: any = await aux.map(prod => {
+             let rating = 0
+             prod.evaluation.forEach((ev: any) => rating = rating + ev.rating)
+             const cuantity = prod.evaluation.length 
+             const prom: any = rating / cuantity
+             return {
+                 name: prod.name,
+                 rating: prom
+             }
+         }).sort((a: any, b: any) => {
+             return b.rating - a.rating
+     
+         })
+     
+         return aux2
+    }
 }
 
-export const MSProducts = async (products: any) => {
-    const productsWithOrders = await products.filter((prod: any) => prod.order.length > 0).map((prod: any) => {
+export const MSProducts = async (products: any, type: string | undefined | string[]) => {
+    console.log(type);
+    
+    if(type){
+        const productsWithOrders = await products.filter((prod: any) => prod.order.length > 0 && prod.category === type).map((prod: any) => {
+            let orders = 0
+            const aux = prod.order.forEach((ord: any) => {
+                if(ord.status === 'confirmed') orders = orders + 1
+            })
+    
+            return {
+                name: prod.name,
+                orders,
+            }
+        }).sort((a: any, b: any) => {
+            return b.orders - a.orders
+        })
+            return productsWithOrders
+    } else {
+        const productsWithOrders = await products.filter((prod: any) => prod.order.length > 0).map((prod: any) => {
         let orders = 0
-        const aux = prod.order.forEach((ord: any) => orders = orders + 1)
+        const aux = prod.order.forEach((ord: any) => {
+            if(ord.status === 'confirmed') orders = orders + 1
+        })
 
         return {
             name: prod.name,
@@ -123,8 +166,10 @@ export const MSProducts = async (products: any) => {
     }).sort((a: any, b: any) => {
         return b.orders - a.orders
     })
-
+        return productsWithOrders
+    }
+    
     
 
-    return productsWithOrders.slice(0, 5)
+    
 }

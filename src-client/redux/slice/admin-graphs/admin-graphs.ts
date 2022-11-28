@@ -38,14 +38,15 @@ export const getSales = () => async (dispatch: Function) => {
     return dispatch(adminGraphs.actions.actionGetSales(sales.data))
 }
 
-export const getMVP = () => async (dispatch: Function) => {
-    const products: any = await axios.get('/api/adminScope/graphDatas/MVPData')
+export const getMVP = (type: string) => async (dispatch: Function) => {
+    const products: any = await axios.get(`/api/adminScope/graphDatas/MVPData?${type === 'all'? '': `type=${type}`}`)
 
     return dispatch(adminGraphs.actions.actionMVP(products.data))
 }
 
-export const getSolds = () => async (dispatch: Function) => {
-    const products: any = await axios.get('/api/adminScope/graphDatas/soldsData')
+export const getSolds = (type: string) => async (dispatch: Function) => {
+    
+    const products: any = await axios.get(`/api/adminScope/graphDatas/soldsData?${type === 'all'? '': `type=${type}`}`)
     return dispatch(adminGraphs.actions.actionSolds(products.data))
 }
 

@@ -4,12 +4,15 @@ import { MSProducts } from '../../../../src-back/admin-graphs/controllers'
 
 const soldsData: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
+        const {type} = req.query
+        console.log(type);
+        
         const products: any = await prisma.product.findMany({
             include:{
                 order: true
             }
         })
-        const ahoraChi = await MSProducts(products)
+        const ahoraChi = await MSProducts(products, type)
         return res.status(200).json(ahoraChi)
     } catch (error) {
         return res.status(400).json(error)
