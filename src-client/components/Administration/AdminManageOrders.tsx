@@ -2,8 +2,9 @@ import styles from "../../styles/AdminManageOrders.module.css";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useDispatch, useSelector } from "react-redux";
-import { filterOrders, getUsersOrders, Ipayload } from "../../redux/slice/admin-management-redux/admin-management";
+import { filterOrders, getUsersOrders, restoreAllOrders, sortOrders } from "../../redux/slice/admin-management-redux/admin-management";
 import { getAllUsers } from "../../redux/slice/user-detail-redux/all-users";
+import formatDate from "../../controllers/format-date";
 import { Ireducers, Iorder } from "../../../lib/types";
 
 
@@ -13,28 +14,18 @@ const AdminManageOrders = () => {
     statusSelection: "",
     dateSort: "",
   });
-  
+
   useEffect(() => {
     dispatch(getUsersOrders());
     dispatch(getAllUsers());
   }, [dispatch]);
   
   const usersOrders = useSelector((state: Ireducers) => state.reducerAdminManagement.usersOrders);
-  // console.log(usersOrders)
-  const usersOrdersToFilter = useSelector((state: Ireducers) => state.reducerAdminManagement.usersOrdersToFilter);
-  // console.log(usersOrdersFilter) 
+  console.log(usersOrders)
   const users = useSelector((state: Ireducers) => state.reducerAllUsers.allUsers);
+  
+  // if (!usersOrders[0]) return <div className={styles.loading}>No orders</div>
 
-  if (!usersOrders[0] || !users[0]) return <div className={styles.loading}>Loading...</div>
-
-
-  let currentOrders: Iorder[];
-  if (usersOrdersToFilter[0]) {
-    currentOrders = usersOrdersToFilter;
-  } else {
-    currentOrders = usersOrders;
-  }
-  // console.log(currentOrders)
 
   const handleStatusSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
@@ -42,25 +33,22 @@ const AdminManageOrders = () => {
       statusSelection: value,
       dateSort: "",
     });
-    if (value === "") return dispatch(getUsersOrders());
+    if (value === "") {
+      return dispatch(restoreAllOrders());
+    };
 
-    const o: Ipayload = {
-      state: currentOrders,
-      value: value,
-    }
-    return filterOrders(o);
+    dispatch(filterOrders(value));
   }
 
-
-
-  // const handleDateSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
-  //   const { value } = e.target;
-  //   setSelectedValue({
-  //     ...selectedValue,
-  //     dateSort: value,
-  //   });
-
-  // }
+ 
+  const handleDateSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const value = e.target.value;
+    setSelectedValue({
+      ...selectedValue,
+      dateSort: value,
+    });
+    dispatch(sortOrders(value));
+  }
 
   return (
     <div className={styles.orders_management__container}>
@@ -75,7 +63,7 @@ const AdminManageOrders = () => {
           <option value="fulfilled">Fulfilled</option>
         </select>
 
-        <select name="dateSort" defaultValue={selectedValue.dateSort}>
+        <select name="dateSort" defaultValue={selectedValue.dateSort} onChange={handleDateSort}>
           <option value="" disabled>Order by date</option>
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
@@ -115,7 +103,7 @@ const AdminManageOrders = () => {
                 </p>
                 <p className={styles.orders_management__order_info}>
                   <span className={styles.orders_management__order_span}>Order date:{" "}</span>
-                  {order.date.toLocaleString().split("T")[0]}
+                  {formatDate(order.date)}
                 </p>
                 <p className={styles.orders_management__order_info}>
                   <span className={styles.orders_management__order_span}>Delivery time:{" "}</span>

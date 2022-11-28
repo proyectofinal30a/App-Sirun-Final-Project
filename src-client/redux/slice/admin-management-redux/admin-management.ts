@@ -4,7 +4,7 @@ import { IadminManagement, Iorder } from "../../../../lib/types";
 
 const initialState: IadminManagement = {
   usersOrders: [],
-  usersOrdersToFilter: [],
+  usersOrdersAutoSave: [],
   usersReviews: [],
 };
 
@@ -14,18 +14,30 @@ export const reducerAdminManagement = createSlice({
   reducers: {
     getUsersOrders: (state, action) => {
       state.usersOrders = action.payload;
-      state.usersOrdersToFilter = action.payload;
+      state.usersOrdersAutoSave = action.payload;
+    },
+    autoSaveOrders: (state, action) => {
+      state.usersOrdersAutoSave = action.payload;
+      state.usersOrders = state.usersOrdersAutoSave;
     },
     filterOrders: (state, action) => {
-      state.usersOrdersToFilter = action.payload;
+      if (state.usersOrders.length === state.usersOrdersAutoSave.length) {
+        state.usersOrders = state.usersOrders.filter(order => order.status === action.payload);
+        return;
+      }
+      state.usersOrders = state.usersOrdersAutoSave;
+      state.usersOrders = state.usersOrders.filter(order => order.status === action.payload);
     },
+    restoreAllOrders: (state) => {
+      state.usersOrders = state.usersOrdersAutoSave;
+    },  
     sortOrders: (state, action) => {
-      state.usersOrdersToFilter = action.payload;
+      if (action.payload === "asc") state.usersOrders.sort((a, b) => a.date > b.date ? 1 : a.date < b.date ? -1 : 0);
+      if (action.payload === "desc") state.usersOrders.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
     },
     // changeOrderStatus: (state, action) => {
     //   state.usersOrders = action.payload;
     // },
-
     getUsersReviews: (state, action) => {
       state.usersOrders = action.payload;
     },
@@ -34,6 +46,7 @@ export const reducerAdminManagement = createSlice({
     },
   },
 });
+
 
 
 // ORDERS
@@ -51,15 +64,16 @@ export const getUsersOrders = () => async (dispatch: Function) => {
   }
 };
 
-export interface Ipayload {
-  state: Iorder[],
-  value: string
+export const restoreAllOrders = () => (dispatch: Function) => {
+  dispatch(reducerAdminManagement.actions.restoreAllOrders());
 }
 
-export const filterOrders = (o: Ipayload) => {
-  const data = o.state.filter((order: Iorder) => order.status !== o.value);
-  console.log(data)
-  reducerAdminManagement.actions.getUsersOrders(data);
+export const filterOrders = (value: string) => (dispatch: Function) => {
+  dispatch(reducerAdminManagement.actions.filterOrders(value));
+}
+
+export const sortOrders = (value: string) => (dispatch: Function) => {
+  dispatch(reducerAdminManagement.actions.sortOrders(value));
 }
 
 

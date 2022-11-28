@@ -14,5 +14,3 @@ export default async function createPreferenceMP(user: IUserBuyer, productArray:
         },
     }
 }
-
-
