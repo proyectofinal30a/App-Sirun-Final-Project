@@ -7,11 +7,11 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
     try {
         interface body {
             email: string
-            idReferenceArray: string[]
+            idReference: string
             name: string
         }
         interface responseMP { data: { results: [{ status: string, id: string }] } }
-        const { email, idReferenceArray, name }: body = req.body
+        const { email, idReference, name }: body = req.body
 
 
         const transporter = nodemailer.createTransport({
@@ -22,71 +22,73 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
             }
         });
 
-        idReferenceArray.forEach(async (idReference) => {
-            const requestOrder: responseMP = await axios({
-                method: 'get',
-                url: `https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=${idReference}`,
-                headers: {
-                    'Content-Type': "application/json",
-                    Authorization: `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
-                }
-            })
-            if (requestOrder.data?.results?.[0]?.status !== 'approved') return res.status(200).json({ msg: "hasn't paid yet" })
 
-            await prisma.order.update({
-                where: {
-                    id: idReference
-                },
-                data: {
-                    status: "confirmed"
-                }
-            })
+        const requestOrder: responseMP = await axios({
+            method: 'get',
+            url: `https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=${idReference}`,
+            headers: {
+                'Content-Type': "application/json",
+                Authorization: `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
+            }
+        })
+        if (requestOrder.data?.results?.[0]?.status !== 'approved') return res.status(200).json({ msg: "hasn't paid yet" })
 
-            const responseforEmail = await prisma.user.findFirst({
-                where: { email },
-                select: {
-                    orders: {
-                        where: {
-                            id: idReference
-                        },
-                        select: {
-                            addressOrder: {
-                                select: {
-                                    zip_code: true,
-                                    street_name: true,
-                                    street_number: true,
-                                    phone: {
-                                        select: {
-                                            number: true,
-                                            area_code: true
-                                        }
+        await prisma.order.update({
+            where: {
+                id: idReference
+            },
+            data: {
+                status: "confirmed"
+            }
+        })
+
+        const responseforEmail = await prisma.user.findFirst({
+            where: { email },
+            select: {
+                orders: {
+                    where: {
+                        id: idReference
+                    },
+                    select: {
+                        addressOrder: {
+                            select: {
+                                zip_code: true,
+                                street_name: true,
+                                street_number: true,
+                                phone: {
+                                    select: {
+                                        number: true,
+                                        area_code: true
                                     }
                                 }
-                            },
-                            purchasedProducts: {
-                                select: {
-                                    title: true,
-                                    unit_price: true,
-                                    picture_url: true,
-                                    quantity: true,
+                            }
+                        },
+                        purchasedProducts: {
+                            select: {
+                                title: true,
+                                unit_price: true,
+                                picture_url: true,
+                                quantity: true,
 
-                                }
-                            },
-                            status: true,
-                            delivery_time: true,
-                            total: true,
-                        }
+                            }
+                        },
+                        status: true,
+                        delivery_time: true,
+                        total: true,
                     }
                 }
-            })
-
-            const myHtml = CreationOfHTML(responseforEmail, email, name, requestOrder.data?.results?.[0]?.id)
-            const mailOptions = {
-                from: process.env.EMAIL_USER,
-                to: email,
-                subject: `Sirun Pâtisserie - Order ${requestOrder.data?.results?.[0]?.id}`,
-                html: myHtml
             }
+        })
+
+        const myHtml = CreationOfHTML(responseforEmail, email, name, requestOrder.data?.results?.[0]?.id)
+        const mailOptions = {
+            from: process.env.EMAIL_USER,
+            to: email,
+            subject: `Sirun Pâtisserie - Order ${requestOrder.data?.results?.[0]?.id}`,
+            html: myHtml
+        }
+
+
     
     await transporter.sendMail(mailOptions, function (error, info) {
                 if (error) {
@@ -96,7 +98,7 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
                 }
             });
 
-        })
+
 
         res.status(200).json({ msg: "the order status check was successful" })
     } catch (error) {
