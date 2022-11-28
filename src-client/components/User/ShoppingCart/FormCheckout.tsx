@@ -10,24 +10,23 @@ import CardCart from "../cardCart/cardCart";
 import MyFormAdd from "../formAddress/formAddress";
 import { useRef } from "react";
 import ButtonConfirmInf from "../bottonSubmitForm/confirmInf";
-
-
+import { useRouter } from 'next/router'
 const FormCheckout = (): JSX.Element => {
   const dispatch: Function = useDispatch();
   const [address, setAddress] = useState(1000);
+  const router = useRouter()
   const [modalIsOpen, setIsOpen] = useState(false);
   const [buttonInput, setButtonInput] = useState(false);
-
   const { confirmed, payLink, products } = useSelector((state: Ireducers) => state.reducerCart);
   const myFormAddress = useSelector((state: Ireducers) => state.reducerUser.user.addresses);
 
   const { data } = useSession();
 
-
   useEffect(() => {
     return () => dispatch(resetCart());
   }, []);
 
+  if (!products[0]) router.push('/')
 
   const personInfo: IDataAddress = {
     name_address: "",
@@ -58,11 +57,11 @@ const FormCheckout = (): JSX.Element => {
   const [errors, setErrors] = useState(personInfo);
   const [startNumber, setStartNumber] = useState(1000);
 
-  if (!data?.user.email || !products || !products[0]) return <div className={styles.loading}>Loading...</div>
+  if (!data?.user.email || !products) return <div className={styles.loading}>Loading...</div>
 
   const isOpenModal = () => setIsOpen((current: Boolean) => !current)
-  const total = products.map((elem) => elem.subTotal).reduce((elem, acc: number) => elem + acc)
-  const totalQuantity = products.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc)
+  const total = products[0] && products.map((elem) => elem.subTotal).reduce((elem, acc: number) => elem + acc)
+  const totalQuantity = products[0] && products.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc)
 
 
   const myDataUser = {

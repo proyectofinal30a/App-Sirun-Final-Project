@@ -98,10 +98,10 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
 
         })
 
-
+        res.status(200).json({ msg: "the order status check was successful" })
     } catch (error) {
         console.log(error);
-        res.status(404).json({ msg: `Error al buscar OrderEmail` })
+        res.status(404).json({ msg: `error when checking the status of Orders` })
     }
 
 }
