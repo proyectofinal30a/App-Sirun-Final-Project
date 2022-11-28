@@ -53,11 +53,11 @@ const AdminManageOrders = () => {
   }
 
 
-  // const changeStatus = (e) => {
-  //   const { value } = e.target;
-  //   dispatch(changeOrderStatus());
-  //   dispatch(getUsersOrders());
-  // }
+  const handleStatusChange = (e) => {
+    const { value } = e.target;
+    dispatch(changeOrderStatus());
+    dispatch(getUsersOrders());
+  }
 
 
   return (
@@ -107,7 +107,13 @@ const AdminManageOrders = () => {
                     <span className={styles.orders_management__order_span}>Order status:{" "}</span>
                     <p className={styles.status}>{order.status}</p>
                   </div>
-                  <button className={styles.change_status_btn}>Change status</button>
+                  <select value="" className={styles.change_status_btn} onChange={handleStatusChange}> 
+                    <option value="" disabled>Change status to:</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="in_process">In process</option>
+                    <option value="canceled">Canceled</option>
+                    <option value="fulfilled">Fulfilled</option>
+                  </select>
                 </div>
 
                 <p className={styles.orders_management__order_info}>

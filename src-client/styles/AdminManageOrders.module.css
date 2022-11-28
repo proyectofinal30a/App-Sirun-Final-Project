@@ -112,7 +112,8 @@
 
 .change_status_btn {
   border: none;
-  border: 1px solid var(--color-dark-blue);
+  border-right: .5em solid transparent;
+  box-shadow: 0 0 2px grey;
   padding: .3em;
   border-radius: .2em;
 }
@@ -237,7 +238,6 @@
   }
 
   .change_status_btn {
-    max-width: 10em;
     margin: auto;
   }
 
