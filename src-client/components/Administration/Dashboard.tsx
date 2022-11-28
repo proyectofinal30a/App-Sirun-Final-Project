@@ -23,7 +23,7 @@ const AdminDashboard = () => {
         <div className={styles.dashboard__individual_container}>
           <h1 className={styles.dashboard__title}>Sales</h1>
           <div className={styles.dashboard__graphic_container}>
-            <Sales />
+            {/* <Sales /> */}
           </div>
         </div>
       )}
@@ -31,14 +31,14 @@ const AdminDashboard = () => {
       {Dashboard === "mostSoldProduct" && (
         <div className={styles.dashboard__graphic_container}>
           <h1 className={styles.dashboard__title}>Best selling product</h1>
-          <MostSoldProduct />
+          {/* <MostSoldProduct /> */}
         </div>
       )}
 
       {Dashboard === "mostValuatedProduct" && (
         <div className={styles.dashboard__graphic_container}>
           <h1 className={styles.dashboard__title}>Best ranked product</h1>
-          <MostValuatedProducts />
+          {/* <MostValuatedProducts /> */}
         </div>
       )}
     </div>
