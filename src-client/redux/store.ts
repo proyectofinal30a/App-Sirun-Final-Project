@@ -16,7 +16,7 @@ import adminGraphs from "./slice/admin-graphs/admin-graphs";
 
 const persistConfig = {
 
-  key: 'tutu',
+  key: 'blablabla',
 
   storage,
 }

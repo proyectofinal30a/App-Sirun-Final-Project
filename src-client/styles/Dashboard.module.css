@@ -18,8 +18,7 @@
   border-right: .5em solid transparent;
   border-radius: .2em;
   box-shadow: 0 0 2px grey;
-  background-color: rgb(174, 171, 171);
-  color: white;
+  /* color: var(--color-dark-blue); */
 }
 
 .dashboard__secondary_select {

@@ -24,6 +24,7 @@ export default function Orders(): JSX.Element {
   if (status === 'unauthenticated') router.push('/');
 
   if (!Array.isArray(orderAll)) return <div className={styles.order__loading}>Loading...</div>;
+  console.log(orderAll);
 
 
   return (
@@ -45,6 +46,7 @@ export default function Orders(): JSX.Element {
                     className={styles.order__img}
                   />
                 </div>
+
                 <div className={styles.order__product_info_container}>
                   <h3 className={styles.order__product_name}>{item.title.toLowerCase()}</h3>
                   <p className={styles.order__product_info}>Quantity: {item.quantity}</p>
@@ -68,7 +70,13 @@ export default function Orders(): JSX.Element {
                 <span className={styles.order__span}>Status: </span>
                 {elem.status}
               </div>
-
+              {elem.purchase_link &&
+                <div>
+                  <p>
+                    You have not yet purchased these products but we leave you the Link to make them yours!!!
+                  </p>
+                  <a href={elem.purchase_link}>Pay here!!</a>
+                </div>}
               <div className={styles.order__date}>
                 <span className={styles.order__span}>Date: </span>
                 {mydate}

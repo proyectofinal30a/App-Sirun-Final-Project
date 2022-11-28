@@ -27,6 +27,7 @@ const Sales = () => {
     sales &&
     <>
       <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select}>
+        <option value="" selected disabled>Select period</option>
         <option value="Now">Now</option>
         <option value="January">January</option>
         <option value="February">February</option>
@@ -44,7 +45,7 @@ const Sales = () => {
 
       <div className={styles.dashboard__graphic}>
         <ResponsiveContainer height={400} width={500}>
-          <ComposedChart data={sales['2022'][selectedMonth]}>
+          <ComposedChart data={sales['2022'][selectedMonth?selectedMonth: '']}>
             <XAxis dataKey="week"/>
             <YAxis />
             <Bar type="monotone" dataKey="confirmed" barSize={30} fill="#3c7358" />

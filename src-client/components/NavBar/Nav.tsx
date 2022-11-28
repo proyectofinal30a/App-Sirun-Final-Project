@@ -12,6 +12,8 @@ const Nav = () => {
     url = "/admin/adminProducts"
   }
 
+  
+
 
 
 
@@ -21,7 +23,7 @@ const Nav = () => {
         <Link href="/" className={styles.header__title}>Sirun Pâtisserie</Link>
         <div className={styles.header__nav_container}>
           <Menu />
-          {router.pathname === "/admin/productManage" ? null : <SearchBar />}
+          {router.pathname == "/admin/adminUsers" ||router.pathname == "/admin/adminOrders"  || router.pathname == "/admin/productCreationForm" || router.pathname == "/admin/productManage" || router.pathname == "/admin/adminDashboard"? null : <SearchBar />}
         </div>
       </header>
     </>
