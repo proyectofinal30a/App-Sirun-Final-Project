@@ -12,14 +12,16 @@ import reducerCart from "./slice/cart-redux/cart-redux";
 import reducerAfterPayment from "./slice/payment/payment";
 import reducerAllUsers from "./slice/user-detail-redux/all-users";
 import adminGraphs from "./slice/admin-graphs/admin-graphs";
+import reducerAdminManagement from "./slice/admin-management-redux/admin-management";
 
 
 const persistConfig = {
-  key: 'blablabla',
+  key: 'blasadaqdsaablabla',
   storage,
 }
 
 const myReducers = combineReducers({
+  reducerAdminManagement,
   reducerUser,
   reducerProducts,
   reducerProductDetail,
