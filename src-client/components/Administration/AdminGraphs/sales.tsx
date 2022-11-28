@@ -21,8 +21,9 @@ const Sales = () => {
   useEffect(() =>{
     dispatch(getSales())
   })
+console.log(sales);
 
-  if(selectedMonth && sales){
+  if(sales[2022]){
     return (
       <>
         <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select}>

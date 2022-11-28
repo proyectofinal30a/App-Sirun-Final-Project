@@ -11,6 +11,7 @@ const AdminDashboard = () => {
   const changeDashboard = (e: any) => setDashboard(e.target.value);
 
   return (
+    
     <div className={styles.dashboard__container}>
       <select onChange={(e) => changeDashboard(e)} className={styles.dashboard__select}>
         <option value="" selected disabled>Select graphic</option>
@@ -23,7 +24,7 @@ const AdminDashboard = () => {
         <div className={styles.dashboard__individual_container}>
           <h1 className={styles.dashboard__title}>Sales</h1>
           <div className={styles.dashboard__graphic_container}>
-            {/* <Sales /> */}
+            <Sales />
           </div>
         </div>
       )}
@@ -31,14 +32,14 @@ const AdminDashboard = () => {
       {Dashboard === "mostSoldProduct" && (
         <div className={styles.dashboard__graphic_container}>
           <h1 className={styles.dashboard__title}>Best selling product</h1>
-          {/* <MostSoldProduct /> */}
+          <MostSoldProduct />
         </div>
       )}
 
       {Dashboard === "mostValuatedProduct" && (
         <div className={styles.dashboard__graphic_container}>
           <h1 className={styles.dashboard__title}>Best ranked product</h1>
-          {/* <MostValuatedProducts /> */}
+          <MostValuatedProducts />
         </div>
       )}
     </div>
