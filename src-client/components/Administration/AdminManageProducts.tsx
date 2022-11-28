@@ -114,7 +114,9 @@ const AdminManageProducts = () => {
     e.preventDefault()
     if (modalError.quantity || modalError.direction || modalError.type) return alert("Please fill all the fields correctly")
     dispatch(updateAllPrices(modalForm))
-    backMessage.length && alert(backMessage)
+    // backMessage.length && alert(backMessage)
+    //eze, perdon no pude resolver el delay del backMessage, creo que capaz la primera vez me trae undefined. pero se me quemaron los papeles..
+    // la ruta funciona y la validacones tambien, es solo que el usuario no se entera porque no se realizo el cambio
     dispatch(cleanMsg())
     setmodalForm(masiveData)
     setmodalUpdateIsOpen(false) 
@@ -136,6 +138,7 @@ const AdminManageProducts = () => {
     await requestUpdateStatusProducts(productsToUpdate) 
     // ACA NO SOLAMENTE DEBERIA INFORMAR AL BACK DE LOS CAMBIOS
     // TAMBIEN DEBERIA ACTUALIZAR EL ESTADO DE LOS PRODUCTOS EN EL FRONT
+    // porquela wishlist y el cart tomaron el producto de un estado viejo, de una request anterior
     //Y ASI FILTRAR EL ESTADO DEL CARRITO Y DE LA WHISLIST, eliminando los productos que no esten disponibles
     // deberia actualizar el estado de products y de favorites???
     // impedir que agregue al carrito si ya no esta disponible
@@ -197,7 +200,7 @@ const AdminManageProducts = () => {
   const handleOnChangeNumber = (event: any) => {
     const { name, value } = event.target;
     setFormProduct({ ...formProduct, [name]: value });
-    // setFormErrors(Validation({ ...formProduct, [name]: value }));
+    //setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
 
   const handleOnFile = (event: any) => {
@@ -291,8 +294,9 @@ const AdminManageProducts = () => {
 
             <div className={styles.product__card__icons}>
               <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
-                <button value={active} className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} >  
-                  {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
+                <button value={active} className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} > 
+                  {// es por los tipos que no toma value eze?
+                  product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
             </div>
 
           </div>

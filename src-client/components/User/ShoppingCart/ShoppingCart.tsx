@@ -9,12 +9,14 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { Ireducers } from "../../../../lib/types";
 import { addOne, removeOne, trashItem } from "../../../redux/slice/cart-redux/cart-redux";
 import { useSession } from "next-auth/react";
+import { log } from "console";
 
 const ShoppingCart = () => {
   const router = useRouter();
   const dispatch: Function = useDispatch();
   const { status } = useSession()
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
+  const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
 
   const totalQuantity = cart[0] ? cart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
 
@@ -22,6 +24,24 @@ const ShoppingCart = () => {
   cart.map((elem) => {
     return (total += elem.subTotal);
   });
+
+
+  
+  const handleAvailable = (e : any) => {
+    const productsInCart = cart.map((elem) => elem.id)
+    console.log(productsInCart)
+    const productsInStock = allProducts.filter((elem) => productsInCart.includes(elem.id) && elem.available === true)
+    console.log(productsInStock)
+    const productsNotAvailable = allProducts.filter((elem) => productsInCart.includes(elem.id) && elem.available === false)
+    console.log(productsNotAvailable);
+
+    if(productsInStock.length === productsInCart.length) {
+      router.push("/checkout")    
+    } else {
+      alert("Some products are already sold out and there is no stock available")
+      productsNotAvailable.map((elem) => dispatch(trashItem(elem.id)))
+    }
+}
 
 
   return (
@@ -103,6 +123,7 @@ const ShoppingCart = () => {
             <p className={styles.modal__total}>${total}</p>
           </div>
 
+
           {status === "unauthenticated" ?
             <div className={styles.modal__purchase_btn_container}>
               <input
@@ -113,9 +134,12 @@ const ShoppingCart = () => {
               />
             </div>
             : 
-            <Link href="/checkout" className={styles.modal__purchase_btn_container}>
-              <button className={styles.modal__start_purchase_btn}>Checkout</button>
-            </Link>
+            // <Link href="/checkout" >
+            //   </Link> 
+            <div className={styles.modal__purchase_btn_container}>
+
+              <button className={styles.modal__start_purchase_btn} onClick={(e)=>handleAvailable(e)} >Checkout</button> 
+            </div>
           }
         </form>
         :
