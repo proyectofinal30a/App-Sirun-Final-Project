@@ -35,8 +35,14 @@ export const reducerAdminManagement = createSlice({
       if (action.payload === "desc") state.usersOrders.sort((a, b) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
     },
     changeOrderStatus: (state, action) => {
-      state.usersOrders = action.payload;
-      state.usersOrdersAutoSave = action.payload;
+      const ordersUpdated = state.usersOrdersAutoSave.map((order) => {
+        if (order.id === action.payload.id) {
+          return action.payload;
+        }
+        return order;
+      })
+      state.usersOrdersAutoSave = ordersUpdated;
+      state.usersOrders = ordersUpdated;
     },
   },
 });
@@ -49,6 +55,7 @@ export const getUsersOrders = () => async (dispatch: Function) => {
       url: "/api/adminScope/get/orders",
     });
     data = data.filter((order: Iorder) => order.status !== "pending");
+    data = data.sort((a: Iorder, b: Iorder) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
 
     dispatch(reducerAdminManagement.actions.getUsersOrders(data));
   } catch (error) {

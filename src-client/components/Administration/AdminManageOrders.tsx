@@ -3,14 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
 import { Ireducers, Iorder } from "../../../lib/types";
 import formatDate from "../../controllers/format-date";
-import { filterOrders, getUsersOrders, restoreAllOrders, sortOrders, changeOrderStatus } from "../../redux/slice/admin-management-redux/admin-management";
+import { filterOrders, getUsersOrders, restoreAllOrders, sortOrders, changeOrderStatus } from "../../redux/slice/admin-management-redux/admin-manage-orders";
 import styles from "../../styles/AdminManageOrders.module.css";
 
 
 const AdminManageOrders = () => {
   const dispatch: Function = useDispatch();
   const usersOrders = useSelector((state: Ireducers) => state.reducerAdminManagement.usersOrders);
-  console.log(usersOrders)
   const [selectedValue, setSelectedValue] = useState({
     statusSelection: "",
     dateSort: "",

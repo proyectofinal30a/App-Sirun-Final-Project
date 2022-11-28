@@ -11,7 +11,7 @@ import reducerAdmin from "./slice/product-Admin-redux/GetProAdm-Redux";
 import reducerCart from "./slice/cart-redux/cart-redux";
 import reducerAfterPayment from "./slice/payment/payment";
 import reducerAllUsers from "./slice/user-detail-redux/all-users";
-import reducerAdminManagement from "./slice/admin-management-redux/admin-management";
+import reducerAdminManagement from "./slice/admin-management-redux/admin-manage-orders";
 
 
 
