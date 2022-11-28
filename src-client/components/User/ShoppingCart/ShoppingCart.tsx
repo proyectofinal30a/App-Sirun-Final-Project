@@ -26,7 +26,7 @@ const ShoppingCart = () => {
 
   return (
     <div className={styles.cart__container}>
-      {cart[0] ?
+      {cart[0] ? 
         <form className={styles.modal__container}>
           <h2>Shopping Cart</h2>
 
@@ -112,7 +112,7 @@ const ShoppingCart = () => {
                 className={styles.modal__start_purchase_btn}
               />
             </div>
-            :
+            : 
             <Link href="/checkout" className={styles.modal__purchase_btn_container}>
               <button className={styles.modal__start_purchase_btn}>Checkout</button>
             </Link>

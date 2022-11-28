@@ -12,17 +12,16 @@ import reducerCart from "./slice/cart-redux/cart-redux";
 import reducerAfterPayment from "./slice/payment/payment";
 import reducerAllUsers from "./slice/user-detail-redux/all-users";
 import reducerAdminManagement from "./slice/admin-management-redux/admin-manage-orders";
-
+import adminGraphs from "./slice/admin-graphs/admin-graphs";
 
 
 const persistConfig = {
-
-  key: 'blablabla',
-
+  key: 'blasadaqdsaablabla',
   storage,
 }
 
 const myReducers = combineReducers({
+  reducerAdminManagement,
   reducerUser,
   reducerProducts,
   reducerProductDetail,
@@ -32,7 +31,7 @@ const myReducers = combineReducers({
   reducerAdmin,
   reducerAfterPayment,
   reducerAllUsers,
-  reducerAdminManagement,
+  adminGraphs
 })
 
 
@@ -42,5 +41,6 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
   middleware: [thunk],
 });
+
 
 export const persistor = persistStore(store);

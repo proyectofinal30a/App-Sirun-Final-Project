@@ -11,6 +11,7 @@ const AdminDashboard = () => {
   const changeDashboard = (e: any) => setDashboard(e.target.value);
 
   return (
+    
     <div className={styles.dashboard__container}>
       <select onChange={(e) => changeDashboard(e)} className={styles.dashboard__select}>
         <option value="" selected disabled>Select graphic</option>

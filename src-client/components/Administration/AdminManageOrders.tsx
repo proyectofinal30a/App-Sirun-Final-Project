@@ -8,6 +8,7 @@ import styles from "../../styles/AdminManageOrders.module.css";
 
 
 const AdminManageOrders = () => {
+
   const dispatch: Function = useDispatch();
   const usersOrders = useSelector((state: Ireducers) => state.reducerAdminManagement.usersOrders);
   const [selectedValue, setSelectedValue] = useState({
@@ -155,11 +156,11 @@ const AdminManageOrders = () => {
                   <span className={styles.orders_management__order_span}>Products: </span>
                 </p>
 
-                {order.purchasedProducts?.map(product => {
+                {order.purchasedProducts?.map((product, index) => {
                   return (
                     <div key={product?.id} className={styles.orders_management__product_container}>
                       <div className={styles.orders_management__product_img_container}>
-                        <Image 
+                        <Image
                           src={product.picture_url}
                           alt={product.title}
                           height="200"
