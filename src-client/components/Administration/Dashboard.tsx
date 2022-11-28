@@ -13,7 +13,7 @@ const AdminDashboard = () => {
   return (
     <div className={styles.dashboard__container}>
       <select onChange={(e) => changeDashboard(e)} className={styles.dashboard__select}>
-        <option value="" disabled>Select graphic</option>
+        <option value="" selected disabled>Select graphic</option>
         <option value="sales">Sales</option>
         <option value="mostSoldProduct">Best selling product</option>
         <option value="mostValuatedProduct">Best ranked product</option>
