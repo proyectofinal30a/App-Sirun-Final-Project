@@ -86,16 +86,21 @@ export const getUserDetail = (email: string | undefined) => async (dispatch: Fun
             return { ...ele, purchase_link: '' }
         })
 
-
-        if (myPending.idReferenceArray[0]) {
+        myPending.idReferenceArray[0] && myPending.idReferenceArray.forEach(async (id) => {
+            const mypack = {
+                idReference: id,
+                email: myUser.email,
+                name: myUser.name
+            }
 
             await axios({
                 method: "post",
                 url: '/api/userScope/post/email-back-order/request-status-order',
-                data: myPending,
+                data: mypack,
             })
 
-        }
+
+        })
 
 
 
