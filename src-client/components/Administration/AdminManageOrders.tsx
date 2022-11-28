@@ -43,6 +43,7 @@ const AdminManageOrders = () => {
       dateSort: "",
     });
     if (value === "") return dispatch(getUsersOrders());
+
     const o: Ipayload = {
       state: currentOrders,
       value: value,
@@ -50,7 +51,7 @@ const AdminManageOrders = () => {
     return filterOrders(o);
   }
 
-  // console.log(currentOrders)
+
 
   // const handleDateSort = (e: React.ChangeEvent<HTMLSelectElement>) => {
   //   const { value } = e.target;

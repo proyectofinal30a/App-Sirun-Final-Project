@@ -36,6 +36,7 @@ export const reducerAdminManagement = createSlice({
 });
 
 
+// ORDERS
 export const getUsersOrders = () => async (dispatch: Function) => {
   try {
     let { data } = await axios({
@@ -61,6 +62,9 @@ export const filterOrders = (o: Ipayload) => {
   reducerAdminManagement.actions.getUsersOrders(data);
 }
 
+
+
+// REVIEWS
 export const getUsersReviews = () => async (dispatch: Function) => {
   try {
     const { data } = await axios({
@@ -86,5 +90,6 @@ export const deleteReview = (id: string) => async (dispatch: Function) => {
     console.log(error);
   }
 };
+
 
 export default reducerAdminManagement.reducer;
