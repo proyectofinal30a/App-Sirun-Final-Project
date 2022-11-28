@@ -24,8 +24,6 @@ const AdminManageOrders = () => {
   console.log(usersOrders)
   const users = useSelector((state: Ireducers) => state.reducerAllUsers.allUsers);
   
-  // if (!usersOrders[0]) return <div className={styles.loading}>No orders</div>
-
 
   const handleStatusSelection = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const { value } = e.target;
