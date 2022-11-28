@@ -137,7 +137,10 @@ const AdminManageProducts = () => {
 
   const aplicarCambios = async () => {
     if (!productsToUpdate.length) return alert('Please select product to change')
-    await requestUpdateStatusProducts(productsToUpdate)
+    await requestUpdateStatusProducts(productsToUpdate) 
+    // ACA NO SOLAMENTE DEBERIA INFORMAR AL BACK DE LOS CAMBIOS
+    // TAMBIEN DEBERIA ACTUALIZAR EL ESTADO DE LOS PRODUCTOS EN EL FRONT
+    //Y ASI FILTRAR EL ESTADO DEL CARRITO Y DE LA WHISLIST, eliminando los productos que no esten disponibles
     alert(` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
   }
 
@@ -416,6 +419,9 @@ const AdminManageProducts = () => {
 };
 
 export default AdminManageProducts;
+
+
+
 
 
 

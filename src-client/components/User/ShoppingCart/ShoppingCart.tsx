@@ -26,7 +26,7 @@ const ShoppingCart = () => {
 
   return (
     <div className={styles.cart__container}>
-      {cart[0] ?
+      {cart[0] ? 
         <form className={styles.modal__container}>
           <h2>Shopping Cart</h2>
 
