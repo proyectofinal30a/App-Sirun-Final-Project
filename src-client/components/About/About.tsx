@@ -22,39 +22,39 @@ const About = () => {
     setEmailError("");
 
     if (typeof process.env.EMAILJS_SERVICE_ID !== "string") return;
-    
+
     emailjs.sendForm(
-      process.env.EMAILJS_SERVICE_ID, 
-      "template_gpd7ahi", 
-      e.target, 
+      process.env.EMAILJS_SERVICE_ID,
+      "template_gpd7ahi",
+      e.target,
       process.env.EMAILJS_PUBLIC_KEY,
     ).then(
-      (result) => console.log("Email succesfully sent! " + result.text), 
+      (result) => console.log("Email succesfully sent! " + result.text),
       (error) => console.log("There's been an error while trying to send the confirmation email: " + error.text)
     );
 
     setEmail("");
   }
-  
+
 
   return (
     <div className={styles.about__container}>
 
       <div className={styles.newsletter__container} id="newsletter">
-        <h1 className={styles.newsletter__title}>Newsletter</h1>
+        <h2 className={styles.newsletter__title}>Newsletter</h2>
         <p>Be a part of the dreamy world of Sirun Pâtisserie.</p>
         <p>Sign up to be kept in the know with all our launches, our latests news and get exclusive offers!</p>
         <form className={styles.newsletter__form} onSubmit={handleSubscription}>
-          <input 
-            type="email" 
-            placeholder="Email address" 
+          <input
+            type="email"
+            placeholder="Email address"
             value={email}
             name="email"
             required
-            className={styles.newsletter__form_input} 
+            className={styles.newsletter__form_input}
             onChange={handleChange}
           />
-          <button 
+          <button
             type="submit"
             className={styles.newsletter__form_btn}
           >
@@ -64,24 +64,29 @@ const About = () => {
         </form>
       </div>
 
-      
+
       <div className={styles.about_us__container}>
-        <h1 className={styles.about__title}>About us</h1>
+        <h2 className={styles.about__title}>About us</h2>
         <HomeInfo />
       </div>
 
 
       <div className={styles.shipping__container} id="shipping">
-        <h1 className={styles.shipping__title}>Delivery & shipping</h1>
+        <h2 className={styles.shipping__title}>Delivery & shipping</h2>
         <p>At Sirun Pâtisserie we use a professional courier delivery service which can be booked online during checkout.</p>
         <div className={styles.shipping_dates__container}>
           <p className={styles.shipping_dates__title}>Shipping dates</p>
-          <p className={styles.shipping_dates}>For personalized cakes: 14 working days.</p>  
+          <p className={styles.shipping_dates}>For personalized cakes: 14 working days.</p>
           <p className={styles.shipping_dates}>For catering: 14 working days.</p>
           <p className={styles.shipping_dates}>For others: 3 working days.</p>
           <p className={[styles.shipping_dates, styles.shipping_dates_bold].join(" ")}>LAST ORDER DATE for Christmas is 22nd December. Last delivery date is 24th December.</p>
         </div>
       </div>
+
+
+      <h2 className={styles.shipping__title}>Find us on</h2>
+
+      <iframe width="520" height="400" frameBorder="0" scrolling="no" marginHeight={Number(0)} marginWidth={Number(0)} id="gmap_canvas" src="https://maps.google.com/maps?width=520&amp;height=400&amp;hl=en&amp;q=rivadavia%207000%20flores+(Sirun%20Patisserie)&amp;t=p&amp;z=13&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe><a href='https://maps-generator.com/' />
 
     </div>
   );
