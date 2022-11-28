@@ -87,16 +87,15 @@ export const getUserDetail = (email: string | undefined) => async (dispatch: Fun
         })
 
 
-        if (myPending.idReferenceArray[0]) {
+     /*   if (myPending.idReferenceArray[0]) {
 
-            await axios({
+           await axios({
                 method: "post",
                 url: '/api/userScope/post/email-back-order/request-status-order',
                 data: myPending,
             })
 
-        }
-
+        }*/
 
 
         const myUserOrder = { ...myUser, orders: myStatus }
