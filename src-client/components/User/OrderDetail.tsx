@@ -22,7 +22,6 @@ const OrderDetail = () => {
     if (idReference !== "" && email !== "") dispatch(getOrder({ idReference, email }));
   }, [email, idReference, dispatch]);
 
-  console.log(orderInfo)
   if (!orderInfo) return <div className={styles.loading}>Loading...</div>
 
 

@@ -7,7 +7,6 @@ import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del ro
 const updatePrices: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const { quantity, direction, type } = req.body.object
-        console.log(quantity, direction, type)
         const allProducts = await prisma.product.findMany()
         allProducts.forEach(async (p) => {
             const price = Number(p.price)

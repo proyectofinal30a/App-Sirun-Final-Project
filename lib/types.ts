@@ -207,7 +207,8 @@ export interface Iorder {
   purchasedProducts: IproductModelCart[];
   status: StatusType;
   purchase_link: string;
-  id_user?: string  // ver que no crashee nada
+  id_user?: string;
+  addressOrder?: Iaddresses;
 }
 
 export interface IReview {
@@ -250,5 +251,5 @@ export interface IbodoyPreferenceLink {
 
 export interface IadminManagement {
   usersOrders: Iorder[];
-  usersReviews: IReview[];
+  usersOrdersAutoSave: Iorder[];
 }

@@ -21,7 +21,6 @@ const Average = ({ evaluation }: IpropEva) => {
 
 
   const myRating = (Math.round(totalRating / evaluation.length))
-  console.log(myRating);
   const myArray: any = []
 
   for (let i = 0; i < myRating; i++) {

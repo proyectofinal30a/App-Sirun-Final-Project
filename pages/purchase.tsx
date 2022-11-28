@@ -13,49 +13,25 @@ import styles from "../src-client/styles/ApprovedPayment.module.css";
 
 
 export default function ApprovedPayment() {
+  const router = useRouter();
   const dispatch: Function = useDispatch();
   const { query } = useRouter();
   const { data, status } = useSession<boolean>();
 
-  let idReference: string = typeof query.external_reference === "string" ? query.external_reference : "";
-  let email: string = typeof data?.user?.email === "string" ? data?.user?.email : "";
-  let name: string = typeof data?.user?.name === "string" ? data?.user?.name : "";
+  const email: string = typeof data?.user?.email === "string" ? data?.user?.email : "";
+  const name: string = typeof data?.user?.name === "string" ? data?.user?.name : "";
+  const idReference: string = typeof query.external_reference === "string" ? query.external_reference : "";
+  let idPurchase: string = typeof query.collection_id  === "string" ? query.collection_id : "";
   const orderInfo: any = useSelector<Ireducers>((state) => state.reducerAfterPayment.myOrder);
-
+ 
   useEffect(() => {
-    if (idReference !== "" && email !== "") dispatch(getOrder({ idReference, email }));
-  }, [email, idReference, dispatch]);
-
-
-  if (orderInfo?.orders?.[0]) {
-    let templateParams = {
-      client_name: name,
-      client_email: email,
-      client_phone: orderInfo.orders[0].addressOrder.phone.area_code + "-" + orderInfo.orders[0].addressOrder.phone.number,
-      client_address: orderInfo.orders[0].addressOrder.street_name + " " + orderInfo.orders[0].addressOrder.street_number,
-      client_zip_code: orderInfo.orders[0].addressOrder.zip_code,
-      order_number: idReference,
-      order_status: orderInfo.orders[0].status,
-      order_date: new Date().toLocaleString(), 
-      order_delivery_time: orderInfo.orders[0].delivery_time,
-      order_detail_url: `https://sirunnpatisserie.vercel.app/order/${idReference}`,
-      order_total: orderInfo.orders[0].total,
+    if(email && name && idReference && idPurchase) {
+      dispatch(getOrder({ email, name, idReference, idPurchase }));
+      setTimeout(() => {
+        router.push('/')
+      }, 7000);
     }
-
-    console.log(templateParams)
-
-    if (typeof process.env.EMAILJS_SERVICE_ID !== "string") return;
-
-    // emailjs.send(
-    //   process.env.EMAILJS_SERVICE_ID,
-    //   "template_rsukkck",
-    //   templateParams,
-    //   process.env.EMAILJS_PUBLIC_KEY
-    // ).then(
-    //   (result) => console.log("Email successfully sent!: " + result.text),
-    //   (error) => console.log("There's been an error while sending the email: " + error.text)
-    // );
-  }
+  }, [dispatch, email]);
 
 
   return (
@@ -76,6 +52,8 @@ export default function ApprovedPayment() {
           </div>
           <p className={styles.approved_payment__message}>Payment was approved.</p>
           <p className={styles.approved_payment__sub_message}>Your order will be processed shortly.</p>
+          <br />
+          <p className={styles.approved_payment__sub_message}>Check your inbox to see the details of your order #{idPurchase}.</p>
         </div>
       </main>
 
