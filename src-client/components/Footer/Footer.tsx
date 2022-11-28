@@ -5,6 +5,7 @@ import { FaTiktok, FaMapMarkerAlt } from "react-icons/fa";
 import { SiGmail } from "react-icons/si";
 import { IconContext } from "react-icons";
 import styles from "../../styles/Footer.module.css";
+import Logo from '../../images/sirun_logo.png'
 import Image from "next/image";
 import Link from "next/link";
 
@@ -50,36 +51,31 @@ function Footer() {
 
       {/* COLUMNA ANEXADA */}
         <div className={styles.footer__plus}>
-          <h3 className={styles.footer__title}>Collections</h3>
+          <h3 className={styles.footer__title}>My account</h3>
           <ul className={styles.nav__list}>
             <li className={styles.nav__item}>
-              <Link href="#" className={styles.nav__link}>
-                Cakes
+              <Link href="/user/profile" className={styles.nav__link}>
+                My Profile
               </Link>
             </li>
             <li className={styles.nav__item}>
-              <Link href="#" className={styles.nav__link}>
-                Muffins
+              <Link href="/user/whishlist" className={styles.nav__link}>
+                My Wishlist
               </Link>
             </li>
             <li className={styles.nav__item}>
-              <Link href="#" className={styles.nav__link}>
-                Cookies
+              <Link href="/user/reviews" className={styles.nav__link}>
+                My Reviews
               </Link>
             </li>
             <li className={styles.nav__item}>
-              <a href="#" className={styles.nav__link}>
-                Bakery
+              <a href="/user/order" className={styles.nav__link}>
+                My Orders
               </a>
             </li>
             <li className={styles.nav__item}>
-              <Link href="#" className={styles.nav__link}>
-                Desserts
-              </Link>
-            </li>
-            <li className={styles.nav__item}>
-              <Link href="#" className={styles.nav__link}>
-                Pies
+              <Link href="/cart" className={styles.nav__link}>
+                My cart
               </Link>
             </li>
           </ul>
@@ -164,7 +160,8 @@ function Footer() {
             phoneNumber=""
             accountName="Sirun Pâtisserie"
             chatMessage="Hello, how can we help you?"
-            avatar="https://scontent.fpmy1-2.fna.fbcdn.net/v/t39.30808-6/301489512_514135013952153_843317702517651050_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeFu3FPnIhEmbqfO614MOAe55I3ff39018nkjd9_f3TXySMDY2vFBZIUbD1Azsn3Y8LaItaUrtFxCaoYp2NCas6l&_nc_ohc=QXZMUlTJBVIAX88vqQ6&tn=wON0_ynBExSBrHcO&_nc_ht=scontent.fpmy1-2.fna&oh=00_AfAgiQVXDnlMaT_VS5KfTZQF0krI1lCo1RLPvpzGCDyjRQ&oe=63715E37"
+           // avatar= {Logo}
+           avatar = "https://scontent.fpmy1-2.fna.fbcdn.net/v/t39.30808-6/301489512_514135013952153_843317702517651050_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=GLM18tnNJ8wAX-T9YdU&_nc_ht=scontent.fpmy1-2.fna&oh=00_AfCpXenWoy7t9MGRHASAE5RwyfiR-Lo168s4jlmcjR95FQ&oe=63891937"
             allowEsc
             allowClickAway
             notification
