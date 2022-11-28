@@ -104,7 +104,9 @@ export const productMVP = async (products: any) => {
             name: prod.name,
             rating: prom
         }
-    }) 
+    }).sort((a: any, b: any) => {
+        return b.rating - a.rating
+    })
 
     return aux2.slice(0, 5)
 }
