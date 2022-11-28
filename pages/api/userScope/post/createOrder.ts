@@ -14,7 +14,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
         })
 
 
-        const myItems = myPreference.items.map(product => {
+        const myItems = await myPreference.items.map(product => {
             return {
                 id: product.id,
                 title: product.title,
@@ -95,7 +95,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
                 }
             })
 
-            const preferenceAddReference = { ...myPreference, external_reference: OrderUser.id }
+            const preferenceAddReference = await { ...myPreference, external_reference: OrderUser.id }
 
             const response = await axios({
                 method: 'post',
@@ -164,7 +164,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
             }
         })
 
-        const preferenceAddReference = { ...myPreference, external_reference: OrderUser.id }
+        const preferenceAddReference = await { ...myPreference, external_reference: OrderUser.id }
 
         const response = await axios({
             method: 'post',
@@ -185,7 +185,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
             }
         })
 
-        
+
         return res.status(200).json({ url: response.data.init_point })
     } catch (error) {
         console.log(error);
