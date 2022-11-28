@@ -28,7 +28,6 @@ const nextConfig = {
     dangerouslyAllowSVG: false,
     contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
     remotePatterns: [],
-
     unoptimized: false,
     domains: [
       "lh3.googleusercontent.com",

@@ -74,6 +74,8 @@ const AdminManageUsers = () => {
       <div className={styles.users__container}>
         {allUsers[0] &&
           currentUsers.map((user: any, index: number) => {
+            console.log(user, "SOY USER");
+            if(!user.image) return null;
             return (
               <div className={styles.user__container} key={user.id}>
                 <div className={styles.user__image_container}>
