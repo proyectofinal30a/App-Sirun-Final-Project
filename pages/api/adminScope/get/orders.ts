@@ -38,6 +38,7 @@ const orders: Function = async (req: NextApiRequest, res: NextApiResponse) => {
         total: true,
         delivery_time: true,
         status: true,
+        id: true,
       }
     });
     prisma.$disconnect();
