@@ -3,6 +3,7 @@ import Image from "next/image";
 import { AiFillEyeInvisible, AiFillEye, AiFillEdit } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux'
 import { Iproduct, Ireducers } from "../../../lib/types";
+import { getProductByName } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import { getProducts, updateProduct, changeAvailability, requestUpdateStatusProducts, clean, setProduct, updateAllPrices, cleanMsg } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import SearchBar from "../SearchBar/SearchBar";
 import Modal from "react-modal";
@@ -63,6 +64,16 @@ const AdminManageProducts = () => {
   const [modalUpdateIsOpen, setmodalUpdateIsOpen] = useState(false);
   const [modalForm, setmodalForm] = useState(masiveData)
   const [modalError, setmodalError] = useState(masiveData)
+  const [name, setName] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setName(e.target.value.trim());
+    const obj: any = {
+      name: name,
+      allProducts: allProducts,
+    }
+    dispatch(getProductByName(obj))
+  };
 
   function closeModal() {
     setIsOpen(false);
@@ -127,7 +138,7 @@ const AdminManageProducts = () => {
   const aplicarCambios = async () => {
     if (!productsToUpdate.length) return alert('Please select product to change')
     await requestUpdateStatusProducts(productsToUpdate)
-    alert(`Se actualizo: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
+    alert(` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
   }
 
 
@@ -155,7 +166,8 @@ const AdminManageProducts = () => {
     }
     updateProduct(prouctToUpdate)
     setIsOpen(false)
-    alert(`se actualizo el producto ${name}`)
+    setFormProduct(myForm)
+    alert(`${name} is updated`)
     dispatch(getProducts())
   }
   //END EDICT PRODUCT 
@@ -229,12 +241,25 @@ const AdminManageProducts = () => {
   //   setFormProduct({ ...formProduct, image: myFilter });
   // };
 
+
  
 
   return (
     <div className={styles.products_manage__container}>
       <h1 className={styles.products_manage__title}>Administration Product Managing</h1>
-      <SearchBar/>
+     
+     
+      <div className={styles.users_management__searchbar}>
+        <input
+          type="search"
+          placeholder="Search product name"
+          className={styles.search_bar__input}
+          autoComplete="on"
+          name="name"
+          value={name}
+          onChange={handleChange}
+        />
+      </div>
 
       {/* onClick={(e: any) => editOpenModal(e, product)} */}
       
@@ -287,27 +312,28 @@ const AdminManageProducts = () => {
           <h2>Edit Product</h2>
 
           <div className={styles.creation_form__section_container}>
-            <p>Current Price: ${productModal.price}</p>
+            <p className={styles.current__data}>Current Price: ${productModal.price}</p>
 
-            <label className={styles.creation_form__label}>New Price: $</label>
-            <input
+
+            <input     
               type="number"
               onChange={handleOnChangeNumber}
               name="price"
               value={formProduct.price}
-              placeholder={"Price"}
-              className={styles.creation_form__input}
+              defaultValue={productModal.price} 
+              className={styles.new_price__input}
+              placeholder="New Price"
               required
             />
             <span className={styles.creation_form__error_message}>{formErrors.price}</span>
           </div>
 
           <div className={styles.creation_form__section_container}>
-            <p>Current Description: ${productModal.description}</p>
-            <label className={styles.creation_form__label}>New Description:</label>
+            <p className={styles.current__data}>Current Description: {productModal.description}</p>
+
             <textarea
               name="description"
-              placeholder="Description"
+              placeholder="New Description"
               onChange={handleOnChangeInput}
               value={formProduct.description}
               className={styles.creation_form__textarea}
@@ -318,8 +344,9 @@ const AdminManageProducts = () => {
 
 
           <div className={styles.creation_form__section_container}>
-            <p>Current Images:</p>
-            <div>{productModal.image?.map((img) =>
+            <p className={styles.current__data}>Current Images:</p>
+            <div className={styles.images__container}>
+              {productModal.image?.map((img) =>
               <Image
                 key={img.id}
                 src={img.image}
@@ -333,7 +360,6 @@ const AdminManageProducts = () => {
             )}
             </div>
 
-            <label className={styles.creation_form__label}>Images</label>
             <input
               type="file"
               accept=".jpg , .png , .jpeg"
@@ -344,8 +370,9 @@ const AdminManageProducts = () => {
               multiple
             />
           </div>
-
+          <div className={styles.modal__purchase_btn_container }>
           <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
+          </div>
         </form>
       </Modal>
 
@@ -362,23 +389,26 @@ const AdminManageProducts = () => {
           <div className={styles.modal__btn_right_container}>
             <button className={styles.modal__close_modal_btn} onClick={closeModalUpdate}>x</button>
           </div>
-          <h2>Edit ALL Products</h2>
-          <input name="quantity" value={modalForm.quantity} onChange={handlerInputQuantity} placeholder="Add a quantity to update all products"></input>
+          <h2>Edit All Products</h2>
+          <div className={styles.modal__selects__container}>
+          <input className={styles.search_bar__input} name="quantity" value={modalForm.quantity} onChange={handlerInputQuantity} placeholder="Add a quantity to update all products"></input>
           {modalError.quantity && <p className={styles.modal__error}>{modalError.quantity}</p>}
-           <select name="direction" onChange={handlerInputDirection} value={modalForm.direction}>
+           <select className={styles.filter__select} name="direction" onChange={handlerInputDirection} value={modalForm.direction}>
             <option value="">Choose</option>
             <option value="increase">Plus(+)</option>
             <option value="decrease">Less(-)</option>
           </select>
           {modalError.direction && <p className={styles.modal__error}>{modalError.direction}</p>}
-          <select name="type" onChange={handlerInputType} value={modalForm.type}> 
+          <select className={styles.filter__select} name="type" onChange={handlerInputType} value={modalForm.type}> 
             <option value="">Choose</option>
             <option value="percent">Per Percent</option>
             <option value="fixed">Per Fixed Amount</option>
           </select>
           {modalError.type && <p className={styles.modal__error}>{modalError.type}</p>}
-          {/* // alert: useSelector agregar un estado para el error */}
+          </div>
+          <div className={styles.modal__purchase_btn_container }>
           <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
+          </div>
         </form>
       </Modal>
     </div >

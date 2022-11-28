@@ -5,6 +5,8 @@
   flex-direction: column;
   align-items: center;
   font-family: var(--font-paragraph);
+  width: 65%;
+  margin-bottom: 5em;
 }
 
 .products_manage__title {
@@ -14,12 +16,21 @@
   margin: .5em;
 }
 
+
+.search_bar__input {
+  padding: .3em .5em;
+  width: 300px;
+  border: none;
+  box-shadow: 0 0 2px grey;
+  margin-bottom: .7em;
+}
+
 .products__map_container{
   overflow-y: scroll;
   margin-bottom: 2em;
-  /* display: flex;
+  display: flex;
   flex-direction: column;
-  align-items: center; */
+  align-items: center;
   border-radius: 0.2em;
   box-shadow: 0 0 0 1px grey;
   width: 100%;
@@ -57,15 +68,17 @@
 
 .product__card__info_container{
   display: flex;
+  flex-direction: column;
   justify-content: space-between;
   width: 70%;
   padding-top: .5em;
-  margin-left: 2em;
-  margin-right: 1em;
+  margin-left: 1.5em;
 }
 
 
 .product__card__icons{
+  display: flex;
+  flex-direction: row;
   margin-right: .5em;
 
 }
@@ -73,34 +86,37 @@
 .product__card__icon_edit{
   border-radius: 50%;
   border: none;
-  padding: .5em;
-  margin: .2em;
+  padding: .6em;
+  margin: .4em;
+}
+
+.visibility__btn, .change__price__btn {
+  width: 14em;
+  padding: .3em;
+  background-color: rgb(220, 217, 217);
+  color: black;
+  border: none;
+  border: 1px solid grey;
+  border-radius: .2em;
+  margin-bottom: .5em;
+  margin-left: auto;
+}
+
+.visibility__btn:hover,
+.change__price__btn:hover {
+  cursor: pointer;
+  background-color: rgb(233, 227, 227);
+  color: var(--color-dark-blue);
 }
 
 .visibility__btn{
-  background-color: green;
-  color : white;
-  width: 12em;
-  border: none;
-  border-radius: 5px;
-  padding: .5em;
-  margin-left: auto;
-  margin-top: 1em;
-  
+  background-color: rgb(10, 181, 10);
+  color: white;
 }
 
-.change__price__btn {
-  width: 12em;
-  margin-left: auto;
-  margin-top: 1em;
-  border: none;
-  border-radius: 5px;
-  padding: .5em;
-  color: var(--color-light-blue);
-  background-color: var(--color-light-pink);
-}
+/*MASIVE MODAL*/
 
-.modal__container{
+.modal {
   width: 40%;
   margin: auto;
   margin-top: 7em;
@@ -108,14 +124,124 @@
   max-height: 75%;
   overflow-y: auto;
   border: 2px solid rgb(211, 210, 210);
+}
+
+.modal__container {
   background-color: rgb(248, 246, 248);
   font-family: var(--font-paragraph);
   padding: 2em 3em;
 }
 
+.modal__container > h2 {
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 1.2em;
+  padding-bottom: 1em;
+}
+
+.modal__btn_right_container {
+  float: right;
+}
+
+.modal__close_modal_btn {
+  border: none;
+  border-radius: .2em;
+  padding: .2em .7em;
+  background-color: rgb(250, 47, 47);
+  color: rgb(24, 24, 24);
+  font-weight: bold;
+}
+
+.modal__close_modal_btn:hover {
+  background-color: rgb(251, 77, 77);
+  cursor: pointer;
+}
+
+.modal__selects__container{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+
+.filter__select {
+  /* height: 3em; */
+  padding: .3em .5em;
+  width: 300px;
+  margin-bottom: .7em;
+  border: none;
+  border-right: .7em solid transparent;
+  border-radius: .2em;
+  box-shadow: 0 0 2px grey;
+}
+
+.filter__select:hover {
+  cursor: pointer;
+}
+
+.modal__purchase_btn_container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modal__start_purchase_btn {
+  margin-top: 1em;
+  padding: .3em .7em;
+  border: none;
+  border: 1px solid grey;
+  border-radius: .2em;
+  font-size: .9em;
+}
+
+
 .modal__error{
   color: red;
 }
+
+/*EDIT MODAL*/
+.creation_form__section_container{
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+}
+
+.current__data{
+  font-style: italic;
+  font-size: .9em;
+  color: var(--color-dark-blue);
+}
+
+.new_price__input{
+  width: 100%;
+  padding: .3em .5em;
+  border: none;
+  border-right: .7em solid transparent;
+  border-radius: .2em;
+  box-shadow: 0 0 2px grey;
+  margin-bottom: .7em;
+}
+
+.creation_form__textarea {
+  height: 9em;
+  width: 100%;
+  margin-bottom: 1em;
+  resize: none;
+  border: none;
+  box-shadow: 0 0 2px grey;
+}
+
+.images__container{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1em;
+}
+.creation_form__section_container{
+  margin: .5em;
+}
+
 /*End modal*/
 
 /* Responsive layout */
