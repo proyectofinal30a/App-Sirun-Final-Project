@@ -24,7 +24,6 @@ export default function Orders(): JSX.Element {
   if (status === 'unauthenticated') router.push('/');
 
   if (!Array.isArray(orderAll)) return <div className={styles.order__loading}>Loading...</div>;
-  console.log(orderAll);
 
 
   return (

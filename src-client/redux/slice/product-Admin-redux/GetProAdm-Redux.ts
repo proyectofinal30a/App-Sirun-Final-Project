@@ -68,10 +68,7 @@ export const reducerAdmin = createSlice({
       state.productsToFilter = []
     },
     errorMessage: (state, action) => {
-      console.log(action.payload, "msg para actualizar el estado");
-      state.errorMessage = action.payload
-      console.log(state.errorMessage, "state.errorMessage");
-      
+      state.errorMessage = action.payload      
     },
     cleanMessage : (state, action) => {
       state.errorMessage = " "
@@ -102,9 +99,7 @@ export const updateAllPrices =  (object : IpriceEdit) => async (disptach: Functi
         "Authorization": myToken
       }
     })
-    console.log(response.data.msg, "respuesta del back"); 
     disptach(reducerAdmin.actions.errorMessage(response.data.msg))
-    //return response.data.msg 
   } catch (error) {
     console.log(error);
   }
@@ -201,7 +196,11 @@ export const getProducts: any = () => async (dispatch: Function) => {
   }
 };
 //end get all products
+//Get products of orders
 
+export const getOrderProducts: any = () => async (dispatch: Function) => {
+  
+}
 
 
 

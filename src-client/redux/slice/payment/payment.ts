@@ -54,8 +54,10 @@ export const reducerAfterPayment = createSlice({
 
 
 interface IidOrder {
-  idReference: string;
   email: string;
+  name: string;
+  idReference: string;
+  idPurchase: string;
 }
 
 export const getOrder = (orderInfo: IidOrder) => async (dispatch: Function) => {

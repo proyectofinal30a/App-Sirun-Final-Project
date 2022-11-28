@@ -93,7 +93,6 @@ const AdminManageProducts = () => {
 
   const handlerInputQuantity = (e: any) => {
     const { value } = e.target
-    console.log(value, "value");
     setmodalForm({...modalForm, quantity : value})
     setmodalError(masiveValidate({...modalForm, quantity : value}))
   }
@@ -101,24 +100,20 @@ const AdminManageProducts = () => {
   
   const handlerInputDirection = (e: any) => {
     const { value } = e.target
-    console.log(value);
     setmodalForm({...modalForm, direction : value})
     setmodalError(masiveValidate({...modalForm, direction : value}))
   }
 
   const handlerInputType = (e: any) => {
     const { value } = e.target
-    console.log(value);
     setmodalForm({...modalForm, type : value})
     setmodalError(masiveValidate({...modalForm, type : value}))
   }
 
   const submitUpdateAllPrices = (e: Event, modalForm) => {
     e.preventDefault()
-      console.log(modalForm, "data a enviar")
     if (modalError.quantity || modalError.direction || modalError.type) return alert("Please fill all the fields correctly")
     dispatch(updateAllPrices(modalForm))
-      console.log(backMessage, "mensaje de back"); 
     backMessage.length && alert(backMessage)
     dispatch(cleanMsg())
     setmodalForm(masiveData)

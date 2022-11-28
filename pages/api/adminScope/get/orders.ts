@@ -5,7 +5,41 @@ import { prisma } from "../../../../lib/prisma";
 
 const orders: Function = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
-    const orders = await prisma.order.findMany();
+    const orders = await prisma.order.findMany({
+      select: { 
+        user: {
+          select: {
+            name: true,
+            email: true,
+          }
+        },
+        purchasedProducts: {
+          select: {
+            title: true,
+            picture_url: true,
+            unit_price: true,
+            quantity: true,
+          }
+        },
+        addressOrder: {
+          select: {
+            phone : {
+              select: {
+                area_code: true,
+                number: true,
+              }
+            },
+            street_name: true,
+            street_number: true,
+            zip_code: true,
+          }
+        },
+        date: true,
+        total: true,
+        delivery_time: true,
+        status: true,
+      }
+    });
     prisma.$disconnect();
     res.status(200).json(orders);
   } catch (error) {
