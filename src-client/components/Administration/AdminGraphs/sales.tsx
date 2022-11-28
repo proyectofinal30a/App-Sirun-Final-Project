@@ -45,7 +45,7 @@ const Sales = () => {
 
       <div className={styles.dashboard__graphic}>
         <ResponsiveContainer height={400} width={500}>
-          <ComposedChart data={sales['2022'][selectedMonth?selectedMonth: '']}>
+          <ComposedChart data={selectedMonth? sales[2022][selectedMonth] : sales[2022]['November'] }>
             <XAxis dataKey="week"/>
             <YAxis />
             <Bar type="monotone" dataKey="confirmed" barSize={30} fill="#3c7358" />
