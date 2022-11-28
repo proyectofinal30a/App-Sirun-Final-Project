@@ -21,6 +21,7 @@ const AdminManageOrders = () => {
   }, [dispatch]);
   
   const usersOrders = useSelector((state: Ireducers) => state.reducerAdminManagement.usersOrders);
+  console.log(usersOrders)
   const users = useSelector((state: Ireducers) => state.reducerAllUsers.allUsers);
   
 
@@ -105,10 +106,6 @@ const AdminManageOrders = () => {
                 <p className={styles.orders_management__order_info}>
                   <span className={styles.orders_management__order_span}>Delivery time:{" "}</span>
                   {order.delivery_time}
-                </p>
-                <p className={styles.orders_management__order_info}>
-                  <span className={styles.orders_management__order_span}>Order description:{" "}</span>
-                  {order.description}
                 </p>
                 <p className={styles.orders_management__order_info}>
                   <span className={styles.orders_management__order_span}>Order status:{" "}</span>
