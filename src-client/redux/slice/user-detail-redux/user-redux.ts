@@ -15,7 +15,6 @@ const template: IUserDetail = {
         favorites: [],
         addresses: [],
         role: '',
-        favoriteId:[]
     }
 };
 
@@ -26,7 +25,9 @@ interface IidString {
 interface IpayloadUserdata {
     payload: userData
 }
-
+interface IpayloadArrayIdfavorite {
+    payload: string[]
+}
 
 export const reducerUser = createSlice({
     name: "reducerUser",
@@ -133,8 +134,6 @@ export const deleteAddress = (id: string) => async (dispatch: Function) => {
     }
 
 }
-
-export const favorite
 
 
 export const deleteReview = (id: string) => async (dispatch: Function) => {

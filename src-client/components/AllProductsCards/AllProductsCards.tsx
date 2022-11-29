@@ -10,6 +10,7 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import * as action from '../../redux/slice/filter-product-client/filters-redux'
+import * as actionFav from '../../redux/slice/favorite-user-redux/favorite-redux'
 import { Iproduct, Ireducers, IproductModelCart } from "../../../lib/types";
 import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
 import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
@@ -22,9 +23,10 @@ const AllProductsCards = () => {
   // GET ALL PRODUCTS
   const dispatch: Function = useDispatch();
   const { data, status } = useSession<boolean>();
-  const { favorites } = useSelector((state: Ireducers) => state.reducerUser.user);
+  const { favoriteId } = useSelector((state: Ireducers) => state.reducerFavoriteUser);
   const [modalIsOpen, setIsOpen] = useState(false);
   // FILTERS
+  console.log(favoriteId, 'holaaaa');
 
   const filterProducts = useSelector((state: Ireducers) => state.reducerFilters.productsToFilter);
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
@@ -35,6 +37,7 @@ const AllProductsCards = () => {
   useEffect(() => {
     return () => dispatch(cleanFilters());
   }, [dispatch])
+  console.log(allProducts);
 
   useEffect(() => {
     dispatch(getAllProducts())
@@ -49,13 +52,13 @@ const AllProductsCards = () => {
 
   useEffect(() => {
 
-    return  function() {
-      console.log("deveria subirme");
+    return function () {
+    dispatch(actionFav.updateFavorite(favoriteId, data.user.email))
 
     }
-  },)
+  }, [])
 
-  console.log(favorites, "favorites");
+
 
   useEffect(() => {
     data?.user && dispatch(getUserDetail(data?.user.email))
@@ -168,12 +171,11 @@ const AllProductsCards = () => {
   }
 
 
-  let biblioteca: any = {}
+  const biblioteca = {}
 
-  if (favorites[0]) {
-    myListFavorite = favorites.map((e) => { return { id: e.id } })
-    myListFavorite.forEach(fav => {
-      biblioteca[fav.id] = true;
+  if (favoriteId?.[0]) {
+    favoriteId.forEach(fav => {
+      biblioteca[fav] = true;
     })
   }
 
@@ -182,10 +184,7 @@ const AllProductsCards = () => {
 
   const handleFavorite = (id: string) => {
     status === "unauthenticated" && signIn("auth0");
-    const productToAdd = {
-      id: id,
-    }
-    dispatch(addToFavorites(productToAdd));
+    dispatch(actionFav.addFavoriteRedux(id));
   }
 
 

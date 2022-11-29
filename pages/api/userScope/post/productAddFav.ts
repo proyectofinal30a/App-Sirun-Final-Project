@@ -5,16 +5,15 @@ import { prisma } from "../../../../lib/prisma";
 export default async function productAddFav(req: NextApiRequest, res: NextApiResponse) {
   try {
     interface IidUserIdPro {
-      idUser: string;
-      favorites: any;
+      email: string;
+      mypackIdFavo: { id: string }[] | []
     }
-    //{ idUser, [{},{},{}]}
-    const { idUser, favorites }: IidUserIdPro = req.body;
+    const { email, mypackIdFavo }: IidUserIdPro = req.body;
 
     await prisma.user.update({
-      where: { id: idUser },
+      where: { email },
       data: {
-        favorites: { set: favorites }
+        favorites: { set: mypackIdFavo }
       }
     },
     );

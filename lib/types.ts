@@ -135,7 +135,8 @@ export interface Ireducers {
   reducerAllUsers: IallUsers;
   reducerAdmin: Iproducts;
   reducerAdminManagement: IadminManagement;
-  reducerAdminReview: IreviewRedux
+  reducerAdminReview: IreviewRedux;
+  reducerFavoriteUser: IFavoriteUser;
 }
 
 export interface Ierror {
@@ -240,7 +241,6 @@ export interface userData {
   orders: Iorder[];
   evaluations: Ievaluations[];
   role: string;
-  favoriteId?:string[]
 }
 
 export interface IUserDetail {
@@ -314,3 +314,9 @@ export interface IreviewRedux {
   productReview: IProductReview | null
 }
 
+
+
+export interface IFavoriteUser {
+  favoriteId: string[]
+  saveFavorite: string[]
+} 
