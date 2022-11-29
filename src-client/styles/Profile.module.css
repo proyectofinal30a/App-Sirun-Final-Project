@@ -212,6 +212,19 @@
   cursor: pointer;
 }
 
+.btn__change_password {
+  border-radius: .2em;
+  border: none;
+  border: 1px solid var(--color-dark-blue);
+  padding: .3em;
+  margin-bottom: 1em;
+}
+
+.btn__change_password:hover {
+  cursor: pointer;
+  background-color: rgb(234, 227, 227);
+}
+
 .btn__submit {
   padding: 0.4em;
   margin: 0.2em;

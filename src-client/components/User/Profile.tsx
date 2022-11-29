@@ -138,6 +138,8 @@ const Profile = () => {
       status: !previewForm.status,
     });
   };
+
+  // esta funcion si no se usa y no sirve borrarla
   const handleChangePassword = (e) => {
     e.preventDefault()
       dispatch(accion.changePassword(email))
@@ -166,7 +168,7 @@ const Profile = () => {
       />
 
       <label className={styles.form__label}>Change password</label>
-      <button className={styles.btn__submit} onClick={() => dispatch(accion.changePassword(email))}>Change</button>
+      <button className={styles.btn__change_password} onClick={() => dispatch(accion.changePassword(email))}>Change</button>
 
       <div className={styles.election__btn}>
         <button className={styles.btn} onClick={handleOnclikSwich}>
