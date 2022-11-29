@@ -5,7 +5,17 @@ import { Iproduct, Iproducts } from "../../../../lib/types";
 import userVerification from '../../../controllers/userVerification-controller'
 
 
+export interface Iimg {
+  image : string
+  imageCloudinary : File
+}
 
+
+export interface IUpdateProduct {
+  price : number
+  description : string
+  image : Iimg[]
+}
 
 
 export interface IpriceEdit {
@@ -89,7 +99,7 @@ export const clean = () => (dispatch: Function) => {
 
 //Change all prices
 export const updateAllPrices =  (object : IpriceEdit) => async (disptach: Function) => {
-  try {
+  try {  
     const myToken: any = await userVerification('server')
     const response = await axios({
       method: 'post',
@@ -141,10 +151,11 @@ export const requestUpdateStatusProducts = async(obj: any) =>{
 export const setProduct = (object: Iproduct) => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.updateProduct(object))
 }
-export const updateProduct: Function = async (dataForm) => {
+export const updateProduct = (dataForm : IUpdateProduct) => async(dispatch:Function) => {
   try {
+    console.log(dataForm, "data que llega a redux");
     // const myToken: any = await userVerification('client')
-    await axios({
+    const productUpdated =  await axios({
       method: 'post',
       url: '/api/adminScope/put/updateProduct',
       data: dataForm
@@ -152,7 +163,9 @@ export const updateProduct: Function = async (dataForm) => {
       //   "Authorization": myToken
       // }
     });
-
+    console.log(productUpdated, "PRODUCTO ACTUALIZADO desde el back"); 
+    // no me llega entre las propiedades del producto la prop image por eso no se setea
+    return dispatch(reducerAdmin.actions.updateProduct(productUpdated))
   } catch (error) {
     console.log(error)
   }
