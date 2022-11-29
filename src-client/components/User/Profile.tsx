@@ -20,59 +20,6 @@ const Profile = () => {
   const [imageUser, setImageUser] = useState(null);
   const [previewForm, setPreviewFrom] = useState(myStateForm);
 
-  //CHANGE PASSWORD
-  const { data } = useSession();
-  const [newPassword, setNewPassword] = useState({
-    original: "",
-    repeat: "",
-  });
-  const [equal, setEqual] = useState(false);
-  const [permited, setPermited] = useState({
-    original: false,
-    repeat: false
-  });
-
-  const userEmail: string | undefined = data?.user?.email;
-  const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{7,15}$/;
-
-
-  const handlerChangePassword = (e: any) => {
-    if (e.target.name === "original") {
-      if (regPassword.test(newPassword.original)) {
-        setPermited({
-          original: true,
-          repeat: permited.repeat
-        });
-      } else {
-        setPermited({
-          original: true,
-          repeat: permited.repeat
-        });
-      }
-      setNewPassword({
-        original: e.target.value.toString(),
-        repeat: newPassword.repeat,
-      });
-
-    } else {
-      if (regPassword.test(newPassword.repeat)) {
-        setPermited({
-          original: permited.original,
-          repeat: true
-        });
-      } else {
-        setPermited({
-          original: permited.original,
-          repeat: false
-        });
-      }
-      setNewPassword({
-        original: newPassword.original,
-        repeat: e.target.value.toString(),
-      });
-    }
-  };
-
   type valueForm =
     | React.FormEvent<HTMLFormElement>
     | React.ChangeEvent<HTMLInputElement>
@@ -82,7 +29,7 @@ const Profile = () => {
   const myProfide = useSelector((state: Ireducers) => state.reducerUser.user);
   if (!myProfide) return <div className={styles.loading}>Loading...</div>;
   
-  const { name, email, image, addresses, id } = myProfide;
+  const { name, email, image, addresses} = myProfide;
 
   const defaultImage = cloudinaryOrUrl(image, "client");
 
@@ -138,11 +85,6 @@ const Profile = () => {
       status: !previewForm.status,
     });
   };
-  const handleChangePassword = (e) => {
-    e.preventDefault()
-      dispatch(accion.changePassword(email))
-    
-  }
 
   const myForm = (
     <form className={styles.form__container} onSubmit={handleOnsubmit}>
