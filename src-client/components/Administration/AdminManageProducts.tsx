@@ -131,6 +131,7 @@ const AdminManageProducts = () => {
     setActive(true)
   }
 
+  
 
   const aplicarCambios = async () => {
     if (!productsToUpdate.length) return alert('Please select product to change')
