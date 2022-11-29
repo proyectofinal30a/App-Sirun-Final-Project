@@ -121,7 +121,7 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
               >.
             </p>
             <br />
-            <p
+            <a
               href="https://sirunnpatisserie.vercel.app/about#newsletter"
               style="
                 color: rgb(248, 159, 174);
@@ -130,7 +130,7 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
               "
             >
               Did you sign up to our newsletter?
-            </p>
+            </a>
             <p>
               Be the first to know about the latests news! Get exclusive offers
               with inspirational and styling tips!
