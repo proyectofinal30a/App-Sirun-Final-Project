@@ -37,11 +37,10 @@ const ShoppingCart = () => {
   ;
   return (
     <div className={styles.cart__container}>
-      {productsInCart? 
-        <form className={styles.modal__container}>
+      {cart? <form className={styles.modal__container}>
           <h2>Shopping Cart</h2>
 
-          {productsInCart?.map((elem, index: number) => {
+          {productsInCart ? productsInCart?.map((elem, index: number) => {
 
             return (
               <div key={index} className={styles.modal__product_container}>
@@ -105,7 +104,7 @@ const ShoppingCart = () => {
                 </div>
               </div>
             );
-          })}
+          }) : <p>The shooping cart is empthy</p>}
 
           <p className={styles.modal__quantity_total}>Items in shopping cart ({totalQuantity})</p>
 
