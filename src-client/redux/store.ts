@@ -13,10 +13,10 @@ import reducerAfterPayment from "./slice/payment/payment";
 import reducerAllUsers from "./slice/user-detail-redux/all-users";
 import adminGraphs from "./slice/admin-graphs/admin-graphs";
 import reducerAdminManagement from "./slice/admin-management-redux/admin-management";
-
+import reducerAdminReview from './slice/admi-review-redux/all-review-adm-redux'
 
 const persistConfig = {
-  key: 'blasadaqdsaablabla',
+  key: 'blasadaqdsadasssalabla',
   storage,
 }
 
@@ -31,7 +31,8 @@ const myReducers = combineReducers({
   reducerAdmin,
   reducerAfterPayment,
   reducerAllUsers,
-  adminGraphs
+  adminGraphs,
+  reducerAdminReview
 })
 
 

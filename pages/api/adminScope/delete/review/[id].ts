@@ -5,12 +5,12 @@ import { prisma } from "../../../../../lib/prisma";
 export default async function deleteAddress(req: NextApiRequest, res: NextApiResponse) {
     try {
         // interface IreviewId { idReview: string };
-        const { idReview } = req.query;
+        const { id } = req.query;
 
-        if (typeof idReview !== 'string') return;
+        if (typeof id !== 'string') return;
 
         await prisma.evaluation.delete({
-            where: { id: idReview }
+            where: { id }
         });
 
         res.status(200).json({ msg: "The review has been removed successfully" });
