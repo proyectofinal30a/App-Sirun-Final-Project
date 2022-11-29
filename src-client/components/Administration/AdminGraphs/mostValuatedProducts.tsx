@@ -33,7 +33,7 @@ import { getMVP } from '../../../redux/slice/admin-graphs/admin-graphs';
         </select>
 
       <div className={styles.dashboard__graphic_best_ranked_product}>
-        <ResponsiveContainer width="99%">
+        <ResponsiveContainer width={500} height={400}>
           <BarChart margin={{top: 0, bottom: 0, left: 0, right: 0}} className={styles.graphic} height={400} width={500} data={products}>
             <XAxis dataKey="name" />
             <YAxis domain={[1, 5]} />
