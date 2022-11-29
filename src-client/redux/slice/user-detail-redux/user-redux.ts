@@ -211,14 +211,12 @@ export const postImageServerUsert = async ({ email, name, newImage, deleteImage 
 
     }
 }
-export const changePassword = (email: string) => async (dispatch: Function) => {
-    console.log(email);
-    
+export const changePassword = (email: string) => async (dispatch: Function) => {    
     try {
         const user: any = await axios.post('/api/adminScope/put/changePassword', {
             email,
         })
-        swal('Success', 'Verify your email for change your password', 'success')
+        swal('Success', 'Check your email inbox to reset your password', 'success')
     } catch (error) {
         return error        
     }

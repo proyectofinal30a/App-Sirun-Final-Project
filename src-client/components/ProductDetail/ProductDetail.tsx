@@ -33,15 +33,15 @@ const ProductDetail = () => {
 
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const product = useSelector((state: Ireducers) => state.reducerProductDetail.detail);
-  const cart = useSelector((state: Ireducers) => state.reducerCart.products);
-  const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products);
+
+  const cart = useSelector((state: Ireducers) => state.reducerCart.products);  
+  const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
 
   interface IproduId {
     id: string
   }
 
-  let favorites2: Array<IproduId> = [];
-
+  let favorites2: Array<IproduId> = []
   
   useEffect(() => {
       dispatch(cleanProductDetail());
@@ -49,32 +49,34 @@ const ProductDetail = () => {
     }, [dispatch, id]);
   
     
-  useEffect(() => {
-    if (!myInfUser?.user?.id) {
-      dispatch(getUserDetail(myNuEmail));
+    useEffect(() => {
+      if (!myInfUser?.user?.id) {
+        dispatch(getUserDetail(myNuEmail));
+      }
+    }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
+    
+    
+    useEffect(() => {
+      if (!myProfile) return
+      (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
+    })
+    
+    useEffect(()=>{
+      dispatch(getAllProducts())
+      },[dispatch])
+    
+    if(!cart?.[0] || !allProducts?.[0]){
+      return <div className={styles.loading}>The cart is empthy...</div>
     }
-  }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
-    
-    
-  useEffect(() => {
-    if (!myProfile) return
-    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
-  })
-    
-  useEffect(()=>{
-    dispatch(getAllProducts());
-  },[dispatch]);
-    
-  // *REVISAR ESTA CONDICION PORQUE ROMPE TODO
-  // if(!cart?.[0] || !allProducts?.[0]){
-  //   return <div className={styles.loading}>Loading...</div>
-  // }
 
-  const productsInCartID = cart.map((elem) => elem.id);
-  const allProductsID = allProducts.filter((elem) => elem.available === true)
-                                   .map((elem) => elem.id)                             
-                                   .filter((elem) => productsInCartID.includes(elem));
-  const productsInCart = cart.filter((elem) => allProductsID.includes(elem.id));
+  const productsInCartID = cart.map((elem) => elem.id)
+  const allProductsID =allProducts.filter((elem)=> elem.available === true)
+                                  .map((elem)=>elem.id)                             
+                                  .filter((elem)=> productsInCartID.includes(elem))    
+  const productsInCart = cart.filter((elem)=> allProductsID.includes(elem.id))
+
+
+
 
 
   if (id !== product.id || !product?.evaluation) return <div className={styles.loading}>Loading...</div>

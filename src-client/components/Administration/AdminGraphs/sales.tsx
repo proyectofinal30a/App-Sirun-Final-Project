@@ -25,7 +25,7 @@ const Sales = () => {
 
   if(sales[2022]){
     return (
-      <>
+      <div className={styles.dashboard_control}>
         <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select} defaultValue="">
           <option value="" disabled>Select period</option>
           <option value="Now">Now</option>
@@ -44,8 +44,10 @@ const Sales = () => {
         </select>
   
         <div className={styles.dashboard__graphic}>
-          <ResponsiveContainer width='99%'>
-            <ComposedChart className={styles.graphic} height={400} width={500} data={selectedMonth? sales[2022][selectedMonth] : sales[2022][thisMonth? thisMonth : 'December'] }>
+
+          <ResponsiveContainer width="99%">
+            <ComposedChart margin={{top: 0, bottom: 0, left: 0, right: 0}} className={styles.graphic} height={400} width={500} data={selectedMonth? sales[2022][selectedMonth] : sales[2022][thisMonth? thisMonth : 'December'] }>
+
               <XAxis dataKey="week"/>
               <YAxis />
               <Bar type="monotone" dataKey="confirmed" barSize={10} fill="#84d8af"/>
@@ -59,12 +61,12 @@ const Sales = () => {
             </ComposedChart>
           </ResponsiveContainer>
         </div>
-      </>
+      </div>
     );
   } else {
     return (
       <>
-        <h2>Loading...</h2>
+        <p className={styles.loading}>Loading...</p>
       </>
     )
   }

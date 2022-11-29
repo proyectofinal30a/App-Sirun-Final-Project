@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import {useSelector, useDispatch} from 'react-redux'
 import styles from "../../../styles/Dashboard.module.css";
-import { Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend, BarChart, ResponsiveContainer } from 'recharts'
+import { ResponsiveContainer, Bar, XAxis, YAxis, Tooltip, CartesianGrid, Legend, BarChart } from 'recharts'
 import { getMVP } from '../../../redux/slice/admin-graphs/admin-graphs';
 
 
@@ -20,7 +20,7 @@ import { getMVP } from '../../../redux/slice/admin-graphs/admin-graphs';
 
   if(products){
     return (
-      <>
+      <div className={styles.dashboard_control}>
         <select onChange={(e)=> changeType(e)} defaultValue="" className={styles.dashboard__secondary_select}>
           <option value="" disabled>Select category</option>
           <option value="all">All</option>
@@ -33,23 +33,23 @@ import { getMVP } from '../../../redux/slice/admin-graphs/admin-graphs';
         </select>
 
       <div className={styles.dashboard__graphic_best_ranked_product}>
-          <ResponsiveContainer width='99%'>
-            <BarChart className={styles.graphic} height={400} width={500} data={products}>
-              <XAxis dataKey="name" />
-              <YAxis domain={[1, 5]} />
-              <Tooltip />
-              <Legend />
-              <CartesianGrid />
-              <Bar type="monotone" dataKey="rating" barSize={50} fill="#3c5473" />
-            </BarChart>
-          </ResponsiveContainer>
+        <ResponsiveContainer width="99%">
+          <BarChart margin={{top: 0, bottom: 0, left: 0, right: 0}} className={styles.graphic} height={400} width={500} data={products}>
+            <XAxis dataKey="name" />
+            <YAxis domain={[1, 5]} />
+            <Tooltip />
+            <Legend />
+            <CartesianGrid />
+            <Bar type="monotone" dataKey="rating" barSize={50} fill="#3c5473" />
+          </BarChart>
+        </ResponsiveContainer>
       </div>
-     </>
+     </div>
    );
   } else {
     return (
       <>
-        <h1 className={styles.loading}>Loading</h1>
+        <p className={styles.loading}>Loading...</p>
       </>
     )
   }
