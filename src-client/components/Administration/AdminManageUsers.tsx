@@ -6,14 +6,16 @@ import { Ireducers, userData } from "../../../lib/types";
 import { activeUser } from "../../../src-back/admin-users/putUsers";
 import {getAllUsers, getUsersByName, clearUserSearch } from "../../redux/slice/user-detail-redux/all-users";
 import cloudinaryOrUrl from "../../controllers/detectionOfImage";
+import { useSession } from "next-auth/react";
 
 
 const AdminManageUsers = () => {
   const dispatch: Function = useDispatch();
-  
+  const {data: user, status} = useSession()
   const allUsers = useSelector((state: Ireducers) => state.reducerAllUsers.allUsers);
   const usersByName = useSelector((state: Ireducers) => state.reducerAllUsers.usersByName);
-
+  const userSession = user?.user.role
+  
   let currentUsers: userData[] = [];
   if (usersByName.length > 0) {
     currentUsers = usersByName;
@@ -107,7 +109,7 @@ const AdminManageUsers = () => {
                   </div>
 
                   <div className={styles.user__btns_container}>
-                    {user.role === "admin" ? 
+                    {userSession === 'super admin' && (user.role === "admin" ? 
                       <button onClick={() => userChangeRole(user.id, "user")} className={styles.user__role_btn}>
                         Set user role
                       </button>
@@ -115,11 +117,18 @@ const AdminManageUsers = () => {
                       <button onClick={() => userChangeRole(user.id, "admin")} className={styles.user__role_btn}>
                         Set admin role
                       </button>
-                    }
-                    {user.role !== "inactive" && 
+                        )}
+                    {userSession === 'super admin' ? 
+                    (user.role !== "inactive" && 
                       <button onClick={() => userOnOffSwitch(user.id, "inactive")} className={styles.user__deactivate_btn}>
                         Deactivate account
                     </button>
+                    ): (
+                      user.role === "user" && 
+                      <button onClick={() => userOnOffSwitch(user.id, "inactive")} className={styles.user__deactivate_btn}>
+                        Deactivate account
+                    </button>
+                    )
                     }
                     {user.role === "inactive" && 
                       <button onClick={() => userOnOffSwitch(user.id, "user")} className={styles.user__activate_btn}>
