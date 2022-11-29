@@ -36,6 +36,7 @@ const ShoppingCart = () => {
   });
   ;
   
+  
   return (
     <div className={styles.cart__container}>
       {cart? <form className={styles.modal__container}>
