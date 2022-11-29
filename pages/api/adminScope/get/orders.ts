@@ -7,6 +7,7 @@ const orders: Function = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const orders = await prisma.order.findMany({
       select: { 
+        idPurchase: true,
         user: {
           select: {
             name: true,

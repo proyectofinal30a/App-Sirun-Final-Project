@@ -1,5 +1,5 @@
 interface data {
-  idPurchaseMP: string;
+  idPurchase: string;
   user?: {
       name: string | null;
       email: string | null;
@@ -12,7 +12,7 @@ interface data {
   delivery_time?: string | undefined;
 }
 
-export default function CreationInTransitEmail({idPurchaseMP, user, addressOrder, delivery_time}: data) {
+export default function CreationInTransitEmail({idPurchase, user, addressOrder, delivery_time}: data) {
     if (!user) return `<div>NO FOUNT</div>`
 
     return `
@@ -24,7 +24,7 @@ export default function CreationInTransitEmail({idPurchaseMP, user, addressOrder
           padding: 0;
         "
       >
-        <p style="float: right; margin-top: auto; color: grey;">Order ${idPurchaseMP}</p>
+        <p style="float: right; margin-top: auto; color: grey;">Order ${idPurchase}</p>
     
         <p style="padding-top: 2em;">Hello ${user.name},</p>
     

@@ -13,7 +13,7 @@ const updateOrderStatus: Function = async (req: NextApiRequest, res: NextApiResp
       data: { status: orderStatus },
     });
 
-    if (order.status === "fulfilled") {
+    if (order.status === "in_transit") {
       interface responseMP { data: { results: [{ status: string, id: string }] } }
   
       const transporter = nodemailer.createTransport({
@@ -50,20 +50,22 @@ const updateOrderStatus: Function = async (req: NextApiRequest, res: NextApiResp
             }
           },
           delivery_time: true,
+          idPurchase: true,
         }
       })
+
+     
       
-      const idPurchaseMP = requestOrder.data.results[0].id;
   
-      const resEmail = { ...updatedOrder, idPurchaseMP };
+      if (!updatedOrder) return res.status(200).json({ msg: "Cannot send email without data"});
+
+      const emailCreation = CreationInTransitEmail(updatedOrder);
   
-      const emailCreation = CreationInTransitEmail(resEmail);
-  
-  
+
       const mailOptions = {
         from: process.env.EMAIL_USER,
         to: updatedOrder?.user.email || "",
-        subject: `Sirun Pâtisserie - Order ${idPurchaseMP}`,
+        subject: `Sirun Pâtisserie - Order ${updatedOrder.idPurchase}`,
         html: emailCreation,
       };
   
@@ -76,7 +78,47 @@ const updateOrderStatus: Function = async (req: NextApiRequest, res: NextApiResp
       });
     }
 
-    return res.status(200).json(order);
+    const newCompleteOrder = await prisma.order.findFirst({
+      where: { id: orderId },
+      select: { 
+        idPurchase: true,
+        user: {
+          select: {
+            name: true,
+            email: true,
+          }
+        },
+        purchasedProducts: {
+          select: {
+            title: true,
+            picture_url: true,
+            unit_price: true,
+            quantity: true,
+            id: true,
+          }
+        },
+        addressOrder: {
+          select: {
+            phone : {
+              select: {
+                area_code: true,
+                number: true,
+              }
+            },
+            street_name: true,
+            street_number: true,
+            zip_code: true,
+          }
+        },
+        date: true,
+        total: true,
+        delivery_time: true,
+        status: true,
+        id: true,
+      }
+    })
+
+    return res.status(200).json(newCompleteOrder);
   } catch (error) {
     return res.status(400).json(error.message);
   }

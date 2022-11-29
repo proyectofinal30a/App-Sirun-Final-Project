@@ -29,6 +29,7 @@ export default async function findUser(req: NextApiRequest, res: NextApiResponse
                     orders: {
                         select: {
                             status: true,
+                            idPurchase: true,
                             id: true,
                             purchase_link: true,
                             addressOrder: {
