@@ -82,7 +82,7 @@ const Menu = () => {
               <span className={styles.nav_span}>Shopping Cart</span>
             </Link>
           </li>
-          {session?.user?.role === "admin" && (
+          {session?.user?.role === "admin" || session?.user?.role === 'super admin' && (
             <li className={styles.nav__item}>
               <Link href="/admin/adminDashboard" className={styles.nav__link}>
                 <span className={styles.nav_span}>Administration</span>
