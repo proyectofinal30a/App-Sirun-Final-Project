@@ -76,6 +76,7 @@ const AdminManageProducts = () => {
 
   function closeModal() {
     setIsOpen(false);
+    setFormProduct(myForm)
   }
 
   function closeModalUpdate() {
@@ -235,9 +236,8 @@ const AdminManageProducts = () => {
       console.log(productToUpdate, "data que envio desde el componente");
       
       await dispatch(updateProduct(productToUpdate))
-
-      setIsOpen(false)
       setFormProduct(myForm)
+      setIsOpen(false)
       swal('Done',`${name} is updated`, 'success')
       dispatch(getProducts())
     }
@@ -253,32 +253,49 @@ const AdminManageProducts = () => {
 
   return (
     <div className={styles.products_manage__container}>
-      <h1 className={styles.products_manage__title}>Administration Product Managing</h1>
+      <h1 className={styles.products_manage__title}>
+        Administration Product Managing
+      </h1>
 
       <div className={styles.container_width}>
         <div className={styles.products_manage_comands}>
           {/* <div className={styles.users_management__searchbar}> */}
-            <input
-              type="search"
-              placeholder="Search product name"
-              className={styles.search_bar__input}
-              autoComplete="on"
-              name="name"
-              value={name}
-              onChange={handleChange}
-            />
+          <input
+            type="search"
+            placeholder="Search product name"
+            className={styles.search_bar__input}
+            autoComplete="on"
+            name="name"
+            value={name}
+            onChange={handleChange}
+          />
           {/* </div> */}
-          <button className={styles.change__price__btn} onClick={() => openMasiveModal()}>Update All Prices</button>
+          <button
+            className={styles.change__price__btn}
+            onClick={() => openMasiveModal()}
+          >
+            Update All Prices
+          </button>
         </div>
         <div className={styles.visibility_btn_container}>
-          {active ? <input className={styles.visibility__btn} type="button" value="Apply visibility changes" onClick={aplicarCambios} /> : null}
+          {active ? (
+            <input
+              className={styles.visibility__btn}
+              type="button"
+              value="Apply visibility changes"
+              onClick={aplicarCambios}
+            />
+          ) : null}
         </div>
 
         <div className={styles.products__map_container}>
           {currentProducts?.map((product: any, index: number) => {
             return (
               <div className={styles.product__card_container} key={index}>
-                <div key={index + 123} className={styles.product_card__img_container}>
+                <div
+                  key={index + 123}
+                  className={styles.product_card__img_container}
+                >
                   <Image
                     key={index + 1}
                     src={product.image?.[0]?.image}
@@ -295,19 +312,27 @@ const AdminManageProducts = () => {
                   <p>${product.price}</p>
                 </div>
 
-              <div className={styles.product__card__icons}>
-                <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
-                  
-                  <button className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} > 
-                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
+                <div className={styles.product__card__icons}>
+                  <button
+                    className={styles.product__card__icon_edit}
+                    onClick={(e: any) => editOpenModal(e, product)}
+                  >
+                    {" "}
+                    <AiFillEdit />
+                  </button>
+
+                  <button
+                    className={styles.product__card__icon_edit}
+                    onClick={(e: any) => handleVisibility(e, product)}
+                  >
+                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}
+                  </button>
+                </div>
               </div>
-            </div>
-            )
+            );
           })}
         </div>
       </div>
-
-
 
       <Modal
         ariaHideApp={false}
@@ -316,113 +341,140 @@ const AdminManageProducts = () => {
         className={styles.modal}
         contentLabel="Modal1"
       >
-        <form className={styles.modal__container} onSubmit={(e) => submitHandler(e, productModal)}>
-          <div className={styles.modal__btn_right_container}>
-            <button className={styles.modal__close_modal_btn} onClick={closeModal}>x</button>
-          </div>
-          <h2>Edit Product</h2>
+        <form
+          className={styles.modal__container}
+          onSubmit={(e) => submitHandler(e, productModal)}
+        >
+          <div className={styles.modal__container__inside}>
+            <div className={styles.modal__btn_right_container}>
+              <button
+                className={styles.modal__close_modal_btn}
+                onClick={closeModal}
+              >
+                x
+              </button>
+            </div>
+            <h2>Edit Product</h2>
 
-          <div className={styles.creation_form__section_container}>
-            <p className={styles.current__data}>Current Price: ${productModal.price}</p>
-            <input
-              type="text"
-              onChange={handleOnChangeNumber}
-              name="price"
-              value={formProduct.price}
-              className={styles.new_price__input}
-              placeholder="Add a new Price"
-              required
-            />
-            <span className={styles.creation_form__error_message}>{formErrors.price}</span>
-          </div>
-
-          <div className={styles.creation_form__section_container}>
-            <p className={styles.current__data}>Current Description: {productModal.description}</p>
-
-            <textarea
-              name="description"
-              placeholder="Add a new Description"
-              onChange={handleOnChangeInput}
-              value={formProduct.description}
-              className={styles.creation_form__textarea}
-              required
-            />
-            <span className={styles.creation_form__error_message}>{formErrors.description}</span>
-          </div>
-
-
-          <div className={styles.creation_form__section_container}>
-            <p className={styles.current__data}>Current Images:</p>
-            <div className={styles.images__container}>
-              {productModal.image?.map((img, index: number) =>{
-                  return <Image
-                    key={index}
-                    src={img.image}
-                    width={200}
-                    alt=""
-                    height={200}
-                    priority
-                    className={styles.product_card__img}
-                />}
-              )}
+            <div className={styles.creation_form__section_container}>
+              <p className={styles.current__data}>
+                Current Price: ${productModal.price}
+              </p>
+              <input
+                type="text"
+                onChange={handleOnChangeNumber}
+                name="price"
+                value={formProduct.price}
+                className={styles.new_price__input}
+                placeholder="Add a new Price"
+                required
+              />
+              <span className={styles.creation_form__error_message}>
+                {formErrors.price}
+              </span>
             </div>
 
-            <input
-              type="file"
-              accept=".jpg , .png , .jpeg"
-              onChange={handleOnFile}
-              name="image"
-              className={styles.creation_form__img_input}
-              required
-              multiple
-            />
-          </div>
+            <div className={styles.creation_form__section_container}>
+              <p className={styles.current__data}>
+                Current Description: {productModal.description}
+              </p>
 
+              <textarea
+                name="description"
+                placeholder="Add a new Description"
+                onChange={handleOnChangeInput}
+                value={formProduct.description}
+                className={styles.creation_form__textarea}
+                required
+              />
+              <span className={styles.creation_form__error_message}>
+                {formErrors.description}
+              </span>
+            </div>
 
-          
-        <div className={styles.images__container}>
-{formProduct.image[0] && formProduct.image.map((e : Iimg, index) => {
-return (
-<div key={index} >
-{/* <div className={styles.creation_form__img_container}> */}
-<Image
-  src={e.image} 
-  alt=""
-  width="1000"
-  height="300"
-  className={styles.product_card__img}
-/>
-{/* </div> */}
+     
+              <p className={styles.current__data}>Current Images:</p>
+              <div className={styles.images__container}>
+                {productModal.image?.map((img, index: number) => {
+                  return (
+                    <Image
+                      key={index}
+                      src={img.image}
+                      width={200}
+                      alt=""
+                      height={200}
+                      priority
+                      className={styles.product_card__img}
+                    />
+                  );
+                })}
+              </div>
 
-<input
-type={"button"}
-name={e.image}
-onClick={handleOnClickDelete}
-value={"Delete"}
-className={styles.creation_form__input_btn_delete}
-/>
-</div>
-)
-})}
+              <input
+                type="file"
+                accept=".jpg , .png , .jpeg"
+                onChange={handleOnFile}
+                name="image"
+                className={styles.creation_form__img_input}
+                required
+                multiple
+              
+              />
+         
 
-{formProduct.image[0] &&
-    <>
-  <button
-     onClick={handleOnClickReset}
-    className={[styles.creation_form__input_btn, styles.creation_form__reset_btn].join(" ")}
-    >
-   Reset all image/s
-  </button>
-    </>
-  }
-</div>
-          <div className={styles.modal__purchase_btn_container}>
-            <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
+   
+              <div className={styles.images__container}>
+                {formProduct.image[0] &&
+                  formProduct.image.map((e: Iimg, index) => {
+                    return (
+                      <div key={index}>
+                        <Image
+                          src={e.image}
+                          alt=""
+                          width="1000"
+                          height="300"
+                          className={styles.product_card__img}
+                        />
+
+                        <input
+                          type={"button"}
+                          name={e.image}
+                          onClick={handleOnClickDelete}
+                          value={"Delete"}
+                          className={styles.creation_form__input_btn_delete}
+                        />
+                      </div>
+                    );
+                  })}
+              </div>
+
+              {formProduct.image[0] && (
+                <>
+                  <button
+                    onClick={handleOnClickReset}
+                    className={[
+                      styles.creation_form__input_btn,
+                      styles.creation_form__reset_btn,
+                    ].join(" ")}
+                  >
+                    Reset all image/s
+                  </button>
+                </>
+              )}
+         
+
+            <div className={styles.modal__purchase_btn_container}>
+              <button
+                type="submit"
+                className={styles.modal__start_purchase_btn}
+              >
+                Confirm Changes
+              </button>
+            </div>
+            
           </div>
         </form>
-
       </Modal>
-
 
       {/* //MODAL -UPDATE MASIVE PRICES */}
       <Modal
@@ -432,54 +484,97 @@ className={styles.creation_form__input_btn_delete}
         className={styles.modal}
         contentLabel="Modal2"
       >
-        <form className={styles.modal__container} onSubmit={(e: any) => submitUpdateAllPrices(e, modalForm)}>
+        <form
+          className={styles.modal__container}
+          onSubmit={(e: any) => submitUpdateAllPrices(e, modalForm)}
+        >
           <div className={styles.modal__btn_right_container}>
-            <button className={styles.modal__close_modal_btn} onClick={closeModalUpdate}>x</button>
+            <button
+              className={styles.modal__close_modal_btn}
+              onClick={closeModalUpdate}
+            >
+              x
+            </button>
           </div>
           <h2>Edit All Products</h2>
           <div className={styles.modal__selects__container}>
-            <label className={styles.current__data}>How much do yo want you update your price product?</label>
-            <input className={styles.search_bar__input} name="quantity" value={modalForm.quantity} onChange={handlerInputQuantity} placeholder="Add a quantity to update all products"></input>
-            {modalError.quantity && <p className={styles.modal__error}>{modalError.quantity}</p>}
-            <label className={styles.current__data}>Do you want to make a discount or an increase?</label>
-            <select className={styles.filter__select} name="direction" onChange={handlerInputDirection} value={modalForm.direction}>
+            <label className={styles.current__data}>
+              How much do yo want you update your price product?
+            </label>
+            <input
+              className={styles.search_bar__input}
+              name="quantity"
+              value={modalForm.quantity}
+              onChange={handlerInputQuantity}
+              placeholder="Add a quantity to update all products"
+            ></input>
+            {modalError.quantity && (
+              <p className={styles.modal__error}>{modalError.quantity}</p>
+            )}
+            <label className={styles.current__data}>
+              Do you want to make a discount or an increase?
+            </label>
+            <select
+              className={styles.filter__select}
+              name="direction"
+              onChange={handlerInputDirection}
+              value={modalForm.direction}
+            >
               <option value="">Choose</option>
               <option value="increase">Increase(+)</option>
               <option value="decrease">Discount(-)</option>
             </select>
-            {modalError.direction && <p className={styles.modal__error}>{modalError.direction}</p>}
-            <label className={styles.current__data}>How much do you want to update your price product? <br /> By percentage or by amount?</label>
-            <select className={styles.filter__select} name="type" onChange={handlerInputType} value={modalForm.type}>
+            {modalError.direction && (
+              <p className={styles.modal__error}>{modalError.direction}</p>
+            )}
+            <label className={styles.current__data}>
+              How much do you want to update your price product? <br /> By
+              percentage or by amount?
+            </label>
+            <select
+              className={styles.filter__select}
+              name="type"
+              onChange={handlerInputType}
+              value={modalForm.type}
+            >
               <option value="">Choose</option>
               <option value="percent">Per Percent(%)</option>
               <option value="fixed">Per Fixed Amount($)</option>
             </select>
-            {modalError.type && <p className={styles.modal__error}>{modalError.type}</p>}
+            {modalError.type && (
+              <p className={styles.modal__error}>{modalError.type}</p>
+            )}
           </div>
           <div className={styles.modal__purchase_btn_container}>
-            <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
+            <button type="submit" className={styles.modal__start_purchase_btn}>
+              Confirm Changes
+            </button>
           </div>
         </form>
       </Modal>
 
-  {backMessage.length &&
-      <Modal
-        ariaHideApp={false}
-        isOpen={IsOpenMsg}
-        onRequestClose={closeModalMsg}
-        className={styles.modal}
-        contentLabel="Modal3"
-      >
-                <div className={styles.modal__container} >
-                  <div className={styles.modal__btn_right_container}>
-                    <button className={styles.modal__close_modal_btn} onClick={closeModalMsg}>x</button>
-                  </div>
-                  <p className={styles.current__data}>{backMessage}</p>
-                </div>
-      </Modal>
-    }
-
-    </div >
+      {backMessage.length && (
+        <Modal
+          ariaHideApp={false}
+          isOpen={IsOpenMsg}
+          onRequestClose={closeModalMsg}
+          className={styles.modal}
+          contentLabel="Modal3"
+        >
+          <div className={styles.modal__container}>
+            <div className={styles.modal__btn_right_container}>
+              <button
+                className={styles.modal__close_modal_btn}
+                onClick={closeModalMsg}
+              >
+                x
+              </button>
+            </div>
+            <p className={styles.current__data}>{backMessage}</p>
+          </div>
+        </Modal>
+      )}
+    </div>
   );
 };
 
