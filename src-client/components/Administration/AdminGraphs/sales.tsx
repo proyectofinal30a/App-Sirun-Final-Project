@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import styles from "../../../styles/Dashboard.module.css";
-import { Bar, XAxis, YAxis, Tooltip, CartesianGrid, ComposedChart, Legend, Line } from 'recharts';
+import { Bar, XAxis, YAxis, Tooltip, CartesianGrid, ComposedChart, Legend, Line, ResponsiveContainer } from 'recharts';
 
 import { convertMonth } from '../../../controllers/adminGraphs';
 import { getSales } from '../../../redux/slice/admin-graphs/admin-graphs';
