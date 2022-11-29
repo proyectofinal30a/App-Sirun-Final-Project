@@ -1,13 +1,7 @@
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  orderByAscDesc,
-  prepState,
-  actionFilterByCategoryOrType,
-  cleanFilters,
-  IactionPayload,
-} from "../../../redux/slice/filter-product-client/filters-redux";
+import * as action from "../../../redux/slice/filter-product-client/filters-redux";
 import { Iproduct, Ireducers } from "../../../../lib/types";
 import styles from "../../../styles/FiltersAndOrders.module.css";
 
@@ -19,15 +13,11 @@ const FilterAndOrder = () => {
   const prevStateContainer: any = useSelector<Ireducers>((state) => state.reducerFilters.productPrevState)
   const productsByName: any = useSelector<Ireducers>((state) => state.reducerProductsByName)
 
+  useEffect(() => {
+    !productsFilters[0] && dispatch(action.saveProductFilter(products))
+  }, [])
 
-  let currentProducts: any = [];
-  if (productsByName.productsByName.length > 0) {
-    currentProducts = productsByName.productsByName;
-  } else if (productsFilters.length > 0) {
-    currentProducts = productsFilters;
-  } else {
-    currentProducts = products;
-  }
+
 
 
   const stateSelects = {
@@ -37,7 +27,6 @@ const FilterAndOrder = () => {
     selectType: "",
   };
   const [select, setSelect] = useState(stateSelects);
-
   const previousState = {
     price: "",
     dimention: "",
@@ -50,73 +39,49 @@ const FilterAndOrder = () => {
   const handlerChangePrice = (e: Event) => {
     e.preventDefault();
     const { value }: any = e.target;
-    const o: IactionPayload = {
-      state: currentProducts,
+    const o: any = {
+      state: productsFilters,
       order: value,
 
     };
     setSelect({ ...select, selectPrice: value, selectDimention: "" });
-    dispatch(orderByAscDesc(o));
+    dispatch(action.orderByAscDesc(o));
   };
 
 
   const handlerChangeDimention = (e: Event) => {
     e.preventDefault();
     const { value }: any = e.target;
-    const o: IactionPayload = {
-      state: currentProducts,
+    const o: any = {
+      state: productsFilters,
       order: value,
 
     };
     setSelect({ ...select, selectDimention: value, selectPrice: "" });
-    dispatch(orderByAscDesc(o));
+    dispatch(action.orderByAscDesc(o));
   };
 
   const handleChangeCategory = (e: Event) => {
     e.preventDefault();
     const { value }: any = e.target;
-    const o: IactionPayload = {
-      state: currentProducts,
-      order: value,
-    };
-
 
 
     setSelect({ ...select, selectDimention: "", selectPrice: "" });
 
-    if (prev.category && prev.type) {
-      const o: IactionPayload = {
-        state: products,
-        order: value,
+    if (prev.type) {
+      const filterCategotyAndType: any = {
+        category: value,
+        type: prev.type
       };
-
       setSelect({ ...select, selectCategory: value });
       setPrevState({ ...prev, category: value });
-      dispatch(cleanFilters);
-      dispatch(prepState(o));
-      dispatch(actionFilterByCategoryOrType(o));
-
+      dispatch(action.filterDouble(filterCategotyAndType));
       return;
     }
-
-    if (prev.category) {
-      const obj: IactionPayload = {
-        state: products,
-        order: value,
-      };
-      dispatch(cleanFilters);
-      setSelect({ ...select, selectCategory: value });
-      setPrevState({ ...prev, category: value });
-      dispatch(prepState(obj));
-      dispatch(actionFilterByCategoryOrType(obj));
-
-      return;
-    }
-
-    dispatch(prepState(o));
     setSelect({ ...select, selectCategory: value });
     setPrevState({ ...prev, category: value });
-    dispatch(actionFilterByCategoryOrType(o));
+    dispatch(action.filterByCategory(value));
+    return;
   };
 
   const handleChangeType = (e: Event) => {
@@ -124,30 +89,28 @@ const FilterAndOrder = () => {
 
     setSelect({ ...select, selectDimention: "", selectPrice: "" });
     const { value }: any = e.target;
-    const o: IactionPayload = {
-      state: currentProducts,
-      order: value,
-    };
 
-    if (prev.category !== "" && prev.type !== "") {
-      const ob: IactionPayload = {
-        state: prevStateContainer,
-        order: value,
+
+    console.log(prev.category, '===', prev.type, '---', prev.category);
+
+    if (prev.category) {
+      const filterCategotyAndType: any = {
+        category: prev.category,
+        type: value
       };
-
       setSelect({ ...select, selectType: value });
-      dispatch(actionFilterByCategoryOrType(ob));
+      setPrevState({ ...prev, type: value });
+      dispatch(action.filterDouble(filterCategotyAndType));
       return;
     }
-
-    setPrevState({ ...prev, type: value });
-    dispatch(actionFilterByCategoryOrType(o));
     setSelect({ ...select, selectType: value });
+    setPrevState({ ...prev, type: value });
+    dispatch(action.filterByType(value));
   };
 
   const handleClean = (e: Event) => {
     e.preventDefault();
-    dispatch(cleanFilters());
+    dispatch(action.cleanFilters());
     setSelect(stateSelects);
   };
 
@@ -164,7 +127,7 @@ const FilterAndOrder = () => {
     <div className={styles.filter__container}>
       <select
         name="selectCategory"
-        defaultValue={select.selectCategory}
+        value={select.selectCategory}
         className={styles.filter__select}
         onChange={(e: any) => handleChangeCategory(e)}
       >
@@ -181,11 +144,11 @@ const FilterAndOrder = () => {
 
       <select
         name="selectType"
-        defaultValue={select.selectType}
+        value={select.selectType}
         className={styles.filter__select}
         onChange={(e: any) => handleChangeType(e)}
       >
-        <option value="" disabled>Filter by Type</option>
+        <option value="" disabled selected>Filter by Type</option>
         {/* <option value="all">Filter by Type</option> */}
         {types && types.map((type: any, index: number) => {
           return (
@@ -198,7 +161,7 @@ const FilterAndOrder = () => {
 
       <select
         name="selectPrice"
-        defaultValue={select.selectPrice}
+        value={select.selectPrice}
         className={styles.filter__select}
         onChange={(e: any) => handlerChangePrice(e)}
       >
@@ -210,7 +173,7 @@ const FilterAndOrder = () => {
 
       <select
         name="selectDimention"
-        defaultValue={select.selectDimention}
+        value={select.selectDimention}
         className={styles.filter__select}
         onChange={(e: any) => handlerChangeDimention(e)}
       >
