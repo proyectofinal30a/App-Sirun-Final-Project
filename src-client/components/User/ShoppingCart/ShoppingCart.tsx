@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { getAllProducts } from "../../../redux/slice/products-client/Products-all-redux";
 
 const ShoppingCart = () => {
+  
   const router = useRouter();
   const dispatch: Function = useDispatch();
   const { status } = useSession();
@@ -36,6 +37,7 @@ const ShoppingCart = () => {
   });
   ;
   
+
   return (
     <div className={styles.cart__container}>
       {cart? <form className={styles.modal__container}>

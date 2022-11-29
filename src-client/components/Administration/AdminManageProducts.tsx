@@ -11,12 +11,26 @@ import styles from "../../styles/AdminManageProducts.module.css";
 import masiveValidate from "../../controllers/masiveValidation"
 import Validation from "../../components/Administration/ProductCreationForm/Validation"
 import swal from "sweetalert";
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
 const AdminManageProducts = () => {
-  const myForm = {
+  
+  // interface toMyForm {
+  //   price : number
+  //   description : string
+  //   image : []
+  // }
+
+  
+interface Iimg {
+  image : string
+  imageCloudinary : File
+}
+
+  const myForm  = {
     price: 0,
-    image: [],
     description: "",
+    image: [],
   };
 
   const [formProduct, setFormProduct] = useState(myForm);
@@ -155,27 +169,7 @@ const AdminManageProducts = () => {
     dispatch(setProduct(product))
   }
 
-
-  const submitHandler = (e, product: any) => {
-    e.preventDefault()
-    const { id, name } = product
-    const newPrice = Number(formProduct.price)
-    const newDescription = formProduct.description
-
-    const prouctToUpdate = {
-      id: id,
-      price: newPrice,
-      description: newDescription
-      //faltan las imagenes(Fran)
-    }
-    updateProduct(prouctToUpdate)
-    setIsOpen(false)
-    setFormProduct(myForm)
-    swal('Done',`${name} is updated`, 'success')
-    dispatch(getProducts())
-  }
-  //END EDICT PRODUCT 
-
+  
   const handleOnChangeInput = (event: any) => {
     const { name, value } = event.target;
 
@@ -192,20 +186,21 @@ const AdminManageProducts = () => {
       });
     }
     setFormProduct({ ...formProduct, [name]: value });
-    setFormErrors(Validation({ ...formProduct, [name]: value }));
+    //setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
 
 
   const handleOnChangeNumber = (event: any) => {
     const { name, value } = event.target;
     setFormProduct({ ...formProduct, [name]: value });
-    setFormErrors(Validation({ ...formProduct, [name]: value }));
+   // setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
 
   const handleOnFile = (event: any) => {
     const imageFile: any = event.target.files;
-    if (!imageFile || !imageFile[0]) return;
 
+    if (!imageFile || !imageFile[0]) return;
+    
     if (formProduct.image.length >= 4) return swal('Oops!','Only four images per product', 'warning')
 
     const myTO: any = [...formProduct.image]
@@ -232,10 +227,41 @@ const AdminManageProducts = () => {
     setFormProduct({ ...formProduct, image: myTO });
   };
 
+  const handleOnClickReset = () => {
+    setFormProduct({ ...formProduct, image: [] });
+  };
 
-
+  const handleOnClickDelete = ({ target }: any) => {
+    const { name } = target;
+    const [...myPrevurl] = formProduct.image
+    const myFilter = myPrevurl.filter((e : Iimg) => e.image !== name)
+    setFormProduct({ ...formProduct, image: myFilter });
+  };
+  
+    const submitHandler = async(e, product: any) => {
+      e.preventDefault()
+      const { id, name } = product
+      const newPrice = Number(formProduct.price)
+      const newDescription = formProduct.description
+  
+      const prouctToUpdate = {
+        id: id,
+        price: newPrice,
+        description: newDescription,
+        image : formProduct.image,
+      }
+      await updateProduct(prouctToUpdate)
+      setIsOpen(false)
+      setFormProduct(myForm)
+      swal('Done',`${name} is updated`, 'success')
+      dispatch(getProducts())
+    }
+    //END EDICT PRODUCT 
+  
+  
+  
   const [active, setActive] = useState<boolean>(false)  
-
+  
 
 
   if (!currentProducts[0]) return <div className={styles.products_manage__container}><h1 className={styles.products_manage__title}> Loading....</h1></div>
@@ -272,7 +298,7 @@ const AdminManageProducts = () => {
                     key={index + 1}
                     src={product.image?.[0]?.image}
                     width={200}
-                    alt={product.name}
+                    alt=""
                     height={200}
                     priority
                     className={styles.product_card__img}
@@ -351,7 +377,7 @@ const AdminManageProducts = () => {
                   key={index}
                   src={img.image}
                   width={200}
-                  alt={productModal.name}
+                  alt=""
                   height={200}
                   priority
                   className={styles.product_card__img}
@@ -370,10 +396,55 @@ const AdminManageProducts = () => {
               multiple
             />
           </div>
+
+
           <div className={styles.modal__purchase_btn_container}>
             <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
           </div>
         </form>
+
+        <div className={styles.creation_form__images_container}>
+
+        {formProduct.image[0] &&
+            <>
+              <p className={styles.creation_form__images_container__title}>Images control</p>
+          <button
+             onClick={handleOnClickReset}
+            className={[styles.creation_form__input_btn, styles.creation_form__reset_btn].join(" ")}
+            >
+           Reset all image/s
+          </button>
+            </>
+          }
+
+
+{formProduct.image[0] && formProduct.image.map((e : Iimg, index) => {
+  console.log(e);
+  
+  
+  return (
+    <div key={index} className={styles.creation_form__img_show_container}>
+      <div className={styles.creation_form__img_container}>
+        <Image
+          src={e.image} 
+          alt=""
+          width="1000"
+          height="300"
+          className={styles.creation_form__img}
+        />
+      </div>
+
+      <input
+        type={"button"}
+        name={e.image}
+        onClick={handleOnClickDelete}
+        value={"Delete"}
+        className={styles.creation_form__input_btn_delete}
+      />
+    </div>
+  )
+})}
+</div>
       </Modal>
 
 
@@ -437,9 +508,6 @@ const AdminManageProducts = () => {
 };
 
 export default AdminManageProducts;
-
-
-
 
 
 
