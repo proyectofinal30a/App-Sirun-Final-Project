@@ -42,10 +42,10 @@ const AllProductsCards = () => {
     dispatch(getAllProducts())
   },[dispatch])
   
-  
+  // *REVISAR ESTA CONDICION PORQUE ROMPE TODO, si lo descomento rompe, pero es necesario!
   // if(!cart?.[0] || !allProductsAdmin?.[0]){
   //   return <div>Loading...</div>
-  // } /// REVISAR porque si lo descomento rompe, pero es necesario!
+  // } 
 
     const productsInCartID = cart.map((elem) => elem.id)
     const allProductsID =allProductsAdmin.filter((elem)=> elem.available === true)
