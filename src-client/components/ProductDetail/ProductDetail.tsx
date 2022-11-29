@@ -37,10 +37,6 @@ const ProductDetail = () => {
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);  
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
 
-
-  const cart = useSelector((state: Ireducers) => state.reducerCart.products);  
-  const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
-
   interface IproduId {
     id: string
   }
