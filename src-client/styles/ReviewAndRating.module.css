@@ -2,7 +2,7 @@
   padding-top: 8em;
   font-family: var(--font-paragraph);
   width: 90%;
-  margin-bottom: 6em;
+  margin-bottom: 8em;
   min-height: 100vh;
   padding-top: 8em;
 }
@@ -177,7 +177,7 @@
 
 @media (max-width: 1540px) {
   .reviews__container {
-    padding-top: 10em;
+    padding-top: 11em;
   }
 }
 
@@ -187,9 +187,9 @@
   }
 }
 
-@media (max-width: 880px) {
+@media (max-width: 900px) {
   .reviews__container {
-    padding-top: 2em;
+    padding-top: 4em;
   }
 
   .delete__review {
@@ -200,7 +200,7 @@
 
 @media (max-width: 780px) {
   .reviews__container {
-    padding-top: 4em;
+    padding-top: 6em;
   }
 }
 

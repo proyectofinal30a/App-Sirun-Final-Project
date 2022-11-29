@@ -11,8 +11,8 @@ import reducerAdmin from "./slice/product-Admin-redux/GetProAdm-Redux";
 import reducerCart from "./slice/cart-redux/cart-redux";
 import reducerAfterPayment from "./slice/payment/payment";
 import reducerAllUsers from "./slice/user-detail-redux/all-users";
+import reducerAdminManagement from "./slice/admin-management-redux/admin-manage-orders";
 import adminGraphs from "./slice/admin-graphs/admin-graphs";
-import reducerAdminManagement from "./slice/admin-management-redux/admin-management";
 
 
 const persistConfig = {
@@ -41,5 +41,6 @@ export const store = configureStore({
   devTools: process.env.NODE_ENV !== "production",
   middleware: [thunk],
 });
+
 
 export const persistor = persistStore(store);

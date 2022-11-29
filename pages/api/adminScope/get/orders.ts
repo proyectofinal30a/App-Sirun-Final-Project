@@ -19,6 +19,7 @@ const orders: Function = async (req: NextApiRequest, res: NextApiResponse) => {
             picture_url: true,
             unit_price: true,
             quantity: true,
+            id: true,
           }
         },
         addressOrder: {
@@ -38,6 +39,7 @@ const orders: Function = async (req: NextApiRequest, res: NextApiResponse) => {
         total: true,
         delivery_time: true,
         status: true,
+        id: true,
       }
     });
     prisma.$disconnect();
