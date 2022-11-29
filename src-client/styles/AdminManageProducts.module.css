@@ -27,6 +27,7 @@
   padding: .3em .5em;
   width: 25em;
   border: none;
+  border-radius: .2em;
   box-shadow: 0 0 2px grey;
 }
 
@@ -174,7 +175,7 @@
   /* height: 3em; */
   padding: .3em .5em;
   width: 300px;
-  margin-bottom: .7em;
+  margin-bottom: 2em;
   border: none;
   border-right: .7em solid transparent;
   border-radius: .2em;

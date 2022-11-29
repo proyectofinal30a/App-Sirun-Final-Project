@@ -1,4 +1,4 @@
-import { TypeDiet, CategoryPro, StatusType } from "@prisma/client";
+import { TypeDiet, CategoryPro, StatusType, User } from "@prisma/client";
 
 
 export interface Iimage {
@@ -196,6 +196,7 @@ export interface IitemForMercadoPago {
   title: string;
   quantity: string;
   unit_price: string;
+  id?: string;
 }
 
 export interface Iorder {
@@ -209,6 +210,7 @@ export interface Iorder {
   status: StatusType;
   purchase_link: string;
   id_user?: string;
+  user?: User;
   addressOrder?: Iaddresses;
 }
 

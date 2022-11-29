@@ -4,10 +4,12 @@ import { AiFillEyeInvisible, AiFillEye, AiFillEdit } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux'
 import { Iproduct, Ireducers } from "../../../lib/types";
 import { getProductByName } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
+import {getAllProducts} from "../../redux/slice/products-client/Products-all-redux"
 import { getProducts, updateProduct, changeAvailability, requestUpdateStatusProducts, clean, setProduct, updateAllPrices, cleanMsg } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import Modal from "react-modal";
 import styles from "../../styles/AdminManageProducts.module.css";
 import masiveValidate from "../../controllers/masiveValidation"
+import Validation from "../../components/Administration/ProductCreationForm/Validation"
 
 const AdminManageProducts = () => {
   const myForm = {
@@ -18,30 +20,29 @@ const AdminManageProducts = () => {
 
 
 
+  
   const [formProduct, setFormProduct] = useState(myForm);
-
+  
   const myErr = {
     price: "",
     description: "",
   };
   const [formErrors, setFormErrors] = useState(myErr);
-
+  
+  const { products: allProducts, productsToFilter: filteredProducts, productEdit: productModal, productsUpdate: productsToUpdate, errorMessage: backMessage } = useSelector((state: Ireducers) => state.reducerAdmin)
+  
+  const dispatch: Function = useDispatch()
+ 
   useEffect(() => {
     dispatch(getProducts())
     return () => {
       dispatch(clean())
+      dispatch(cleanMsg())
     }
-  }, [])
-
-  const { products: allProducts, productsToFilter: filteredProducts, productEdit: productModal, productsUpdate: productsToUpdate, errorMessage: backMessage } = useSelector((state: Ireducers) => state.reducerAdmin)
-
-
-  const dispatch: Function = useDispatch()
+  }, [dispatch])
 
   let currentProducts: Iproduct[] = allProducts;
   // let currentProduct: Iproduct;
-
-
 
   if (filteredProducts?.length >= 1) {
     currentProducts = filteredProducts
@@ -58,6 +59,7 @@ const AdminManageProducts = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalUpdateIsOpen, setmodalUpdateIsOpen] = useState(false);
   const [modalForm, setmodalForm] = useState(masiveData)
+  const [IsOpenMsg, setIsOpenMsg] = useState(false)
   const [modalError, setmodalError] = useState(masiveData)
   const [name, setName] = useState("");
 
@@ -80,10 +82,18 @@ const AdminManageProducts = () => {
     setmodalUpdateIsOpen(false)
   }
 
-  // MODAL- MASIVE prices UPDATE
-  const openMasiveModal = (e: Event) => {
-    e.preventDefault()
+  function closeModalMsg() {
+    setIsOpenMsg(false);
+    dispatch(cleanMsg())
+  }
+  
+  
+  const openMasiveModal = () => {
     setmodalUpdateIsOpen(true);
+  }
+  // MODAL- MASIVE prices UPDATE
+  const modalIsOpenMsg = () => {
+    setIsOpenMsg(true);
   }
 
 
@@ -107,12 +117,11 @@ const AdminManageProducts = () => {
     setmodalError(masiveValidate({ ...modalForm, type: value }))
   }
 
-  const submitUpdateAllPrices = (e: Event, modalForm) => {
+  const submitUpdateAllPrices = async(e: Event, modalForm) => {
     e.preventDefault()
     if (modalError.quantity || modalError.direction || modalError.type) return alert("Please fill all the fields correctly")
-    dispatch(updateAllPrices(modalForm))
-    backMessage.length && alert(backMessage)
-    dispatch(cleanMsg())
+    await dispatch(updateAllPrices(modalForm))
+    modalIsOpenMsg()
     setmodalForm(masiveData)
     setmodalUpdateIsOpen(false)
     dispatch(getProducts())
@@ -127,18 +136,15 @@ const AdminManageProducts = () => {
     setActive(true)
   }
 
+  
 
   const aplicarCambios = async () => {
     if (!productsToUpdate.length) return alert('Please select product to change')
     await requestUpdateStatusProducts(productsToUpdate)
-    // ACA NO SOLAMENTE DEBERIA INFORMAR AL BACK DE LOS CAMBIOS
-    // TAMBIEN DEBERIA ACTUALIZAR EL ESTADO DE LOS PRODUCTOS EN EL FRONT
-    //Y ASI FILTRAR EL ESTADO DEL CARRITO Y DE LA WHISLIST, eliminando los productos que no esten disponibles
-    // deberia actualizar el estado de products y de favorites???
-    // impedir que agregue al carrito si ya no esta disponible
+    dispatch(getProducts())
     alert(` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
     dispatch(clean())
-    setActive(false)
+    setActive(!active)
   }
 
 
@@ -162,7 +168,7 @@ const AdminManageProducts = () => {
       id: id,
       price: newPrice,
       description: newDescription
-      //faltan las imagenes
+      //faltan las imagenes(Fran)
     }
     updateProduct(prouctToUpdate)
     setIsOpen(false)
@@ -188,14 +194,14 @@ const AdminManageProducts = () => {
       });
     }
     setFormProduct({ ...formProduct, [name]: value });
-    //setFormErrors(Validation({ ...formProduct, [name]: value }));
+    setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
 
 
   const handleOnChangeNumber = (event: any) => {
     const { name, value } = event.target;
     setFormProduct({ ...formProduct, [name]: value });
-    // setFormErrors(Validation({ ...formProduct, [name]: value }));
+    setFormErrors(Validation({ ...formProduct, [name]: value }));
   };
 
   const handleOnFile = (event: any) => {
@@ -230,7 +236,8 @@ const AdminManageProducts = () => {
 
 
 
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState<boolean>(false)  
+
 
 
   if (!currentProducts[0]) return <div className={styles.products_manage__container}><h1 className={styles.products_manage__title}> Loading....</h1></div>
@@ -251,11 +258,9 @@ const AdminManageProducts = () => {
             onChange={handleChange}
           />
         </div>
-        <button className={styles.change__price__btn} onClick={(e: any) => openMasiveModal(e)}>Update All Prices</button>
+        <button className={styles.change__price__btn} onClick={() => openMasiveModal()}>Update All Prices</button>
       </div>
       {active ? <input className={styles.visibility__btn} type="button" value="Apply visibility changes" onClick={aplicarCambios} /> : null}
-
-      {/* onClick={(e: any) => editOpenModal(e, product)} */}
 
       <div className={styles.products__map_container}>
         {currentProducts?.map((product: any, index: number) => {
@@ -278,13 +283,16 @@ const AdminManageProducts = () => {
                 <p>${product.price}</p>
               </div>
 
-              <div className={styles.product__card__icons}>
-                <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
-                <button className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} >
+            <div className={styles.product__card__icons}>
+              <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
+                
+                <button className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} > 
                   {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
-              </div>
+
+
 
             </div>
+          </div>
           )
         })}
       </div>
@@ -408,6 +416,24 @@ const AdminManageProducts = () => {
           </div>
         </form>
       </Modal>
+
+  {backMessage.length &&
+      <Modal
+        ariaHideApp={false}
+        isOpen={IsOpenMsg}
+        onRequestClose={closeModalMsg}
+        className={styles.modal}
+        contentLabel="Modal3"
+      >
+                <div className={styles.modal__container} >
+                  <div className={styles.modal__btn_right_container}>
+                    <button className={styles.modal__close_modal_btn} onClick={closeModalMsg}>x</button>
+                  </div>
+                  <p className={styles.current__data}>{backMessage}</p>
+                </div>
+      </Modal>
+}
+
     </div >
   );
 };

@@ -164,7 +164,7 @@ const FilterAndOrder = () => {
     <div className={styles.filter__container}>
       <select
         name="selectCategory"
-        value={select.selectCategory}
+        defaultValue={select.selectCategory}
         className={styles.filter__select}
         onChange={(e: any) => handleChangeCategory(e)}
       >
@@ -181,7 +181,7 @@ const FilterAndOrder = () => {
 
       <select
         name="selectType"
-        value={select.selectType}
+        defaultValue={select.selectType}
         className={styles.filter__select}
         onChange={(e: any) => handleChangeType(e)}
       >
@@ -198,7 +198,7 @@ const FilterAndOrder = () => {
 
       <select
         name="selectPrice"
-        value={select.selectPrice}
+        defaultValue={select.selectPrice}
         className={styles.filter__select}
         onChange={(e: any) => handlerChangePrice(e)}
       >
@@ -210,7 +210,7 @@ const FilterAndOrder = () => {
 
       <select
         name="selectDimention"
-        value={select.selectDimention}
+        defaultValue={select.selectDimention}
         className={styles.filter__select}
         onChange={(e: any) => handlerChangeDimention(e)}
       >

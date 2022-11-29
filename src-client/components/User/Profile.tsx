@@ -27,7 +27,10 @@ const Profile = () => {
     repeat: "",
   });
   const [equal, setEqual] = useState(false);
-  const [permited, setPermited] = useState(false);
+  const [permited, setPermited] = useState({
+    original: false,
+    repeat: false
+  });
 
   const userEmail: string | undefined = data?.user?.email;
   const regPassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&#.$($)$-$_])[A-Za-z\d$@$!%*?&#.$($)$-$_]{7,15}$/;
@@ -35,26 +38,38 @@ const Profile = () => {
 
   const handlerChangePassword = (e: any) => {
     if (e.target.name === "original") {
+      if (regPassword.test(newPassword.original)) {
+        setPermited({
+          original: true,
+          repeat: permited.repeat
+        });
+      } else {
+        setPermited({
+          original: true,
+          repeat: permited.repeat
+        });
+      }
       setNewPassword({
         original: e.target.value.toString(),
         repeat: newPassword.repeat,
       });
 
-      if (regPassword.test(newPassword.original) && newPassword.original === newPassword.repeat) {
-        setPermited(true);
-      } else {
-        setPermited(false);
-      }
     } else {
+      if (regPassword.test(newPassword.repeat)) {
+        setPermited({
+          original: permited.original,
+          repeat: true
+        });
+      } else {
+        setPermited({
+          original: permited.original,
+          repeat: false
+        });
+      }
       setNewPassword({
         original: newPassword.original,
         repeat: e.target.value.toString(),
       });
-      if (regPassword.test(newPassword.original) && newPassword.original === newPassword.repeat) {
-        setPermited(true);
-      } else {
-        setPermited(false);
-      }
     }
   };
 
@@ -66,8 +81,8 @@ const Profile = () => {
 
   const myProfide = useSelector((state: Ireducers) => state.reducerUser.user);
   if (!myProfide) return <div className={styles.loading}>Loading...</div>;
-
-  const { name, email, image, addresses } = myProfide;
+  
+  const { name, email, image, addresses, id } = myProfide;
 
   const defaultImage = cloudinaryOrUrl(image, "client");
 
@@ -123,7 +138,11 @@ const Profile = () => {
       status: !previewForm.status,
     });
   };
-
+  const handleChangePassword = (e) => {
+    e.preventDefault()
+      dispatch(accion.changePassword(email))
+    
+  }
 
   const myForm = (
     <form className={styles.form__container} onSubmit={handleOnsubmit}>
@@ -147,22 +166,7 @@ const Profile = () => {
       />
 
       <label className={styles.form__label}>Change password</label>
-      <input
-        className={permited ? styles.form__input : styles.form__input__error}
-        type="text"
-        name="original"
-        placeholder="Enter new password"
-        value={newPassword.original}
-        onChange={(e) => handlerChangePassword(e)}
-      />
-      <input
-        className={styles.form__input}
-        type="text"
-        name="repeat"
-        placeholder="Repeat new password"
-        value={newPassword.repeat}
-        onChange={(e) => handlerChangePassword(e)}
-      />
+      <button className={styles.btn__submit} onClick={() => dispatch(accion.changePassword(email))}>Change</button>
 
       <div className={styles.election__btn}>
         <button className={styles.btn} onClick={handleOnclikSwich}>

@@ -173,13 +173,13 @@
   font-size: .9em;
   margin-bottom: 2em;
 }
+
 .form__input__error {
-  background-color: red;
   padding: 0.3em;
   margin-bottom: 0.5em;
   padding-left: 0.5em;
   font-size: .9em;
-  margin-bottom: 2em;
+  margin-bottom: 1em;
 }
 
 .btn {

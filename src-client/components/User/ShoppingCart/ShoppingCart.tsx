@@ -1,5 +1,5 @@
 import styles from "../../../styles/ShoppingCart.module.css";
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { signIn } from "next-auth/react";
@@ -9,28 +9,48 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { Ireducers } from "../../../../lib/types";
 import { addOne, removeOne, trashItem } from "../../../redux/slice/cart-redux/cart-redux";
 import { useSession } from "next-auth/react";
+import { log } from "console";
+import { getAllProducts } from "../../../redux/slice/products-client/Products-all-redux";
 
 const ShoppingCart = () => {
   const router = useRouter();
   const dispatch: Function = useDispatch();
   const { status } = useSession()
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
+  const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products)
 
-  const totalQuantity = cart[0] ? cart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
+  useEffect(()=>{
+    dispatch(getAllProducts())
+    },[dispatch])
+  
+  if(!cart?.[0] || !allProducts?.[0]){
+    return <div className={styles.loading}>Loading...</div>
+  }
 
+  const productsInCartID = cart.map((elem) => elem.id)
+  const allProductsID =allProducts.filter((elem)=> elem.available === true)
+                                  .map((elem)=>elem.id)                             
+                                  .filter((elem)=> productsInCartID.includes(elem))    
+  const productsInCart = cart.filter((elem)=> allProductsID.includes(elem.id))
+  
+
+  
+
+
+  const totalQuantity = productsInCart[0] ? productsInCart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
+  
   let total = 0;
-  cart.map((elem) => {
+  productsInCart.map((elem) => {
     return (total += elem.subTotal);
   });
-
-
+  
   return (
     <div className={styles.cart__container}>
-      {cart[0] ? 
+      {productsInCart? 
         <form className={styles.modal__container}>
           <h2>Shopping Cart</h2>
 
-          {cart?.map((elem, index: number) => {
+          {productsInCart?.map((elem, index: number) => {
 
             return (
               <div key={index} className={styles.modal__product_container}>
@@ -103,6 +123,7 @@ const ShoppingCart = () => {
             <p className={styles.modal__total}>${total}</p>
           </div>
 
+
           {status === "unauthenticated" ?
             <div className={styles.modal__purchase_btn_container}>
               <input
@@ -113,9 +134,10 @@ const ShoppingCart = () => {
               />
             </div>
             : 
-            <Link href="/checkout" className={styles.modal__purchase_btn_container}>
-              <button className={styles.modal__start_purchase_btn}>Checkout</button>
-            </Link>
+             <Link href="/checkout" className={styles.modal__purchase_btn_container} >
+              <button className={styles.modal__start_purchase_btn}>Checkout</button> 
+               </Link> 
+         
           }
         </form>
         :

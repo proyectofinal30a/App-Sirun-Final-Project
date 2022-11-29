@@ -2,7 +2,7 @@ import { createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
 import { userData, IUserDetail } from "../../../../lib/types";
 import userVerification from "../../../controllers/userVerification-controller";
-
+import swal from 'sweetalert'
 
 const template: IUserDetail = {
     user: {
@@ -209,6 +209,18 @@ export const postImageServerUsert = async ({ email, name, newImage, deleteImage 
     } catch (error) {
         console.log(error);
 
+    }
+}
+export const changePassword = (email: string) => async (dispatch: Function) => {
+    console.log(email);
+    
+    try {
+        const user: any = await axios.post('/api/adminScope/put/changePassword', {
+            email,
+        })
+        swal('Success', 'Verify your email for change your password', 'success')
+    } catch (error) {
+        return error        
     }
 }
 

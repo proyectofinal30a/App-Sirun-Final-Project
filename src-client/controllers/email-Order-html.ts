@@ -159,7 +159,7 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
             style="
               color: rgb(248, 159, 174);
               font-weight: bold;
-              font-size: 0.95em;
+              font-size: 1em;
             "
           >
             ORDER SUMMARY
@@ -167,7 +167,7 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
         </section>
   
         <br />
-        <section style="font-size: 0.8em">
+        <section style="font-size: 1em">
           <article>
             <header>
               <p style="font-weight: bold; text-decoration: underline">
@@ -196,13 +196,13 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
               style="
                 color: rgb(248, 159, 174);
                 font-weight: bold;
-                font-size: 0.95em;
+                font-size: 1em;
               "
             >
               COSTUMER INFORMATION
             </header>
   
-            <div style="font-size: .8em;">
+            <div style="font-size: 1em;">
               <p>Name: ${name}</p>
               <p>Email: ${email}</p>
               <p>Phone: ${myorder.orders[0].addressOrder.phone.number}</p>
