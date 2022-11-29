@@ -13,7 +13,7 @@ const Average = ({ evaluation }: IpropEva) => {
 
   if (!evaluation[0]) return (
     <div className={styles.average__container}>
-      <p className={styles.review__average}>There are no reviews</p>
+      <p className={styles.review__average}>No one has rated this product yet</p>
     </div>
   )
 

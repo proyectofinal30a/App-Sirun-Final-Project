@@ -25,7 +25,7 @@ const ShoppingCart = () => {
   
   // *REVISAR ESTA CONDICION PORQUE ROMPE TODO
   // if(!cart?.[0] || !allProducts?.[0]){
-  //   return <div className={styles.loading}>Loading...</div>
+  //   return <div className={styles.loading_visibility}>Loading...</div>
   // }
 
   const productsInCartID = cart.map((elem) => elem.id);

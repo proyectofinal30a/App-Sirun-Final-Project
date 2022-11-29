@@ -81,6 +81,7 @@ const AdminManageOrders = () => {
           <option value="confirmed">Confirmed</option>
           <option value="in_process">In process</option>
           <option value="canceled">Canceled</option>
+          <option value="in_transit">In transit</option>
           <option value="fulfilled">Fulfilled</option>
         </select>
 
@@ -119,6 +120,7 @@ const AdminManageOrders = () => {
                     <option value="confirmed">Confirmed</option>
                     <option value="in_process">In process</option>
                     <option value="canceled">Canceled</option>
+                    <option value="in_transit">In transit</option>
                     <option value="fulfilled">Fulfilled</option>
                   </select>
                 </div>

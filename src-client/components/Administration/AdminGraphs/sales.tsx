@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import styles from "../../../styles/Dashboard.module.css";
-import { Bar, XAxis, YAxis, Tooltip, CartesianGrid, ComposedChart, Legend } from 'recharts';
+import { ResponsiveContainer, Bar, XAxis, YAxis, Tooltip, CartesianGrid, ComposedChart, Legend } from 'recharts';
 import { convertMonth } from '../../../controllers/adminGraphs';
 import { getSales } from '../../../redux/slice/admin-graphs/admin-graphs';
 
@@ -25,7 +25,7 @@ const Sales = () => {
 
   if(sales[2022]){
     return (
-      <>
+      <div className={styles.dashboard_control}>
         <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select} defaultValue="">
           <option value="" disabled>Select period</option>
           <option value="Now">Now</option>
@@ -44,7 +44,8 @@ const Sales = () => {
         </select>
   
         <div className={styles.dashboard__graphic}>
-            <ComposedChart className={styles.graphic} height={400} width={500} data={selectedMonth? sales[2022][selectedMonth] : sales[2022]['November'] }>
+          <ResponsiveContainer width="99%">
+            <ComposedChart margin={{top: 0, bottom: 0, left: 0, right: 0}} className={styles.graphic} height={400} width={500} data={selectedMonth? sales[2022][selectedMonth] : sales[2022]['November'] }>
               <XAxis dataKey="week"/>
               <YAxis />
               <Bar type="monotone" dataKey="confirmed" barSize={30} fill="#3c7358" />
@@ -53,13 +54,14 @@ const Sales = () => {
               <Legend />
               <CartesianGrid />
             </ComposedChart>
+          </ResponsiveContainer>
         </div>
-      </>
+      </div>
     );
   } else {
     return (
       <>
-        <h2>Loading...</h2>
+        <p className={styles.loading}>Loading...</p>
       </>
     )
   }
