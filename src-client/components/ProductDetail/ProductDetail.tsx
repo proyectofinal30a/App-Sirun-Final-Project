@@ -33,6 +33,11 @@ const ProductDetail = () => {
 
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const product = useSelector((state: Ireducers) => state.reducerProductDetail.detail);
+
+  const cart = useSelector((state: Ireducers) => state.reducerCart.products);  
+  const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
+
+
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);  
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
 

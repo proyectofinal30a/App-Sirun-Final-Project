@@ -20,8 +20,8 @@ const ShoppingCart = () => {
   const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products);
 
   useEffect(()=>{
-    dispatch(getAllProducts());
-    },[dispatch]);
+    dispatch(getAllProducts())
+    },[dispatch])
   
   if(!cart?.[0] || !allProducts?.[0]){
     return <div className={styles.loading}>The cart is empthy</div>
