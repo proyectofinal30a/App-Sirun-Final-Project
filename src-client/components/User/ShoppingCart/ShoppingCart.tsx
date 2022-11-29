@@ -32,9 +32,6 @@ const ShoppingCart = () => {
                                   .map((elem)=>elem.id)                             
                                   .filter((elem)=> productsInCartID.includes(elem))    
   const productsInCart = cart.filter((elem)=> allProductsID.includes(elem.id))
-  
-
-  
 
   const totalQuantity = productsInCart[0] ? productsInCart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
   
