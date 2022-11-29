@@ -1,9 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../../../lib/prisma"; 
+import { prisma } from "../../../../../lib/prisma"; 
 
 
-const reviews: Function = async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function reviewsAdm  (req: NextApiRequest, res: NextApiResponse) {
   try {
     const reviews = await prisma.evaluation.findMany();
     prisma.$disconnect();
@@ -13,4 +13,4 @@ const reviews: Function = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default reviews;
+

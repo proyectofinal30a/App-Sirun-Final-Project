@@ -135,6 +135,7 @@ export interface Ireducers {
   reducerAllUsers: IallUsers;
   reducerAdmin: Iproducts;
   reducerAdminManagement: IadminManagement;
+  reducerAdminReview: IreviewRedux
 }
 
 export interface Ierror {
@@ -255,3 +256,59 @@ export interface IadminManagement {
   usersOrders: Iorder[];
   usersOrdersAutoSave: Iorder[];
 }
+
+
+export interface IreviewAll {
+  user: {
+    id: string;
+    name: string;
+    image: string;
+    email: string;
+  };
+  product: {
+    id: string;
+    name: string;
+    image: {
+      image: string;
+    }[];
+  };
+  rating: number;
+  id: string;
+  review: string;
+
+}
+
+export interface IuserReview {
+  name: string;
+  image: string;
+  evaluations: {
+    product: {
+      name: string;
+      image: string;
+    };
+    review: string;
+    rating: number;
+  }[]
+}
+
+
+export interface IProductReview {
+  image: string
+  name: string;
+  evaluation: {
+    user: {
+      name: string;
+      image: string;
+    };
+    review: string;
+    rating: number;
+  }[];
+}
+
+export interface IreviewRedux {
+  reviewSave: IreviewAll[]
+  reviewReact: IreviewAll[]
+  userReview: IuserReview | null
+  productReview: IProductReview | null
+}
+
