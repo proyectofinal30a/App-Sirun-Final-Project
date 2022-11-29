@@ -36,7 +36,17 @@ export const getAllProducts: any = () => async (dispatch: Function) => {
       }
     });
 
+    data?.forEach(element => {
+      console.log(element.available);
+    });
+    
     const allProducts = isAvailable(data)
+
+     console.log("--------------------------");
+     
+    allProducts?.forEach(element => {
+      console.log(element.available);
+    });
 
     dispatch(reducerProducts.actions.getAllProducts(allProducts));
   } catch (error) {

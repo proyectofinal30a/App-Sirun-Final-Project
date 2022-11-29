@@ -20,30 +20,29 @@ const AdminManageProducts = () => {
 
 
 
+  
   const [formProduct, setFormProduct] = useState(myForm);
-
+  
   const myErr = {
     price: "",
     description: "",
   };
   const [formErrors, setFormErrors] = useState(myErr);
-
+  
+  const { products: allProducts, productsToFilter: filteredProducts, productEdit: productModal, productsUpdate: productsToUpdate, errorMessage: backMessage } = useSelector((state: Ireducers) => state.reducerAdmin)
+  
+  const dispatch: Function = useDispatch()
+ 
   useEffect(() => {
     dispatch(getProducts())
     return () => {
       dispatch(clean())
+      dispatch(cleanMsg())
     }
-  }, [])
-
-  const { products: allProducts, productsToFilter: filteredProducts, productEdit: productModal, productsUpdate: productsToUpdate, errorMessage: backMessage } = useSelector((state: Ireducers) => state.reducerAdmin)
-
-
-  const dispatch: Function = useDispatch()
+  }, [dispatch])
 
   let currentProducts: Iproduct[] = allProducts;
   // let currentProduct: Iproduct;
-
-
 
   if (filteredProducts?.length >= 1) {
     currentProducts = filteredProducts
@@ -60,6 +59,7 @@ const AdminManageProducts = () => {
   const [modalIsOpen, setIsOpen] = useState(false);
   const [modalUpdateIsOpen, setmodalUpdateIsOpen] = useState(false);
   const [modalForm, setmodalForm] = useState(masiveData)
+  const [IsOpenMsg, setIsOpenMsg] = useState(false)
   const [modalError, setmodalError] = useState(masiveData)
   const [name, setName] = useState("");
 
@@ -82,10 +82,18 @@ const AdminManageProducts = () => {
     setmodalUpdateIsOpen(false)
   }
 
-  // MODAL- MASIVE prices UPDATE
-  const openMasiveModal = (e: Event) => {
-    e.preventDefault()
+  function closeModalMsg() {
+    setIsOpenMsg(false);
+    dispatch(cleanMsg())
+  }
+  
+  
+  const openMasiveModal = () => {
     setmodalUpdateIsOpen(true);
+  }
+  // MODAL- MASIVE prices UPDATE
+  const modalIsOpenMsg = () => {
+    setIsOpenMsg(true);
   }
 
 
@@ -109,14 +117,11 @@ const AdminManageProducts = () => {
     setmodalError(masiveValidate({ ...modalForm, type: value }))
   }
 
-  const submitUpdateAllPrices = (e: Event, modalForm) => {
+  const submitUpdateAllPrices = async(e: Event, modalForm) => {
     e.preventDefault()
     if (modalError.quantity || modalError.direction || modalError.type) return alert("Please fill all the fields correctly")
-    dispatch(updateAllPrices(modalForm))
-    // backMessage.length && alert(backMessage)
-    //eze, perdon no pude resolver el delay del backMessage, creo que capaz la primera vez me trae undefined. pero se me quemaron los papeles..
-    // la ruta funciona y la validacones tambien, es solo que el usuario no se entera porque no se realizo el cambio
-    dispatch(cleanMsg())
+    await dispatch(updateAllPrices(modalForm))
+    modalIsOpenMsg()
     setmodalForm(masiveData)
     setmodalUpdateIsOpen(false)
     dispatch(getProducts())
@@ -136,10 +141,10 @@ const AdminManageProducts = () => {
   const aplicarCambios = async () => {
     if (!productsToUpdate.length) return alert('Please select product to change')
     await requestUpdateStatusProducts(productsToUpdate)
-    dispatch(getAllProducts())
+    dispatch(getProducts())
     alert(` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
     dispatch(clean())
-    setActive(false)
+    setActive(!active)
   }
 
 
@@ -231,7 +236,8 @@ const AdminManageProducts = () => {
 
 
 
-  const [active, setActive] = useState(false)
+  const [active, setActive] = useState<boolean>(false)  
+
 
 
   if (!currentProducts[0]) return <div className={styles.products_manage__container}><h1 className={styles.products_manage__title}> Loading....</h1></div>
@@ -252,7 +258,7 @@ const AdminManageProducts = () => {
             onChange={handleChange}
           />
         </div>
-        <button className={styles.change__price__btn} onClick={(e: any) => openMasiveModal(e)}>Update All Prices</button>
+        <button className={styles.change__price__btn} onClick={() => openMasiveModal()}>Update All Prices</button>
       </div>
       {active ? <input className={styles.visibility__btn} type="button" value="Apply visibility changes" onClick={aplicarCambios} /> : null}
 
@@ -279,9 +285,12 @@ const AdminManageProducts = () => {
 
             <div className={styles.product__card__icons}>
               <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
-                <button value={active} className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} > 
-                  {//EZEEEE, ES POR EL TIPO QUE ME MARCA ERROR? AIIIIUDAAA!/ WTF!?
-                  product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
+                
+                <button className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} > 
+                  {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
+
+
+
             </div>
           </div>
           )
@@ -407,6 +416,24 @@ const AdminManageProducts = () => {
           </div>
         </form>
       </Modal>
+
+  {backMessage.length &&
+      <Modal
+        ariaHideApp={false}
+        isOpen={IsOpenMsg}
+        onRequestClose={closeModalMsg}
+        className={styles.modal}
+        contentLabel="Modal3"
+      >
+                <div className={styles.modal__container} >
+                  <div className={styles.modal__btn_right_container}>
+                    <button className={styles.modal__close_modal_btn} onClick={closeModalMsg}>x</button>
+                  </div>
+                  <p className={styles.current__data}>{backMessage}</p>
+                </div>
+      </Modal>
+}
+
     </div >
   );
 };

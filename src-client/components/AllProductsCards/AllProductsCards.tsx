@@ -37,11 +37,26 @@ const AllProductsCards = () => {
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
   const allProductsAdmin = useSelector((state: Ireducers) => state.reducerAdmin.products)
-  const productsInCart = cart.filter((elem) => allProductsAdmin.filter((elem) => elem.available === true).map((elem) => elem.id).includes(elem.id))
 
-  // FILTERS
-  const filterProducts = useSelector((state: Ireducers) => state.reducerFilters.productsToFilter);
+  useEffect(()=>{
+    dispatch(getAllProducts())
+  },[dispatch])
+  
+  
+  // if(!cart?.[0] || !allProductsAdmin?.[0]){
+  //   return <div>Loading...</div>
+  // } /// REVISAR porque si lo descomento rompe, pero es necesario!
 
+    const productsInCartID = cart.map((elem) => elem.id)
+    const allProductsID =allProductsAdmin.filter((elem)=> elem.available === true)
+    .map((elem)=>elem.id)                             
+    .filter((elem)=> productsInCartID.includes(elem))    
+    const productsInCart = cart.filter((elem)=> allProductsID.includes(elem.id))
+    
+    
+    // FILTERS
+    const filterProducts = useSelector((state: Ireducers) => state.reducerFilters.productsToFilter);
+    
   let currentProducts = allProducts;
   if (filterProducts.length >= 1) {
     currentProducts = filterProducts;
