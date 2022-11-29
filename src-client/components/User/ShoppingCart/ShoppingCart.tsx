@@ -9,28 +9,32 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { Ireducers } from "../../../../lib/types";
 import { addOne, removeOne, trashItem } from "../../../redux/slice/cart-redux/cart-redux";
 import { useSession } from "next-auth/react";
+import { log } from "console";
 
 const ShoppingCart = () => {
   const router = useRouter();
   const dispatch: Function = useDispatch();
   const { status } = useSession()
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
-
-  const totalQuantity = cart[0] ? cart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
-
+  const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products)
+  const productsInCartID = cart.map((elem) => elem.id)
+  const productsInStock = allProducts.filter((elem) => productsInCartID.includes(elem.id) && elem.available === true)
+  const productsInCart = cart.filter((elem) => productsInStock.map((elem) => elem.id).includes(elem.id)) 
+  
+  const totalQuantity = productsInCart[0] ? productsInCart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
+  
   let total = 0;
-  cart.map((elem) => {
+  productsInCart.map((elem) => {
     return (total += elem.subTotal);
   });
-
-
+  
   return (
     <div className={styles.cart__container}>
-      {cart[0] ? 
+      {productsInCart? 
         <form className={styles.modal__container}>
           <h2>Shopping Cart</h2>
 
-          {cart?.map((elem, index: number) => {
+          {productsInCart?.map((elem, index: number) => {
 
             return (
               <div key={index} className={styles.modal__product_container}>
@@ -103,6 +107,7 @@ const ShoppingCart = () => {
             <p className={styles.modal__total}>${total}</p>
           </div>
 
+
           {status === "unauthenticated" ?
             <div className={styles.modal__purchase_btn_container}>
               <input
@@ -113,9 +118,10 @@ const ShoppingCart = () => {
               />
             </div>
             : 
-            <Link href="/checkout" className={styles.modal__purchase_btn_container}>
-              <button className={styles.modal__start_purchase_btn}>Checkout</button>
-            </Link>
+             <Link href="/checkout" className={styles.modal__purchase_btn_container} >
+              <button className={styles.modal__start_purchase_btn}>Checkout</button> 
+               </Link> 
+         
           }
         </form>
         :

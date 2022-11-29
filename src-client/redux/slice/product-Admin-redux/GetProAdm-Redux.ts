@@ -1,5 +1,6 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 import axios from "axios";
+import { stat } from "fs";
 import { Iproduct, Iproducts } from "../../../../lib/types";
 import userVerification from '../../../controllers/userVerification-controller'
 
@@ -52,16 +53,15 @@ export const reducerAdmin = createSlice({
       state.products = state.products.map((product: Iproduct) => {
         const { id } = product
         if (id === action.payload) {
-          const produUpdateado = { ...product, available: !product.available }
+          const produUpdateado = { ...product, available: !product.available } 
           state.productsUpdate.push(produUpdateado)
           return produUpdateado
         }
         return product
       })
-
     },
     // updateProducts: (state, action) => {
-
+    //   state.products = action.payload;
     //  },
     cleanState: (state, action) => {
       state.productsUpdate = []
@@ -119,10 +119,10 @@ export const changeAvailability = (id: string) => (dispatch: Function) => {
 
 
 //envio de availability a la api
-export const requestUpdateStatusProducts: any = async (obj: any) => {
+export const requestUpdateStatusProducts = async(obj: any) =>{
   try {
     const myToken: any = await userVerification('server')
-    await axios({
+    const productsUpdated = await axios({
       method: 'post',
       url: '/api/adminScope/put/updateAllProducts',
       data: { obj },

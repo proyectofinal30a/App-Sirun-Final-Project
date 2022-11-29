@@ -9,7 +9,8 @@
 
 .about__title,
 .newsletter__title,
-.shipping__title {
+.shipping__title,
+.map__title {
   font-family: var(--font-title);
   font-size: 4em;
   color: var(--color-dark-pink);
@@ -104,6 +105,19 @@
 .shipping_dates_bold {
   margin-top: 1em;
   font-weight: bold;
+}
+
+.map__title {
+  margin-top: .5em;
+  margin-bottom: .3em;
+}
+
+.map__container {
+  margin-bottom: 5em;
+  width: 85%;
+  max-width: 600px;
+  height: 400px;
+
 }
 
 

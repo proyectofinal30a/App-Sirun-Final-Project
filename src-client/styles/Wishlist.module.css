@@ -139,9 +139,9 @@
   }
 }
 
-@media (max-width: 880px) {
+@media (max-width: 900px) {
   .wishlist__container {
-    padding-top: 3em;
+    padding-top: 4em;
   }
 }
 

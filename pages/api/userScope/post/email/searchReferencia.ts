@@ -98,6 +98,6 @@ export default async function findReference(
     res.status(200).json({ msg: "the order status check was successful" });
   } catch (error) {
     console.log(error);
-    res.status(404).json({ msg: "Error al buscar OrderEmail" });
+    res.status(404).json({ msg: "Error while searching for OrderEmail" });
   }
 }
