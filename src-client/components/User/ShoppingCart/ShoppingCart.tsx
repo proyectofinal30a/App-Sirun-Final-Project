@@ -35,6 +35,7 @@ const ShoppingCart = () => {
     return (total += elem.subTotal);
   });
   ;
+  
   return (
     <div className={styles.cart__container}>
       {cart? <form className={styles.modal__container}>
