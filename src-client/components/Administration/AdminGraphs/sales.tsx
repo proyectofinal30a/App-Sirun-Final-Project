@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import styles from "../../../styles/Dashboard.module.css";
-import { Bar, XAxis, YAxis, Tooltip, CartesianGrid, ComposedChart, Legend, Line } from 'recharts';
+import { Bar, XAxis, YAxis, Tooltip, CartesianGrid, ComposedChart, Legend, ResponsiveContainer} from 'recharts';
 import { convertMonth } from '../../../controllers/adminGraphs';
 import { getSales } from '../../../redux/slice/admin-graphs/admin-graphs';
 
@@ -44,6 +44,7 @@ const Sales = () => {
         </select>
   
         <div className={styles.dashboard__graphic}>
+          <ResponsiveContainer width='99%'>
             <ComposedChart className={styles.graphic} height={400} width={500} data={selectedMonth? sales[2022][selectedMonth] : sales[2022][thisMonth? thisMonth : 'December'] }>
               <XAxis dataKey="week"/>
               <YAxis />
@@ -56,6 +57,7 @@ const Sales = () => {
               <Legend />
               <CartesianGrid />
             </ComposedChart>
+          </ResponsiveContainer>
         </div>
       </>
     );
