@@ -16,41 +16,26 @@ const ShoppingCart = () => {
   const dispatch: Function = useDispatch();
   const { status } = useSession()
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
-  const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
-
-  const totalQuantity = cart[0] ? cart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
-
+  const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products)
+  
+  const productsInCartID = cart.map((elem) => elem.id)
+  const productsInStock = allProducts.filter((elem) => productsInCartID.includes(elem.id) && elem.available === true)
+  const productsInCart = cart.filter((elem) => productsInStock.map((elem) => elem.id).includes(elem.id)) 
+  
+  const totalQuantity = productsInCart[0] ? productsInCart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
+  
   let total = 0;
-  cart.map((elem) => {
+  productsInCart.map((elem) => {
     return (total += elem.subTotal);
   });
-
-
   
-  const handleAvailable = (e : any) => {
-    const productsInCart = cart.map((elem) => elem.id)
-    console.log(productsInCart)
-    const productsInStock = allProducts.filter((elem) => productsInCart.includes(elem.id) && elem.available === true)
-    console.log(productsInStock)
-    const productsNotAvailable = allProducts.filter((elem) => productsInCart.includes(elem.id) && elem.available === false)
-    console.log(productsNotAvailable);
-
-    if(productsInStock.length === productsInCart.length) {
-      router.push("/checkout")    
-    } else {
-      alert("Some products are already sold out and there is no stock available")
-      productsNotAvailable.map((elem) => dispatch(trashItem(elem.id)))
-    }
-}
-
-
   return (
     <div className={styles.cart__container}>
-      {cart[0] ? 
+      {productsInCart? 
         <form className={styles.modal__container}>
           <h2>Shopping Cart</h2>
 
-          {cart?.map((elem, index: number) => {
+          {productsInCart?.map((elem, index: number) => {
 
             return (
               <div key={index} className={styles.modal__product_container}>
@@ -134,12 +119,10 @@ const ShoppingCart = () => {
               />
             </div>
             : 
-            // <Link href="/checkout" >
-            //   </Link> 
-            <div className={styles.modal__purchase_btn_container}>
-
-              <button className={styles.modal__start_purchase_btn} onClick={(e)=>handleAvailable(e)} >Checkout</button> 
-            </div>
+             <Link href="/checkout" className={styles.modal__purchase_btn_container} >
+              <button className={styles.modal__start_purchase_btn}>Checkout</button> 
+               </Link> 
+         
           }
         </form>
         :

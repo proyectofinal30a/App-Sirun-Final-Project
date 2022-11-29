@@ -135,12 +135,7 @@ const AdminManageProducts = () => {
   const aplicarCambios = async () => {
     if (!productsToUpdate.length) return alert('Please select product to change')
     await requestUpdateStatusProducts(productsToUpdate)
-    // ACA NO SOLAMENTE DEBERIA INFORMAR AL BACK DE LOS CAMBIOS
-    // TAMBIEN DEBERIA ACTUALIZAR EL ESTADO DE LOS PRODUCTOS EN EL FRONT
-    // porquela wishlist y el cart tomaron el producto de un estado viejo, de una request anterior
-    //Y ASI FILTRAR EL ESTADO DEL CARRITO Y DE LA WHISLIST, eliminando los productos que no esten disponibles
-    // deberia actualizar el estado de products y de favorites???
-    // impedir que agregue al carrito si ya no esta disponible
+    dispatch(getAllProducts())
     alert(` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
     dispatch(clean())
     setActive(false)
@@ -167,7 +162,7 @@ const AdminManageProducts = () => {
       id: id,
       price: newPrice,
       description: newDescription
-      //faltan las imagenes
+      //faltan las imagenes(Fran)
     }
     updateProduct(prouctToUpdate)
     setIsOpen(false)
@@ -260,8 +255,6 @@ const AdminManageProducts = () => {
       </div>
       {active ? <input className={styles.visibility__btn} type="button" value="Apply visibility changes" onClick={aplicarCambios} /> : null}
 
-      {/* onClick={(e: any) => editOpenModal(e, product)} */}
-
       <div className={styles.products__map_container}>
         {currentProducts?.map((product: any, index: number) => {
           return (
@@ -286,8 +279,7 @@ const AdminManageProducts = () => {
             <div className={styles.product__card__icons}>
               <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
                 <button value={active} className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} > 
-                  {// es por los tipos que no toma value eze?
-                  product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
+                  {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
             </div>
           </div>
           )
