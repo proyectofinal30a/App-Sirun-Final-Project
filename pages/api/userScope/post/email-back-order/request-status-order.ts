@@ -33,15 +33,6 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
         })
         if (requestOrder.data?.results?.[0]?.status !== 'approved') return res.status(200).json({ msg: "hasn't paid yet" })
 
-        await prisma.order.update({
-            where: {
-                id: idReference
-            },
-            data: {
-                idPurchase: String(requestOrder.data.results[0].id),
-                status: "confirmed"
-            }
-        })
 
         const responseforEmail = await prisma.user.findFirst({
             where: { email },
@@ -96,8 +87,6 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
             html: myHtml
         }
 
-
-    
         await transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
                 console.log(error);
@@ -107,6 +96,15 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
         });
 
 
+        await prisma.order.update({
+            where: {
+                id: idReference
+            },
+            data: {
+                idPurchase: String(requestOrder.data.results[0].id),
+                status: "confirmed"
+            }
+        })
 
         res.status(200).json({ msg: "the order status check was successful" })
     } catch (error) {
