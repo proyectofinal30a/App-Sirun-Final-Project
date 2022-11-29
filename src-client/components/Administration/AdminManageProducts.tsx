@@ -279,7 +279,8 @@ const AdminManageProducts = () => {
             <div className={styles.product__card__icons}>
               <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
                 <button value={active} className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} > 
-                  {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
+                  {//EZEEEE, ES POR EL TIPO QUE ME MARCA ERROR? AIIIIUDAAA!/ WTF!?
+                  product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
             </div>
           </div>
           )

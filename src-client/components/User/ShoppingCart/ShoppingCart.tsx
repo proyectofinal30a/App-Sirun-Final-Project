@@ -17,7 +17,6 @@ const ShoppingCart = () => {
   const { status } = useSession()
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
   const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products)
-  
   const productsInCartID = cart.map((elem) => elem.id)
   const productsInStock = allProducts.filter((elem) => productsInCartID.includes(elem.id) && elem.available === true)
   const productsInCart = cart.filter((elem) => productsInStock.map((elem) => elem.id).includes(elem.id)) 
