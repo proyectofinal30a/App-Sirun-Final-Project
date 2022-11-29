@@ -10,6 +10,7 @@ import Modal from "react-modal";
 import styles from "../../styles/AdminManageProducts.module.css";
 import masiveValidate from "../../controllers/masiveValidation"
 import Validation from "../../components/Administration/ProductCreationForm/Validation"
+import swal from "sweetalert";
 
 const AdminManageProducts = () => {
   const myForm = {
@@ -119,7 +120,7 @@ const AdminManageProducts = () => {
 
   const submitUpdateAllPrices = async(e: Event, modalForm) => {
     e.preventDefault()
-    if (modalError.quantity || modalError.direction || modalError.type) return alert("Please fill all the fields correctly")
+    if (modalError.quantity || modalError.direction || modalError.type) return swal('Oops!',"Please fill all the fields correctly", 'warning')
     await dispatch(updateAllPrices(modalForm))
     modalIsOpenMsg()
     setmodalForm(masiveData)
@@ -139,10 +140,10 @@ const AdminManageProducts = () => {
   
 
   const aplicarCambios = async () => {
-    if (!productsToUpdate.length) return alert('Please select product to change')
+    if (!productsToUpdate.length) return swal('Oops', 'Please select product to change', 'warning')
     await requestUpdateStatusProducts(productsToUpdate)
     dispatch(getProducts())
-    alert(` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
+    swal('Done',` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
     dispatch(clean())
     setActive(!active)
   }
@@ -173,7 +174,7 @@ const AdminManageProducts = () => {
     updateProduct(prouctToUpdate)
     setIsOpen(false)
     setFormProduct(myForm)
-    alert(`${name} is updated`)
+    swal('Done',`${name} is updated`, 'success')
     dispatch(getProducts())
   }
   //END EDICT PRODUCT 
@@ -208,7 +209,7 @@ const AdminManageProducts = () => {
     const imageFile: any = event.target.files;
     if (!imageFile || !imageFile[0]) return;
 
-    if (formProduct.image.length >= 4) return alert('Only four images per product')
+    if (formProduct.image.length >= 4) return swal('Oops!','Only four images per product', 'warning')
 
     const myTO: any = [...formProduct.image]
 

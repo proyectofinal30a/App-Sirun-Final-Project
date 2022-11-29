@@ -166,7 +166,7 @@ export const getProductByName: any = (objeto: any) => async (dispatch: Function)
   dispatch(reducerAdmin.actions.getByName(arr))
 }
 
-const filteredByName = (objeto) => {
+const filteredByName = (objeto: any) => {
   const { allProducts, name } = objeto
   let filteredSearchedProduct = allProducts?.map((product: any) => {
     let productName = product.name.toLowerCase()
@@ -197,11 +197,7 @@ export const getProducts: any = () => async (dispatch: Function) => {
   }
 };
 //end get all products
-//Get products of orders
 
-export const getOrderProducts: any = () => async (dispatch: Function) => {
-  
-}
 
 
 

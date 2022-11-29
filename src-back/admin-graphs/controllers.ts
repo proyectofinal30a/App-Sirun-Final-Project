@@ -47,25 +47,37 @@ export const orderToSales = async (orders: any) => {
                 week: 'week 1',
                 sales: 0,
                 confirmed: 0,
-                pending: 0
+                fulfilled: 0,
+                in_process: 0,
+                in_transit: 0,
+                canceled: 0
                 },
                 {
                 week: 'week 2',
                 sales: 0,
                 confirmed: 0,
-                pending: 0
+                fulfilled: 0,
+                in_process: 0,
+                in_transit: 0,
+                canceled: 0
                 },
                 {
                 week: 'week 3',
                 sales: 0,
                 confirmed: 0,
-                pending: 0
+                fulfilled: 0,
+                in_process: 0,
+                in_transit: 0,
+                canceled: 0
                 },
                 {
                 week: 'week 4',
                 sales: 0,
                 confirmed: 0,
-                pending: 0
+                fulfilled: 0,
+                in_process: 0,
+                in_transit: 0,
+                canceled: 0
                 }
          ]
         }
@@ -73,17 +85,26 @@ export const orderToSales = async (orders: any) => {
         if(years[year][months[month]][numberWeek]){
             years[year][months[month]][numberWeek].sales++;
             if(order.status === 'confirmed') years[year][months[month]][numberWeek].confirmed++;
-            if(order.status === 'pending') years[year][months[month]][numberWeek].pending++;
+            if(order.status === 'fulfilled') years[year][months[month]][numberWeek].fulfilled++;
+            if(order.status === 'in_process') years[year][months[month]][numberWeek].in_process++;
+            if(order.status === 'in_transit') years[year][months[month]][numberWeek].in_transit++;
+            if(order.status === 'canceled') years[year][months[month]][numberWeek].canceled++;
         } else {
             years[year][months[month]].push({
                 week: 'week 5',
                 sales: 0,
                 confirmed: 0,
-                pending: 0
+                fulfilled: 0,
+                in_process: 0,
+                in_transit: 0,
+                canceled: 0
             })
             years[year][months[month]][numberWeek].sales++;
             if(order.status === 'confirmed') years[year][months[month]][numberWeek].confirmed++;
-            if(order.status === 'pending') years[year][months[month]][numberWeek].pending++;
+            if(order.status === 'fulfilled') years[year][months[month]][numberWeek].fulfilled++;
+            if(order.status === 'in_process') years[year][months[month]][numberWeek].in_process++;
+            if(order.status === 'in_transit') years[year][months[month]][numberWeek].in_transit++;
+            if(order.status === 'canceled') years[year][months[month]][numberWeek].canceled++;
         }
     })
     return years
