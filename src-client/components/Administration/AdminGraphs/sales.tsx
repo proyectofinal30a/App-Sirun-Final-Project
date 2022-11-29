@@ -1,9 +1,9 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import styles from "../../../styles/Dashboard.module.css";
-import { ResponsiveContainer, Bar, XAxis, YAxis, Line, Tooltip, CartesianGrid, ComposedChart, Legend, PieChart, Pie} from 'recharts';
+import { Bar, XAxis, YAxis, Tooltip, CartesianGrid, ComposedChart, Legend } from 'recharts';
 import { convertMonth } from '../../../controllers/adminGraphs';
-import { getSales, cleanState } from '../../../redux/slice/admin-graphs/admin-graphs';
+import { getSales } from '../../../redux/slice/admin-graphs/admin-graphs';
 
 const Sales = () => {
   const thisMonthAcorted = Date().split(" ")[1];
@@ -21,15 +21,13 @@ const Sales = () => {
   useEffect(() =>{
     dispatch(getSales())
   })
-console.log(sales);
 
 
   if(sales[2022]){
-
     return (
       <>
-        <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select}>
-          <option value="Now" selected disabled>Select period</option>
+        <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select} defaultValue="">
+          <option value="" disabled>Select period</option>
           <option value="Now">Now</option>
           <option value="January">January</option>
           <option value="February">February</option>
@@ -46,8 +44,7 @@ console.log(sales);
         </select>
   
         <div className={styles.dashboard__graphic}>
-          <ResponsiveContainer height={400} width={500}>
-            <ComposedChart data={selectedMonth? sales[2022][selectedMonth] : sales[2022]['November'] }>
+            <ComposedChart className={styles.graphic} height={400} width={500} data={selectedMonth? sales[2022][selectedMonth] : sales[2022]['November'] }>
               <XAxis dataKey="week"/>
               <YAxis />
               <Bar type="monotone" dataKey="confirmed" barSize={30} fill="#3c7358" />
@@ -56,14 +53,15 @@ console.log(sales);
               <Legend />
               <CartesianGrid />
             </ComposedChart>
-          </ResponsiveContainer>
         </div>
       </>
     );
   } else {
-    <>
-    <h2>Loading</h2>
-    </>
+    return (
+      <>
+        <h2>Loading...</h2>
+      </>
+    )
   }
 
   

@@ -23,10 +23,12 @@
   visibility: hidden;
 }
 
-.order__description {
-  text-transform: capitalize;
+.order__id {
+  font-weight: bold;
   font-size: 1.2em;
-  margin-bottom: 1em;
+  text-decoration: underline;
+  color: var(--color-light-blue);
+  margin-bottom: .5em;
 }
 
 .order__status {
@@ -194,5 +196,7 @@
 
   .order__product_container {
     width: 100%;
+    display: flex;
+    align-items: center;
   }
 }
