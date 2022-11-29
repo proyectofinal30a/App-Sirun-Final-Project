@@ -38,6 +38,7 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
                 id: idReference
             },
             data: {
+                idPurchase: String(requestOrder.data.results[0].id),
                 status: "confirmed"
             }
         })

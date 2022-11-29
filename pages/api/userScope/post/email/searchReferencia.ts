@@ -12,17 +12,29 @@ export default async function findReference(req: NextApiRequest, res: NextApiRes
       idReference: string;
       idPurchase: string;
     }
-    interface responseMP {
-      data: {
-        results: [{ status: string }];
-      };
-    }
+
     const { email, name, idReference, idPurchase }: body = req.body;
 
+    interface responseMP { data: { results: [{ status: string, id: string }] } }
+
+    const requestOrder: responseMP = await axios({
+        method: 'get',
+        url: `https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=${idReference}`,
+        headers: {
+            'Content-Type': "application/json",
+            Authorization: `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
+        }
+    })
+
     await prisma.order.update({
-      where: { id: idReference },
-      data: { status: "confirmed" },
-    });
+        where: {
+            id: idReference
+        },
+        data: {
+            idPurchase: String(requestOrder.data.results[0].id),
+            status: "confirmed"
+        }
+    })
 
     const statusConfirmation = await prisma.order.findFirst({
       where: { id: idReference },

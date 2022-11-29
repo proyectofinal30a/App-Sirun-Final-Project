@@ -66,6 +66,7 @@ const AllProductsCards = () => {
   const allProductsID = allProducts.map((elem) => elem.id)
     .filter((elem) => productsInCartID.includes(elem))
   const productsInCart = cart.filter((elem) => allProductsID.includes(elem.id))
+  console.log(productsInCart)
 
 
 
@@ -178,7 +179,6 @@ const AllProductsCards = () => {
     dispatch(addToFavorites(productToAdd));
   }
 
-  console.log(paginatedProducts);
 
   return (
     <div className={styles.general__container}>
@@ -243,7 +243,7 @@ const AllProductsCards = () => {
 
                 <h2>Shopping Cart</h2>
 
-                {productsInCart?.map((elem, index: number) => {
+                {cart?.map((elem, index: number) => {
                   if (!elem.title) return null
 
                   return (

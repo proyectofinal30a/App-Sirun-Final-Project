@@ -92,6 +92,7 @@ model Phone {
 
 model Order {
   id                String              @id @unique @default(uuid())
+  idPurchase        String
   addressOrder      AddressOrder        @relation(fields: [id_address], references: [id])
   date              DateTime            @default(now())
   purchasedProducts purchasedProducts[]
@@ -169,6 +170,7 @@ enum StatusType {
   confirmed
   canceled
   in_process
+  in_transit
   fulfilled
 }
 
