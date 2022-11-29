@@ -4,13 +4,14 @@ import SabaCake from "../../images/saba-cake.png";
 import PinkCupcakes from "../../images/pink-cupcakes.png";
 import HappyCostumers from "../../images/happy-costumers.png";
 import styles from "../../styles/HomeInfo.module.css";
+import swal from "sweetalert";
 
 const HomeInfo = () => {
   const [phoneToCopy, setPhoneToCopy] = useState("+54 9 11 4612-2637");
 
   const handleCopyPhone = () => {
     navigator.clipboard.writeText(phoneToCopy);
-    alert("Phone number copied to clipboard.");
+    swal("Phone number copied to clipboard.");
   };
 
   return (

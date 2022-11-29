@@ -4,6 +4,7 @@ import { uploadFormNoRedux } from "../../../redux/slice/product-Admin-redux/ProA
 import { IproductSumbit, Ierror } from "../../../../lib/types";
 import validation from "./Validation";
 import styles from "../../../styles/ProductCreationForm.module.css";
+import swal from "sweetalert";
 
 
 export default function FormProduct(): JSX.Element {
@@ -95,7 +96,7 @@ export default function FormProduct(): JSX.Element {
     const imageFile: any = event.target.files;
     if (!imageFile || !imageFile[0]) return;
 
-    if (formProduct.image.length >= 4) return alert('Only four images per product')
+    if (formProduct.image.length >= 4) return swal('Oops!','Only four images per product', 'warning')
 
     const myTO: any = [...formProduct.image]
 
@@ -151,7 +152,7 @@ export default function FormProduct(): JSX.Element {
       description: "",
       category: "others",
     });
-    alert("New product added.");
+    swal("Done","New product added.", 'success');
   };
 
   return (

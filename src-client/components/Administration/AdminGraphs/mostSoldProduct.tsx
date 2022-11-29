@@ -33,7 +33,7 @@ const MostSoldProduct = () => {
         </select>
 
       <div className={styles.dashboard__graphic_best_selling_product}>
-        <ResponsiveContainer width="99%">
+        <ResponsiveContainer width={500} height={400}>
           <BarChart margin={{top: 0, bottom: 0, left: 0, right: 0}} className={styles.graphic} height={400} width={500} data={products.slice(0, 5)}>
             <Tooltip />
             <XAxis dataKey="name" />
@@ -47,7 +47,7 @@ const MostSoldProduct = () => {
 
       <div className={styles.dashboard__cake_graphic}>
         <h1 className={styles.dashboard__sub_title}>All sold products</h1>
-        <ResponsiveContainer width="99%">
+        <ResponsiveContainer width={500} height={400}>
           <PieChart margin={{top: 0, bottom: 0, left: 0, right: 0}}>
             <Tooltip />
             <Pie className={styles.cake_graphic} width={500} height={350} data={products} dataKey="orders" nameKey="name" outerRadius={150} fill="#3c5473" />
