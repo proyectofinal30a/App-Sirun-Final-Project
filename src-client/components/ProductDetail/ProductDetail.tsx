@@ -33,8 +33,17 @@ const ProductDetail = () => {
 
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const product = useSelector((state: Ireducers) => state.reducerProductDetail.detail);
+
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);  
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
+
+
+  interface IproduId {
+    id: string
+  }
+
+  let favorites2: Array<IproduId> = [];
+
 
   
   useEffect(() => {
@@ -43,22 +52,23 @@ const ProductDetail = () => {
     }, [dispatch, id]);
   
     
-    useEffect(() => {
-      if (!myInfUser?.user?.id) {
-        dispatch(getUserDetail(myNuEmail));
-      }
-    }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
+  useEffect(() => {
+    if (!myInfUser?.user?.id) {
+      dispatch(getUserDetail(myNuEmail));
+    }
+  }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
     
     
-    useEffect(() => {
-      if (!myProfile) return
-      (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
-    })
+  useEffect(() => {
+    if (!myProfile) return
+    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
+  })
     
-    useEffect(()=>{
-      dispatch(getAllProducts())
-      },[dispatch])
+  useEffect(()=>{
+    dispatch(getAllProducts());
+  },[dispatch]);
     
+
     if(!cart?.[0] || !allProducts?.[0]){
       return <div className={styles.loading}>The cart is empthy...</div>
     }
@@ -75,6 +85,7 @@ const ProductDetail = () => {
   }
 
   let favorites2: Array<IproduId> = []
+
 
 
 
