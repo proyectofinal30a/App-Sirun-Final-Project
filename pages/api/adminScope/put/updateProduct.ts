@@ -7,10 +7,12 @@ import { Iproduct } from '../../../../lib/types'
 
 // en desarrollo
 const updateProduct: Function = async (req: NextApiRequest, res: NextApiResponse) => {
-    const { id, price, description } = req.body
+    const { id, price, description, image } = req.body
 
     //Category Pro se importa desde el schema de tablas, esta definido
     try {
+ 
+        
         const product = await prisma.product.update({
             where: {
                 id: id
@@ -18,10 +20,18 @@ const updateProduct: Function = async (req: NextApiRequest, res: NextApiResponse
             data: {
                 price: Number(price),
                 description: description,
+                image : image.image 
+                // image: {
+                //     create: {
+                //         image: image.image
+
+                //     }
+                // }
+
             }
         })
         prisma.$disconnect()
-        res.status(200).json(product)
+        return res.status(200).json(product)  
     } catch (error) {
         console.log(error)
         res.status(404).json({ msg: `Error al actualizar el producto con id: ${id}` })

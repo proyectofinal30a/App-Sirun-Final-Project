@@ -3,31 +3,19 @@ import Image from "next/image";
 import { AiFillEyeInvisible, AiFillEye, AiFillEdit } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux'
 import { Iproduct, Ireducers } from "../../../lib/types";
-import { getProductByName } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
-import {getAllProducts} from "../../redux/slice/products-client/Products-all-redux"
+import { getProductByName, Iimg, IUpdateProduct } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux";
 import { getProducts, updateProduct, changeAvailability, requestUpdateStatusProducts, clean, setProduct, updateAllPrices, cleanMsg } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import Modal from "react-modal";
 import styles from "../../styles/AdminManageProducts.module.css";
 import masiveValidate from "../../controllers/masiveValidation"
-import Validation from "../../components/Administration/ProductCreationForm/Validation"
+import Validation from "../../controllers/validateAdminManageProducts"
 import swal from "sweetalert";
 import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
-const AdminManageProducts = () => {
-  
-  // interface toMyForm {
-  //   price : number
-  //   description : string
-  //   image : []
-  // }
+const AdminManageProducts = () => { 
 
-  
-interface Iimg {
-  image : string
-  imageCloudinary : File
-}
 
-  const myForm  = {
+  const myForm : IUpdateProduct = {
     price: 0,
     description: "",
     image: [],
@@ -179,21 +167,15 @@ interface Iimg {
         [name]: value.charAt(0).toUpperCase() + value.slice(1),
       });
     }
-    if (name === "text") {
-      return setFormProduct({
-        ...formProduct,
-        [name]: value.charAt(0).toUpperCase() + value.slice(1),
-      });
-    }
     setFormProduct({ ...formProduct, [name]: value });
-    //setFormErrors(Validation({ ...formProduct, [name]: value }));
+    setFormErrors(Validation({ ...formProduct, description : value }));
   };
 
 
   const handleOnChangeNumber = (event: any) => {
     const { name, value } = event.target;
     setFormProduct({ ...formProduct, [name]: value });
-   // setFormErrors(Validation({ ...formProduct, [name]: value }));
+    setFormErrors(Validation({ ...formProduct, price : value }));
   };
 
   const handleOnFile = (event: any) => {
@@ -244,13 +226,16 @@ interface Iimg {
       const newPrice = Number(formProduct.price)
       const newDescription = formProduct.description
   
-      const prouctToUpdate = {
+      const productToUpdate = {
         id: id,
         price: newPrice,
         description: newDescription,
         image : formProduct.image,
       }
-      await updateProduct(prouctToUpdate)
+      console.log(productToUpdate, "data que envio desde el componente");
+      
+      await dispatch(updateProduct(productToUpdate))
+
       setIsOpen(false)
       setFormProduct(myForm)
       swal('Done',`${name} is updated`, 'success')
@@ -339,14 +324,11 @@ interface Iimg {
 
           <div className={styles.creation_form__section_container}>
             <p className={styles.current__data}>Current Price: ${productModal.price}</p>
-
-
             <input
-              type="number"
+              type="text"
               onChange={handleOnChangeNumber}
               name="price"
               value={formProduct.price}
-              defaultValue={productModal.price}
               className={styles.new_price__input}
               placeholder="Add a new Price"
               required
@@ -372,17 +354,16 @@ interface Iimg {
           <div className={styles.creation_form__section_container}>
             <p className={styles.current__data}>Current Images:</p>
             <div className={styles.images__container}>
-              {productModal.image?.map((img, index: number) =>
-                <Image
-                  key={index}
-                  src={img.image}
-                  width={200}
-                  alt=""
-                  height={200}
-                  priority
-                  className={styles.product_card__img}
-                />
-
+              {productModal.image?.map((img, index: number) =>{
+                  return <Image
+                    key={index}
+                    src={img.image}
+                    width={200}
+                    alt=""
+                    height={200}
+                    priority
+                    className={styles.product_card__img}
+                />}
               )}
             </div>
 
@@ -419,9 +400,6 @@ interface Iimg {
 
 
 {formProduct.image[0] && formProduct.image.map((e : Iimg, index) => {
-  console.log(e);
-  
-  
   return (
     <div key={index} className={styles.creation_form__img_show_container}>
       <div className={styles.creation_form__img_container}>
