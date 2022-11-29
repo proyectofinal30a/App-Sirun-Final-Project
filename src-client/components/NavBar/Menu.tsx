@@ -84,7 +84,7 @@ const Menu = () => {
           </li>
           {session?.user?.role === "admin" || session?.user?.role === 'super admin' ? (
             <li className={styles.nav__item}>
-              <Link href="/admin/adminDashboard" className={styles.navlink}>
+              <Link href="/admin/adminDashboard" className={styles.nav__link}>
                 <span className={styles.nav_span}>Administration</span>
               </Link>
             </li>

@@ -59,11 +59,15 @@ const AdminManageOrders = () => {
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>, id: string) => {
     const { value } = e.target;
-    // if (value === "in_transit") {
-    //   // ademas de los siguientes 2 dispatch tenemos que enviar un correo indicando que la orden fue despachada
-    //   // aca llamar a la funcion que envía el correo 
-    // }
+
     dispatch(changeOrderStatus({ orderId: id, orderStatus: value}));
+
+    if (value === "in_transit") {
+      alert(`Changed order status to ${value} and sent email to costumer successfully.`);
+    } else {
+      alert(`Order status changed successfully to ${value}`);
+    }
+    
     dispatch(getUsersOrders());
     setSelectedValue({
       statusSelection: "",
@@ -113,8 +117,8 @@ const AdminManageOrders = () => {
             return (
               <div key={order.id} className={styles.orders_management__order_container}>
                 <p className={styles.orders_management__order_identifier}>
-                  <span className={styles.orders_management__order_span}>Order reference id:{" "}</span>
-                  {order.id}
+                  <span className={styles.orders_management__order_span}>Order id:{" "}</span>
+                  {order.idPurchase}
                 </p>
 
                 <div className={styles.orders_management__order_status_container}>
