@@ -7,7 +7,7 @@ import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del ro
 const updateProducts: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     const arrProducts = req.body
     try {
-        arrProducts.obj.forEach(async (p: any) => {
+        const productsUpdates = arrProducts.obj.forEach(async (p: any) => {
             await prisma.product.update({
                 where: { id: p.id },
                 data: {
@@ -16,7 +16,7 @@ const updateProducts: Function = async (req: NextApiRequest, res: NextApiRespons
             })
             prisma.$disconnect()
         })
-        res.status(200).json({ msg: "ha sido todo actualizado" })
+        res.status(200).json(productsUpdates)
     } catch (error) {
         console.log(error)
         res.status(404).json({

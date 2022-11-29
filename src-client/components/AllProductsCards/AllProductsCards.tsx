@@ -36,7 +36,8 @@ const AllProductsCards = () => {
   
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
-
+  const allProductsAdmin = useSelector((state: Ireducers) => state.reducerAdmin.products)
+  const productsInCart = cart.filter((elem) => allProductsAdmin.filter((elem) => elem.available === true).map((elem) => elem.id).includes(elem.id))
 
   // FILTERS
   const filterProducts = useSelector((state: Ireducers) => state.reducerFilters.productsToFilter);
@@ -49,7 +50,7 @@ const AllProductsCards = () => {
 
 
   // SHOPPING CART
-  const totalQuantity = cart[0] ? cart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
+  const totalQuantity = productsInCart[0] ? productsInCart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
 
   const [modalIsOpen, setIsOpen] = useState(false);
   function closeModal() {
@@ -74,12 +75,12 @@ const AllProductsCards = () => {
 
   const handlerTrash = (id: string) => {
     dispatch(trashItem(id));
-    if (cart.length === 1 || cart.length === 0) { return setIsOpen(false); }
+    if (productsInCart.length === 1 || productsInCart.length === 0) { return setIsOpen(false); }
   };
 
 
   let total = 0;
-  cart.map((elem) => {
+  productsInCart.map((elem) => {
     return (total += elem.subTotal);
   });
 
@@ -225,7 +226,7 @@ const AllProductsCards = () => {
 
                 <h2>Shopping Cart</h2>
 
-                {cart?.map((elem, index: number) => {
+                {productsInCart?.map((elem, index: number) => {
                   if (!elem.title) return null
 
                   return (
