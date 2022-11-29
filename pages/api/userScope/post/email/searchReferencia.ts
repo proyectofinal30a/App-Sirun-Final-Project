@@ -4,10 +4,7 @@ import axios from "axios";
 import CreationOfHTML from "../../../../../src-client/controllers/email-Order-html";
 import * as nodemailer from "nodemailer";
 
-export default async function findReference(
-  req: NextApiRequest,
-  res: NextApiResponse
-) {
+export default async function findReference(req: NextApiRequest, res: NextApiResponse) {
   try {
     interface body {
       email: string;
