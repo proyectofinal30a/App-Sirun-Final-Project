@@ -24,11 +24,20 @@ export const reducerFilters = createSlice({
     orderByAscDesc: (state, action) => {
       state.productsToFilter = orderPriceAndDimension(action.payload);
     },
-    filterByCategoryOrType: (state, action) => {
-      state.productsToFilter = action.payload;
+    saveAccion: (state, action) => {
+      state.productPrevState = action.payload;
+      state.productsToFilter = action.payload
     },
-    cleanFilters: (state, action) => {
-      state.productsToFilter = action.payload;
+    filterByCategoryAction: (state, action) => {
+      const firstFilter = state.productPrevState.filter((produ) => produ.category === action.payload)
+      state.productsToFilter = firstFilter;
+    },
+    filterByTypeAction: (state, action) => {
+      const secondFilter = state.productPrevState.filter((produ) => produ.type === action.payload)
+      state.productsToFilter = secondFilter;
+    },
+    cleanFilters: (state) => {
+      state.productsToFilter = state.productPrevState;
     },
     prevState: (state, action) => {
       state.productPrevState = action.payload;
@@ -36,6 +45,13 @@ export const reducerFilters = createSlice({
     getProductByName: (state, action) => {
       state.productsToFilter = action.payload;
     },
+    filterDoubleAction: (state, action) => {
+      console.log(action);
+      
+      const firstFilter = state.productPrevState.filter((produ) => produ.category === action.payload.category)
+      const secondFilter = firstFilter.filter((produ) => produ.type === action.payload.type)
+      state.productsToFilter = secondFilter
+    }
   }
 });
 
@@ -59,13 +75,25 @@ export const orderByAscDesc = (objeto: IactionPayload) => (dispatch: Function) =
   dispatch(reducerFilters.actions.orderByAscDesc(objeto));
 }
 
-export const actionFilterByCategoryOrType = (objeto: IactionPayload) => (dispatch: Function) => {
-  const o = arrfilterCategoryOrType(objeto);
-  dispatch(reducerFilters.actions.filterByCategoryOrType(o));
+
+export const saveProductFilter = (objeto: any) => (dispatch: Function) => {
+  dispatch(reducerFilters.actions.saveAccion(objeto));
+}
+
+export const filterByCategory = (string: string) => (dispatch: Function) => {
+  dispatch(reducerFilters.actions.filterByCategoryAction(string));
+}
+
+export const filterByType = (string: string) => (dispatch: Function) => {
+  dispatch(reducerFilters.actions.filterByTypeAction(string));
+}
+
+export const filterDouble = (object) => (dispatch: Function) => {
+  dispatch(reducerFilters.actions.filterDoubleAction(object));
 }
 
 export const cleanFilters = () => (dispatch: Function) => {
-  dispatch(reducerFilters.actions.cleanFilters([]));
+  dispatch(reducerFilters.actions.cleanFilters());
 }
 
 

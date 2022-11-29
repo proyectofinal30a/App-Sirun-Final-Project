@@ -9,6 +9,7 @@ import { IconContext } from "react-icons";
 import { BsFillTrashFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
+import * as action from '../../redux/slice/filter-product-client/filters-redux'
 import { Iproduct, Ireducers, IproductModelCart } from "../../../lib/types";
 import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
 import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
@@ -20,57 +21,69 @@ import { cleanFilters } from "../../redux/slice/filter-product-client/filters-re
 const AllProductsCards = () => {
   // GET ALL PRODUCTS
   const dispatch: Function = useDispatch();
+  const { data, status } = useSession<boolean>();
+  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+  const [modalIsOpen, setIsOpen] = useState(false);
+  // FILTERS
 
+  const filterProducts = useSelector((state: Ireducers) => state.reducerFilters.productsToFilter);
+  const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
+  const cart = useSelector((state: Ireducers) => state.reducerCart.products);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(9);
+  let favorites2: Array<IproduId> = []
   useEffect(() => {
     return () => dispatch(cleanFilters());
   }, [dispatch])
 
+  useEffect(() => {
+    dispatch(getAllProducts())
+    !filterProducts[0] && dispatch(action.saveProductFilter(allProducts))
+  }, [dispatch])
 
-  // FAVORITE 
-  const { data, status } = useSession<boolean>();
-  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+
+  useEffect(() => {
+    if (!myProfile) return
+    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
+  })
+
 
   useEffect(() => {
     data?.user && dispatch(getUserDetail(data?.user.email))
   }, [dispatch, data]);
-  
-  const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
-  const cart = useSelector((state: Ireducers) => state.reducerCart.products);
+  useEffect(() => {
+    if (filterProducts[0]) setCurrentPage(1);
+    dispatch(getAllProducts());
 
-  useEffect(()=>{
-    dispatch(getAllProducts())
-  },[dispatch])
-  
-  
+  }, [filterProducts, dispatch]);
 
-    const productsInCartID = cart.map((elem) => elem.id) 
-    const allProductsID =allProducts.map((elem)=>elem.id)                             
-    .filter((elem)=> productsInCartID.includes(elem))        
-    const productsInCart = cart.filter((elem)=> allProductsID.includes(elem.id))
- 
-    
-    
-    // FILTERS
-    const filterProducts = useSelector((state: Ireducers) => state.reducerFilters.productsToFilter);
-    
-  let currentProducts = allProducts;
-  if (filterProducts.length >= 1) {
-    currentProducts = filterProducts;
-  }
+  // FAVORITE 
 
 
+
+
+  const productsInCartID = cart.map((elem) => elem.id)
+  const allProductsID = allProducts.map((elem) => elem.id)
+    .filter((elem) => productsInCartID.includes(elem))
+  const productsInCart = cart.filter((elem) => allProductsID.includes(elem.id))
+
+
+
+
+
+  if (!allProducts?.[0]) return (<div className={styles.general__container}>
+    <div className={styles.products__container}> <div className={styles.products__loader}><p>Loading...</p></div> </div></div>)
 
   // SHOPPING CART
   const totalQuantity = productsInCart[0] ? productsInCart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
 
-  const [modalIsOpen, setIsOpen] = useState(false);
   function closeModal() {
     setIsOpen(false);
   }
 
   const addProductOpenModal = (product: Iproduct) => {
     setIsOpen(true);
-    const { id, name, price, image } = product;    
+    const { id, name, price, image } = product;
     const productToAdd: IproductModelCart = {
       id: id,
       title: name,
@@ -98,19 +111,19 @@ const AllProductsCards = () => {
 
 
   // PAGINATION
-  const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(16);
+
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const paginatedProducts = currentProducts.slice(
+  const paginatedProducts = filterProducts.slice(
     indexOfFirstProduct,
     indexOfLastProduct
   );
 
   let pageNumbers: number[] = [];
-  for (let i = 1; i <= Math.ceil(currentProducts.length / productsPerPage); i++) {
+  for (let i = 1; i <= Math.ceil(filterProducts?.length / productsPerPage); i++) {
     pageNumbers.push(i);
   }
+
 
   const pagination = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -134,11 +147,7 @@ const AllProductsCards = () => {
   };
 
 
-  useEffect(() => {
-    if (filterProducts[0]) setCurrentPage(1);
-    dispatch(getAllProducts());
 
-  }, [filterProducts, dispatch]);
 
   //request para guardar los nuevos favs que estan en el redux del user
 
@@ -148,7 +157,7 @@ const AllProductsCards = () => {
     id: string
   }
 
-  let favorites2: Array<IproduId> = []
+
   let biblioteca: any = {}
 
   if (myProfile) {
@@ -158,10 +167,6 @@ const AllProductsCards = () => {
     })
   }
 
-  useEffect(() => {
-    if (!myProfile) return
-    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
-  })
 
 
 
@@ -173,6 +178,7 @@ const AllProductsCards = () => {
     dispatch(addToFavorites(productToAdd));
   }
 
+  console.log(paginatedProducts);
 
   return (
     <div className={styles.general__container}>
@@ -293,7 +299,7 @@ const AllProductsCards = () => {
                       </div>
                     </div>
                   );
-                }) }
+                })}
 
                 <p className={styles.modal__quantity_total}>Items in shopping cart ({totalQuantity})</p>
 
@@ -304,14 +310,14 @@ const AllProductsCards = () => {
 
                 {status === "unauthenticated" ?
                   <div className={styles.modal__purchase_btn_container}>
-                    <input 
-                      value="Sign in to checkout" 
-                      type="button" 
-                      onClick={() => signIn("auth0", { redirect: true, callbackUrl: "/checkout" })} 
-                      className={styles.modal__start_purchase_btn} 
+                    <input
+                      value="Sign in to checkout"
+                      type="button"
+                      onClick={() => signIn("auth0", { redirect: true, callbackUrl: "/checkout" })}
+                      className={styles.modal__start_purchase_btn}
                     />
                   </div>
-                :
+                  :
                   <Link href="/checkout" className={styles.modal__purchase_btn_container}>
                     <button className={styles.modal__start_purchase_btn}>Checkout</button>
                   </Link>
@@ -322,7 +328,7 @@ const AllProductsCards = () => {
           </>
         ) : (
           <div className={styles.products__loader}>
-            <p>Loading...</p>
+            <p>No product found with the applied filter</p>
           </div>
         )}
       </div>
