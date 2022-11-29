@@ -34,46 +34,55 @@ const ProductDetail = () => {
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const product = useSelector((state: Ireducers) => state.reducerProductDetail.detail);
 
-  const cart = useSelector((state: Ireducers) => state.reducerCart.products);  
+  const cart = useSelector((state: Ireducers) => state.reducerCart.products);
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
 
   interface IproduId {
     id: string
   }
 
-  let favorites2: Array<IproduId> = []
-  
+  let favorites2: Array<IproduId> = myProfile.favorites
+
   useEffect(() => {
-      dispatch(cleanProductDetail());
-      typeof id === 'string' && dispatch(getProductDetail(id));
-    }, [dispatch, id]);
-  
-    
-    useEffect(() => {
-      if (!myInfUser?.user?.id) {
-        dispatch(getUserDetail(myNuEmail));
-      }
-    }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
-    
-    
-    useEffect(() => {
-      if (!myProfile) return
-      (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
-    })
-    
-    useEffect(()=>{
-      dispatch(getAllProducts())
-      },[dispatch])
-    
-    if(!cart?.[0] || !allProducts?.[0]){
-      return <div className={styles.loading}>The cart is empthy...</div>
+    dispatch(cleanProductDetail());
+    typeof id === 'string' && dispatch(getProductDetail(id));
+  }, [dispatch, id]);
+
+
+  useEffect(() => {
+    if (!myInfUser?.user?.id) {
+      dispatch(getUserDetail(myNuEmail));
     }
+  }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
+
+  // manda array vacio, por eso vacia la whislist
+  let biblioteca: any = {}
+
+  if (myProfile) {
+    favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
+    favorites2.forEach(fav => {
+      biblioteca[fav.id] = true;
+    })
+  }
+
+  useEffect(() => {
+    if (!myProfile) return
+    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
+  })
+
+  useEffect(() => {
+    dispatch(getAllProducts())
+  }, [dispatch])
+
+  // if(!cart?.[0] || !allProducts?.[0]){
+  //   return <div className={styles.loading}>The cart is empthy...</div>
+  // }
 
   const productsInCartID = cart.map((elem) => elem.id)
-  const allProductsID =allProducts.filter((elem)=> elem.available === true)
-                                  .map((elem)=>elem.id)                             
-                                  .filter((elem)=> productsInCartID.includes(elem))    
-  const productsInCart = cart.filter((elem)=> allProductsID.includes(elem.id))
+  const allProductsID = allProducts.filter((elem) => elem.available === true)
+    .map((elem) => elem.id)
+    .filter((elem) => productsInCartID.includes(elem))
+  const productsInCart = cart.filter((elem) => allProductsID.includes(elem.id))
 
 
 
@@ -131,20 +140,14 @@ const ProductDetail = () => {
 
   // FAVORITE 
 
-  let biblioteca: any = {}
 
-  if (myProfile) {
-    favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
-    favorites2.forEach(fav => {
-      biblioteca[fav.id] = true;
-    })
-  }
 
   const handleFavorite = (id: string) => {
     status === "unauthenticated" && signIn("auth0");
     const productToAdd = {
       id: id
     }
+    console.log(productToAdd)
     dispatch(addToFavorites(productToAdd));
   }
 
@@ -307,20 +310,20 @@ const ProductDetail = () => {
 
           {status === "unauthenticated" ?
             <div className={styles.modal__purchase_btn_container}>
-              <input 
-                value="Sign in to checkout" 
-                type="button" 
-                onClick={() => signIn("auth0", { redirect: true, callbackUrl: "/checkout" })} 
-                className={styles.modal__start_purchase_btn} 
+              <input
+                value="Sign in to checkout"
+                type="button"
+                onClick={() => signIn("auth0", { redirect: true, callbackUrl: "/checkout" })}
+                className={styles.modal__start_purchase_btn}
               />
             </div>
-          :
+            :
             <Link href="/checkout" className={styles.modal__purchase_btn_container}>
               <button className={styles.modal__start_purchase_btn}>Checkout</button>
             </Link>
           }
 
-        </form> 
+        </form>
       </Modal>
 
       <div className={styles.reviews__container}>
