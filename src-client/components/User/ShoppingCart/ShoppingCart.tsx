@@ -24,7 +24,7 @@ const ShoppingCart = () => {
     },[dispatch])
   
   if(!cart?.[0] || !allProducts?.[0]){
-    return <div className={styles.loading}>Loading...</div>
+    return <div className={styles.loading}>The cart is empthy</div>
   }
 
   const productsInCartID = cart.map((elem) => elem.id)

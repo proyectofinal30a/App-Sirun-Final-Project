@@ -33,9 +33,8 @@ const ProductDetail = () => {
 
   const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
   const product = useSelector((state: Ireducers) => state.reducerProductDetail.detail);
-  const cart = useSelector((state: Ireducers) => state.reducerCart.products);
-  const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products)
-
+  const cart = useSelector((state: Ireducers) => state.reducerCart.products);  
+  const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
 
   
   useEffect(() => {
@@ -61,7 +60,7 @@ const ProductDetail = () => {
       },[dispatch])
     
     if(!cart?.[0] || !allProducts?.[0]){
-      return <div className={styles.loading}>Loading...</div>
+      return <div className={styles.loading}>The cart is empthy...</div>
     }
 
   const productsInCartID = cart.map((elem) => elem.id)
