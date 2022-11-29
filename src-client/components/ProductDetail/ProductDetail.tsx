@@ -14,6 +14,7 @@ import { Iproduct, Ireducers, IproductModelCart } from "../../../lib/types";
 import { getProductDetail, cleanProductDetail } from "../../redux/slice/products-client/Product-detail-redux";
 import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
 import { requestAddToFavorites, addToFavorites, getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux"
 import { UserReview } from "./UserReview";
 import Average from "./StarsAverage";
 
@@ -35,21 +36,40 @@ const ProductDetail = () => {
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
   const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products)
 
-  const productsInCart = cart.filter((elem) => allProducts.filter((elem) => elem.available === true).map((elem) => elem.id).includes(elem.id))
-  //console.log(productsInCart);
-
-
-  useEffect(() => {
-    dispatch(cleanProductDetail());
-    typeof id === 'string' && dispatch(getProductDetail(id));
-  }, [dispatch, id]);
 
   
   useEffect(() => {
-    if (!myInfUser?.user?.id) {
-      dispatch(getUserDetail(myNuEmail));
+      dispatch(cleanProductDetail());
+      typeof id === 'string' && dispatch(getProductDetail(id));
+    }, [dispatch, id]);
+  
+    
+    useEffect(() => {
+      if (!myInfUser?.user?.id) {
+        dispatch(getUserDetail(myNuEmail));
+      }
+    }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
+    
+    
+    useEffect(() => {
+      if (!myProfile) return
+      (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
+    })
+    
+    useEffect(()=>{
+      dispatch(getAllProducts())
+      },[dispatch])
+    
+    if(!cart?.[0] || !allProducts?.[0]){
+      return <div className={styles.loading}>Loading...</div>
     }
-  }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
+
+  const productsInCartID = cart.map((elem) => elem.id)
+  const allProductsID =allProducts.filter((elem)=> elem.available === true)
+                                  .map((elem)=>elem.id)                             
+                                  .filter((elem)=> productsInCartID.includes(elem))    
+  const productsInCart = cart.filter((elem)=> allProductsID.includes(elem.id))
+
 
   interface IproduId {
     id: string
@@ -57,10 +77,6 @@ const ProductDetail = () => {
 
   let favorites2: Array<IproduId> = []
 
-  useEffect(() => {
-    if (!myProfile) return
-    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
-  })
 
 
   if (id !== product.id || !product?.evaluation) return <div className={styles.loading}>Loading...</div>
