@@ -145,9 +145,9 @@ export default function AdminReviews(): JSX.Element {
         ))
       ) : (
         <div className={styles.reviews_management__container}>
-          <h1 className={styles.reviews_management__title}>
-            No products or users found
-          </h1>
+          <p className={styles.reviews_management__empty_message}>
+            No reviews found.
+          </p>
         </div>
       )}
 

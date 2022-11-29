@@ -2,9 +2,13 @@
   margin: auto;
   min-height: 100vh;
   font-family: var(--font-paragraph);
-  font-size: 1.5em;
+  font-size: 1.2em;
   font-weight: bold;
   color: var(--color-dark-blue);
+}
+
+.reviews_management__empty_message {
+  font-weight: 400;
 }
 
 .reviews_management__container {
