@@ -72,7 +72,7 @@ const AdminManageOrders = () => {
       <div className={styles.orders_management__select_container}>
         <select 
           name="statusSelection" 
-          value={selectedValue.statusSelection} 
+          defaultValue={selectedValue.statusSelection} 
           onChange={handleStatusSelection} 
           className={styles.orders_management__select}
         >
@@ -86,7 +86,7 @@ const AdminManageOrders = () => {
 
         <select 
           name="dateSort" 
-          value={selectedValue.dateSort} 
+          defaultValue={selectedValue.dateSort} 
           onChange={handleDateSort} 
           className={styles.orders_management__select}
         >
@@ -114,7 +114,7 @@ const AdminManageOrders = () => {
                     <p className={styles.status}>{order.status}</p>
                   </div>
 
-                  <select value="" className={styles.change_status_btn} onChange={(e) => handleStatusChange(e, order.id)}> 
+                  <select defaultValue="" className={styles.change_status_btn} onChange={(e) => handleStatusChange(e, order.id)}> 
                     <option value="" disabled>Change status to:</option>
                     <option value="confirmed">Confirmed</option>
                     <option value="in_process">In process</option>

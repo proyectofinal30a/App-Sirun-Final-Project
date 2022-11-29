@@ -65,17 +65,18 @@ export default function Orders(): JSX.Element {
             <div key={elem.date} className={styles.order__info_container}>
               <p className={styles.order__id}>Order id: {elem.id}</p>
 
+              {elem.purchase_link &&
+                <div className={styles.payment_link__container}>
+                  <p className={styles.payment_link}>You have not yet purchased these products but we leave you the Link to make them yours!!!</p>
+                  <a href={elem.purchase_link} className={styles.pay_here_btn}>Pay here!</a>
+                </div>
+              }
+
               <div className={styles.order__status}>
                 <span className={styles.order__span}>Status: </span>
                 {elem.status}
               </div>
-              {elem.purchase_link &&
-                <div>
-                  <p>
-                    You have not yet purchased these products but we leave you the Link to make them yours!!!
-                  </p>
-                  <a href={elem.purchase_link}>Pay here!!</a>
-                </div>}
+
               <div className={styles.order__date}>
                 <span className={styles.order__span}>Date: </span>
                 {mydate}
