@@ -6,7 +6,7 @@
 
 .dashboard__container {
   min-height: 100vh;
-  padding-top: 8em;
+  padding-top: 6em;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -108,13 +108,13 @@
 
 @media (max-width: 1540px) {
   .dashboard__container {
-    padding-top: 11em;
+    padding-top: 10em;
   }
 }
 
 @media (max-width: 1175px) {
   .dashboard__container {
-    padding-top: 10em;
+    padding-top: 9em;
   }
 }
 
