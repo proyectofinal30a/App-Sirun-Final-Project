@@ -379,50 +379,48 @@ const AdminManageProducts = () => {
           </div>
 
 
+          
+        <div className={styles.images__container}>
+{formProduct.image[0] && formProduct.image.map((e : Iimg, index) => {
+return (
+<div key={index} >
+{/* <div className={styles.creation_form__img_container}> */}
+<Image
+  src={e.image} 
+  alt=""
+  width="1000"
+  height="300"
+  className={styles.product_card__img}
+/>
+{/* </div> */}
+
+<input
+type={"button"}
+name={e.image}
+onClick={handleOnClickDelete}
+value={"Delete"}
+className={styles.creation_form__input_btn_delete}
+/>
+</div>
+)
+})}
+
+{formProduct.image[0] &&
+    <>
+  <button
+     onClick={handleOnClickReset}
+    className={[styles.creation_form__input_btn, styles.creation_form__reset_btn].join(" ")}
+    >
+   Reset all image/s
+  </button>
+    </>
+  }
+</div>
           <div className={styles.modal__purchase_btn_container}>
             <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
           </div>
         </form>
 
-        <div className={styles.creation_form__images_container}>
-
-        {formProduct.image[0] &&
-            <>
-              <p className={styles.creation_form__images_container__title}>Images control</p>
-          <button
-             onClick={handleOnClickReset}
-            className={[styles.creation_form__input_btn, styles.creation_form__reset_btn].join(" ")}
-            >
-           Reset all image/s
-          </button>
-            </>
-          }
-
-
-{formProduct.image[0] && formProduct.image.map((e : Iimg, index) => {
-  return (
-    <div key={index} className={styles.creation_form__img_show_container}>
-      <div className={styles.creation_form__img_container}>
-        <Image
-          src={e.image} 
-          alt=""
-          width="1000"
-          height="300"
-          className={styles.creation_form__img}
-        />
-      </div>
-
-      <input
-        type={"button"}
-        name={e.image}
-        onClick={handleOnClickDelete}
-        value={"Delete"}
-        className={styles.creation_form__input_btn_delete}
-      />
-    </div>
-  )
-})}
-</div>
       </Modal>
 
 
