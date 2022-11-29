@@ -22,7 +22,7 @@ const AllProductsCards = () => {
   // GET ALL PRODUCTS
   const dispatch: Function = useDispatch();
   const { data, status } = useSession<boolean>();
-  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+  const { favorites } = useSelector((state: Ireducers) => state.reducerUser.user);
   const [modalIsOpen, setIsOpen] = useState(false);
   // FILTERS
 
@@ -31,7 +31,7 @@ const AllProductsCards = () => {
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(9);
-  let favorites2: Array<IproduId> = []
+  let myListFavorite: Array<IproduId> = []
   useEffect(() => {
     return () => dispatch(cleanFilters());
   }, [dispatch])
@@ -42,11 +42,20 @@ const AllProductsCards = () => {
   }, [dispatch])
 
 
-  useEffect(() => {
-    if (!myProfile) return
-    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
-  })
+  // useEffect(() => {
+  //   if (!myProfile) return
+  //   (async () => { await requestAddToFavorites(myProfile.id, myListFavorite) })();
+  // })
 
+  useEffect(() => {
+
+    return  function() {
+      console.log("deveria subirme");
+
+    }
+  },)
+
+  console.log(favorites, "favorites");
 
   useEffect(() => {
     data?.user && dispatch(getUserDetail(data?.user.email))
@@ -161,9 +170,9 @@ const AllProductsCards = () => {
 
   let biblioteca: any = {}
 
-  if (myProfile) {
-    favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
-    favorites2.forEach(fav => {
+  if (favorites[0]) {
+    myListFavorite = favorites.map((e) => { return { id: e.id } })
+    myListFavorite.forEach(fav => {
       biblioteca[fav.id] = true;
     })
   }
@@ -174,7 +183,7 @@ const AllProductsCards = () => {
   const handleFavorite = (id: string) => {
     status === "unauthenticated" && signIn("auth0");
     const productToAdd = {
-      id: id
+      id: id,
     }
     dispatch(addToFavorites(productToAdd));
   }

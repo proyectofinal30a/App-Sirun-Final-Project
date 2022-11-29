@@ -240,6 +240,7 @@ export interface userData {
   orders: Iorder[];
   evaluations: Ievaluations[];
   role: string;
+  favoriteId?:string[]
 }
 
 export interface IUserDetail {
