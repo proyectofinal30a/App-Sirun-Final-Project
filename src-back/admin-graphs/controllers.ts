@@ -84,7 +84,7 @@ export const orderToSales = async (orders: any) => {
 
         if(years[year][months[month]][numberWeek]){
             years[year][months[month]][numberWeek].sales++;
-            if(order.status === 'confirmed') years[year][months[month]][numberWeek].confirmed++;
+            if(order.status === 'confirmed') years[year][months[month]][numberWeek].confirmed++
             if(order.status === 'fulfilled') years[year][months[month]][numberWeek].fulfilled++;
             if(order.status === 'in_process') years[year][months[month]][numberWeek].in_process++;
             if(order.status === 'in_transit') years[year][months[month]][numberWeek].in_transit++;
