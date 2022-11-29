@@ -67,7 +67,7 @@ export default function Orders(): JSX.Element {
 
               {elem.purchase_link &&
                 <div className={styles.payment_link__container}>
-                  <p className={styles.payment_link}>You have not yet purchased these products but we leave you the Link to make them yours!!!</p>
+                  <p className={styles.payment_link}>You have not yet purchased these products but we leave you the here the link to make them yours!!!</p>
                   <a href={elem.purchase_link} className={styles.pay_here_btn}>Pay here!</a>
                 </div>
               }

@@ -86,6 +86,7 @@ const Profile = () => {
     });
   };
 
+
   const myForm = (
     <form className={styles.form__container} onSubmit={handleOnsubmit}>
       <label className={styles.form__label}>Enter your name</label>
@@ -108,7 +109,7 @@ const Profile = () => {
       />
 
       <label className={styles.form__label}>Change password</label>
-      <button className={styles.btn__submit} onClick={() => dispatch(accion.changePassword(email))}>Change</button>
+      <button className={styles.btn__change_password} onClick={() => dispatch(accion.changePassword(email))}>Change</button>
 
       <div className={styles.election__btn}>
         <button className={styles.btn} onClick={handleOnclikSwich}>

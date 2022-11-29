@@ -69,13 +69,13 @@ function Footer() {
               </Link>
             </li>
             <li className={styles.nav__item}>
-              <a href="/user/order" className={styles.nav__link}>
+              <Link href="/user/order" className={styles.nav__link}>
                 My Orders
-              </a>
+              </Link>
             </li>
             <li className={styles.nav__item}>
               <Link href="/cart" className={styles.nav__link}>
-                My cart
+                My Cart
               </Link>
             </li>
           </ul>

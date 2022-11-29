@@ -5,6 +5,7 @@
     flex-direction: column;
     align-items: center;
     font-family: var(--font-paragraph);
+    width: 100%;
   }
   
   .reviews_management__title {
