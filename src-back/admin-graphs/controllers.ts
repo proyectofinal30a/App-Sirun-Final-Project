@@ -134,9 +134,7 @@ export const productMVP = async (products: any, type: any) => {
     }
 }
 
-export const MSProducts = async (products: any, type: string | undefined | string[]) => {
-    console.log(type);
-    
+export const MSProducts = async (products: any, type: string | undefined | string[]) => {    
     if(type){
         const productsWithOrders = await products.filter((prod: any) => prod.order.length > 0 && prod.category === type).map((prod: any) => {
             let orders = 0

@@ -99,7 +99,6 @@ export const updateAllPrices =  (object : IpriceEdit) => async (disptach: Functi
         "Authorization": myToken
       }
     })
-    console.log(response.data);
     
     disptach(reducerAdmin.actions.errorMessage(response.data.msg))
   } catch (error) {

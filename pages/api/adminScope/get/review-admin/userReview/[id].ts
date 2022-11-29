@@ -6,7 +6,6 @@ export default async function userReview(req: NextApiRequest, res: NextApiRespon
     try {
         // interface IreviewId { idReview: string };
         const { id } = req.query;
-        console.log(id);
 
         if (typeof id !== 'string') return;
 

@@ -9,33 +9,31 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { Ireducers } from "../../../../lib/types";
 import { addOne, removeOne, trashItem } from "../../../redux/slice/cart-redux/cart-redux";
 import { useSession } from "next-auth/react";
-import { log } from "console";
 import { getAllProducts } from "../../../redux/slice/products-client/Products-all-redux";
+
 
 const ShoppingCart = () => {
   const router = useRouter();
   const dispatch: Function = useDispatch();
-  const { status } = useSession()
+  const { status } = useSession();
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
-  const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products)
+  const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products);
 
   useEffect(()=>{
-    dispatch(getAllProducts())
-    },[dispatch])
+    dispatch(getAllProducts());
+    },[dispatch]);
   
-  if(!cart?.[0] || !allProducts?.[0]){
-    return <div className={styles.loading}>Loading...</div>
-  }
+  // *REVISAR ESTA CONDICION PORQUE ROMPE TODO
+  // if(!cart?.[0] || !allProducts?.[0]){
+  //   return <div className={styles.loading}>Loading...</div>
+  // }
 
-  const productsInCartID = cart.map((elem) => elem.id)
-  const allProductsID =allProducts.filter((elem)=> elem.available === true)
-                                  .map((elem)=>elem.id)                             
-                                  .filter((elem)=> productsInCartID.includes(elem))    
-  const productsInCart = cart.filter((elem)=> allProductsID.includes(elem.id))
+  const productsInCartID = cart.map((elem) => elem.id);
+  const allProductsID = allProducts.filter((elem) => elem.available === true)
+                                   .map((elem) => elem.id)                             
+                                   .filter((elem) => productsInCartID.includes(elem))    
+  const productsInCart = cart.filter((elem) => allProductsID.includes(elem.id));
   
-
-  
-
 
   const totalQuantity = productsInCart[0] ? productsInCart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
   
@@ -43,7 +41,7 @@ const ShoppingCart = () => {
   productsInCart.map((elem) => {
     return (total += elem.subTotal);
   });
-  
+  ;
   return (
     <div className={styles.cart__container}>
       {productsInCart? 
