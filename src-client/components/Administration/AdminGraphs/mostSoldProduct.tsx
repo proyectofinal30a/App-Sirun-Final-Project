@@ -20,7 +20,7 @@ const MostSoldProduct = () => {
 
   if(products.length > 0){
     return (
-      <>
+      <div className={styles.dashboard_control}>
         <select onChange={(e)=> changeType(e)} defaultValue="" className={styles.dashboard__secondary_select}>
           <option value="" disabled>Select category</option>
           <option value="all">All</option>
@@ -33,7 +33,8 @@ const MostSoldProduct = () => {
         </select>
 
       <div className={styles.dashboard__graphic_best_selling_product}>
-          <BarChart className={styles.graphic} height={400} width={500} data={products.slice(0, 5)}>
+        <ResponsiveContainer width="99%">
+          <BarChart margin={{top: 0, bottom: 0, left: 0, right: 0}} className={styles.graphic} height={400} width={500} data={products.slice(0, 5)}>
             <Tooltip />
             <XAxis dataKey="name" />
             <YAxis />
@@ -41,23 +42,24 @@ const MostSoldProduct = () => {
             <CartesianGrid />
             <Bar type="monotone" dataKey="orders" barSize={50} fill="#3c5473" />
           </BarChart>
+        </ResponsiveContainer>
       </div>
 
       <div className={styles.dashboard__cake_graphic}>
         <h1 className={styles.dashboard__sub_title}>All sold products</h1>
-        <ResponsiveContainer width={500} height={350}>
-          <PieChart >
+        <ResponsiveContainer width="99%">
+          <PieChart margin={{top: 0, bottom: 0, left: 0, right: 0}}>
             <Tooltip />
-            <Pie className={styles.cake_graphic} width={500} height={350} data={products} dataKey="orders" nameKey="name" cx="50%" cy="50%" outerRadius={150} fill="#3c5473" />
+            <Pie className={styles.cake_graphic} width={500} height={350} data={products} dataKey="orders" nameKey="name" outerRadius={150} fill="#3c5473" />
           </PieChart>
         </ResponsiveContainer>
       </div>
-    </>
+    </div>
   );
   } else {
     return (
       <>
-      <h1>Loading</h1>
+      <p className={styles.loading}>Loading...</p>
       </>
     )
   }

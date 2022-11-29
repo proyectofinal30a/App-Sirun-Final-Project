@@ -1,3 +1,11 @@
+.loading_visibility {
+  min-height: 100vh;
+  margin: auto;
+  font-family: var(--font-paragraph);
+  color: var(--color-dark-blue);
+  font-size: 1.5em;
+}
+
 .cart__container {
   min-height: 100vh;
   padding-top: 8em;

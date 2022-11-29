@@ -18,9 +18,6 @@ const AdminManageProducts = () => {
     description: "",
   };
 
-
-
-  
   const [formProduct, setFormProduct] = useState(myForm);
   
   const myErr = {
@@ -246,57 +243,57 @@ const AdminManageProducts = () => {
     <div className={styles.products_manage__container}>
       <h1 className={styles.products_manage__title}>Administration Product Managing</h1>
 
-      <div className={styles.products_manage_comands}>
-        <div className={styles.users_management__searchbar}>
-          <input
-            type="search"
-            placeholder="Search product name"
-            className={styles.search_bar__input}
-            autoComplete="on"
-            name="name"
-            value={name}
-            onChange={handleChange}
-          />
+      <div className={styles.container_width}>
+        <div className={styles.products_manage_comands}>
+          {/* <div className={styles.users_management__searchbar}> */}
+            <input
+              type="search"
+              placeholder="Search product name"
+              className={styles.search_bar__input}
+              autoComplete="on"
+              name="name"
+              value={name}
+              onChange={handleChange}
+            />
+          {/* </div> */}
+          <button className={styles.change__price__btn} onClick={() => openMasiveModal()}>Update All Prices</button>
         </div>
-        <button className={styles.change__price__btn} onClick={() => openMasiveModal()}>Update All Prices</button>
-      </div>
-      {active ? <input className={styles.visibility__btn} type="button" value="Apply visibility changes" onClick={aplicarCambios} /> : null}
+        <div className={styles.visibility_btn_container}>
+          {active ? <input className={styles.visibility__btn} type="button" value="Apply visibility changes" onClick={aplicarCambios} /> : null}
+        </div>
 
-      <div className={styles.products__map_container}>
-        {currentProducts?.map((product: any, index: number) => {
-          return (
-            <div className={styles.product__card_container} key={index}>
-              <div key={index + 123} className={styles.product_card__img_container}>
-                <Image
-                  key={index + 1}
-                  src={product.image?.[0]?.image}
-                  width={200}
-                  alt={product.name}
-                  height={200}
-                  priority
-                  className={styles.product_card__img}
-                />
+        <div className={styles.products__map_container}>
+          {currentProducts?.map((product: any, index: number) => {
+            return (
+              <div className={styles.product__card_container} key={index}>
+                <div key={index + 123} className={styles.product_card__img_container}>
+                  <Image
+                    key={index + 1}
+                    src={product.image?.[0]?.image}
+                    width={200}
+                    alt={product.name}
+                    height={200}
+                    priority
+                    className={styles.product_card__img}
+                  />
+                </div>
+
+                <div className={styles.product__card__info_container}>
+                  <p>{product.name.toUpperCase()}</p>
+                  <p>${product.price}</p>
+                </div>
+
+              <div className={styles.product__card__icons}>
+                <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
+                  
+                  <button className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} > 
+                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
               </div>
-
-              <div className={styles.product__card__info_container}>
-                <p>{product.name.toUpperCase()}</p>
-                <p>${product.price}</p>
-              </div>
-
-            <div className={styles.product__card__icons}>
-              <button className={styles.product__card__icon_edit} onClick={(e: any) => editOpenModal(e, product)} >  <AiFillEdit /></button>
-                
-                <button className={styles.product__card__icon_edit} onClick={(e: any) => handleVisibility(e, product)} > 
-                  {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}</button>
-
-
-
             </div>
-          </div>
-          )
-        })}
+            )
+          })}
+        </div>
       </div>
-
 
 
 
@@ -432,7 +429,7 @@ const AdminManageProducts = () => {
                   <p className={styles.current__data}>{backMessage}</p>
                 </div>
       </Modal>
-}
+    }
 
     </div >
   );
