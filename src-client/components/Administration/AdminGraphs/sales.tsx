@@ -1,8 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux'
 import styles from "../../../styles/Dashboard.module.css";
-import { Bar, XAxis, YAxis, Tooltip, CartesianGrid, ComposedChart, Legend, Line } from 'recharts';
-
+import { Bar, XAxis, YAxis, Tooltip, CartesianGrid, ComposedChart, Legend, ResponsiveContainer} from 'recharts';
 import { convertMonth } from '../../../controllers/adminGraphs';
 import { getSales } from '../../../redux/slice/admin-graphs/admin-graphs';
 
@@ -12,6 +11,7 @@ const Sales = () => {
   const [selectedMonth, setSelectedMonth] = useState(thisMonth);
   const sales = useSelector((state: any) => state.adminGraphs.salesGraph)
   const dispatch: Function = useDispatch()
+  console.log(sales);
   
 
   const monthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -20,34 +20,38 @@ const Sales = () => {
       : setSelectedMonth(e.target.value);
   }
   useEffect(() =>{
-    dispatch(getSales())
-  })
+    if(!sales[2022]) dispatch(getSales())
+  }, [sales])
+
+  
 
 
   if(sales[2022]){
+    const optionsGenerator = () => {
+      const array: string[] = []
+    for(const props in sales[2022]){
+      array.push(props)
+    }
+    return array
+  } 
+
+  const options = optionsGenerator()
     return (
       <div className={styles.dashboard_control}>
         <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select} defaultValue="">
-          <option value="" disabled>Select period</option>
+          <option value="Now" disabled>Select period</option>
           <option value="Now">Now</option>
-          <option value="January">January</option>
-          <option value="February">February</option>
-          <option value="March">March</option>
-          <option value="April">April</option>
-          <option value="May">May</option>
-          <option value="June">June</option>
-          <option value="July">July</option>
-          <option value="August">August</option>
-          <option value="September">September</option>
-          <option value="October">October</option>
-          <option value="November">November</option>
-          <option value="December">December</option>
+          {options?.map((month: any) => {
+            return (
+              <option value={`${month}`}>{`${month}`}</option>
+            )
+          })}
         </select>
   
         <div className={styles.dashboard__graphic}>
 
-          <ResponsiveContainer width="99%">
-            <ComposedChart margin={{top: 0, bottom: 0, left: 0, right: 0}} className={styles.graphic} height={400} width={500} data={selectedMonth? sales[2022][selectedMonth] : sales[2022][thisMonth? thisMonth : 'December'] }>
+          <ResponsiveContainer width={500} height={400}>
+            <ComposedChart margin={{top: 0, bottom: 0, left: 0, right: 0}} className={styles.graphic} height={400} width={500} data={selectedMonth? sales[2022][selectedMonth] : sales[2022]['November'] }>
 
               <XAxis dataKey="week"/>
               <YAxis />
