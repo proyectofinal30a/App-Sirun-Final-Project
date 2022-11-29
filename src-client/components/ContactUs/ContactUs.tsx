@@ -23,7 +23,6 @@ const ContactUs = () => {
 
   const form = useRef();
 
-
   const handleInputChange = (e: any) => {
     const { name, value } = e.target;
     setInput({ ...input, [name]: value });
@@ -32,24 +31,30 @@ const ContactUs = () => {
 
   const sendEmail = (e: any) => {
     e.preventDefault();
+    if (typeof process.env.EMAILJS_SERVICE_ID !== "string") return;
 
-    if (typeof process.env.EMAILJS_SERVICE_ID_2 !== "string") return;
-
-    emailjs.sendForm(
-      process.env.EMAILJS_SERVICE_ID_2,
-      "template_diqzxgu", 
-      form.current,
-      process.env.EMAILJS_PUBLIC_KEY_2
-    ).then(
-      (result) => console.log("SUCCESS!", result.status, result.text),
-      (error) => console.log("FAILED...", error.text)
-    );
+    emailjs
+      .sendForm(
+        process.env.EMAILJS_SERVICE_ID,
+        "template_d0olaeg",
+        form.current,
+        process.env.EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        (result) => console.log("SUCCESS!", result.status, result.text),
+        (error) => console.log("FAILED...", error.text)
+      );
 
     e.target.reset();
     showResult(true);
+    setTimeout(() => showResult(false), 15000);
+    setInput({
+      name: "",
+      email: "",
+      message: "",
+    });
   };
 
-  setTimeout(() => showResult(false), 10000);
 
   return (
     <div className={styles.contact__container}>

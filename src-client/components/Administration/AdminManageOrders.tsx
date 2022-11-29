@@ -14,6 +14,7 @@ const AdminManageOrders = () => {
   const [selectedValue, setSelectedValue] = useState({
     statusSelection: "",
     dateSort: "",
+    changedStatus: "",
   });
 
 
@@ -27,6 +28,7 @@ const AdminManageOrders = () => {
     setSelectedValue({
       statusSelection: value,
       dateSort: "",
+      changedStatus: "",
     });
     if (value === "" || value === "all") {
       return dispatch(restoreAllOrders());
@@ -50,6 +52,7 @@ const AdminManageOrders = () => {
     setSelectedValue({
       statusSelection: "",
       dateSort: "",
+      changedStatus: "",
     })
   }
 
@@ -62,6 +65,11 @@ const AdminManageOrders = () => {
     }
     dispatch(changeOrderStatus({ orderId: id, orderStatus: value}));
     dispatch(getUsersOrders());
+    setSelectedValue({
+      statusSelection: "",
+      dateSort: "",
+      changedStatus: "",
+    })
   }
 
 
@@ -72,7 +80,7 @@ const AdminManageOrders = () => {
       <div className={styles.orders_management__select_container}>
         <select 
           name="statusSelection" 
-          defaultValue={selectedValue.statusSelection} 
+          value={selectedValue.statusSelection} 
           onChange={handleStatusSelection} 
           className={styles.orders_management__select}
         >
@@ -87,7 +95,7 @@ const AdminManageOrders = () => {
 
         <select 
           name="dateSort" 
-          defaultValue={selectedValue.dateSort} 
+          value={selectedValue.dateSort} 
           onChange={handleDateSort} 
           className={styles.orders_management__select}
         >
@@ -115,7 +123,7 @@ const AdminManageOrders = () => {
                     <p className={styles.status}>{order.status}</p>
                   </div>
 
-                  <select defaultValue="" className={styles.change_status_btn} onChange={(e) => handleStatusChange(e, order.id)}> 
+                  <select value={selectedValue.changedStatus} className={styles.change_status_btn} onChange={(e) => handleStatusChange(e, order.id)}> 
                     <option value="" disabled>Change status to:</option>
                     <option value="confirmed">Confirmed</option>
                     <option value="in_process">In process</option>

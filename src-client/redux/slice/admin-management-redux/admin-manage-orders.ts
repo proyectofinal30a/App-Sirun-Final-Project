@@ -87,7 +87,6 @@ export const changeOrderStatus = (orderInfo: Ipayload) => async (dispatch: Funct
       url: "/api/adminScope/put/updateOrderStatus",
       data: orderInfo,
     });
-    console.log(data) 
 
     dispatch(reducerAdminManagement.actions.changeOrderStatus(data));
   } catch (error) {

@@ -3,7 +3,7 @@ import styles from "../../styles/ContactUs.module.css"
 
 const MessageResult = () => {
   return (
-    <p className={styles.send}>Your message has been successfully sent. I will contact you soon </p>
+    <p className={styles.send}>Your message has been successfully sent. We will contact you soon!</p>
   )
 }
 
