@@ -36,22 +36,18 @@ const AllProductsCards = () => {
   
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
-  const allProductsAdmin = useSelector((state: Ireducers) => state.reducerAdmin.products)
 
   useEffect(()=>{
     dispatch(getAllProducts())
   },[dispatch])
   
-  // *REVISAR ESTA CONDICION PORQUE ROMPE TODO, si lo descomento rompe, pero es necesario!
-  // if(!cart?.[0] || !allProductsAdmin?.[0]){
-  //   return <div>Loading...</div>
-  // } 
+  
 
-    const productsInCartID = cart.map((elem) => elem.id)
-    const allProductsID =allProductsAdmin.filter((elem)=> elem.available === true)
-    .map((elem)=>elem.id)                             
-    .filter((elem)=> productsInCartID.includes(elem))    
+    const productsInCartID = cart.map((elem) => elem.id) 
+    const allProductsID =allProducts.map((elem)=>elem.id)                             
+    .filter((elem)=> productsInCartID.includes(elem))        
     const productsInCart = cart.filter((elem)=> allProductsID.includes(elem.id))
+ 
     
     
     // FILTERS
@@ -74,7 +70,7 @@ const AllProductsCards = () => {
 
   const addProductOpenModal = (product: Iproduct) => {
     setIsOpen(true);
-    const { id, name, price, image } = product;
+    const { id, name, price, image } = product;    
     const productToAdd: IproductModelCart = {
       id: id,
       title: name,
@@ -297,7 +293,7 @@ const AllProductsCards = () => {
                       </div>
                     </div>
                   );
-                })}
+                }) }
 
                 <p className={styles.modal__quantity_total}>Items in shopping cart ({totalQuantity})</p>
 
