@@ -36,6 +36,11 @@ const ProductDetail = () => {
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);  
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
 
+  interface IproduId {
+    id: string
+  }
+
+  let favorites2: Array<IproduId> = []
   
   useEffect(() => {
       dispatch(cleanProductDetail());
@@ -70,11 +75,6 @@ const ProductDetail = () => {
   const productsInCart = cart.filter((elem)=> allProductsID.includes(elem.id))
 
 
-  interface IproduId {
-    id: string
-  }
-
-  let favorites2: Array<IproduId> = []
 
 
 

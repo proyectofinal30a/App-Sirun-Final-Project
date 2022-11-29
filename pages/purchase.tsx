@@ -31,7 +31,7 @@ export default function ApprovedPayment() {
         router.push('/')
       }, 7000);
     }
-  }, [dispatch, email]);
+  }, [dispatch, email, name, idReference, idPurchase, router]);
 
 
   return (
