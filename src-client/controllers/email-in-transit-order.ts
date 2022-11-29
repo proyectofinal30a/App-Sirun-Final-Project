@@ -1,24 +1,19 @@
 interface data {
-    "orders": [
-        {
-            "addressOrder": {
-                "zip_code": number,
-                "street_name": string,
-                "street_number": number,
-                "phone": {
-                    "number": number,
-                    "area_code": number
-                }
-            },
-            "status": string,
-            "delivery_time": string,
-            "total": number
-        }
-    ]
+  idPurchase: string;
+  user?: {
+      name: string | null;
+      email: string | null;
+  } | undefined;
+  addressOrder?: {
+      street_name: string;
+      street_number: number;
+      zip_code: number;
+  } | undefined;
+  delivery_time?: string | undefined;
 }
 
-export default function CreationOfHTML(myorder: data | any, name: string, id: string) {
-    if (!myorder) return `<div>NO FOUNT</div>`
+export default function CreationInTransitEmail({idPurchase, user, addressOrder, delivery_time}: data) {
+    if (!user) return `<div>NO FOUNT</div>`
 
     return `
     <body
@@ -29,9 +24,9 @@ export default function CreationOfHTML(myorder: data | any, name: string, id: st
           padding: 0;
         "
       >
-        <p style="float: right; margin-top: auto; color: grey;">Order ${id}</p>
+        <p style="float: right; margin-top: auto; color: grey;">Order ${idPurchase}</p>
     
-        <p style="padding-top: 2em;">Hello ${name},</p>
+        <p style="padding-top: 2em;">Hello ${user.name},</p>
     
         <div style="text-align: center">
           <section>
@@ -52,12 +47,14 @@ export default function CreationOfHTML(myorder: data | any, name: string, id: st
               <br />
 
               <p>
-                Delivery time: ${myorder.delivery_time}
+                Delivery time: ${delivery_time}
               </p>
               <p>
-                Shipping address: ${myorder.street_name + " " + myorder.street_number + ", zip code: " + myorder.zip_code}
+                Shipping address: ${addressOrder?.street_name + " " + addressOrder?.street_number + ", zip code: " + addressOrder?.zip_code}
               </p>
+
               <br />
+
               <p
                 href="https://sirunnpatisserie.vercel.app/about#newsletter"
                 style="

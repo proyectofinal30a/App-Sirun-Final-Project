@@ -24,7 +24,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
             }
         })
 
-
+        
         if (!myPreference.payer.address.id) {
             await prisma.user.update({
                 where: {
@@ -50,10 +50,11 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
                 },
 
             })
-
+            console.log("------------ paso user update ---------------")
             const OrderUser = await prisma.order.create({
                 data: {
                     id: idOrder,
+                    idPurchase: "",
                     total: myTotal,
                     status: "pending",
                     delivery_time: 'falta ver esto',
@@ -94,7 +95,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
 
                 }
             })
-
+            console.log("------------ paso order update ---------------")
             const preferenceAddReference = await { ...myPreference, external_reference: OrderUser.id }
 
             const response = await axios({
@@ -123,6 +124,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
         const OrderUser = await prisma.order.create({
             data: {
                 id: idOrder,
+                idPurchase: "",
                 total: myTotal,
                 status: "pending",
                 delivery_time: 'falta ver esto',
@@ -163,7 +165,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
 
             }
         })
-
+        console.log("------------ paso user create ---------------")
         const preferenceAddReference = await { ...myPreference, external_reference: OrderUser.id }
 
         const response = await axios({
@@ -181,7 +183,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
                 id: idOrder
             },
             data: {
-                purchase_link: response.data.init_point
+                purchase_link: response.data.init_point,
             }
         })
 

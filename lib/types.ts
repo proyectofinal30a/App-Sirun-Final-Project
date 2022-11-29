@@ -200,7 +200,8 @@ export interface IitemForMercadoPago {
 }
 
 export interface Iorder {
-  id: string
+  id: string;
+  idPurchase: string;
   total: number;
   description: string;
   delivery_time: string;
