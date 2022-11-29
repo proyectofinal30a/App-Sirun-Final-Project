@@ -1,17 +1,21 @@
 .loading {
-  margin-top: 3em;
-  color: var(--color-dark-blue);
+  margin-top: 4em;
   font-family: var(--font-paragraph);
+  font-weight: bold;
+  font-size: 1em;
+  color: var(--color-dark-blue);
 }
 
 .dashboard__container {
+  margin: 0;
+  padding: 0;
   min-height: 100vh;
+  width: 100%;
   padding-top: 6em;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 100%;
   font-family: var(--font-paragraph);
 }
 
@@ -43,6 +47,11 @@
   cursor: pointer;
 }
 
+.dashboard_control {
+  margin: auto;
+  width: 1000px;
+}
+
 .dashboard__individual_container {
   display: flex;
   flex-direction: column;
@@ -63,18 +72,12 @@
 .dashboard__graphic,
 .dashboard__graphic_best_selling_product,
 .dashboard__graphic_best_ranked_product {
-  margin-left: -2em;
+  margin: 0;
+  padding: 0;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.dashboard__graphic_best_selling_product {
-  margin-left: -3em;
-}
-
-.dashboard__graphic_best_ranked_product {
-  margin-left: -4em;
+  max-width: 90%;
 }
 
 .dashboard__cake_graphic {
@@ -88,7 +91,6 @@
 }
 
 .cake_graphic {
-  /* margin: auto; */
   width: 500px;
   height: 400px;
   margin-top: -5em;
@@ -109,6 +111,12 @@
 @media (max-width: 1540px) {
   .dashboard__container {
     padding-top: 10em;
+  }
+}
+
+@media (max-width: 1250px) {
+  .dashboard_control {
+    width: 500px;
   }
 }
 
@@ -136,9 +144,9 @@
   }
 }
 
-@media (max-width: 550px) {
-  .dashboard__graphic {
-    width: 100% !important;
-    height: 400px !important;
+@media (max-width: 600px) {
+  .dashboard__container {
+    visibility: hidden;
+    display: none;
   }
 }
