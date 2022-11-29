@@ -11,7 +11,6 @@ import { addOne, removeOne, trashItem } from "../../../redux/slice/cart-redux/ca
 import { useSession } from "next-auth/react";
 import { getAllProducts } from "../../../redux/slice/products-client/Products-all-redux";
 
-
 const ShoppingCart = () => {
   const router = useRouter();
   const dispatch: Function = useDispatch();
@@ -23,10 +22,6 @@ const ShoppingCart = () => {
     dispatch(getAllProducts())
     },[dispatch])
   
-  if(!cart?.[0] || !allProducts?.[0]){
-    return <div className={styles.loading}>The cart is empthy</div>
-  }
-
   const productsInCartID = cart.map((elem) => elem.id)
   const allProductsID =allProducts.filter((elem)=> elem.available === true)
                                   .map((elem)=>elem.id)                             
