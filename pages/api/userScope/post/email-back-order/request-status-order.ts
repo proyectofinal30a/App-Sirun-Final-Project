@@ -33,14 +33,6 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
         })
         if (requestOrder.data?.results?.[0]?.status !== 'approved') return res.status(200).json({ msg: "hasn't paid yet" })
 
-        await prisma.order.update({
-            where: {
-                id: idReference
-            },
-            data: {
-                status: "confirmed"
-            }
-        })
 
         const responseforEmail = await prisma.user.findFirst({
             where: { email },
@@ -80,6 +72,13 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
             }
         })
 
+        const statusConfirmation = await prisma.order.findFirst({
+            where: { id: idReference },
+            select: { status: true }
+          });
+      
+        if (statusConfirmation?.status === "confirmed") return res.status(200).json({ msg: "Order is already confirmed" });
+
         const myHtml = CreationOfHTML(responseforEmail, email, name, requestOrder.data?.results?.[0]?.id)
         const mailOptions = {
             from: process.env.EMAIL_USER,
@@ -88,17 +87,24 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
             html: myHtml
         }
 
-
-    
-    await transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    console.log(error);
-                } else {
-                    console.log('Email sent: ' + info.response);
-                }
-            });
+        await transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+            } else {
+                console.log('Email sent: ' + info.response);
+            }
+        });
 
 
+        await prisma.order.update({
+            where: {
+                id: idReference
+            },
+            data: {
+                idPurchase: String(requestOrder.data.results[0].id),
+                status: "confirmed"
+            }
+        })
 
         res.status(200).json({ msg: "the order status check was successful" })
     } catch (error) {

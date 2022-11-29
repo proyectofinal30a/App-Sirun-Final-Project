@@ -78,6 +78,7 @@ const ProductDetail = () => {
   //   return <div className={styles.loading}>The cart is empthy...</div>
   // }
 
+
   const productsInCartID = cart.map((elem) => elem.id)
   const allProductsID = allProducts.filter((elem) => elem.available === true)
     .map((elem) => elem.id)

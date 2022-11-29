@@ -11,7 +11,6 @@ const Sales = () => {
   const [selectedMonth, setSelectedMonth] = useState(thisMonth);
   const sales = useSelector((state: any) => state.adminGraphs.salesGraph)
   const dispatch: Function = useDispatch()
-  console.log(sales);
   
 
   const monthChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -19,14 +18,15 @@ const Sales = () => {
       ? setSelectedMonth(thisMonth)
       : setSelectedMonth(e.target.value);
   }
+
   useEffect(() =>{
-    if(!sales[2022]) dispatch(getSales())
-  }, [sales])
+    dispatch(getSales())
+  }, [thisMonth])
+
 
   
-
-
   if(sales[2022]){
+    console.log(sales);
     const optionsGenerator = () => {
       const array: string[] = []
     for(const props in sales[2022]){
@@ -41,9 +41,9 @@ const Sales = () => {
         <select onChange={(e) => monthChange(e)} className={styles.dashboard__secondary_select} defaultValue="">
           <option value="Now" disabled>Select period</option>
           <option value="Now">Now</option>
-          {options?.map((month: any) => {
+          {options?.map((month: any, index: number) => {
             return (
-              <option value={`${month}`}>{`${month}`}</option>
+              <option key={index} value={`${month}`}>{`${month}`}</option>
             )
           })}
         </select>
@@ -52,7 +52,6 @@ const Sales = () => {
 
           <ResponsiveContainer width={500} height={400}>
             <ComposedChart margin={{top: 0, bottom: 0, left: 0, right: 0}} className={styles.graphic} height={400} width={500} data={selectedMonth? sales[2022][selectedMonth] : sales[2022]['November'] }>
-
               <XAxis dataKey="week"/>
               <YAxis />
               <Bar type="monotone" dataKey="confirmed" barSize={10} fill="#84d8af"/>

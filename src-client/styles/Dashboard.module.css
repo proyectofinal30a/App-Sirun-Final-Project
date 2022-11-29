@@ -49,7 +49,7 @@
 
 .dashboard_control {
   margin: auto;
-  width: 1000px;
+  width: 500px;
 }
 
 .dashboard__individual_container {
@@ -144,9 +144,9 @@
   }
 }
 
-@media (max-width: 600px) {
+/* @media (max-width: 600px) {
   .dashboard__container {
     visibility: hidden;
     display: none;
   }
-}
+} */

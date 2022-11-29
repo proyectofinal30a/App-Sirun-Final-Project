@@ -3,20 +3,22 @@ import Image from "next/image";
 import { AiFillEyeInvisible, AiFillEye, AiFillEdit } from 'react-icons/ai'
 import { useSelector, useDispatch } from 'react-redux'
 import { Iproduct, Ireducers } from "../../../lib/types";
-import { getProductByName } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
-import {getAllProducts} from "../../redux/slice/products-client/Products-all-redux"
+import { getProductByName, Iimg, IUpdateProduct } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux";
 import { getProducts, updateProduct, changeAvailability, requestUpdateStatusProducts, clean, setProduct, updateAllPrices, cleanMsg } from "../../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import Modal from "react-modal";
 import styles from "../../styles/AdminManageProducts.module.css";
 import masiveValidate from "../../controllers/masiveValidation"
-import Validation from "../../components/Administration/ProductCreationForm/Validation"
+import Validation from "../../controllers/validateAdminManageProducts"
 import swal from "sweetalert";
+import { imageConfigDefault } from "next/dist/shared/lib/image-config";
 
-const AdminManageProducts = () => {
-  const myForm = {
+const AdminManageProducts = () => { 
+
+
+  const myForm : IUpdateProduct = {
     price: 0,
-    image: [],
     description: "",
+    image: [],
   };
 
   const [formProduct, setFormProduct] = useState(myForm);
@@ -155,27 +157,7 @@ const AdminManageProducts = () => {
     dispatch(setProduct(product))
   }
 
-
-  const submitHandler = (e, product: any) => {
-    e.preventDefault()
-    const { id, name } = product
-    const newPrice = Number(formProduct.price)
-    const newDescription = formProduct.description
-
-    const prouctToUpdate = {
-      id: id,
-      price: newPrice,
-      description: newDescription
-      //faltan las imagenes(Fran)
-    }
-    updateProduct(prouctToUpdate)
-    setIsOpen(false)
-    setFormProduct(myForm)
-    swal('Done',`${name} is updated`, 'success')
-    dispatch(getProducts())
-  }
-  //END EDICT PRODUCT 
-
+  
   const handleOnChangeInput = (event: any) => {
     const { name, value } = event.target;
 
@@ -185,27 +167,22 @@ const AdminManageProducts = () => {
         [name]: value.charAt(0).toUpperCase() + value.slice(1),
       });
     }
-    if (name === "text") {
-      return setFormProduct({
-        ...formProduct,
-        [name]: value.charAt(0).toUpperCase() + value.slice(1),
-      });
-    }
     setFormProduct({ ...formProduct, [name]: value });
-    setFormErrors(Validation({ ...formProduct, [name]: value }));
+    setFormErrors(Validation({ ...formProduct, description : value }));
   };
 
 
   const handleOnChangeNumber = (event: any) => {
     const { name, value } = event.target;
     setFormProduct({ ...formProduct, [name]: value });
-    setFormErrors(Validation({ ...formProduct, [name]: value }));
+    setFormErrors(Validation({ ...formProduct, price : value }));
   };
 
   const handleOnFile = (event: any) => {
     const imageFile: any = event.target.files;
-    if (!imageFile || !imageFile[0]) return;
 
+    if (!imageFile || !imageFile[0]) return;
+    
     if (formProduct.image.length >= 4) return swal('Oops!','Only four images per product', 'warning')
 
     const myTO: any = [...formProduct.image]
@@ -232,10 +209,44 @@ const AdminManageProducts = () => {
     setFormProduct({ ...formProduct, image: myTO });
   };
 
+  const handleOnClickReset = () => {
+    setFormProduct({ ...formProduct, image: [] });
+  };
 
+  const handleOnClickDelete = ({ target }: any) => {
+    const { name } = target;
+    const [...myPrevurl] = formProduct.image
+    const myFilter = myPrevurl.filter((e : Iimg) => e.image !== name)
+    setFormProduct({ ...formProduct, image: myFilter });
+  };
+  
+    const submitHandler = async(e, product: any) => {
+      e.preventDefault()
+      const { id, name } = product
+      const newPrice = Number(formProduct.price)
+      const newDescription = formProduct.description
+  
+      const productToUpdate = {
+        id: id,
+        price: newPrice,
+        description: newDescription,
+        image : formProduct.image,
+      }
+      console.log(productToUpdate, "data que envio desde el componente");
+      
+      await dispatch(updateProduct(productToUpdate))
 
+      setIsOpen(false)
+      setFormProduct(myForm)
+      swal('Done',`${name} is updated`, 'success')
+      dispatch(getProducts())
+    }
+    //END EDICT PRODUCT 
+  
+  
+  
   const [active, setActive] = useState<boolean>(false)  
-
+  
 
 
   if (!currentProducts[0]) return <div className={styles.products_manage__container}><h1 className={styles.products_manage__title}> Loading....</h1></div>
@@ -272,7 +283,7 @@ const AdminManageProducts = () => {
                     key={index + 1}
                     src={product.image?.[0]?.image}
                     width={200}
-                    alt={product.name}
+                    alt=""
                     height={200}
                     priority
                     className={styles.product_card__img}
@@ -313,14 +324,11 @@ const AdminManageProducts = () => {
 
           <div className={styles.creation_form__section_container}>
             <p className={styles.current__data}>Current Price: ${productModal.price}</p>
-
-
             <input
-              type="number"
+              type="text"
               onChange={handleOnChangeNumber}
               name="price"
               value={formProduct.price}
-              defaultValue={productModal.price}
               className={styles.new_price__input}
               placeholder="Add a new Price"
               required
@@ -346,17 +354,16 @@ const AdminManageProducts = () => {
           <div className={styles.creation_form__section_container}>
             <p className={styles.current__data}>Current Images:</p>
             <div className={styles.images__container}>
-              {productModal.image?.map((img, index: number) =>
-                <Image
-                  key={index}
-                  src={img.image}
-                  width={200}
-                  alt={productModal.name}
-                  height={200}
-                  priority
-                  className={styles.product_card__img}
-                />
-
+              {productModal.image?.map((img, index: number) =>{
+                  return <Image
+                    key={index}
+                    src={img.image}
+                    width={200}
+                    alt=""
+                    height={200}
+                    priority
+                    className={styles.product_card__img}
+                />}
               )}
             </div>
 
@@ -370,10 +377,52 @@ const AdminManageProducts = () => {
               multiple
             />
           </div>
+
+
           <div className={styles.modal__purchase_btn_container}>
             <button type="submit" className={styles.modal__start_purchase_btn}>Confirm Changes</button>
           </div>
         </form>
+
+        <div className={styles.creation_form__images_container}>
+
+        {formProduct.image[0] &&
+            <>
+              <p className={styles.creation_form__images_container__title}>Images control</p>
+          <button
+             onClick={handleOnClickReset}
+            className={[styles.creation_form__input_btn, styles.creation_form__reset_btn].join(" ")}
+            >
+           Reset all image/s
+          </button>
+            </>
+          }
+
+
+{formProduct.image[0] && formProduct.image.map((e : Iimg, index) => {
+  return (
+    <div key={index} className={styles.creation_form__img_show_container}>
+      <div className={styles.creation_form__img_container}>
+        <Image
+          src={e.image} 
+          alt=""
+          width="1000"
+          height="300"
+          className={styles.creation_form__img}
+        />
+      </div>
+
+      <input
+        type={"button"}
+        name={e.image}
+        onClick={handleOnClickDelete}
+        value={"Delete"}
+        className={styles.creation_form__input_btn_delete}
+      />
+    </div>
+  )
+})}
+</div>
       </Modal>
 
 
@@ -437,9 +486,6 @@ const AdminManageProducts = () => {
 };
 
 export default AdminManageProducts;
-
-
-
 
 
 

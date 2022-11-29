@@ -34,7 +34,8 @@ export const adminGraphs = createSlice({
 
 export const getSales = () => async (dispatch: Function) => {
     const sales: any = await axios.get('/api/adminScope/graphDatas/salesGraph')
-
+    console.log(sales, 'REDUCER');
+    
     return dispatch(adminGraphs.actions.actionGetSales(sales.data))
 }
 
