@@ -9,10 +9,8 @@ const nextConfig = {
     "CLOUDINARY_PRODUCTS": "r94njzcs",
     "CLOUDINARY_SLIDER": "slider",
     "CLOUDINARY_USER_PROFILE": "mfrtuke4",
-    "EMAILJS_SERVICE_ID": "service_hys4ifl", // newsletter & order confirmation
-    "EMAILJS_PUBLIC_KEY": "5FIkK-QM1cvwFbl44", // newsletter & order confirmation
-    "ËMAILJS_SERVICE_ID_2": "service_bi4qxyc", // contact form & dispatch order
-    "EMAILJS_PUBLIC_KEY_2": "wFh_Z1YLlso9SqHw0", // contact form & dispatch order
+    "EMAILJS_SERVICE_ID": "service_hys4ifl", // newsletter & contact form
+    "EMAILJS_PUBLIC_KEY": "5FIkK-QM1cvwFbl44", // newsletter & contact form
     "STATUS": "dev",
   }
   ,
