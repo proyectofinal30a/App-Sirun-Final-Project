@@ -1,12 +1,12 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from "next";
-import { prisma } from "../../../../lib/prisma"; 
+import { prisma } from "../../../../lib/prisma";
 
 
-const orders: Function = async (req: NextApiRequest, res: NextApiResponse) => {
+const ordersGet: Function = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const orders = await prisma.order.findMany({
-      select: { 
+      select: {
         idPurchase: true,
         user: {
           select: {
@@ -25,7 +25,7 @@ const orders: Function = async (req: NextApiRequest, res: NextApiResponse) => {
         },
         addressOrder: {
           select: {
-            phone : {
+            phone: {
               select: {
                 area_code: true,
                 number: true,
@@ -50,4 +50,4 @@ const orders: Function = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default orders;
+export default ordersGet;
