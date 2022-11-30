@@ -1,7 +1,7 @@
 import { IUpdateProduct } from "../redux/slice/product-Admin-redux/GetProAdm-Redux"
 import axios from "axios"
 
-export default function imageFormat(dataForm: IUpdateProduct) {
+export default async function imageFormat (dataForm: IUpdateProduct) {
 
   const mydata = dataForm.image.map(async (e) => {
     const formData = new FormData();

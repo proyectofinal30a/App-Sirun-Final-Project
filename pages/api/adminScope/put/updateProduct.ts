@@ -20,23 +20,77 @@ const updateProduct: Function = async (req: NextApiRequest, res: NextApiResponse
             data: {
                 price: price,
                 description : description,
-                // image: {
-                //     update: {
-                //         where: { 
-                //             id: id
-                //          },
-                //         data: {
-                //             image : image.image
-                //         }
-                //     }
-                // }
             }
         })
+ 
+        // imagenes qye ya tiene el producto (antes)
+        const imageToUpdate = await prisma.imageProdu.findMany({  
+            where : {
+                id_product : id
+            }
+        })
+
+        console.log(imageToUpdate, "imagenes encontradas");
+
     
+        if(image.length > imageToUpdate.length){
+            for(let i = 0; i < image.length; i++){
+                if(imageToUpdate[i].image){ 
+                    const imageUpdated = await prisma.imageProdu.update({
+                        where: {
+                            id: imageToUpdate[i].id
+                        },
+                        data: {
+                            image: image[i].image
+                        }
+                    })
+                }else if (!imageToUpdate[i]){ 
+                    const imageCreated = await prisma.imageProdu.create({
+                        data: {
+                            image: image[i].image,
+                            id_product: id
+                        }
+                    })
+                }
+            }
+        }
+    //     } else if (image.length < imageToUpdate.length){
+    //         for(let i = 0; i < imageToUpdate.length; i++){
+    //             if(image[i]){
+    //                 await prisma.imageProdu.update({
+    //                     where : {
+    //                         id : imageToUpdate[i].id
+    //                     },
+    //                      data : {
+    //                         image : image[i].image
+    //                      }
+    //                 })
+    //             } else {
+    //                 await prisma.imageProdu.delete({
+    //                     where : {
+    //                         id : imageToUpdate[i].id
+    //                     }
+    //                 })
+    //             }
+    //         }
+    //     } else if (image.length === imageToUpdate.length){
+    //         for(let i = 0; i < image.length; i++){
+    //             await prisma.imageProdu.update({
+    //                 where : {
+    //                     id : imageToUpdate[i].id
+    //                 },
+
+    //                 data : {
+    //                     image : image[i].image
+    //                 }
+    //             })
+    //         }
+    //  } 
+
         prisma.$disconnect()
-        console.log(productUpdated, "producto actualizado")
-        
-        return res.status(200).json(productUpdated)  
+        res.status(200).json({ message: "Producto actualizado" })
+
+
     } catch (error) {
         console.log(error)
         res.status(404).json({ msg: `Error al actualizar el producto con id: ${id}` })

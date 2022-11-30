@@ -4,6 +4,7 @@ import { stat } from "fs";
 import { Iproduct, Iproducts } from "../../../../lib/types";
 import userVerification from '../../../controllers/userVerification-controller'
 import imageFormat from "../../../controllers/imageFormat";
+import { log } from "console";
 
 export interface Iimg {
   image : string
@@ -152,50 +153,54 @@ export const setProduct = (object: Iproduct) => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.updateProduct(object))
 }
 
-
 export const updateProduct = (dataForm : IUpdateProduct) => async(dispatch:Function) => {
   try {
-    console.log(dataForm, "data que llega a redux");
-    //const myToken: any = await userVerification('client')
-    const productUpdated =  await axios({
-      method: 'post',
-      url: '/api/adminScope/put/updateProduct',
-      data: dataForm
-      // headers: {
-      //   "Authorization": myToken
-      // }
+    const myToken: any = await userVerification("client");
+    const mydata = dataForm.image.map(async (e) => {
+      const formData = new FormData();
+      formData.append("file", e.imageCloudinary);
+      formData.append("upload_preset", `${process.env.CLOUDINARY_PRODUCTS}`);
+  
+      const { data } = await axios({
+        method: "post",
+        url: `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD}/image/upload`,
+        data: formData,
+      });
+  
+      const { public_id, secure_url } = data;
+      const myFracmet: string = public_id.split("/")[1];
+      const myData = {
+        id: myFracmet,
+        image: secure_url,
+      };
+      return myData;
     });
-    console.log(productUpdated, "PRODUCTO ACTUALIZADO desde el back"); 
+
+   const myData = await Promise.all(mydata)  
+      .then((newImageArray) => {
+        return newImageArray;
+      })
+        .catch((err) => {
+          console.log(err);
+        });
+        
+        const myDataForm = { ...dataForm, image: myData}
     
-    return dispatch(reducerAdmin.actions.updateProduct(productUpdated))
+        const response = axios({
+          method: "post",
+          url: "/api/adminScope/put/updateProduct",
+          data: myDataForm,
+          headers: {
+            "Authorization" : myToken
+          }
+        })
+       
+   
+      //return dispatch(reducerAdmin.actions.updateProduct(response?.data.product))
   } catch (error) {
     console.log(error)
   }
 };
-
-// export const updateProduct = (dataForm : IUpdateProduct) => async(dispatch:Function) => {
-//   try {
-//     const myToken: any = await userVerification("client");
-//    const myData = imageFormat(dataForm)
-//     const myDataForm = { ...dataForm, image: myData}
-//     console.log(myDataForm, "datos para actualizar producto")
-    
-//     const response = await axios({
-//       method: "post",
-//       url: "/api/adminScope/put/updateProduct",
-//       data: myDataForm,
-//       headers: {
-//         "Authorization" : myToken
-//       }
-//     })
-
-//     console.log(response.data, "producto actualizado");
-     
-//     return dispatch(reducerAdmin.actions.updateProduct(response.data.product))
-//   } catch (error) {
-//     console.log(error)
-//   }
-// };
 
 //END EDIT PRODUCT
 

@@ -16,7 +16,7 @@ import adminGraphs from "./slice/admin-graphs/admin-graphs";
 import reducerAdminReview from './slice/admi-review-redux/all-review-adm-redux'
 
 const persistConfig = {
-  key: 'otravez4',
+  key: 'otravez7',
   storage,
 }
 

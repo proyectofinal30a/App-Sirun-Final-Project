@@ -231,9 +231,7 @@ const AdminManageProducts = () => {
         price: newPrice,
         description: newDescription,
         image : formProduct.image,
-      }
-      console.log(productToUpdate, "data que envio desde el componente");
-      
+      }  
       await dispatch(updateProduct(productToUpdate))
       setFormProduct(myForm)
       setIsOpen(false)
