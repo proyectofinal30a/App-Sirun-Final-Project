@@ -3,7 +3,7 @@ import axios from "axios";
 import { stat } from "fs";
 import { Iproduct, Iproducts } from "../../../../lib/types";
 import userVerification from '../../../controllers/userVerification-controller'
-
+import imageFormat from "../../../controllers/imageFormat";
 
 export interface Iimg {
   image : string
@@ -151,10 +151,12 @@ export const requestUpdateStatusProducts = async(obj: any) =>{
 export const setProduct = (object: Iproduct) => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.updateProduct(object))
 }
+
+
 export const updateProduct = (dataForm : IUpdateProduct) => async(dispatch:Function) => {
   try {
     console.log(dataForm, "data que llega a redux");
-    // const myToken: any = await userVerification('client')
+    //const myToken: any = await userVerification('client')
     const productUpdated =  await axios({
       method: 'post',
       url: '/api/adminScope/put/updateProduct',
@@ -164,12 +166,36 @@ export const updateProduct = (dataForm : IUpdateProduct) => async(dispatch:Funct
       // }
     });
     console.log(productUpdated, "PRODUCTO ACTUALIZADO desde el back"); 
-    // no me llega entre las propiedades del producto la prop image por eso no se setea
+    
     return dispatch(reducerAdmin.actions.updateProduct(productUpdated))
   } catch (error) {
     console.log(error)
   }
 };
+
+// export const updateProduct = (dataForm : IUpdateProduct) => async(dispatch:Function) => {
+//   try {
+//     const myToken: any = await userVerification("client");
+//    const myData = imageFormat(dataForm)
+//     const myDataForm = { ...dataForm, image: myData}
+//     console.log(myDataForm, "datos para actualizar producto")
+    
+//     const response = await axios({
+//       method: "post",
+//       url: "/api/adminScope/put/updateProduct",
+//       data: myDataForm,
+//       headers: {
+//         "Authorization" : myToken
+//       }
+//     })
+
+//     console.log(response.data, "producto actualizado");
+     
+//     return dispatch(reducerAdmin.actions.updateProduct(response.data.product))
+//   } catch (error) {
+//     console.log(error)
+//   }
+// };
 
 //END EDIT PRODUCT
 

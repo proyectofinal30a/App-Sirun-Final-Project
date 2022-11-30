@@ -39,7 +39,7 @@ const AdminManageProducts = () => {
       dispatch(clean())
       dispatch(cleanMsg())
     }
-  }, [dispatch])
+  }, [dispatch]) 
 
   let currentProducts: Iproduct[] = allProducts;
   // let currentProduct: Iproduct;
@@ -134,11 +134,10 @@ const AdminManageProducts = () => {
     e.preventDefault()
     const { id } = product
     dispatch(changeAvailability(id))
+   // dispatch(getProducts())
     setActive(true)
   }
-
   
-
   const aplicarCambios = async () => {
     if (!productsToUpdate.length) return swal('Oops', 'Please select product to change', 'warning')
     await requestUpdateStatusProducts(productsToUpdate)
@@ -325,7 +324,7 @@ const AdminManageProducts = () => {
                     className={styles.product__card__icon_edit}
                     onClick={(e: any) => handleVisibility(e, product)}
                   >
-                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}
+                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />} 
                   </button>
                 </div>
               </div>
@@ -354,7 +353,7 @@ const AdminManageProducts = () => {
                 x
               </button>
             </div>
-            <h2>Edit Product</h2>
+          <h2>Edit Product: {productModal.name}</h2>
 
             <div className={styles.creation_form__section_container}>
               <p className={styles.current__data}>
@@ -579,6 +578,8 @@ const AdminManageProducts = () => {
 };
 
 export default AdminManageProducts;
+
+
 
 
 
