@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
+import swal from "sweetalert";
 import { Ireducers, Iorder } from "../../../lib/types";
 import formatDate from "../../controllers/format-date";
 import { filterOrders, getUsersOrders, restoreAllOrders, sortOrders, changeOrderStatus } from "../../redux/slice/admin-management-redux/admin-manage-orders";
@@ -59,11 +60,16 @@ const AdminManageOrders = () => {
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>, id: string) => {
     const { value } = e.target;
-    // if (value === "in_transit") {
-    //   // ademas de los siguientes 2 dispatch tenemos que enviar un correo indicando que la orden fue despachada
-    //   // aca llamar a la funcion que envía el correo 
-    // }
+
     dispatch(changeOrderStatus({ orderId: id, orderStatus: value}));
+
+    if (value === "in_transit") {
+
+      swal("OK", `Changed order status to ${value} and sent email to costumer successfully.`, "success");
+    } else {
+      swal("OK", `Order status changed successfully to ${value}`, "success");
+    }
+    
     dispatch(getUsersOrders());
     setSelectedValue({
       statusSelection: "",
@@ -104,7 +110,9 @@ const AdminManageOrders = () => {
           <option value="desc">Newer first</option>
         </select>
 
-        <button className={styles.clear_filters_btn} onClick={clearFilters}>Clear filters</button>
+        <button className={styles.clear_filters_btn} onClick={clearFilters}>
+          Clear filters
+        </button>
       </div>
 
       <div className={styles.orders_management__orders_container}>
@@ -113,8 +121,8 @@ const AdminManageOrders = () => {
             return (
               <div key={order.id} className={styles.orders_management__order_container}>
                 <p className={styles.orders_management__order_identifier}>
-                  <span className={styles.orders_management__order_span}>Order reference id:{" "}</span>
-                  {order.id}
+                  <span className={styles.orders_management__order_span}>Order id:{" "}</span>
+                  {order.idPurchase}
                 </p>
 
                 <div className={styles.orders_management__order_status_container}>

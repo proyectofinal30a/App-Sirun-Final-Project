@@ -8,7 +8,8 @@ import Image from "next/image";
 import { IconContext } from "react-icons";
 import { FaHeart } from "react-icons/fa";
 import { Ireducers } from "../../../lib/types";
-import * as acctionFav from '../../redux/slice/favorite-user-redux/favorite-redux'
+import * as acctionFav from '../../redux/slice/favorite-user-redux/favorite-redux';
+import swal from "sweetalert";
 
 
 export default function Wishlist(): JSX.Element {
@@ -25,9 +26,23 @@ export default function Wishlist(): JSX.Element {
   if (!data) return (<div className={styles.wishlist__loading}>Loading...</div>);
 
   const handleFavorite = (id: string) => {
-    let deleteConfirmation = confirm("Are you sure you want to delete this product from your wishlist?");
-    if (deleteConfirmation === false) return;
-    dispatch(acctionFav.deleteOneFavorite(data.user.email, id));
+    swal({
+      title: "Removing product from wishlist", 
+      text: "Are you sure you want to delete this product from your wishlist?", 
+      icon: "warning",
+      buttons: [
+        "No, cancel it!",
+        "Yes, I am sure!",
+      ],
+    }).then(
+      (isConfirm) => {
+        if (isConfirm) {
+          dispatch(acctionFav.deleteOneFavorite(data.user.email, id));
+          return swal("Confirmed", "Product removed from your wishlist!", "success");
+        } 
+        return swal("Canceled", "Product is staying in your wishlist!", "success");
+      }
+    )
   }
 
   return (

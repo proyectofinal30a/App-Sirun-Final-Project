@@ -50,11 +50,9 @@ const UserSideBar = () => {
           </Link>
           <div className={styles.nav__link}>
             <li className={styles.nav__item}>
-
-              <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })} className={styles.sign__btn}>
+              <span onClick={() => signOut({ redirect: true, callbackUrl: "/" })} className={styles.sign__btn}>
                 Sign out
-
-              </button>
+              </span>
             </li>
           </div>
         </ul>
@@ -73,9 +71,7 @@ const UserSideBar = () => {
             <Link href="/user/order" className={styles.mobile_nav__link}>My orders</Link>
             <Link href="/user/review" className={styles.mobile_nav__link}>My reviews</Link>
             <div className={styles.mobile_nav__link}>
-              <button onClick={() => signOut({ redirect: true, callbackUrl: "/" })} className={styles.sing__btn}>
-                Sign Out
-              </button>
+              <span onClick={() => signOut({ redirect: true, callbackUrl: "/" })} className={styles.sing__btn_mobile}>Sign out</span>
             </div>
           </div>
         </div>

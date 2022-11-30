@@ -72,7 +72,7 @@ const ProductDetail = () => {
 
 
   const productsInCartID = cart.map((elem) => elem.id)
-  const allProductsID = allProducts.filter((elem) => elem.available === true)
+  const allProductsID = allProducts.filter((elem) => elem.available !== false)
     .map((elem) => elem.id)
     .filter((elem) => productsInCartID.includes(elem))
   const productsInCart = cart.filter((elem) => allProductsID.includes(elem.id))
@@ -94,6 +94,8 @@ const ProductDetail = () => {
 
   const addProductOpenModal = (product: Iproduct) => {
     setIsOpen(true);
+    console.log(product);
+    
     const { id, name, price, image } = product;
     const productToAdd: IproductModelCart = {
       id: id,
@@ -197,6 +199,7 @@ const ProductDetail = () => {
             <button
               className={styles.add_to_cart__btn}
               onClick={() => addProductOpenModal(product)}
+              disabled={product.available? true: false}
             >
               Add to cart
             </button>
