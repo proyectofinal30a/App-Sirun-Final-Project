@@ -189,6 +189,7 @@ console.log(favoriteId);
         {paginatedProducts[0] ? (
           <>
             {paginatedProducts.map((product, index: number) => {
+              
               return (
                 <div key={index} className={styles.product_card__container}>
 
@@ -223,9 +224,10 @@ console.log(favoriteId);
                     <p>$ {product.price}</p>
                   </div>
 
-                  <button className={styles.add_to_cart__btn} onClick={() => addProductOpenModal(product)}>
+                  <button className={styles.add_to_cart__btn} onClick={() => addProductOpenModal(product)} disabled={product.available? true : false}>
                     Add to cart
                   </button>
+                  
                 </div>
               )
             })}

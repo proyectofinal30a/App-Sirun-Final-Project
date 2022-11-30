@@ -21,17 +21,20 @@ export default function ApprovedPayment() {
   const email: string = typeof data?.user?.email === "string" ? data?.user?.email : "";
   const name: string = typeof data?.user?.name === "string" ? data?.user?.name : "";
   const idReference: string = typeof query.external_reference === "string" ? query.external_reference : "";
-  let idPurchase: string = typeof query.collection_id  === "string" ? query.collection_id : "";
-  const orderInfo: any = useSelector<Ireducers>((state) => state.reducerAfterPayment.myOrder);
- 
-  useEffect(() => {
-    if(email && name && idReference && idPurchase) {
-      dispatch(getOrder({ email, name, idReference, idPurchase }));
-      setTimeout(() => {
-        router.push('/')
-      }, 7000);
-    }
-  }, [dispatch, email, name, idReference, idPurchase, router]);
+  let idPurchase: string = typeof query.collection_id === "string" ? query.collection_id : "";
+
+
+  console.log(email, name, idReference, idPurchase, 'data');
+
+
+  // useEffect(() => {
+  //   if (email && name && idReference && idPurchase) {
+  //     dispatch(getOrder({ email, name, idReference, idPurchase }));
+  //     setTimeout(() => {
+  //       router.push('/')
+  //     }, 7000);
+  //   }
+  // }, [dispatch, email, name, idReference, idPurchase, router]);
 
 
   return (

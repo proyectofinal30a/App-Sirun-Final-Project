@@ -16,25 +16,27 @@ export default async function findReference(req: NextApiRequest, res: NextApiRes
     const { email, name, idReference, idPurchase }: body = req.body;
 
     interface responseMP { data: { results: [{ status: string, id: string }] } }
+    console.log('===init');
 
     const requestOrder: responseMP = await axios({
-        method: 'get',
-        url: `https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=${idReference}`,
-        headers: {
-            'Content-Type': "application/json",
-            Authorization: `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
-        }
+      method: 'get',
+      url: `https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=${idReference}`,
+      headers: {
+        'Content-Type': "application/json",
+        Authorization: `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
+      }
     })
-
+    console.log('requestOrder', requestOrder?.data?.results?.[0]?.status);
     await prisma.order.update({
-        where: {
-            id: idReference
-        },
-        data: {
-            idPurchase: String(requestOrder.data.results[0].id),
-            status: "confirmed"
-        }
+      where: {
+        id: idReference
+      },
+      data: {
+        idPurchase: String(requestOrder.data.results[0].id),
+        status: "confirmed"
+      }
     })
+    console.log('==paso update');
 
     const statusConfirmation = await prisma.order.findFirst({
       where: { id: idReference },
@@ -73,12 +75,14 @@ export default async function findReference(req: NextApiRequest, res: NextApiRes
               },
             },
             status: true,
+            date: true,
             delivery_time: true,
             total: true,
           },
         },
       },
     });
+    console.log('==paso update2');
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -104,6 +108,8 @@ export default async function findReference(req: NextApiRequest, res: NextApiRes
         console.log("Email sent: " + info.response);
       }
     });
+    console.log('==paso update3');
+
     res.status(200).json({ msg: "the order status check was successful" });
   } catch (error) {
     console.log(error);
