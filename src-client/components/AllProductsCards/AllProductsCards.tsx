@@ -224,7 +224,7 @@ console.log(favoriteId);
                     <p>$ {product.price}</p>
                   </div>
 
-                  <button className={styles.add_to_cart__btn} onClick={() => addProductOpenModal(product)} disabled={product.available? true : false}>
+                  <button className={styles.add_to_cart__btn} onClick={() => addProductOpenModal(product)} disabled={product.available? false : true}>
                     Add to cart
                   </button>
                   
