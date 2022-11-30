@@ -87,15 +87,16 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
             subject: `Sirun Pâtisserie - Order ${requestOrder.data?.results?.[0]?.id}`,
             html: myHtml
         }
-
-        await transporter.sendMail(mailOptions, function (error, info) {
-            if (error) {
-                console.log(error);
-            } else {
-                console.log('Email sent: ' + info.response);
-            }
-        });
-  
+        
+        setTimeout(() => {
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                } else {
+                    console.log('Email sent: ' + info.response);
+                }
+            });
+        }, 3000)
 
 
         await prisma.order.update({
