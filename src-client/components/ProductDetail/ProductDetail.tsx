@@ -13,7 +13,8 @@ import { FiHeart } from "react-icons/fi";
 import { Iproduct, Ireducers, IproductModelCart } from "../../../lib/types";
 import { getProductDetail, cleanProductDetail } from "../../redux/slice/products-client/Product-detail-redux";
 import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
-import { requestAddToFavorites, addToFavorites, getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import * as action from '../../redux/slice/favorite-user-redux/favorite-redux'
 import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux"
 import { UserReview } from "./UserReview";
 import Average from "./StarsAverage";
@@ -30,53 +31,57 @@ const ProductDetail = () => {
   const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
   const [activeImage, setActiveImage] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
-
-  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+  const favoriteId = useSelector((state: Ireducers) => state.reducerFavoriteUser.favoriteId)
   const product = useSelector((state: Ireducers) => state.reducerProductDetail.detail);
-
-  const cart = useSelector((state: Ireducers) => state.reducerCart.products);  
+  const cart = useSelector((state: Ireducers) => state.reducerCart.products);
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
 
-  interface IproduId {
-    id: string
+
+
+
+  useEffect(() => {
+    dispatch(cleanProductDetail());
+    typeof id === 'string' && dispatch(getProductDetail(id));
+  }, [dispatch, id]);
+
+
+  useEffect(() => {
+    if (!myInfUser?.user?.id) {
+      dispatch(getUserDetail(myNuEmail));
+    }
+  }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
+
+
+
+  const biblioteca = {}
+
+  if (favoriteId?.[0]) {
+    favoriteId.forEach(fav => {
+      biblioteca[fav] = true;
+    })
   }
 
-  let favorites2: Array<IproduId> = []
-  
+
   useEffect(() => {
-      dispatch(cleanProductDetail());
-      typeof id === 'string' && dispatch(getProductDetail(id));
-    }, [dispatch, id]);
-  
-    
-    useEffect(() => {
-      if (!myInfUser?.user?.id) {
-        dispatch(getUserDetail(myNuEmail));
-      }
-    }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
-    
-    
-    useEffect(() => {
-      if (!myProfile) return
-      (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
-    })
-    
-    useEffect(()=>{
-      dispatch(getAllProducts())
-      },[dispatch])
-    
+    dispatch(getAllProducts())
+  }, [dispatch])
+
+  // if(!cart?.[0] || !allProducts?.[0]){
+  //   return <div className={styles.loading}>The cart is empthy...</div>
+  // }
+
 
   const productsInCartID = cart.map((elem) => elem.id)
-  const allProductsID =allProducts.filter((elem)=> elem.available === true)
-                                  .map((elem)=>elem.id)                             
-                                  .filter((elem)=> productsInCartID.includes(elem))    
-  const productsInCart = cart.filter((elem)=> allProductsID.includes(elem.id))
+  const allProductsID = allProducts.filter((elem) => elem.available === true)
+    .map((elem) => elem.id)
+    .filter((elem) => productsInCartID.includes(elem))
+  const productsInCart = cart.filter((elem) => allProductsID.includes(elem.id))
 
 
 
 
 
-  if (id !== product.id || !product?.evaluation) return <div className={styles.loading}>Loading...</div>
+  if (id !== product.id || !product?.evaluation || !myNuEmail) return <div className={styles.loading}>Loading...</div>
   const { evaluation } = product;
 
 
@@ -128,21 +133,13 @@ const ProductDetail = () => {
 
   // FAVORITE 
 
-  let biblioteca: any = {}
 
-  if (myProfile) {
-    favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
-    favorites2.forEach(fav => {
-      biblioteca[fav.id] = true;
-    })
-  }
 
   const handleFavorite = (id: string) => {
     status === "unauthenticated" && signIn("auth0");
-    const productToAdd = {
-      id: id
-    }
-    dispatch(addToFavorites(productToAdd));
+    favoriteId.includes(id) ?
+      dispatch(action.deleteOneFavorite(myNuEmail, id)) :
+      dispatch(action.addOneFavorite(myNuEmail, id))
   }
 
 
@@ -304,20 +301,20 @@ const ProductDetail = () => {
 
           {status === "unauthenticated" ?
             <div className={styles.modal__purchase_btn_container}>
-              <input 
-                value="Sign in to checkout" 
-                type="button" 
-                onClick={() => signIn("auth0", { redirect: true, callbackUrl: "/checkout" })} 
-                className={styles.modal__start_purchase_btn} 
+              <input
+                value="Sign in to checkout"
+                type="button"
+                onClick={() => signIn("auth0", { redirect: true, callbackUrl: "/checkout" })}
+                className={styles.modal__start_purchase_btn}
               />
             </div>
-          :
+            :
             <Link href="/checkout" className={styles.modal__purchase_btn_container}>
               <button className={styles.modal__start_purchase_btn}>Checkout</button>
             </Link>
           }
 
-        </form> 
+        </form>
       </Modal>
 
       <div className={styles.reviews__container}>

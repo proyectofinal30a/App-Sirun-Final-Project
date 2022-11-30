@@ -14,7 +14,7 @@ const template: IUserDetail = {
         orders: [],
         favorites: [],
         addresses: [],
-        role: ''
+        role: '',
     }
 };
 
@@ -25,10 +25,11 @@ interface IidString {
 interface IpayloadUserdata {
     payload: userData
 }
-
+interface IpayloadArrayIdfavorite {
+    payload: string[]
+}
 
 export const reducerUser = createSlice({
-
     name: "reducerUser",
     initialState: template,
     reducers: {
@@ -37,6 +38,7 @@ export const reducerUser = createSlice({
             return;
         },
         addToFavorites: (state: IUserDetail, action: any) => {
+            console.log(action)
             if (!state.user) return
             const foundProduct = state.user.favorites.find(product => product.id === action.payload.id);
             if (foundProduct) {
@@ -52,7 +54,6 @@ export const reducerUser = createSlice({
         deleteAddress: (state: IUserDetail, action: IidString) => {
             state.user.addresses = state.user.addresses.filter((elem) => elem.id !== action.payload)
         },
-
     },
 });
 
@@ -93,7 +94,7 @@ export const getUserDetail = (email: string | undefined) => async (dispatch: Fun
                 name: myUser.name
             }
 
-           await axios({
+            await axios({
                 method: "post",
                 url: '/api/userScope/post/email-back-order/request-status-order',
                 data: mypack,
@@ -211,14 +212,14 @@ export const postImageServerUsert = async ({ email, name, newImage, deleteImage 
 
     }
 }
-export const changePassword = (email: string) => async (dispatch: Function) => {    
+export const changePassword = (email: string) => async (dispatch: Function) => {
     try {
         const user: any = await axios.post('/api/adminScope/put/changePassword', {
             email,
         })
         swal('Success', 'Check your email inbox to reset your password', 'success')
     } catch (error) {
-        return error        
+        return error
     }
 }
 

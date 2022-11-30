@@ -1,5 +1,5 @@
 import styles from "../../styles/Wishlist.module.css";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
@@ -7,68 +7,35 @@ import Link from "next/link";
 import Image from "next/image";
 import { IconContext } from "react-icons";
 import { FaHeart } from "react-icons/fa";
-import { FiHeart } from "react-icons/fi";
 import { Ireducers } from "../../../lib/types";
-import { requestAddToFavorites, addToFavorites, getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import * as acctionFav from '../../redux/slice/favorite-user-redux/favorite-redux'
 
 
 export default function Wishlist(): JSX.Element {
   const router = useRouter();
   const dispatch: Function = useDispatch();
-  const { data, status } = useSession<boolean>();
+  const { data} = useSession<boolean>();
 
-  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
-  const myNuEmail = data?.user?.email;
-  const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
-  
+  const myFavorite = useSelector((state: Ireducers) => state.reducerFavoriteUser.favoriteId);
+  const myProduct = useSelector((state: Ireducers) => state.reducerProducts.products)
 
-  useEffect(() => {
-    if (!myInfUser?.user?.id) {
-      dispatch(getUserDetail(myNuEmail));
-    }
-  }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
+  const myProductFav = myFavorite?.[0] && myProduct?.[0] && myProduct?.filter(elem => myFavorite.includes(elem.id))
 
 
-  interface IproduId {
-    id: string;
-  }
+  if (!data) return (<div className={styles.wishlist__loading}>Loading...</div>);
 
-  let favorites2: Array<IproduId> = [];
-
-
-  useEffect(() => {
-    if (!myProfile) return;
-    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
-  })
-
-
-  if (!myProfile.name || !data) return (<div className={styles.wishlist__loading}>Loading...</div>);
-
-
-  let biblioteca: any = {};
-
-
-  if (myProfile) {
-    favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
-    favorites2.forEach(fav => {
-      biblioteca[fav.id] = true;
-    })
-  }
-  
   const handleFavorite = (id: string) => {
-    const productToAdd = { id: id };
     let deleteConfirmation = confirm("Are you sure you want to delete this product from your wishlist?");
     if (deleteConfirmation === false) return;
-    dispatch(addToFavorites(productToAdd));
+    dispatch(acctionFav.deleteOneFavorite(data.user.email, id));
   }
-
 
   return (
     <div className={styles.wishlist__container}>
-      <h3 className={myProfile.favorites[0] ? styles.wishlist_title : styles.wishlist_title_hidden}>My Wishlist</h3>
+      <h3 className={myProductFav?.[0] ? styles.wishlist_title : styles.wishlist_title_hidden}>My Wishlist</h3>
 
-      {myProfile.favorites[0] ? 
-        myProfile.favorites.map((elem) => {
+      {Array.isArray(myProductFav) && myProductFav[0] ?
+        myProductFav?.map((elem) => {
           if (!elem.name) return null
 
           const myImage: string = typeof elem?.image?.[0].image === "string" ? elem.image[0].image : "Loading...";
@@ -76,11 +43,11 @@ export default function Wishlist(): JSX.Element {
           return (
             <div key={elem.id} className={styles.wishlist_product_container}>
               <div className={styles.wishlist_product_img_container}>
-                <Image 
-                  src={myImage} 
-                  width="300" 
-                  height="300" 
-                  alt={elem.name} 
+                <Image
+                  src={myImage}
+                  width="300"
+                  height="300"
+                  alt={elem.name}
                   className={styles.wishlist_product_img}
                 />
               </div>
@@ -96,7 +63,7 @@ export default function Wishlist(): JSX.Element {
               <div className={styles.wishlist_fav_btn_container} onClick={() => handleFavorite(elem.id)}>
                 <IconContext.Provider value={{ color: "red", size: "1.5em" }}>
                   <p className={styles.wishlist_fav_btn}>
-                    {biblioteca[elem.id] ? <FaHeart /> : <FiHeart /> }
+                    <FaHeart />
                   </p>
                 </IconContext.Provider>
               </div>
@@ -104,7 +71,7 @@ export default function Wishlist(): JSX.Element {
           )
         })
 
-      : 
+        :
         <div className={styles.empty_cart__container}>
           <p className={styles.empty_cart__message}>Your wishlist is empty.</p>
           <button
