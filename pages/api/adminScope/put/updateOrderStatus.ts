@@ -23,16 +23,7 @@ const updateOrderStatus: Function = async (req: NextApiRequest, res: NextApiResp
               pass: process.env.API_KEY_EMAIL
           }
       });
-  
-      const requestOrder: responseMP = await axios({
-          method: 'get',
-          url: `https://api.mercadopago.com/v1/payments/search?sort=date_created&criteria=desc&external_reference=${orderId}`,
-          headers: {
-              'Content-Type': "application/json",
-              Authorization: `Bearer ${process.env.MERCADOPAGO_ACCESS_TOKEN}`
-          }
-      })
-  
+
       const updatedOrder = await prisma.order.findFirst({
         where: { id: orderId },
         select: {
