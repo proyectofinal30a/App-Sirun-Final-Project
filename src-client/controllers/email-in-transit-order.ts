@@ -50,12 +50,12 @@ export default function CreationInTransitEmail({idPurchase, user, addressOrder, 
                 Delivery time: ${delivery_time}
               </p>
               <p>
-                Shipping address: ${addressOrder?.street_name + " " + addressOrder?.street_number + ", zip code: " + addressOrder?.zip_code}
+                Shipping address: ${addressOrder?.street_name + " " + addressOrder?.street_number + " - " + addressOrder?.zip_code}
               </p>
 
               <br />
 
-              <p
+              <a
                 href="https://sirunnpatisserie.vercel.app/about#newsletter"
                 style="
                   color: rgb(248, 159, 174);
@@ -64,7 +64,7 @@ export default function CreationInTransitEmail({idPurchase, user, addressOrder, 
                 "
               >
                 Did you sign up to our newsletter?
-              </p>
+              </a>
               <p>
                 Be the first to know about the latests news! Get exclusive offers
                 with inspirational and styling tips!

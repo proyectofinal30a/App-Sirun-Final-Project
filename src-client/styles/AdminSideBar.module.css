@@ -71,6 +71,10 @@
   background: none;
 }
 
+.sing__btn_mobile {
+  text-decoration: underline;
+}
+
 .sign__btn:hover, .sign__btn:focus {
   cursor: pointer;
   background-color: rgb(229, 234, 244);
