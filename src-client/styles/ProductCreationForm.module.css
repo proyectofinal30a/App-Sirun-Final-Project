@@ -144,6 +144,14 @@
   object-fit: cover;
 }
 
+.creation_form__img {
+  margin-bottom: 1em;
+  width: 100%;
+  object-fit: cover;
+}
+
+
+
 .creation_form__error_message {
   color: red;
   font-size: .8em;

@@ -13,6 +13,7 @@
   padding-right: 0;
 }
 
+
 .container_width {
   margin: 0;
   width: 90%;
@@ -181,6 +182,10 @@
   padding-bottom: 1em;
 }
 
+.modal__container__inside{
+  padding: 2em;
+}
+
 .modal__btn_right_container {
   float: right;
 }
@@ -233,6 +238,7 @@
   border: 1px solid grey;
   border-radius: .2em;
   font-size: .9em;
+  background-color: rgb(10, 181, 10);
 }
 
 
@@ -275,10 +281,15 @@
 
 .images__container{
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: space-evenly;
+  width: 100%;
+  margin-bottom: 1.5em;
+}
+
+.creation_form__img_input {
+  border: none;
   margin-bottom: 1em;
+  padding: .3em;
 }
 
 .creation_form__error_message {
@@ -288,9 +299,28 @@
   margin-bottom: 1.5em;
 }
 
-/* .creation_form__section_container{
-  margin: .5em;
-} */
+
+.creation_form__input_btn,
+.creation_form__input_btn_delete,
+.input[type="button"],
+.input[type="file"] {
+  margin-top: 1em;
+  padding: .3em .7em;
+  border: none;
+  border: 1px solid grey;
+  border-radius: .2em;
+  font-size: .9em;
+}
+
+.creation_form__input_btn:hover,
+.creation_form__input_btn_delete:hover,
+.input[type="button"]:hover,
+.input[type="file"]:hover {
+  background-color: gray;
+  cursor: pointer;
+}
+
+
 
 /*End modal*/
 
