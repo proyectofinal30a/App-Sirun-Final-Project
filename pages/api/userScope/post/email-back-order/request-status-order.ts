@@ -96,6 +96,7 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
                 console.log('Email sent: ' + info.response);
             }
         });
+
         await prisma.order.update({
             where: {
                 id: idReference
