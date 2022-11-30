@@ -26,6 +26,7 @@ const FormCheckout = (): JSX.Element => {
     if (payLink) dispatch(resetCart())
     return () => dispatch(resetCart());
   }, []);
+  console.log(payLink);
 
   if (!products[0]) router.push('/')
 
