@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Image from "next/image";
+import swal from "sweetalert";
 import { Ireducers, Iorder } from "../../../lib/types";
 import formatDate from "../../controllers/format-date";
 import { filterOrders, getUsersOrders, restoreAllOrders, sortOrders, changeOrderStatus } from "../../redux/slice/admin-management-redux/admin-manage-orders";
@@ -63,9 +64,10 @@ const AdminManageOrders = () => {
     dispatch(changeOrderStatus({ orderId: id, orderStatus: value}));
 
     if (value === "in_transit") {
-      alert(`Changed order status to ${value} and sent email to costumer successfully.`);
+
+      swal("OK", `Changed order status to ${value} and sent email to costumer successfully.`, "success");
     } else {
-      alert(`Order status changed successfully to ${value}`);
+      swal("OK", `Order status changed successfully to ${value}`, "success");
     }
     
     dispatch(getUsersOrders());
