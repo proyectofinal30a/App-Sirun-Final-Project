@@ -109,7 +109,7 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
 
     } catch (error) {
         console.log(error);
-        res.status(200).json({ msg: error.message || error })
+        res.status(200).json({ msg: error.message || error})
     }
 
 }

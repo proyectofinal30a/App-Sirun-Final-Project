@@ -27,7 +27,7 @@ const AllProductsCards = () => {
   const [uploadFavo, setUploadFavo] = useState(false);
   // FILTERS
 
-console.log(favoriteId);
+
 
   const filterProducts = useSelector((state: Ireducers) => state.reducerFilters.productsToFilter);
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
@@ -46,7 +46,7 @@ console.log(favoriteId);
   }, [dispatch])
 
 
- 
+
 
 
   useEffect(() => {
@@ -189,7 +189,7 @@ console.log(favoriteId);
         {paginatedProducts[0] ? (
           <>
             {paginatedProducts.map((product, index: number) => {
-              
+
               return (
                 <div key={index} className={styles.product_card__container}>
 
@@ -224,10 +224,10 @@ console.log(favoriteId);
                     <p>$ {product.price}</p>
                   </div>
 
-                  <button className={styles.add_to_cart__btn} onClick={() => addProductOpenModal(product)} disabled={product.available? false : true}>
+                  <button className={styles.add_to_cart__btn} onClick={() => addProductOpenModal(product)} disabled={product.available ? false : true}>
                     Add to cart
                   </button>
-                  
+
                 </div>
               )
             })}
