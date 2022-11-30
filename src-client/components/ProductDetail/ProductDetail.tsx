@@ -199,7 +199,7 @@ const ProductDetail = () => {
             <button
               className={styles.add_to_cart__btn}
               onClick={() => addProductOpenModal(product)}
-              disabled={product.available? true: false}
+              disabled={product.available? false: true}
             >
               Add to cart
             </button>
