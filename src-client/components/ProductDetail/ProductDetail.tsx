@@ -13,7 +13,8 @@ import { FiHeart } from "react-icons/fi";
 import { Iproduct, Ireducers, IproductModelCart } from "../../../lib/types";
 import { getProductDetail, cleanProductDetail } from "../../redux/slice/products-client/Product-detail-redux";
 import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
-import { requestAddToFavorites, addToFavorites, getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
+import * as action from '../../redux/slice/favorite-user-redux/favorite-redux'
 import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux"
 import { UserReview } from "./UserReview";
 import Average from "./StarsAverage";
@@ -30,18 +31,13 @@ const ProductDetail = () => {
   const myInfUser = useSelector((state: Ireducers) => state.reducerUser);
   const [activeImage, setActiveImage] = useState("");
   const [modalIsOpen, setIsOpen] = useState(false);
-
-  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+  const favoriteId = useSelector((state: Ireducers) => state.reducerFavoriteUser.favoriteId)
   const product = useSelector((state: Ireducers) => state.reducerProductDetail.detail);
-
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
 
-  interface IproduId {
-    id: string
-  }
 
-  let favorites2: Array<IproduId> = myProfile.favorites
+
 
   useEffect(() => {
     dispatch(cleanProductDetail());
@@ -55,20 +51,16 @@ const ProductDetail = () => {
     }
   }, [dispatch, data, myInfUser?.user?.id, myNuEmail]);
 
-  // manda array vacio, por eso vacia la whislist
-  let biblioteca: any = {}
 
-  if (myProfile) {
-    favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
-    favorites2.forEach(fav => {
-      biblioteca[fav.id] = true;
+
+  const biblioteca = {}
+
+  if (favoriteId?.[0]) {
+    favoriteId.forEach(fav => {
+      biblioteca[fav] = true;
     })
   }
 
-  useEffect(() => {
-    if (!myProfile) return
-    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
-  })
 
   useEffect(() => {
     dispatch(getAllProducts())
@@ -89,7 +81,7 @@ const ProductDetail = () => {
 
 
 
-  if (id !== product.id || !product?.evaluation) return <div className={styles.loading}>Loading...</div>
+  if (id !== product.id || !product?.evaluation || !myNuEmail) return <div className={styles.loading}>Loading...</div>
   const { evaluation } = product;
 
 
@@ -145,11 +137,9 @@ const ProductDetail = () => {
 
   const handleFavorite = (id: string) => {
     status === "unauthenticated" && signIn("auth0");
-    const productToAdd = {
-      id: id
-    }
-    console.log(productToAdd)
-    dispatch(addToFavorites(productToAdd));
+    favoriteId.includes(id) ?
+      dispatch(action.deleteOneFavorite(myNuEmail, id)) :
+      dispatch(action.addOneFavorite(myNuEmail, id))
   }
 
 

@@ -3,7 +3,7 @@ import { prisma } from '../../../../../lib/prisma'
 export default async function userFavorite(req: NextApiRequest, res: NextApiResponse) {
     try {
         const { email } = req.query
-        if (typeof email === 'string' && email !== 'undefined') {
+        if (typeof email === 'string') {
             const userFavorite = await prisma.user.findFirst({
                 where: { email },
                 select: {
@@ -15,10 +15,9 @@ export default async function userFavorite(req: NextApiRequest, res: NextApiResp
                 }
             })
             const mydataFavorite = userFavorite?.favorites.map(e => e.id)
-
-            res.status(200).json(mydataFavorite)
+            return res.status(200).json(mydataFavorite)
         }
-
+        res.status(200).json([])
     } catch (error) {
         console.log(error);
 

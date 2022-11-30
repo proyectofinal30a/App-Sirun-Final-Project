@@ -28,7 +28,7 @@ export const reducerFavoriteUser = createSlice({
             state.favoriteId = action.payload
         },
         updateFavoriteAction: (state: IFavoriteUser, action: IidString) => {
-            if (state.favoriteId.includes(action.payload)) {
+            if (state.favoriteId?.includes(action.payload)) {
                 const myFilter = state.favoriteId.filter(e => e !== action.payload)
                 state.favoriteId = myFilter
                 return
@@ -39,10 +39,24 @@ export const reducerFavoriteUser = createSlice({
     },
 });
 
+export const deleteOneFavorite = (email: string, id: string) => async (dispatch: Function) => {
+    try {
+        if (typeof email !== 'string') return
+        await axios({
+            method: 'delete',
+            url: `/api/userScope/delete/productLessFav`,
+            data: { email, id }
+        })
+
+        dispatch(reducerFavoriteUser.actions.updateFavoriteAction(id))
+    } catch (error) {
+        console.log(error);
 
 
+    }
 
-export const updateFavorite = async (stringArray: string[], email: string) => {
+}
+export const updateFavorite = (stringArray: string[], email: string) => async (dispatch: Function) => {
     try {
 
         const mypackIdFavo = stringArray[0] ? stringArray.map(e => {
@@ -70,6 +84,21 @@ interface IuserUpdate {
     deleteImage: string
 }
 
+export const addOneFavorite = (email: string, id: string) => async (dispatch: Function) => {
+    try {
+        if (typeof email !== 'string') return
+        await axios({
+            method: 'post',
+            url: `/api/userScope/post/one-evalution-favorite`,
+            data: { email, id }
+        })
+
+        dispatch(reducerFavoriteUser.actions.updateFavoriteAction(id))
+    } catch (error) {
+        console.log(error);
+    }
+
+}
 
 
 export const addFavoriteRedux = (id: string) => (dispatch: Function) => {

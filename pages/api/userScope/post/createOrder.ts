@@ -12,8 +12,6 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
         const idProduct = myPreference.items.map(elem => {
             return { id: elem.id }
         })
-
-
         const myItems = await myPreference.items.map(product => {
             return {
                 id: product.id,
@@ -24,7 +22,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
             }
         })
 
-        
+
         if (!myPreference.payer.address.id) {
             await prisma.user.update({
                 where: {
@@ -50,7 +48,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
                 },
 
             })
-            console.log("------------ paso user update ---------------")
+
             const OrderUser = await prisma.order.create({
                 data: {
                     id: idOrder,
@@ -95,7 +93,6 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
 
                 }
             })
-            console.log("------------ paso order update ---------------")
             const preferenceAddReference = await { ...myPreference, external_reference: OrderUser.id }
 
             const response = await axios({
@@ -165,7 +162,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
 
             }
         })
-        console.log("------------ paso user create ---------------")
+
         const preferenceAddReference = await { ...myPreference, external_reference: OrderUser.id }
 
         const response = await axios({

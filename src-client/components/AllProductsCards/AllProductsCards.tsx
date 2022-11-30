@@ -14,7 +14,6 @@ import * as actionFav from '../../redux/slice/favorite-user-redux/favorite-redux
 import { Iproduct, Ireducers, IproductModelCart } from "../../../lib/types";
 import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
 import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
-import { requestAddToFavorites, addToFavorites, getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { cleanFilters } from "../../redux/slice/filter-product-client/filters-redux";
 
 
@@ -25,8 +24,9 @@ const AllProductsCards = () => {
   const { data, status } = useSession<boolean>();
   const { favoriteId } = useSelector((state: Ireducers) => state.reducerFavoriteUser);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [uploadFavo, setUploadFavo] = useState(false);
   // FILTERS
-  console.log(favoriteId, 'holaaaa');
+
 
   const filterProducts = useSelector((state: Ireducers) => state.reducerFilters.productsToFilter);
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
@@ -37,7 +37,7 @@ const AllProductsCards = () => {
   useEffect(() => {
     return () => dispatch(cleanFilters());
   }, [dispatch])
-  console.log(allProducts);
+
 
   useEffect(() => {
     dispatch(getAllProducts())
@@ -45,23 +45,20 @@ const AllProductsCards = () => {
   }, [dispatch])
 
 
-  // useEffect(() => {
-  //   if (!myProfile) return
-  //   (async () => { await requestAddToFavorites(myProfile.id, myListFavorite) })();
-  // })
-
-  useEffect(() => {
-
-    return function () {
-    dispatch(actionFav.updateFavorite(favoriteId, data.user.email))
-
-    }
-  }, [])
-
+ 
 
 
   useEffect(() => {
-    data?.user && dispatch(getUserDetail(data?.user.email))
+    data?.user.email && dispatch(actionFav.getfavoriteUser(data?.user.email))
+  }, [data])
+
+  useEffect(() => {
+    favoriteId[0] && dispatch(actionFav.updateFavorite(favoriteId, data?.user.email || ""))
+  }, [uploadFavo])
+
+
+  useEffect(() => {
+
   }, [dispatch, data]);
   useEffect(() => {
     if (filterProducts[0]) setCurrentPage(1);
@@ -69,7 +66,7 @@ const AllProductsCards = () => {
 
   }, [filterProducts, dispatch]);
 
-  // FAVORITE 
+
 
 
 
@@ -78,10 +75,6 @@ const AllProductsCards = () => {
   const allProductsID = allProducts.map((elem) => elem.id)
     .filter((elem) => productsInCartID.includes(elem))
   const productsInCart = cart.filter((elem) => allProductsID.includes(elem.id))
-  console.log(productsInCart)
-
-
-
 
 
   if (!allProducts?.[0]) return (<div className={styles.general__container}>
@@ -184,6 +177,7 @@ const AllProductsCards = () => {
 
   const handleFavorite = (id: string) => {
     status === "unauthenticated" && signIn("auth0");
+    setUploadFavo(!uploadFavo)
     dispatch(actionFav.addFavoriteRedux(id));
   }
 
