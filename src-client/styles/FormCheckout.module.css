@@ -1,6 +1,8 @@
 .loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: auto;
-  margin-top: 10em;
   height: 100vh;
   color: var(--color-dark-blue);
   font-family: var(--font-paragraph);
@@ -15,6 +17,40 @@
   margin-top: -1.2em;
   margin-bottom: 1em;
 }
+
+
+/* Calendar input */
+
+.input_calendar__container {
+  margin-left: -.5em;
+  margin-bottom: 2em;
+  display: flex;
+  flex-direction: column;
+}
+
+.input_calendar__label {
+  font-weight: bold;
+}
+
+.span {
+  font-weight: bold;
+  margin-left: -.5em;
+}
+
+.input_calendar__span {
+  margin-bottom: .5em;
+}
+
+.input_calendar {
+  width: 15em;
+  border: none;
+  border: 1px solid grey;
+  border-radius: .2em;
+  padding: .3em .5em;
+}
+
+
+/* Checkout */
 
 .checkout__container {
   display: flex;

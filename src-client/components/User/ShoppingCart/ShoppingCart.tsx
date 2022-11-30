@@ -73,7 +73,7 @@ const ShoppingCart = () => {
                         Price: {elem.quantity}
                       </p>
                       <p className={styles.modal__product_data}>
-                        Subtotal: {elem.subTotal}
+                        Subtotal: ${elem.subTotal}
                       </p>
                     </div>
 
@@ -107,7 +107,18 @@ const ShoppingCart = () => {
                 </div>
               </div>
             );
-          }) : <p>The shooping cart is empthy</p>}
+          }) 
+          : 
+            <div className={styles.empty_cart__container}>
+              <p className={styles.empty_cart__message}>Your shopping cart is empty.</p>
+              <button
+                onClick={() => router.push("/products")}
+                className={styles.empty_cart__btn}
+              >
+                View products
+              </button>
+            </div>
+          }
 
           <p className={styles.modal__quantity_total}>Items in shopping cart ({totalQuantity})</p>
 

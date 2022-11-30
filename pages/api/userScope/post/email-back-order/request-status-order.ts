@@ -65,6 +65,7 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
                             }
                         },
                         status: true,
+                        date: true,
                         delivery_time: true,
                         total: true,
                     }
@@ -75,8 +76,8 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
         const statusConfirmation = await prisma.order.findFirst({
             where: { id: idReference },
             select: { status: true }
-          });
-      
+        });
+
         if (statusConfirmation?.status === "confirmed") return res.status(200).json({ msg: "Order is already confirmed" });
 
         const myHtml = CreationOfHTML(responseforEmail, email, name, requestOrder.data?.results?.[0]?.id)
@@ -91,10 +92,10 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
             if (error) {
                 console.log(error);
             } else {
+                res.status(200).json({ msg: info.response })
                 console.log('Email sent: ' + info.response);
             }
         });
-
 
         await prisma.order.update({
             where: {
@@ -106,10 +107,10 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
             }
         })
 
-        res.status(200).json({ msg: "the order status check was successful" })
+
     } catch (error) {
         console.log(error);
-        res.status(404).json({ msg: `error when checking the status of Orders` })
+        res.status(200).json({ msg: error.message || error})
     }
 
 }

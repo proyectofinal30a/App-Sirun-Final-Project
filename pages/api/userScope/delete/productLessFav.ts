@@ -5,14 +5,14 @@ import { prisma } from "../../../../lib/prisma"; //importo prisma del lib del ro
 
 export default async function productLessFav(req: NextApiRequest, res: NextApiResponse) {
   try {
-    const { idUser, idProduct } = req.body;
+    const { email, id } = req.body;
 
-    if (typeof idUser === "string" && typeof idProduct === "string") {
+    if (typeof email === "string" && typeof id === "string") {
       await prisma.user.update({
-        where: { id: idUser },
+        where: { email },
         data: {
           favorites: {
-            disconnect: { id: idProduct },
+            disconnect: { id },
           },
         },
       });

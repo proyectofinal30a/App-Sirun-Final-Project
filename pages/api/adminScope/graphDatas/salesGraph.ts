@@ -5,10 +5,10 @@ import { orderToSales } from '../../../../src-back/admin-graphs/controllers';
 const salesGraph: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
         const orders: any = await prisma.order.findMany()
-        console.log(orders);
+
         
         const order = await orderToSales(orders)
-        console.log(order, 'Soy order');
+
         
         return res.status(200).json(order)
     } catch (error) {

@@ -63,7 +63,7 @@ export default function Orders(): JSX.Element {
 
           return (
             <div key={elem.date} className={styles.order__info_container}>
-              <p className={styles.order__id}>Order id: {elem.id}</p>
+              <p className={styles.order__id}>Order id: {elem.idPurchase}</p>
 
               {elem.purchase_link &&
                 <div className={styles.payment_link__container}>

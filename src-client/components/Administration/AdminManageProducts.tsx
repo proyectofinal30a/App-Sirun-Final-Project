@@ -232,6 +232,7 @@ const AdminManageProducts = () => {
         description: newDescription,
         image : formProduct.image,
       }  
+
       await dispatch(updateProduct(productToUpdate))
       setFormProduct(myForm)
       setIsOpen(false)

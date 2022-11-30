@@ -10,10 +10,10 @@ import { BsFillTrashFill } from "react-icons/bs";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import * as action from '../../redux/slice/filter-product-client/filters-redux'
+import * as actionFav from '../../redux/slice/favorite-user-redux/favorite-redux'
 import { Iproduct, Ireducers, IproductModelCart } from "../../../lib/types";
 import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
 import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
-import { requestAddToFavorites, addToFavorites, getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import { cleanFilters } from "../../redux/slice/filter-product-client/filters-redux";
 
 
@@ -22,19 +22,23 @@ const AllProductsCards = () => {
   // GET ALL PRODUCTS
   const dispatch: Function = useDispatch();
   const { data, status } = useSession<boolean>();
-  const myProfile = useSelector((state: Ireducers) => state.reducerUser.user);
+  const { favoriteId } = useSelector((state: Ireducers) => state.reducerFavoriteUser);
   const [modalIsOpen, setIsOpen] = useState(false);
+  const [uploadFavo, setUploadFavo] = useState(false);
   // FILTERS
+
+
 
   const filterProducts = useSelector((state: Ireducers) => state.reducerFilters.productsToFilter);
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(9);
-  let favorites2: Array<IproduId> = []
+
   useEffect(() => {
     return () => dispatch(cleanFilters());
   }, [dispatch])
+
 
   useEffect(() => {
     dispatch(getAllProducts())
@@ -42,14 +46,20 @@ const AllProductsCards = () => {
   }, [dispatch])
 
 
-  useEffect(() => {
-    if (!myProfile) return
-    (async () => { await requestAddToFavorites(myProfile.id, favorites2) })();
-  })
+
 
 
   useEffect(() => {
-    data?.user && dispatch(getUserDetail(data?.user.email))
+    data?.user.email && dispatch(actionFav.getfavoriteUser(data?.user.email))
+  }, [data])
+
+  useEffect(() => {
+    favoriteId[0] && dispatch(actionFav.updateFavorite(favoriteId, data?.user.email || ""))
+  }, [uploadFavo])
+
+
+  useEffect(() => {
+
   }, [dispatch, data]);
   useEffect(() => {
     if (filterProducts[0]) setCurrentPage(1);
@@ -57,7 +67,7 @@ const AllProductsCards = () => {
 
   }, [filterProducts, dispatch]);
 
-  // FAVORITE 
+
 
 
 
@@ -66,10 +76,6 @@ const AllProductsCards = () => {
   const allProductsID = allProducts.map((elem) => elem.id)
     .filter((elem) => productsInCartID.includes(elem))
   const productsInCart = cart.filter((elem) => allProductsID.includes(elem.id))
-  console.log(productsInCart)
-
-
-
 
 
   if (!allProducts?.[0]) return (<div className={styles.general__container}>
@@ -159,12 +165,11 @@ const AllProductsCards = () => {
   }
 
 
-  let biblioteca: any = {}
+  const biblioteca = {}
 
-  if (myProfile) {
-    favorites2 = myProfile.favorites.map((e) => { return { id: e.id } })
-    favorites2.forEach(fav => {
-      biblioteca[fav.id] = true;
+  if (favoriteId?.[0]) {
+    favoriteId.forEach(fav => {
+      biblioteca[fav] = true;
     })
   }
 
@@ -173,10 +178,8 @@ const AllProductsCards = () => {
 
   const handleFavorite = (id: string) => {
     status === "unauthenticated" && signIn("auth0");
-    const productToAdd = {
-      id: id
-    }
-    dispatch(addToFavorites(productToAdd));
+    setUploadFavo(!uploadFavo)
+    dispatch(actionFav.addFavoriteRedux(id));
   }
 
 
@@ -186,6 +189,7 @@ const AllProductsCards = () => {
         {paginatedProducts[0] ? (
           <>
             {paginatedProducts.map((product, index: number) => {
+
               return (
                 <div key={index} className={styles.product_card__container}>
 
@@ -220,9 +224,10 @@ const AllProductsCards = () => {
                     <p>$ {product.price}</p>
                   </div>
 
-                  <button className={styles.add_to_cart__btn} onClick={() => addProductOpenModal(product)}>
+                  <button className={styles.add_to_cart__btn} onClick={() => addProductOpenModal(product)} disabled={product.available ? false : true}>
                     Add to cart
                   </button>
+
                 </div>
               )
             })}
@@ -243,7 +248,7 @@ const AllProductsCards = () => {
 
                 <h2>Shopping Cart</h2>
 
-                {cart?.map((elem, index: number) => {
+                {productsInCart?.map((elem, index: number) => {
                   if (!elem.title) return null
 
                   return (

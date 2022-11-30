@@ -58,6 +58,8 @@ export const getUsersOrders = () => async (dispatch: Function) => {
     data = data.sort((a: Iorder, b: Iorder) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
 
     dispatch(reducerAdminManagement.actions.getUsersOrders(data));
+
+
   } catch (error) {
     console.log(error);
   }
@@ -82,13 +84,23 @@ interface Ipayload {
 
 export const changeOrderStatus = (orderInfo: Ipayload) => async (dispatch: Function) => {
   try {
-    let { data } = await axios({
+    const { data } = await axios({
       method: "put",
       url: "/api/adminScope/put/updateOrderStatus",
       data: orderInfo,
     });
 
     dispatch(reducerAdminManagement.actions.changeOrderStatus(data));
+    console.log(orderInfo.orderStatus, 'staTUS');
+
+    if (orderInfo.orderStatus === 'in_transit') {
+      const { data } = await axios({
+        method: "post",
+        url: "/api/adminScope/post/send-email-status-in-proccess",
+        data: { orderId: orderInfo.orderId }
+      })
+      console.log(data);
+    }
   } catch (error) {
     console.log(error);
   }
