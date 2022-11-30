@@ -65,6 +65,7 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
                             }
                         },
                         status: true,
+                        date: true,
                         delivery_time: true,
                         total: true,
                     }

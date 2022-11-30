@@ -108,7 +108,9 @@ const AdminManageOrders = () => {
           <option value="desc">Newer first</option>
         </select>
 
-        <button className={styles.clear_filters_btn} onClick={clearFilters}>Clear filters</button>
+        <button className={styles.clear_filters_btn} onClick={clearFilters}>
+          Clear filters
+        </button>
       </div>
 
       <div className={styles.orders_management__orders_container}>

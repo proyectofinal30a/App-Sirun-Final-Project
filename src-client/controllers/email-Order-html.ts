@@ -21,6 +21,7 @@ interface data {
             },
             "purchasedProducts": product[],
             "status": string,
+            "date": Date;
             "delivery_time": string,
             "total": number
         }
@@ -66,7 +67,7 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
                   ${e.title}
                 </div>
                 <div style="position: relative; margin: 0; padding: 0; padding-bottom: 0.5em">
-                  Price: ${e.unit_price}
+                  Price: $${e.unit_price}
                 </div>
                 <div style="position: relative; margin: 0; padding: 0; padding-bottom: 0.5em">
                   Quantity: ${e.quantity}
@@ -77,7 +78,6 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
             `
         )
     }).join("")
-
 
 
 
@@ -175,13 +175,13 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
               </p>
             </header>
             <section>
-                  ${myproducHTML}
+              ${myproducHTML}
             </section>
   
             <div>
-              <p>Confirmation date: FALTA VER ESOOOOO</p>
-              <p>Delivery times: ${myorder.orders[0].delivery_time}</p>
-              <p>Total: ${myorder.orders[0].total}</p>
+              <p>Confirmation date: ${myorder.orders[0].date}</p>
+              <p>Delivery time: ${myorder.orders[0].delivery_time}</p>
+              <p>Total: $${myorder.orders[0].total}</p>
             </div>
           </article>
         </section>
@@ -205,8 +205,8 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
             <div style="font-size: 1em;">
               <p>Name: ${name}</p>
               <p>Email: ${email}</p>
-              <p>Phone: ${myorder.orders[0].addressOrder.phone.number}</p>
-              <p>Zip code: ${myorder.orders[0].addressOrder.phone.area_code}</p>
+              <p>Phone: +${myorder.orders[0].addressOrder.phone.area_code + " " + myorder.orders[0].addressOrder.phone.number}</p>
+              <p>Zip code: ${myorder.orders[0].addressOrder.zip_code}</p>
             </div>
           </article>
         </section>
@@ -218,7 +218,5 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
   
       </div>
     </body>
-  
-  
   `
 }

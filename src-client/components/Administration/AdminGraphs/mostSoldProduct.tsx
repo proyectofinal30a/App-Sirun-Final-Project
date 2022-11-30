@@ -59,7 +59,7 @@ const MostSoldProduct = () => {
   } else {
     return (
       <>
-      <p className={styles.loading}>Loading...</p>
+        <p className={styles.loading}>Loading...</p>
       </>
     )
   }
