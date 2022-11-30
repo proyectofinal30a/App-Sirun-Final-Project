@@ -1,4 +1,4 @@
-import { createSlice, current } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { userData, IFavoriteUser } from "../../../../lib/types";
 import userVerification from "../../../controllers/userVerification-controller";

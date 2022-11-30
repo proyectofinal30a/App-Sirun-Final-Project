@@ -27,13 +27,14 @@ const AllProductsCards = () => {
   const [uploadFavo, setUploadFavo] = useState(false);
   // FILTERS
 
+console.log(favoriteId);
 
   const filterProducts = useSelector((state: Ireducers) => state.reducerFilters.productsToFilter);
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(9);
-  let myListFavorite: Array<IproduId> = []
+
   useEffect(() => {
     return () => dispatch(cleanFilters());
   }, [dispatch])
