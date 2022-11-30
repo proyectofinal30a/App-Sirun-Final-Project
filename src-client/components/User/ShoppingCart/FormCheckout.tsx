@@ -73,6 +73,32 @@ const FormCheckout = (): JSX.Element => {
 
   const forButtonMercadoPago = { confirmed, payLink };
 
+
+
+  // DELIVERY DATE CALCULATIONS
+  const daysTillDeliveryDate = 
+      totalQuantity <= 4 ? 4
+    : totalQuantity > 4 && totalQuantity <= 8 ? 6
+    : totalQuantity > 8 && totalQuantity <= 12 ? 10
+    : 14;
+
+  // console.log(daysTillDeliveryDate)
+
+  
+
+
+  let date = new Date()
+  date.setDate(date.getDate() + daysTillDeliveryDate)
+
+  const minDate = date.toISOString().split('T')[0];
+  console.log(minDate)
+
+
+  // const handleBlockedDates = (e) => {
+  //   console.log(e.target.value)
+  // }
+
+
   return (
     <div className={styles.checkout__container}>
 
@@ -82,6 +108,21 @@ const FormCheckout = (): JSX.Element => {
         </h1>
 
         <div className={styles.card_user_address_container}>
+          <div className={styles.input_calendar__container}>
+            <label className={styles.input_calendar__label}>Choose the delivery date</label>
+            <span className={styles.input_calendar__span}>
+              Delivery time can vary between 1 to 2 days according to distance.
+            </span>
+
+            <input 
+              type="date"
+              className={styles.input_calendar}
+              min={minDate} 
+              // onChange={handleBlockedDates}
+            />
+          </div>
+
+          <span className={styles.span}>Select or create a new address</span>
           <CardUserAddress
             data={data}
             mySelect={mySelect}
@@ -118,6 +159,7 @@ const FormCheckout = (): JSX.Element => {
           isOpenModal={isOpenModal}
           inputAddres={inputAddres}
         />
+
       </div>
 
       <ModalConfirm
