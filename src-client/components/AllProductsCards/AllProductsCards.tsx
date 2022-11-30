@@ -246,7 +246,7 @@ console.log(favoriteId);
 
                 <h2>Shopping Cart</h2>
 
-                {cart?.map((elem, index: number) => {
+                {productsInCart?.map((elem, index: number) => {
                   if (!elem.title) return null
 
                   return (
