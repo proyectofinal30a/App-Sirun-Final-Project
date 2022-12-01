@@ -43,7 +43,6 @@ const stateInitial: Iproducts = {
   },
   productsUpdate: [],
   errorMessage: "",
-  // un nvo estado para errores (cambiar tipo del inicial state) msg : ""
 }
 
 
@@ -60,20 +59,17 @@ export const reducerAdmin = createSlice({
     updateProduct: (state, action) => {
       state.productEdit = action.payload;
     },
-    updateAvailability: (state: any, action) => {
+    updateAvailability: (state: any, action) => { 
       state.products = state.products.map((product: Iproduct) => {
         const { id } = product
         if (id === action.payload) {
           const produUpdateado = { ...product, available: !product.available } 
           state.productsUpdate.push(produUpdateado)
-          return produUpdateado
+          return produUpdateado 
         }
-        return product
+        return product 
       })
     },
-    // updateProducts: (state, action) => {
-    //   state.products = action.payload;
-    //  },
     cleanState: (state, action) => {
       state.productsUpdate = []
       state.productsToFilter = []
@@ -131,8 +127,10 @@ export const changeAvailability = (id: string) => (dispatch: Function) => {
 
 
 //envio de availability a la api
-export const requestUpdateStatusProducts = async(obj: any) =>{
+
+export const requestUpdateStatusProducts = async(obj: any) => {
   try {
+    console.log(obj, "datos hacia la api") 
     const myToken: any = await userVerification('server')
     const productsUpdated = await axios({
       method: 'post',
@@ -142,6 +140,9 @@ export const requestUpdateStatusProducts = async(obj: any) =>{
         "Authorization": myToken
       }
     });
+   
+    console.log(productsUpdated.data , "productos actualizados desde la api")
+    return productsUpdated.data
   } catch (error) {
     console.log(error);
   }
@@ -195,8 +196,6 @@ export const updateProduct = (dataForm : IUpdateProduct) => async(dispatch:Funct
           }
         })
        
-   
-      //return dispatch(reducerAdmin.actions.updateProduct(response?.data.product))
   } catch (error) {
     console.log(error)
   }

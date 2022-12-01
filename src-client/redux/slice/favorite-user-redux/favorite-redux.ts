@@ -28,7 +28,7 @@ export const reducerFavoriteUser = createSlice({
             state.favoriteId = action.payload
         },
         updateFavoriteAction: (state: IFavoriteUser, action: IidString) => {
-            if (state.favoriteId?.includes(action.payload)) {
+            if (state.favoriteId?.includes(action.payload)) { //  aca 
                 const myFilter = state.favoriteId.filter(e => e !== action.payload)
                 state.favoriteId = myFilter
                 return
