@@ -37,7 +37,7 @@ const ProductDetail = () => {
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
 
 
-console.log(product);
+
 
 
   useEffect(() => {
