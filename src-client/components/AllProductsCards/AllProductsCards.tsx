@@ -34,7 +34,7 @@ const AllProductsCards = () => {
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
   // PAGINATION
   const [currentPage, setCurrentPage] = useState(1); 
-  const [productsPerPage] = useState(15); 
+  const [productsPerPage] = useState(14); 
 
 
   useEffect(() => {

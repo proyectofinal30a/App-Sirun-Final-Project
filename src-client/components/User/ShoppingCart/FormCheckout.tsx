@@ -92,7 +92,7 @@ const FormCheckout = (): JSX.Element => {
     setDateState(e.target.value)
   }
 
-  
+
   return (
     <div className={styles.checkout__container}>
 
