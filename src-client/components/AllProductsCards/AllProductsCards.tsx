@@ -33,9 +33,10 @@ const AllProductsCards = () => {
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
   // PAGINATION
-  const [currentPage, setCurrentPage] = useState(1); 
-  const [productsPerPage] = useState(14); 
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(14);
 
+  console.log(filterProducts)
 
   useEffect(() => {
     dispatch(getAllProducts())
@@ -46,7 +47,7 @@ const AllProductsCards = () => {
   useEffect(() => {
     return () => {
       console.log('limpiando');
-      dispatch(action.cleanFilters())
+      dispatch(action.cleanFilters(allProducts))
       dispatch(cleanProducts())
     }
   }, [])
@@ -150,9 +151,6 @@ const AllProductsCards = () => {
     );
     window.scrollTo({ top: 0 });
   };
-
-
-
 
   //request para guardar los nuevos favs que estan en el redux del user
 
