@@ -82,7 +82,7 @@ console.log(product);
 
 
 
-  if (id !== product.id || !product?.evaluation) return <div className={styles.loading}>Loading..</div>
+  if (id !== product.id || !product?.evaluation) return <div className={styles.loading}>Loading...</div>
   const { evaluation } = product;
 
 
@@ -197,6 +197,7 @@ console.log(product);
             <div className={styles.detail_info_description}>
               <p className={styles.detail_info_description_title}>Product description</p>
               <p>{product.description}</p>
+              <p>Dimention: {product.dimension} cm.</p>
             </div>
             <button
               className={styles.add_to_cart__btn}
