@@ -37,11 +37,12 @@ const ProductDetail = () => {
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
 
 
+console.log(product);
 
 
   useEffect(() => {
-    dispatch(cleanProductDetail());
     typeof id === 'string' && dispatch(getProductDetail(id));
+    //return dispatch(cleanProductDetail());
   }, [dispatch, id]);
 
 
@@ -81,7 +82,7 @@ const ProductDetail = () => {
 
 
 
-  if (id !== product.id || !product?.evaluation || !myNuEmail) return <div className={styles.loading}>Loading...</div>
+  if (id !== product.id || !product?.evaluation) return <div className={styles.loading}>Loading..</div>
   const { evaluation } = product;
 
 
@@ -121,7 +122,7 @@ const ProductDetail = () => {
 
   // IMAGES SWITCHER
 
-  if (!product?.image?.[0]?.image) return <div className={styles.loading}>Loading...</div>
+  if (!product?.image?.[0]?.image) return <div className={styles.loading}>Loading..</div>
 
   const detail = product.image[0].image
 
@@ -137,10 +138,12 @@ const ProductDetail = () => {
 
 
   const handleFavorite = (id: string) => {
-    status === "unauthenticated" && signIn("auth0");
+    if(myNuEmail !== undefined){
+      status === "unauthenticated" && signIn("auth0");
     favoriteId.includes(id) ?
       dispatch(action.deleteOneFavorite(myNuEmail, id)) :
       dispatch(action.addOneFavorite(myNuEmail, id))
+    }
   }
 
 

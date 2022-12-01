@@ -34,9 +34,9 @@ export const getAllProducts = () => async (dispatch: Function) => {
     const { data } = await axios({
       method: 'get',
       url: '/api/product/gets/products',
-      headers: {
-        "Authorization": myToken
-      }
+      // headers: {
+      //   "Authorization": myToken
+      // }
     });
     const allProducts = isAvailable(data)
  

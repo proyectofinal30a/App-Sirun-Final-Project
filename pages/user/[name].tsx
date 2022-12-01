@@ -1,3 +1,4 @@
+import React from "react";
 import Footer from "../../src-client/components/Footer/Footer";
 import HEAD from "../../src-client/components/HEAD";
 import Nav from "../../src-client/components/NavBar/Nav";

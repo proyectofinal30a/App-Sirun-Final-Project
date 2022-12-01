@@ -11,43 +11,44 @@ import masiveValidate from "../../controllers/masiveValidation"
 import Validation from "../../controllers/validateAdminManageProducts"
 import swal from "sweetalert";
 import { imageConfigDefault } from "next/dist/shared/lib/image-config";
+import * as action from '../../redux/slice/products-client/Products-all-redux'
 
-const AdminManageProducts = () => { 
+const AdminManageProducts = () => {
 
 
-  const myForm : IUpdateProduct = {
+  const myForm: IUpdateProduct = {
     price: 0,
     description: "",
     image: [],
   };
 
   const [formProduct, setFormProduct] = useState(myForm);
-  
+
   const myErr = {
     price: "",
     description: "",
   };
   const [formErrors, setFormErrors] = useState(myErr);
-  
+
   const { products: allProducts, productsToFilter: filteredProducts, productEdit: productModal, productsUpdate: productsToUpdate, errorMessage: backMessage } = useSelector((state: Ireducers) => state.reducerAdmin)
-  
+
   const dispatch: Function = useDispatch()
- 
+
   useEffect(() => {
     dispatch(getProducts())
     return () => {
       dispatch(clean())
       dispatch(cleanMsg())
     }
-  }, [dispatch]) 
+  }, [dispatch])
 
 
 
-  let currentProducts: Iproduct[] = allProducts; 
+  let currentProducts: Iproduct[] = allProducts;
 
 
   if (filteredProducts?.length >= 1) {
-    currentProducts = filteredProducts 
+    currentProducts = filteredProducts
   } else {
     currentProducts = allProducts
   }
@@ -89,8 +90,8 @@ const AdminManageProducts = () => {
     setIsOpenMsg(false);
     dispatch(cleanMsg())
   }
-  
-  
+
+
   const openMasiveModal = () => {
     setmodalUpdateIsOpen(true);
   }
@@ -120,28 +121,30 @@ const AdminManageProducts = () => {
     setmodalError(masiveValidate({ ...modalForm, type: value }))
   }
 
-  const submitUpdateAllPrices = async(e: Event, modalForm) => {
+  const submitUpdateAllPrices = async (e: Event, modalForm) => {
     e.preventDefault()
-    if (modalError.quantity || modalError.direction || modalError.type) return swal('Oops!',"Please fill all the fields correctly", 'warning')
+    if (modalError.quantity || modalError.direction || modalError.type) return swal('Oops!', "Please fill all the fields correctly", 'warning')
     await dispatch(updateAllPrices(modalForm))
     modalIsOpenMsg()
     setmodalForm(masiveData)
     setmodalUpdateIsOpen(false)
     dispatch(getProducts())
   }
-  
+
   const handleVisibility = (e, product) => {
     e.preventDefault()
     const { id } = product
     dispatch(changeAvailability(id))
     setActive(true)
   }
-   
+
   const applyChanges = async () => {
+
     if (!productsToUpdate.length) return swal('Oops', 'Please select product to change', 'warning')
+    dispatch(action.cleanProducts())
     await requestUpdateStatusProducts(productsToUpdate)
 
-    swal('Done',` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
+    swal('Done', ` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
     dispatch(clean())
     setActive(!active)
   }
@@ -152,7 +155,7 @@ const AdminManageProducts = () => {
     dispatch(setProduct(product))
   }
 
-  
+
   const handleOnChangeInput = (event: any) => {
     const { name, value } = event.target;
 
@@ -163,22 +166,22 @@ const AdminManageProducts = () => {
       });
     }
     setFormProduct({ ...formProduct, [name]: value });
-    setFormErrors(Validation({ ...formProduct, description : value }));
+    setFormErrors(Validation({ ...formProduct, description: value }));
   };
 
 
   const handleOnChangeNumber = (event: any) => {
     const { name, value } = event.target;
     setFormProduct({ ...formProduct, [name]: value });
-    setFormErrors(Validation({ ...formProduct, price : value }));
+    setFormErrors(Validation({ ...formProduct, price: value }));
   };
 
   const handleOnFile = (event: any) => {
     const imageFile: any = event.target.files;
 
     if (!imageFile || !imageFile[0]) return;
-    
-    if (formProduct.image.length >= 4) return swal('Oops!','Only four images per product', 'warning')
+
+    if (formProduct.image.length >= 4) return swal('Oops!', 'Only four images per product', 'warning')
 
     const myTO: any = [...formProduct.image]
 
@@ -211,35 +214,35 @@ const AdminManageProducts = () => {
   const handleOnClickDelete = ({ target }: any) => {
     const { name } = target;
     const [...myPrevurl] = formProduct.image
-    const myFilter = myPrevurl.filter((e : Iimg) => e.image !== name)
+    const myFilter = myPrevurl.filter((e: Iimg) => e.image !== name)
     setFormProduct({ ...formProduct, image: myFilter });
   };
-  
-    const submitHandler = async(e, product: any) => {
-      e.preventDefault()
-      const { id, name } = product
-      const newPrice = Number(formProduct.price)
-      const newDescription = formProduct.description
-  
-      const productToUpdate = {
-        id: id,
-        price: newPrice,
-        description: newDescription,
-        image : formProduct.image,
-      }  
 
-      await dispatch(updateProduct(productToUpdate))
-      setFormProduct(myForm)
-      setIsOpen(false)
-      swal('Done',`${name} is updated`, 'success')
-      dispatch(getProducts())
+  const submitHandler = async (e, product: any) => {
+    e.preventDefault()
+    const { id, name } = product
+    const newPrice = Number(formProduct.price)
+    const newDescription = formProduct.description
+
+    const productToUpdate = {
+      id: id,
+      price: newPrice,
+      description: newDescription,
+      image: formProduct.image,
     }
-  
-  
-  
-  
-  const [active, setActive] = useState<boolean>(false)  
-  
+
+    await dispatch(updateProduct(productToUpdate))
+    setFormProduct(myForm)
+    setIsOpen(false)
+    swal('Done', `${name} is updated`, 'success')
+    dispatch(getProducts())
+  }
+
+
+
+
+  const [active, setActive] = useState<boolean>(false)
+
 
 
   if (!currentProducts[0]) return <div className={styles.products_manage__container}><h1 className={styles.products_manage__title}> Loading....</h1></div>
@@ -252,7 +255,7 @@ const AdminManageProducts = () => {
 
       <div className={styles.container_width}>
         <div className={styles.products_manage_comands}>
-        
+
           <input
             type="search"
             placeholder="Search product name"
@@ -262,7 +265,7 @@ const AdminManageProducts = () => {
             value={name}
             onChange={handleChange}
           />
-        
+
           <button
             className={styles.change__price__btn}
             onClick={() => openMasiveModal()}
@@ -317,7 +320,7 @@ const AdminManageProducts = () => {
                     className={styles.product__card__icon_edit}
                     onClick={(e: any) => handleVisibility(e, product)}
                   >
-                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />} 
+                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}
                   </button>
                 </div>
               </div>
@@ -346,7 +349,7 @@ const AdminManageProducts = () => {
                 x
               </button>
             </div>
-          <h2>Edit Product: {productModal.name}</h2>
+            <h2>Edit Product: {productModal.name}</h2>
 
             <div className={styles.creation_form__section_container}>
               <p className={styles.current__data}>
@@ -384,79 +387,79 @@ const AdminManageProducts = () => {
               </span>
             </div>
 
-     
-              <p className={styles.current__data}>Current Images:</p>
-              <div className={styles.images__container}>
-                {productModal.image?.map((img, index: number) => {
+
+            <p className={styles.current__data}>Current Images:</p>
+            <div className={styles.images__container}>
+              {productModal.image?.map((img, index: number) => {
+                return (
+                  <Image
+                    key={index}
+                    src={img.image}
+                    width={200}
+                    alt=""
+                    height={200}
+                    priority
+                    className={styles.product_card__img}
+                  />
+                );
+              })}
+            </div>
+
+            <p className={styles.current__data}>
+              Choose only 4 images
+            </p>
+            <input
+              type="file"
+              accept=".jpg , .png , .jpeg"
+              onChange={handleOnFile}
+              name="image"
+              className={styles.creation_form__img_input}
+              required
+              multiple
+
+            />
+
+
+
+            <div className={styles.images__container}>
+              {formProduct.image[0] &&
+                formProduct.image.map((e: Iimg, index) => {
                   return (
-                    <Image
-                      key={index}
-                      src={img.image}
-                      width={200}
-                      alt=""
-                      height={200}
-                      priority
-                      className={styles.product_card__img}
-                    />
+                    <div key={index}>
+                      <Image
+                        src={e.image}
+                        alt=""
+                        width="1000"
+                        height="300"
+                        className={styles.product_card__img}
+                      />
+
+                      <input
+                        type={"button"}
+                        name={e.image}
+                        onClick={handleOnClickDelete}
+                        value={"Delete"}
+                        className={styles.creation_form__input_btn_delete}
+                      />
+                    </div>
                   );
                 })}
-              </div>
+            </div>
 
-              <p className={styles.current__data}>
-                Choose only 4 images
-              </p>
-              <input
-                type="file"
-                accept=".jpg , .png , .jpeg"
-                onChange={handleOnFile}
-                name="image"
-                className={styles.creation_form__img_input}
-                required
-                multiple
-              
-              />
-         
+            {formProduct.image[0] && (
+              <>
+                <button
+                  onClick={handleOnClickReset}
+                  className={[
+                    styles.creation_form__input_btn,
+                    styles.creation_form__reset_btn,
+                  ].join(" ")}
+                >
+                  Reset all image/s
+                </button>
+              </>
+            )}
 
-   
-              <div className={styles.images__container}>
-                {formProduct.image[0] &&
-                  formProduct.image.map((e: Iimg, index) => {
-                    return (
-                      <div key={index}>
-                        <Image
-                          src={e.image}
-                          alt=""
-                          width="1000"
-                          height="300"
-                          className={styles.product_card__img}
-                        />
-
-                        <input
-                          type={"button"}
-                          name={e.image}
-                          onClick={handleOnClickDelete}
-                          value={"Delete"}
-                          className={styles.creation_form__input_btn_delete}
-                        />
-                      </div>
-                    );
-                  })}
-              </div>
-
-              {formProduct.image[0] && (
-                <>
-                  <button
-                    onClick={handleOnClickReset}
-                    className={[
-                      styles.creation_form__input_btn,
-                      styles.creation_form__reset_btn,
-                    ].join(" ")}
-                  >
-                    Reset all image/s
-                  </button>
-                </>
-              )}
-         
 
             <div className={styles.modal__purchase_btn_container}>
               <button
@@ -466,12 +469,12 @@ const AdminManageProducts = () => {
                 Confirm Changes
               </button>
             </div>
-            
+
           </div>
         </form>
       </Modal>
 
-   
+
       <Modal
         ariaHideApp={false}
         isOpen={modalUpdateIsOpen}

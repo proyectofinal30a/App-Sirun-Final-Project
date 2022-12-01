@@ -8,21 +8,22 @@ const products: Function = async (req: NextApiRequest, res: NextApiResponse) => 
     const session: any = await unstable_getServerSession(req, res, authOptions)
     const myToken = await userVerification('server', session)
     const authorization = req.headers?.authorization
-    if (myToken === authorization) {
-      const products = await prisma.product.findMany({
-        include: {
-          image: {
-            select: {
-              image: true
-            }
+
+
+    const products = await prisma.product.findMany({
+      include: {
+        image: {
+          select: {
+            image: true
+
           }
         }
+      }
 
-      });
-      prisma.$disconnect()
-      return res.status(200).json(products)
-    }
-    res.status(200).json({ msj: 'Estas en la ruta de product' })
+    });
+    prisma.$disconnect()
+    return res.status(200).json(products)
+
   } catch (error) {
     console.log(error)
     res.status(404).json({ msg: "Error al obtener Products" })
