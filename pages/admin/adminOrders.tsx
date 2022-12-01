@@ -30,7 +30,6 @@ export default function AdminProductsPage() {
     </div>
   );
 }  else if(session?.user.role === 'user') {
-  const router = useRouter()
   router.push('https://sirunnpatisserie.vercel.app/')
 } else {
   signIn('auth0')
