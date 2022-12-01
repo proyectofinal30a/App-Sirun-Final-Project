@@ -8,6 +8,11 @@ import swal from "sweetalert";
 
 
 export default function FormProduct(): JSX.Element {
+  const [selectValue, setSelectValue] = useState({
+    selectType: "",
+    selectCategory: "",
+  });
+
   const N = Number;
   type valueSelec = React.ChangeEvent<HTMLSelectElement>;
   type valueForm =
@@ -77,6 +82,7 @@ export default function FormProduct(): JSX.Element {
   const handelOnSelectCategory = ({ target }: valueSelec) => {
     const { name, value } = target;
 
+    setSelectValue({ ...selectValue, selectCategory: value }); // Reset selection
     setFormProduct({ ...formProduct, [name]: value });
     setFormErrors(validation({ ...formProduct, [name]: value }));  // Form validation
   };
@@ -86,6 +92,7 @@ export default function FormProduct(): JSX.Element {
   const handelOnSelectType = ({ target }: valueSelec) => {
     const { name, value } = target;
 
+    setSelectValue({ ...selectValue, selectType: value }); // Reset selection
     setFormProduct({ ...formProduct, [name]: value });
     setFormErrors(validation({ ...formProduct, [name]: value }));  // Form validation
   };
@@ -122,7 +129,6 @@ export default function FormProduct(): JSX.Element {
 
 
     setFormProduct({ ...formProduct, image: myTO });
-
   };
 
 
@@ -152,6 +158,7 @@ export default function FormProduct(): JSX.Element {
       description: "",
       category: "others",
     });
+    setSelectValue({ selectType: "", selectCategory: "" }); // Reset selection
     swal("Done","New product added.", 'success');
   };
 
@@ -243,7 +250,7 @@ export default function FormProduct(): JSX.Element {
           <label className={styles.creation_form__label}>Category</label>
           <select
             name="category"
-            // value={select.selectCategory}
+            value={selectValue.selectCategory}
             onChange={handelOnSelectCategory}
             className={styles.creation_form__select}
           >
@@ -261,7 +268,7 @@ export default function FormProduct(): JSX.Element {
           <label className={styles.creation_form__label}>Type of diet</label>
           <select
             name="type"
-            // value={select.selectType}
+            value={selectValue.selectType}
             onChange={handelOnSelectType}
             className={styles.creation_form__select}
           >

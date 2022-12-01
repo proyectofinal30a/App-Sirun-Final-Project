@@ -74,7 +74,7 @@ const FormCheckout = (): JSX.Element => {
 
 
 
-  // DELIVERY DATE CALCULATIONS
+  // DELIVERY TIMES CALCULATIONS
   const daysTillDeliveryDate = totalQuantity <= 4 ? 4
     : totalQuantity > 4 && totalQuantity <= 8 ? 6
     : totalQuantity > 8 && totalQuantity <= 12 ? 10
@@ -92,7 +92,7 @@ const FormCheckout = (): JSX.Element => {
     setDateState(e.target.value)
   }
 
-
+  
   return (
     <div className={styles.checkout__container}>
 

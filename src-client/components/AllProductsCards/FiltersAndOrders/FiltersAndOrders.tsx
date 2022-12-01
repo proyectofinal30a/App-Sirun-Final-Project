@@ -131,7 +131,7 @@ const FilterAndOrder = () => {
         className={styles.filter__select}
         onChange={(e: any) => handleChangeCategory(e)}
       >
-        <option value="" disabled>Filter by Category</option>
+        <option value="" disabled>Filter by category</option>
         {/* <option value="all">Filter by Category</option> */}
         {categories && categories.map((category: any, index: number) => {
           return (
@@ -148,7 +148,7 @@ const FilterAndOrder = () => {
         className={styles.filter__select}
         onChange={(e: any) => handleChangeType(e)}
       >
-        <option value="" disabled selected>Filter by Type</option>
+        <option value="" disabled selected>Filter by type</option>
         {/* <option value="all">Filter by Type</option> */}
         {types && types.map((type: any, index: number) => {
           return (
@@ -165,7 +165,7 @@ const FilterAndOrder = () => {
         className={styles.filter__select}
         onChange={(e: any) => handlerChangePrice(e)}
       >
-        <option value="" disabled>Sort by Price</option>
+        <option value="" disabled>Sort by price</option>
         {/* <option value="none">Sort by Price</option> */}
         <option value="asc">Ascending</option>
         <option value="desc">Descending</option>
@@ -177,7 +177,7 @@ const FilterAndOrder = () => {
         className={styles.filter__select}
         onChange={(e: any) => handlerChangeDimention(e)}
       >
-        <option value="" disabled>Sort by Dimention</option>
+        <option value="" disabled>Sort by dimention</option>
         {/* <option value="none">Sort by Dimention</option> */}
         <option value="-">Ascending</option>
         <option value="+">Descending</option>
