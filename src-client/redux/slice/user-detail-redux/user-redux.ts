@@ -97,15 +97,12 @@ export const getUserDetail = (email: string | undefined) => async (dispatch: Fun
                 method: 'get',
                 url: `/api/userScope/get/email/${id}`
             })
-                console.log(myStatus.data?.status,'pasame la repe')
             if (myStatus.data?.status) {
-                console.log(myStatus.data?.status, 'a verr')
-             const  myResques =   await axios({
+         await axios({
                     method: "post",
                     url: '/api/userScope/post/email-back-order/request-status-order',
                     data: mypack,
                 })
-            console.log(myResques.data)
             }
 
 
