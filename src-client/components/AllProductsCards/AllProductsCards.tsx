@@ -46,7 +46,6 @@ const AllProductsCards = () => {
 
   useEffect(() => {
     return () => {
-      console.log('limpiando');
       dispatch(action.cleanFilters(allProducts))
       // dispatch(cleanProducts())
     }
