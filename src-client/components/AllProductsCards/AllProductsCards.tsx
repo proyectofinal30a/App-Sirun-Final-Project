@@ -36,11 +36,11 @@ const AllProductsCards = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(14);
 
-  console.log(filterProducts)
+  
 
   useEffect(() => {
     dispatch(getAllProducts())
-    dispatch(action.saveProductFilter(allProducts))
+    !filterProducts[0] && dispatch(action.saveProductFilter(allProducts))
   }, [dispatch])
 
 
@@ -48,7 +48,7 @@ const AllProductsCards = () => {
     return () => {
       console.log('limpiando');
       dispatch(action.cleanFilters(allProducts))
-      dispatch(cleanProducts())
+      // dispatch(cleanProducts())
     }
   }, [])
 
