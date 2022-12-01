@@ -18,17 +18,17 @@ const ShoppingCart = () => {
   const { status } = useSession();
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
   const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products);
-
+  
+  
   useEffect(()=>{
-    if(allProducts.length)dispatch(getAllProducts())
+    if(!allProducts.length)dispatch(getAllProducts())
     },[dispatch])
   
   const productsInCartID = cart.map((elem) => elem.id)
   const allProductsID =allProducts.filter((elem)=> elem.available === true)
-                                  .map((elem)=>elem.id)                             
-                                  .filter((elem)=> productsInCartID.includes(elem))    
-  const productsInCart = cart.filter((elem)=> allProductsID.includes(elem.id))
-
+  const allProductsaux =allProductsID.map((elem)=>elem.id)                             
+  const allProductsaux2 = allProductsaux.filter((elem)=> allProductsaux.includes(elem))    
+  const productsInCart = cart.filter((elem)=> allProductsaux2.filter((e) => elem.id === e ))
   const totalQuantity = productsInCart[0] ? productsInCart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
   
   let total = 0;
