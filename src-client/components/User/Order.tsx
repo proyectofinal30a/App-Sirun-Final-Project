@@ -10,18 +10,16 @@ import styles from "../../styles/Order.module.css";
 import { useSession } from "next-auth/react";
 
 export default function Orders(): JSX.Element {
-  const router = useRouter()
+  const router = useRouter();
   const dispatch: Function = useDispatch();
+  const { data, status } = useSession();
   const orderAll = useSelector((state: Ireducers) => state.reducerUser.user.orders);
-  console.log(orderAll)
-  const { data, status } = useSession()
   
   
   useEffect(() => {
     data?.user.email && dispatch(getUserDetail(data?.user.email));
   }, [dispatch, data?.user.email]);
   
-  // const orderAll = orders?.[0].sort((a: Iorder, b: Iorder) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
 
   if (status === 'unauthenticated') router.push('/');
 
