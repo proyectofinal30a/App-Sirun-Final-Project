@@ -1,3 +1,8 @@
+.products__empty_message_container {
+  min-height: 100vh;
+  padding-top: 8em;
+}
+
 .general {
   margin: auto;
   display: flex;

@@ -3,23 +3,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import { Ireducers } from "../../../lib/types";
+import { Ireducers, Iorder } from "../../../lib/types";
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import formatDate from "../../controllers/format-date";
 import styles from "../../styles/Order.module.css";
 import { useSession } from "next-auth/react";
 
 export default function Orders(): JSX.Element {
-  const router = useRouter()
+  const router = useRouter();
   const dispatch: Function = useDispatch();
+  const { data, status } = useSession();
   const orderAll = useSelector((state: Ireducers) => state.reducerUser.user.orders);
-  const { data, status } = useSession()
-
-
+  
+  
   useEffect(() => {
     data?.user.email && dispatch(getUserDetail(data?.user.email));
   }, [dispatch, data?.user.email]);
-
+  
 
   if (status === 'unauthenticated') router.push('/');
 
@@ -77,7 +77,7 @@ export default function Orders(): JSX.Element {
                 {elem.status}
               </div>
               <div className={styles.order__status}>
-                <span className={styles.order__span}>Delivery Time: </span>
+                <span className={styles.order__span}>Delivery date: </span>
                 {elem.delivery_time}
               </div>
               <div className={styles.order__date}>

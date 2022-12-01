@@ -158,7 +158,7 @@ const AdminManageOrders = () => {
                   {formatDate(order.date)}
                 </p>
                 <p className={styles.orders_management__order_info}>
-                  <span className={styles.orders_management__order_span}>Delivery time:{" "}</span>
+                  <span className={styles.orders_management__order_span}>Delivery date:{" "}</span>
                   {order.delivery_time}
                 </p>
 
