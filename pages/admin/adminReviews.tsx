@@ -5,8 +5,13 @@ import AdminSideBar from "../../src-client/components/Administration/AdminSideBa
 import styles from "../../src-client/styles/AdminSideBar.module.css";
 import AdminManageReviews from "../../src-client/components/Administration/review-manager-adm/AdminManageReviews";
 import React from "react";
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function AdminReviewsPage() {
+  const {data: session, status} = useSession()
+  const router = useRouter()
+  if(session?.user.role === 'admin' || session?.user.role === 'super admin'){
   return (
     <div>
       <HEAD />
@@ -24,4 +29,9 @@ export default function AdminReviewsPage() {
       <Footer />
     </div>
   );
+}  else if(session?.user.role === 'user') {
+  router.push('https://sirunnpatisserie.vercel.app/')
+} else {
+  signIn('auth0')
+}
 }

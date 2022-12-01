@@ -9,11 +9,13 @@ const products: Function = async (req: NextApiRequest, res: NextApiResponse) => 
     const myToken = await userVerification('server', session)
     const authorization = req.headers?.authorization
 
+
     const products = await prisma.product.findMany({
       include: {
         image: {
           select: {
             image: true
+
           }
         }
       }
@@ -22,7 +24,6 @@ const products: Function = async (req: NextApiRequest, res: NextApiResponse) => 
     prisma.$disconnect()
     return res.status(200).json(products)
 
-    //res.status(200).json({ msj: 'Estas en la ruta de product' })
   } catch (error) {
     console.log(error)
     res.status(404).json({ msg: "Error al obtener Products" })

@@ -5,8 +5,14 @@ import Nav from "../../src-client/components/NavBar/Nav";
 import AdminDashboard from "../../src-client/components/Administration/Dashboard";
 import styles from "../../src-client/styles/AdminSideBar.module.css";
 import React from "react";
+import { useSession, signIn } from "next-auth/react";
+import {useRouter} from 'next/router'
+
 
 export default function ProductsPage() {
+  const {data: session, status} = useSession()
+  const router = useRouter()
+  if(session?.user.role === 'admin' || session?.user.role === 'super admin'){
   return (
     <div>
       <HEAD />
@@ -24,4 +30,10 @@ export default function ProductsPage() {
       <Footer />
     </div>
   );
+  }  else if(session?.user.role === 'user') {
+    
+    router.push('https://sirunnpatisserie.vercel.app/')
+  } else {
+    signIn('auth0')
+  }
 }
