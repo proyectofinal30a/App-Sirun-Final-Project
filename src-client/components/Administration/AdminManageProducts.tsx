@@ -140,7 +140,7 @@ const AdminManageProducts = () => {
   const applyChanges = async () => {
     if (!productsToUpdate.length) return swal('Oops', 'Please select product to change', 'warning')
     await requestUpdateStatusProducts(productsToUpdate)
-    //dispatch(getProducts()) 
+
     swal('Done',` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
     dispatch(clean())
     setActive(!active)
