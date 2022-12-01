@@ -95,9 +95,9 @@ export const getUserDetail = (email: string | undefined) => async (dispatch: Fun
 
             const myStatus = await axios({
                 method: 'get',
-                url: `http://localhost:3000/api/userScope/get/email/${id}`
+                url: `/api/userScope/get/email/${id}`
             })
-
+                console.log(myStatus.data?.status,'pasame la repe')
             if (myStatus.data?.status) {
                 console.log(myStatus.data?.status, 'a verr')
              const  myResques =   await axios({
