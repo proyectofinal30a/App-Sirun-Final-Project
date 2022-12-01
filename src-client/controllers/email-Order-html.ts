@@ -183,7 +183,7 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
             <div>
               <p>Confirmation date: ${myorder.orders[0].date}</p>
               <p>Delivery date: ${myorder.orders[0].delivery_time}</p>
-              <p>Total: $${myorder.orders[0].total}</p>
+              <p>Total + shipping: $${myorder.orders[0].total}</p>
             </div>
           </article>
         </section>
