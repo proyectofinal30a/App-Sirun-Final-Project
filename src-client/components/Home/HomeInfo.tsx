@@ -52,11 +52,12 @@ const HomeInfo = () => {
           <p>
           If you were looking for the perfect catering for your next event, 
           you don&apos;t have to look any further, you&apos;ve come to the right place. 
-          Sirun Pâtisserie offers you different varieties of catering that you can find in the following link:
-          {" "}<a href="#" className={styles.home_info__a}>
-            Catering: sweet little things.
+          Sirun Pâtisserie offers you different varieties of catering with products you see on this website!
+          Just send us an email to:
+          {" "}<a className={styles.home_info__a} href="mailto:sirun.patisserie@gmail.com">
+            sirun.patisserie@gmail.com
           </a>{" "}
-          This way you&apos;ll treat your guests like no one has before!
+          and we&apos;ll plan together your catering. This way you&apos;ll treat your guests like no one has before!
           </p>
         </div>
       </div>
