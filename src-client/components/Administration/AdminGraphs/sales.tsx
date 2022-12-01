@@ -26,7 +26,6 @@ const Sales = () => {
 
   
   if(sales[2022]){
-    console.log(sales);
     const optionsGenerator = () => {
       const array: string[] = []
     for(const props in sales[2022]){

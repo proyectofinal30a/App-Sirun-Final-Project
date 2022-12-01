@@ -9,6 +9,7 @@ import * as action from "../../../redux/slice/cart-redux/cart-redux";
 import { useDispatch } from "react-redux";
 import { useRouter } from 'next/router'
 interface prop {
+  dateState: string
   data: {
     name: string;
     email: string;
@@ -26,6 +27,7 @@ interface prop {
 }
 
 export default function ButtonSumbitMercadoPago({
+  dateState,
   data,
   product,
   mySelect,
@@ -39,12 +41,12 @@ export default function ButtonSumbitMercadoPago({
   const router = useRouter()
   const handleOnclick = () => {
     if (mySelect.current.phone.number) {
-      const { zip_code, name_address, id, street_name, street_number, phone } =
-        mySelect.current;
+      const { zip_code, name_address, id, street_name, street_number, phone } = mySelect.current;
 
       const myUser: IUserBuyer = {
         name: data.name,
         email: data.email,
+        delivery_time: dateState,
         address: {
           id,
           zip_code,
@@ -74,6 +76,7 @@ export default function ButtonSumbitMercadoPago({
       const myUser: IUserBuyer = {
         name: data.name,
         email: data.email,
+        delivery_time: dateState,
         address: {
           zip_code,
           name_address,

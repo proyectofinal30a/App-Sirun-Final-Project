@@ -17,7 +17,7 @@ import reducerAdminReview from './slice/admi-review-redux/all-review-adm-redux'
 import reducerFavoriteUser from "./slice/favorite-user-redux/favorite-redux";
 const persistConfig = {
 
-  key: 'deee3',
+  key: 'daasdaasaaassasdsasaassa3',
   storage,
 }
 

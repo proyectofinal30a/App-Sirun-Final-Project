@@ -12,7 +12,7 @@ import { FiHeart } from "react-icons/fi";
 import * as action from '../../redux/slice/filter-product-client/filters-redux'
 import * as actionFav from '../../redux/slice/favorite-user-redux/favorite-redux'
 import { Iproduct, Ireducers, IproductModelCart } from "../../../lib/types";
-import { getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
+import { cleanProducts, getAllProducts } from "../../redux/slice/products-client/Products-all-redux";
 import { addToCart, addOne, removeOne, trashItem } from "../../redux/slice/cart-redux/cart-redux";
 import { cleanFilters } from "../../redux/slice/filter-product-client/filters-redux";
 
@@ -36,18 +36,18 @@ const AllProductsCards = () => {
   const [productsPerPage] = useState(9);
 
   useEffect(() => {
-    return () => dispatch(cleanFilters());
-  }, [dispatch])
-
-
-  useEffect(() => {
     dispatch(getAllProducts())
     !filterProducts[0] && dispatch(action.saveProductFilter(allProducts))
   }, [dispatch])
 
 
-
-
+  useEffect(() => {
+    return () => {
+      console.log('limpiando');
+      dispatch(action.cleanFilters())
+      dispatch(cleanProducts())
+    }
+  }, [])
 
   useEffect(() => {
     data?.user.email && dispatch(actionFav.getfavoriteUser(data?.user.email))

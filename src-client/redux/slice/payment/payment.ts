@@ -9,8 +9,7 @@ interface ImyOrder {
     total: string;
     status: string;
     date: string;
-    delivery_time: string;
-    user: IUserBuyer; 
+    user: IUserBuyer;
     purchasedProducts: IitemForMercadoPago[];
   };
 }
@@ -22,8 +21,8 @@ const initialState: ImyOrder = {
     total: "",
     status: "",
     date: "",
-    delivery_time: "",
     user: {
+      delivery_time: "",
       email: "",
       name: "",
       address: {

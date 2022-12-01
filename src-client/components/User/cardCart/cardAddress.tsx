@@ -8,20 +8,19 @@ interface prop {
     current: any;
   };
 }
-export default function CardAddress({addresses, mySelect, styles, index}: prop) {
-  mySelect.current =
-    index === 1000
-      ? {
-          name_address: "",
-          phone: {
-            number: "",
-            area_code: "",
-          },
-          street_name: "",
-          street_number: "",
-          zip_code: "",
-        }
-      : addresses[index];
+export default function CardAddress({ addresses, mySelect, styles, index }: prop) {
+  mySelect.current = index === 1000
+    ? {
+      name_address: "",
+      phone: {
+        number: "",
+        area_code: "",
+      },
+      street_name: "",
+      street_number: "",
+      zip_code: "",
+    }
+    : addresses[index];
 
   return index !== 1000 ? (
     <div className={styles.addresses_info_container}>
@@ -31,7 +30,7 @@ export default function CardAddress({addresses, mySelect, styles, index}: prop) 
         {" "}+{addresses[index].phone.area_code}{" "}{addresses[index].phone.number}
       </p>
       <p className={styles.address_street}>
-        <span className={styles.address_span}>Street:</span> 
+        <span className={styles.address_span}>Street:</span>
         {" "}{addresses[index].street_name.toLowerCase()} {addresses[index].street_number}
       </p>
       <p>

@@ -73,12 +73,16 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
             }
         })
 
-        const statusConfirmation = await prisma.order.findFirst({
-            where: { id: idReference },
-            select: { status: true }
-        });
 
-        if (statusConfirmation?.status === "confirmed") return res.status(200).json({ msg: "Order is already confirmed" });
+        await prisma.order.update({
+            where: {
+                id: idReference
+            },
+            data: {
+                idPurchase: String(requestOrder.data.results[0].id),
+                status: "confirmed"
+            }
+        })
 
         const myHtml = CreationOfHTML(responseforEmail, email, name, requestOrder.data?.results?.[0]?.id)
         const mailOptions = {
@@ -92,25 +96,16 @@ export default async function requestStatusOrder(req: NextApiRequest, res: NextA
             if (error) {
                 console.log(error);
             } else {
-                res.status(200).json({ msg: info.response })
                 console.log('Email sent: ' + info.response);
+                return res.status(200).json({ msg: info.response })
             }
         });
 
-        await prisma.order.update({
-            where: {
-                id: idReference
-            },
-            data: {
-                idPurchase: String(requestOrder.data.results[0].id),
-                status: "confirmed"
-            }
-        })
 
 
     } catch (error) {
         console.log(error);
-        res.status(200).json({ msg: error.message || error})
+        res.status(200).json({ msg: error.message || error })
     }
 
 }

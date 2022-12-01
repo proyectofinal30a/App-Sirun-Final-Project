@@ -94,7 +94,6 @@ const ProductDetail = () => {
 
   const addProductOpenModal = (product: Iproduct) => {
     setIsOpen(true);
-    console.log(product);
     
     const { id, name, price, image } = product;
     const productToAdd: IproductModelCart = {

@@ -91,7 +91,6 @@ export const changeOrderStatus = (orderInfo: Ipayload) => async (dispatch: Funct
     });
 
     dispatch(reducerAdminManagement.actions.changeOrderStatus(data));
-    console.log(orderInfo.orderStatus, 'staTUS');
 
     if (orderInfo.orderStatus === 'in_transit') {
       const { data } = await axios({
@@ -99,7 +98,7 @@ export const changeOrderStatus = (orderInfo: Ipayload) => async (dispatch: Funct
         url: "/api/adminScope/post/send-email-status-in-proccess",
         data: { orderId: orderInfo.orderId }
       })
-      console.log(data);
+
     }
   } catch (error) {
     console.log(error);

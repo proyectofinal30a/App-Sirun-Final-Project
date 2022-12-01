@@ -38,7 +38,6 @@ export const reducerUser = createSlice({
             return;
         },
         addToFavorites: (state: IUserDetail, action: any) => {
-            console.log(action)
             if (!state.user) return
             const foundProduct = state.user.favorites.find(product => product.id === action.payload.id);
             if (foundProduct) {
@@ -86,22 +85,30 @@ export const getUserDetail = (email: string | undefined) => async (dispatch: Fun
 
             return { ...ele, purchase_link: '' }
         })
-
-        myPending.idReferenceArray[0] && myPending.idReferenceArray.forEach(async (id) => {
+    
+        myPending.idReferenceArray[0] && myPending.idReferenceArray.forEach(async (id, index) => {
             const mypack = {
                 idReference: id,
                 email: myUser.email,
                 name: myUser.name
             }
 
-    const myResponse =     await axios({
-                method: "post",
-                url: '/api/userScope/post/email-back-order/request-status-order',
-                data: mypack,
+            const myStatus = await axios({
+                method: 'get',
+                url: `http://localhost:3000/api/userScope/get/email/${id}`
             })
 
-            console.log(myResponse.data);
-        
+            if (myStatus.data?.status) {
+
+                await axios({
+                    method: "post",
+                    url: '/api/userScope/post/email-back-order/request-status-order',
+                    data: mypack,
+                })
+
+            }
+
+
         })
 
 

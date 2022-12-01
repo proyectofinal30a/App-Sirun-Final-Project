@@ -21,11 +21,14 @@ export const reducerProducts = createSlice({
     getAllProducts: (state, action) => {
       state.products = action.payload;
     },
+    cleanProductsAction: (state) => {
+      state.products = [];
+    },
   },
 });
 
 
-export const getAllProducts: any = () => async (dispatch: Function) => {
+export const getAllProducts = () => async (dispatch: Function) => {
   try {
     const myToken: any = await userVerification('client')
     const { data } = await axios({
@@ -35,17 +38,8 @@ export const getAllProducts: any = () => async (dispatch: Function) => {
         "Authorization": myToken
       }
     });
-
-    // data?.forEach(element => {
-    //   console.log(element.available);
-    // });
-    
     const allProducts = isAvailable(data)
-
-     
-    // allProducts?.forEach(element => {
-    //   console.log(element.available);
-    // });
+ 
 
     dispatch(reducerProducts.actions.getAllProducts(allProducts));
   } catch (error) {
@@ -53,5 +47,8 @@ export const getAllProducts: any = () => async (dispatch: Function) => {
   }
 };
 
+export const cleanProducts = () => (dispatch: Function) => {
+  dispatch(reducerProducts.actions.cleanProductsAction)
+}
 
 export default reducerProducts.reducer;
