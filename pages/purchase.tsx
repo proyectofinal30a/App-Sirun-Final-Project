@@ -25,8 +25,7 @@ export default function ApprovedPayment() {
   useEffect(() => {
     setTimeout(() => {
       router.push('/')
-    }, 7000);
-
+    }, 10000);
   }, []);
 
 
