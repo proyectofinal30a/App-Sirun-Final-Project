@@ -17,9 +17,6 @@ const FilterAndOrder = () => {
     !productsFilters[0] && dispatch(action.saveProductFilter(products))
   }, [])
 
-
-
-
   const stateSelects = {
     selectPrice: "",
     selectDimention: "",
@@ -65,7 +62,6 @@ const FilterAndOrder = () => {
     e.preventDefault();
     const { value }: any = e.target;
 
-
     setSelect({ ...select, selectDimention: "", selectPrice: "" });
 
     if (prev.type) {
@@ -108,10 +104,11 @@ const FilterAndOrder = () => {
     dispatch(action.filterByType(value));
   };
 
-  const handleClean = (e: Event) => {
+  const handleClean = (e: Event, products: any) => {
     e.preventDefault();
-    dispatch(action.cleanFilters());
     setSelect(stateSelects);
+    setPrevState(previousState)
+    dispatch(action.cleanFilters(products));
   };
 
 
@@ -185,7 +182,7 @@ const FilterAndOrder = () => {
 
       <button
         className={styles.filter__btn}
-        onClick={(e: any) => handleClean(e)}
+        onClick={(e: any) => handleClean(e, products)}
       >
         Clear filters
       </button>
