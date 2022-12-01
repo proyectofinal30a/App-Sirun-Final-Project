@@ -92,7 +92,7 @@ const AdminManageProducts = () => {
   const openMasiveModal = () => {
     setmodalUpdateIsOpen(true);
   }
-  // MODAL- MASIVE prices UPDATE
+
   const modalIsOpenMsg = () => {
     setIsOpenMsg(true);
   }
@@ -127,9 +127,7 @@ const AdminManageProducts = () => {
     setmodalUpdateIsOpen(false)
     dispatch(getProducts())
   }
-  //END MODAL UPDATE PRODUCTS
-
-  //Visibilidad
+  
   const handleVisibility = (e, product) => {
     e.preventDefault()
     const { id } = product
@@ -140,8 +138,6 @@ const AdminManageProducts = () => {
   
   const aplicarCambios = async () => {
     if (!productsToUpdate.length) return swal('Oops', 'Please select product to change', 'warning')
-    console.log(productsToUpdate, "PRODUCTOS A ACTUALIZAR/ENVIAR")
-    
     await requestUpdateStatusProducts(productsToUpdate)
     dispatch(getProducts()) 
     swal('Done',` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
@@ -149,10 +145,6 @@ const AdminManageProducts = () => {
     setActive(!active)
   }
 
-
-  //end visibilidad
-
-  //MODAL - EDIT ONE PRODUCT
   const editOpenModal = (e: Event, product: Iproduct) => {
     e.preventDefault()
     setIsOpen(true);
@@ -241,7 +233,7 @@ const AdminManageProducts = () => {
       swal('Done',`${name} is updated`, 'success')
       dispatch(getProducts())
     }
-    //END EDICT PRODUCT 
+  
   
   
   
@@ -259,7 +251,7 @@ const AdminManageProducts = () => {
 
       <div className={styles.container_width}>
         <div className={styles.products_manage_comands}>
-          {/* <div className={styles.users_management__searchbar}> */}
+        
           <input
             type="search"
             placeholder="Search product name"
@@ -269,7 +261,7 @@ const AdminManageProducts = () => {
             value={name}
             onChange={handleChange}
           />
-          {/* </div> */}
+        
           <button
             className={styles.change__price__btn}
             onClick={() => openMasiveModal()}
@@ -478,7 +470,7 @@ const AdminManageProducts = () => {
         </form>
       </Modal>
 
-      {/* //MODAL -UPDATE MASIVE PRICES */}
+   
       <Modal
         ariaHideApp={false}
         isOpen={modalUpdateIsOpen}

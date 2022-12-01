@@ -59,15 +59,15 @@ export const reducerAdmin = createSlice({
     updateProduct: (state, action) => {
       state.productEdit = action.payload;
     },
-    updateAvailability: (state: any, action) => { 
+    updateAvailability: (state: any, action) => {
       state.products = state.products.map((product: Iproduct) => {
         const { id } = product
         if (id === action.payload) {
           const produUpdateado = { ...product, available: !product.available } 
           state.productsUpdate.push(produUpdateado)
-          return produUpdateado 
+          return produUpdateado
         }
-        return product 
+        return product
       })
     },
     cleanState: (state, action) => {
@@ -87,14 +87,14 @@ export const reducerAdmin = createSlice({
 
 
 
-//cleanstate
+
 export const clean = () => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.cleanState([]));
 };
 
 
 
-//Change all prices
+
 export const updateAllPrices =  (object : IpriceEdit) => async (disptach: Function) => {
   try {  
     const myToken: any = await userVerification('server')
@@ -120,17 +120,14 @@ export const cleanMsg = () => (dispatch: Function) => {
 
 
 
-//availability 
+
 export const changeAvailability = (id: string) => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.updateAvailability(id));
 };
 
 
-//envio de availability a la api
-
-export const requestUpdateStatusProducts = async(obj: any) => {
+export const requestUpdateStatusProducts = async(obj: any) =>{
   try {
-    console.log(obj, "datos hacia la api") 
     const myToken: any = await userVerification('server')
     const productsUpdated = await axios({
       method: 'post',
@@ -140,16 +137,13 @@ export const requestUpdateStatusProducts = async(obj: any) => {
         "Authorization": myToken
       }
     });
-   
-    console.log(productsUpdated.data , "productos actualizados desde la api")
-    return productsUpdated.data
   } catch (error) {
     console.log(error);
   }
 }
-//end availability
 
-//setea producto en estado para verlo en el modal y editarlo. Posteriormente hacer la request a la api con la info.
+
+
 export const setProduct = (object: Iproduct) => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.updateProduct(object))
 }
@@ -201,9 +195,7 @@ export const updateProduct = (dataForm : IUpdateProduct) => async(dispatch:Funct
   }
 };
 
-//END EDIT PRODUCT
 
-//Get by name
 export const getProductByName: any = (objeto: any) => async (dispatch: Function) => {
   const arr = filteredByName(objeto)
   dispatch(reducerAdmin.actions.getByName(arr))
@@ -218,10 +210,8 @@ const filteredByName = (objeto: any) => {
   })
   return filteredSearchedProduct.filter((product: any) => product !== undefined);
 }
-//end get by name
 
 
-//get all products
 export const getProducts: any = () => async (dispatch: Function) => {
   try {
     const myToken: any = await userVerification('client')
@@ -239,7 +229,7 @@ export const getProducts: any = () => async (dispatch: Function) => {
     console.log(error)
   }
 };
-//end get all products
+
 
 
 
