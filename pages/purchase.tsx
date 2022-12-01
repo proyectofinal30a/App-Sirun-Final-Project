@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/router";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import HEAD from "../src-client/components/HEAD";
 import Nav from "../src-client/components/NavBar/Nav";
@@ -9,26 +8,9 @@ import styles from "../src-client/styles/ApprovedPayment.module.css";
 
 
 export default function ApprovedPayment() {
-  const router = useRouter();
   const { query } = useRouter();
-  const { data } = useSession<boolean>();
 
-  const email: string = typeof data?.user?.email === "string" ? data?.user?.email : "";
-  const name: string = typeof data?.user?.name === "string" ? data?.user?.name : "";
-  const idReference: string = typeof query.external_reference === "string" ? query.external_reference : "";
   let idPurchase: string = typeof query.collection_id === "string" ? query.collection_id : "";
-
-  console.log(query)
-
-  setTimeout(() => {
-    if (!query.external_reference) router.push('/');  
-  }, 15000);
-
-
-  // useEffect(() => {
-  //   setTimeout(() => { router.push('/') }, 15000);
-  // }, []);
-
 
   return (
     <div>
