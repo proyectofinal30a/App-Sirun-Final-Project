@@ -5,33 +5,62 @@ import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del ro
 import { TypeDiet, CategoryPro } from '@prisma/client'
 import { Iproduct } from '../../../../lib/types'
 
-// en desarrollo
 const updateProduct: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     const { id, price, description, image } = req.body
-
-    //Category Pro se importa desde el schema de tablas, esta definido
-    try {
- 
-        
-        const product = await prisma.product.update({
-            where: {
-                id: id
+    try {      
+        const imageIds = await prisma.product.findFirst({ 
+            where : {
+                id,
             },
-            data: {
-                price: Number(price),
-                description: description,
-                image : image.image 
-                // image: {
-                //     create: {
-                //         image: image.image
-
-                //     }
-                // }
-
+            select : {
+                image : {
+                    select : {
+                        id : true
+                    }
+                }
             }
         })
+
+      imageIds && imageIds.image.forEach(async(e)=>{
+            await prisma.imageProdu.delete({
+                        where : {
+                            id  : e.id,
+                        },
+                    })
+        })
+
+
+        image && image.forEach(async(e)=>{
+            await prisma.imageProdu.create({
+                        data :{
+                            id : e.id,
+                            image : e.image,
+                            product : {
+                                connect : {
+                                    id : id,
+                                }
+                            }
+                        }
+
+                    })
+        })
+
+        
+        await prisma.product.update({
+            where: { 
+                id: id
+             },
+            data: {
+                price: price,
+                description : description,        
+            }
+        })
+        
+
         prisma.$disconnect()
-        return res.status(200).json(product)  
+        res.status(200).json({ message: "Producto actualizado" })
+
+
     } catch (error) {
         console.log(error)
         res.status(404).json({ msg: `Error al actualizar el producto con id: ${id}` })

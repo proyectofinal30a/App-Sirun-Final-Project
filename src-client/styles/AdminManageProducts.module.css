@@ -123,9 +123,10 @@
   align-items: center;
   border-radius: 50%;
   border: none;
-  padding: .6em;
+  padding: .9em;
   margin: .4em;
 }
+
 
 .visibility__btn, .change__price__btn {
   /* width: 14em; */
@@ -489,6 +490,7 @@
     padding: 2em 1em;
   }
 }
+
 
 @media (max-width: 550px) {
   .products_form__container {

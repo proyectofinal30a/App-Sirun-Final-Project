@@ -39,13 +39,15 @@ const AdminManageProducts = () => {
       dispatch(clean())
       dispatch(cleanMsg())
     }
-  }, [dispatch])
+  }, [dispatch]) 
 
-  let currentProducts: Iproduct[] = allProducts;
-  // let currentProduct: Iproduct;
+
+
+  let currentProducts: Iproduct[] = allProducts; 
+
 
   if (filteredProducts?.length >= 1) {
-    currentProducts = filteredProducts
+    currentProducts = filteredProducts 
   } else {
     currentProducts = allProducts
   }
@@ -92,7 +94,7 @@ const AdminManageProducts = () => {
   const openMasiveModal = () => {
     setmodalUpdateIsOpen(true);
   }
-  // MODAL- MASIVE prices UPDATE
+
   const modalIsOpenMsg = () => {
     setIsOpenMsg(true);
   }
@@ -127,31 +129,23 @@ const AdminManageProducts = () => {
     setmodalUpdateIsOpen(false)
     dispatch(getProducts())
   }
-  //END MODAL UPDATE PRODUCTS
-
-  //Visibilidad
+  
   const handleVisibility = (e, product) => {
     e.preventDefault()
     const { id } = product
     dispatch(changeAvailability(id))
     setActive(true)
   }
-
-  
-
-  const aplicarCambios = async () => {
+   
+  const applyChanges = async () => {
     if (!productsToUpdate.length) return swal('Oops', 'Please select product to change', 'warning')
     await requestUpdateStatusProducts(productsToUpdate)
-    dispatch(getProducts())
+
     swal('Done',` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
     dispatch(clean())
     setActive(!active)
   }
 
-
-  //end visibilidad
-
-  //MODAL - EDIT ONE PRODUCT
   const editOpenModal = (e: Event, product: Iproduct) => {
     e.preventDefault()
     setIsOpen(true);
@@ -232,15 +226,15 @@ const AdminManageProducts = () => {
         price: newPrice,
         description: newDescription,
         image : formProduct.image,
-      }
-      
+      }  
+
       await dispatch(updateProduct(productToUpdate))
       setFormProduct(myForm)
       setIsOpen(false)
       swal('Done',`${name} is updated`, 'success')
       dispatch(getProducts())
     }
-    //END EDICT PRODUCT 
+  
   
   
   
@@ -258,7 +252,7 @@ const AdminManageProducts = () => {
 
       <div className={styles.container_width}>
         <div className={styles.products_manage_comands}>
-          {/* <div className={styles.users_management__searchbar}> */}
+        
           <input
             type="search"
             placeholder="Search product name"
@@ -268,7 +262,7 @@ const AdminManageProducts = () => {
             value={name}
             onChange={handleChange}
           />
-          {/* </div> */}
+        
           <button
             className={styles.change__price__btn}
             onClick={() => openMasiveModal()}
@@ -282,7 +276,7 @@ const AdminManageProducts = () => {
               className={styles.visibility__btn}
               type="button"
               value="Apply visibility changes"
-              onClick={aplicarCambios}
+              onClick={applyChanges}
             />
           ) : null}
         </div>
@@ -316,7 +310,6 @@ const AdminManageProducts = () => {
                     className={styles.product__card__icon_edit}
                     onClick={(e: any) => editOpenModal(e, product)}
                   >
-                    {" "}
                     <AiFillEdit />
                   </button>
 
@@ -324,7 +317,7 @@ const AdminManageProducts = () => {
                     className={styles.product__card__icon_edit}
                     onClick={(e: any) => handleVisibility(e, product)}
                   >
-                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}
+                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />} 
                   </button>
                 </div>
               </div>
@@ -353,7 +346,7 @@ const AdminManageProducts = () => {
                 x
               </button>
             </div>
-            <h2>Edit Product</h2>
+          <h2>Edit Product: {productModal.name}</h2>
 
             <div className={styles.creation_form__section_container}>
               <p className={styles.current__data}>
@@ -409,6 +402,9 @@ const AdminManageProducts = () => {
                 })}
               </div>
 
+              <p className={styles.current__data}>
+                Choose only 4 images
+              </p>
               <input
                 type="file"
                 accept=".jpg , .png , .jpeg"
@@ -475,7 +471,7 @@ const AdminManageProducts = () => {
         </form>
       </Modal>
 
-      {/* //MODAL -UPDATE MASIVE PRICES */}
+   
       <Modal
         ariaHideApp={false}
         isOpen={modalUpdateIsOpen}
@@ -578,6 +574,8 @@ const AdminManageProducts = () => {
 };
 
 export default AdminManageProducts;
+
+
 
 
 

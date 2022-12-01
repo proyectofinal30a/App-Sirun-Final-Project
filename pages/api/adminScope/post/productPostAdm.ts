@@ -17,6 +17,8 @@ const createProduct: Function = async (req: NextApiRequest, res: NextApiResponse
             const myDimension = N(dimension)
             const typeDiet: TypeDiet = type
             const typeCategory: CategoryPro = category
+        
+            
             await prisma.product.create({
                 data: {
                     name,
