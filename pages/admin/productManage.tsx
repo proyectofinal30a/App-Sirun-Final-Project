@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 
 export default function ProductCreationFormPage() {
   const {data: session, status} = useSession()
+  const router = useRouter()
   if(session?.user.role === 'admin' || session?.user.role === 'super admin'){
     return (
     <div>
@@ -29,7 +30,7 @@ export default function ProductCreationFormPage() {
     </div>
   );
   } else if(session?.user.role === 'user') {
-    const router = useRouter()
+    
     router.push('https://sirunnpatisserie.vercel.app/')
   } else {
     signIn('auth0')

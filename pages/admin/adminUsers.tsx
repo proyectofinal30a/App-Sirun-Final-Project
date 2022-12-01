@@ -9,6 +9,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export default function AdminUsersPage() {
+  const router = useRouter()
   const {data: session, status} = useSession()
   if(session?.user.role === 'admin' || session?.user.role === 'super admin'){
   return (
@@ -29,7 +30,6 @@ export default function AdminUsersPage() {
     </div>
   );
   }  else if(session?.user.role === 'user') {
-    const router = useRouter()
     router.push('https://sirunnpatisserie.vercel.app/')
   } else {
     signIn('auth0')

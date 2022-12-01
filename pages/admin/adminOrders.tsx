@@ -10,6 +10,7 @@ import { useRouter } from "next/router";
 
 export default function AdminProductsPage() {
   const {data: session, status} = useSession()
+  const router = useRouter()
   if(session?.user.role === 'admin' || session?.user.role === 'super admin'){
   return (
     <div>
