@@ -51,13 +51,15 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
                 width: 500px;
               "
             >
+              
               <img
                 height="100"
                 width="100"
                 src=${e.picture_url}
                 alt="none"
-                style="margin-right: 2em"
+                style="margin-right: 2em; object-fit: cover;"
               />
+              
               <article
                 style="
                 text-align: left;
@@ -180,7 +182,7 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
   
             <div>
               <p>Confirmation date: ${myorder.orders[0].date}</p>
-              <p>Delivery time: ${myorder.orders[0].delivery_time}</p>
+              <p>Delivery date: ${myorder.orders[0].delivery_time}</p>
               <p>Total: $${myorder.orders[0].total}</p>
             </div>
           </article>
