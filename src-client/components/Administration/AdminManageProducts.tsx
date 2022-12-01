@@ -505,7 +505,7 @@ const AdminManageProducts = () => {
                 name="quantity"
                 value={modalForm.quantity}
                 onChange={handlerInputQuantity}
-                placeholder="Add a amount to update all products"
+                placeholder="Add an amount to update all products"
               ></input>
               {modalError.quantity && (
                 <p className={styles.modal__error}>{modalError.quantity}</p>
