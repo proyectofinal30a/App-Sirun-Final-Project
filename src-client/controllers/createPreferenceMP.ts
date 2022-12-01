@@ -10,5 +10,8 @@ export default async function createPreferenceMP(user: IUserBuyer, productArray:
             failure: 'https://sirunnpatisserie.vercel.app',
             pending: 'https://sirunnpatisserie.vercel.app',
         },
+        shipments:{
+            cost:0
+        }
     }
 }

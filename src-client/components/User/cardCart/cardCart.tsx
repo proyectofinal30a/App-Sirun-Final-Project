@@ -15,9 +15,8 @@ export default function CardCart({
   styles,
   totalQuantity,
 }: prop) {
-  const shippingCost = total * 0.1;
-  const totalBuy = total + shippingCost
-  console.log()
+  const shippingCost = Math.round(total * 0.1);
+  const totalBuy = Math.round(total + shippingCost)
   return (
     <div className={styles.second__column}>
       <h2 className={styles.column__title}>Order Summary</h2>
