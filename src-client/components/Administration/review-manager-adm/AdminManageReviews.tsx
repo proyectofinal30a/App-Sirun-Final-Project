@@ -178,7 +178,7 @@ export default function AdminReviews(): JSX.Element {
                   width="100"
                   height="100"
                   alt={userReview.name}
-                  className={styles.reviews_container__img_modal}
+                  className={styles.reviews_management__img_modal}
                 />
               </div>
 
@@ -195,7 +195,7 @@ export default function AdminReviews(): JSX.Element {
                         width="100"
                         height="100"
                         alt={userReview.name}
-                        className={styles.reviews_container__img_modal}
+                        className={styles.reviews_management__img_modal}
                       />
                     </div>
 

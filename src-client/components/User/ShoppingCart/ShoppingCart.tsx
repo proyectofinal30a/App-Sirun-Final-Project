@@ -70,7 +70,7 @@ const ShoppingCart = () => {
                         Quantity: {elem.quantity}
                       </p>
                       <p className={styles.modal__product_data}>
-                        Price: {elem.quantity}
+                        Price: ${elem.quantity}
                       </p>
                       <p className={styles.modal__product_data}>
                         Subtotal: ${elem.subTotal}

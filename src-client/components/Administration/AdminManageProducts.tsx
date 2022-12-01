@@ -493,19 +493,21 @@ const AdminManageProducts = () => {
           </div>
           <h2>Edit All Products</h2>
           <div className={styles.modal__selects__container}>
-            <label className={styles.current__data}>
-              How much do yo want you update your price product?
-            </label>
-            <input
-              className={styles.search_bar__input}
-              name="quantity"
-              value={modalForm.quantity}
-              onChange={handlerInputQuantity}
-              placeholder="Add a quantity to update all products"
-            ></input>
-            {modalError.quantity && (
-              <p className={styles.modal__error}>{modalError.quantity}</p>
-            )}
+            <div className={styles.bottom_space}>
+              <label className={styles.current__data}>
+                How much do yo want you update your price product?
+              </label>
+              <input
+                className={styles.search_bar__input}
+                name="quantity"
+                value={modalForm.quantity}
+                onChange={handlerInputQuantity}
+                placeholder="Add a amount to update all products"
+              ></input>
+              {modalError.quantity && (
+                <p className={styles.modal__error}>{modalError.quantity}</p>
+              )}
+            </div>
             <label className={styles.current__data}>
               Do you want to make a discount or an increase?
             </label>

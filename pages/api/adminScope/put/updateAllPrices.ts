@@ -29,7 +29,7 @@ const updatePrices: Function = async (req: NextApiRequest, res: NextApiResponse)
                         price: newPrice
                     }
                 })
-                return res.status(200).json({ msg: `Already applied a disconunt of $${quantity}` })
+                return res.status(200).json({ msg: `Already applied a discount of $${quantity}` })
 
             }else if(type === "fixed" && direction === 'decrease' && price <= Number(quantity)){
                return res.status(200).json({msg:"You can't decrease the price of the product to a negative number or zero"})
