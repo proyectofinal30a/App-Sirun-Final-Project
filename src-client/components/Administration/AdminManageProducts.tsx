@@ -245,7 +245,7 @@ const AdminManageProducts = () => {
 
 
 
-  if (!currentProducts[0]) return <div className={styles.products_manage__container}><h1 className={styles.products_manage__title}> Loading....</h1></div>
+  if (!currentProducts[0]) return <div className={styles.products_manage__container}><h1 className={styles.products_manage__title}>Loading...</h1></div>
 
   return (
     <div className={styles.products_manage__container}>
@@ -570,7 +570,7 @@ const AdminManageProducts = () => {
                 x
               </button>
             </div>
-            <p className={styles.current__data}>{backMessage}</p>
+            <p className={styles.current__data}>{backMessage ? backMessage : null}</p>
           </div>
         </Modal>
       )}
