@@ -16,7 +16,8 @@ import adminGraphs from "./slice/admin-graphs/admin-graphs";
 import reducerAdminReview from './slice/admi-review-redux/all-review-adm-redux'
 import reducerFavoriteUser from "./slice/favorite-user-redux/favorite-redux";
 const persistConfig = {
-  key: 'dsdassasaasssaassa3',
+
+  key: 'deee3',
   storage,
 }
 

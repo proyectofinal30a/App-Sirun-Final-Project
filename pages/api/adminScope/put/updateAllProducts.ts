@@ -6,17 +6,27 @@ import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del ro
 // updatea la visibilidad del producto desde el dashboard del admin.
 const updateProducts: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     const arrProducts = req.body
+    console.log(arrProducts, "productos llegando a la api") 
+    
     try {
-        const productsUpdates = arrProducts.obj.forEach(async (p: any) => {
+        
+        const productsUpdates = arrProducts.obj.forEach(async (p: any) => {  
             await prisma.product.update({
-                where: { id: p.id },
+                where: { 
+                    id: p.id 
+                },
                 data: {
                     available: p.available
                 }
             })
-            prisma.$disconnect()
         })
-        res.status(200).json(productsUpdates)
+    
+        
+        console.log(productsUpdates, "productos actualizados hacia el front") // con forEach da undefined  y con map da un array de promesas
+        prisma.$disconnect()
+        res.status(200).json({ msg: "Productos actualizados" })
+       
+    
     } catch (error) {
         console.log(error)
         res.status(404).json({

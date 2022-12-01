@@ -3,7 +3,8 @@ import axios from "axios";
 import { stat } from "fs";
 import { Iproduct, Iproducts } from "../../../../lib/types";
 import userVerification from '../../../controllers/userVerification-controller'
-
+import imageFormat from "../../../controllers/imageFormat";
+import { log } from "console";
 
 export interface Iimg {
   image : string
@@ -42,7 +43,6 @@ const stateInitial: Iproducts = {
   },
   productsUpdate: [],
   errorMessage: "",
-  // un nvo estado para errores (cambiar tipo del inicial state) msg : ""
 }
 
 
@@ -59,20 +59,17 @@ export const reducerAdmin = createSlice({
     updateProduct: (state, action) => {
       state.productEdit = action.payload;
     },
-    updateAvailability: (state: any, action) => {
+    updateAvailability: (state: any, action) => { 
       state.products = state.products.map((product: Iproduct) => {
         const { id } = product
         if (id === action.payload) {
           const produUpdateado = { ...product, available: !product.available } 
           state.productsUpdate.push(produUpdateado)
-          return produUpdateado
+          return produUpdateado 
         }
-        return product
+        return product 
       })
     },
-    // updateProducts: (state, action) => {
-    //   state.products = action.payload;
-    //  },
     cleanState: (state, action) => {
       state.productsUpdate = []
       state.productsToFilter = []
@@ -130,8 +127,10 @@ export const changeAvailability = (id: string) => (dispatch: Function) => {
 
 
 //envio de availability a la api
-export const requestUpdateStatusProducts = async(obj: any) =>{
+
+export const requestUpdateStatusProducts = async(obj: any) => {
   try {
+    console.log(obj, "datos hacia la api") 
     const myToken: any = await userVerification('server')
     const productsUpdated = await axios({
       method: 'post',
@@ -141,6 +140,9 @@ export const requestUpdateStatusProducts = async(obj: any) =>{
         "Authorization": myToken
       }
     });
+   
+    console.log(productsUpdated.data , "productos actualizados desde la api")
+    return productsUpdated.data
   } catch (error) {
     console.log(error);
   }
@@ -151,21 +153,49 @@ export const requestUpdateStatusProducts = async(obj: any) =>{
 export const setProduct = (object: Iproduct) => (dispatch: Function) => {
   return dispatch(reducerAdmin.actions.updateProduct(object))
 }
+
 export const updateProduct = (dataForm : IUpdateProduct) => async(dispatch:Function) => {
   try {
-    console.log(dataForm, "data que llega a redux");
-    // const myToken: any = await userVerification('client')
-    const productUpdated =  await axios({
-      method: 'post',
-      url: '/api/adminScope/put/updateProduct',
-      data: dataForm
-      // headers: {
-      //   "Authorization": myToken
-      // }
+    const myToken: any = await userVerification("client");
+    const mydata = dataForm.image.map(async (e) => {
+      const formData = new FormData();
+      formData.append("file", e.imageCloudinary);
+      formData.append("upload_preset", `${process.env.CLOUDINARY_PRODUCTS}`);
+  
+      const { data } = await axios({
+        method: "post",
+        url: `https://api.cloudinary.com/v1_1/${process.env.CLOUDINARY_CLOUD}/image/upload`,
+        data: formData,
+      });
+  
+      const { public_id, secure_url } = data;
+      const myFracmet: string = public_id.split("/")[1];
+      const myData = {
+        id: myFracmet,
+        image: secure_url,
+      };
+      return myData;
     });
-    console.log(productUpdated, "PRODUCTO ACTUALIZADO desde el back"); 
-    // no me llega entre las propiedades del producto la prop image por eso no se setea
-    return dispatch(reducerAdmin.actions.updateProduct(productUpdated))
+
+   const myData = await Promise.all(mydata)  
+      .then((newImageArray) => {
+        return newImageArray;
+      })
+        .catch((err) => {
+          console.log(err);
+        });
+        
+        const myDataForm = { ...dataForm, image: myData}
+    
+        const response = axios({
+          method: "post",
+          url: "/api/adminScope/put/updateProduct",
+          data: myDataForm,
+          headers: {
+            "Authorization" : myToken
+          }
+        })
+       
   } catch (error) {
     console.log(error)
   }

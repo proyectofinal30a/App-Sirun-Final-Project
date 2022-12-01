@@ -39,7 +39,7 @@ const AdminManageProducts = () => {
       dispatch(clean())
       dispatch(cleanMsg())
     }
-  }, [dispatch])
+  }, [dispatch]) 
 
   let currentProducts: Iproduct[] = allProducts;
   // let currentProduct: Iproduct;
@@ -134,15 +134,16 @@ const AdminManageProducts = () => {
     e.preventDefault()
     const { id } = product
     dispatch(changeAvailability(id))
+    //dispatch(getProducts())
     setActive(true)
   }
-
   
-
   const aplicarCambios = async () => {
     if (!productsToUpdate.length) return swal('Oops', 'Please select product to change', 'warning')
+    console.log(productsToUpdate, "PRODUCTOS A ACTUALIZAR/ENVIAR")
+    
     await requestUpdateStatusProducts(productsToUpdate)
-    dispatch(getProducts())
+    dispatch(getProducts()) 
     swal('Done',` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
     dispatch(clean())
     setActive(!active)
@@ -232,8 +233,8 @@ const AdminManageProducts = () => {
         price: newPrice,
         description: newDescription,
         image : formProduct.image,
-      }
-      
+      }  
+
       await dispatch(updateProduct(productToUpdate))
       setFormProduct(myForm)
       setIsOpen(false)
@@ -316,7 +317,6 @@ const AdminManageProducts = () => {
                     className={styles.product__card__icon_edit}
                     onClick={(e: any) => editOpenModal(e, product)}
                   >
-                    {" "}
                     <AiFillEdit />
                   </button>
 
@@ -324,7 +324,7 @@ const AdminManageProducts = () => {
                     className={styles.product__card__icon_edit}
                     onClick={(e: any) => handleVisibility(e, product)}
                   >
-                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}
+                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}  
                   </button>
                 </div>
               </div>
@@ -353,7 +353,7 @@ const AdminManageProducts = () => {
                 x
               </button>
             </div>
-            <h2>Edit Product</h2>
+          <h2>Edit Product: {productModal.name}</h2>
 
             <div className={styles.creation_form__section_container}>
               <p className={styles.current__data}>
@@ -409,6 +409,9 @@ const AdminManageProducts = () => {
                 })}
               </div>
 
+              <p className={styles.current__data}>
+                Choose only 4 images
+              </p>
               <input
                 type="file"
                 accept=".jpg , .png , .jpeg"
@@ -578,6 +581,8 @@ const AdminManageProducts = () => {
 };
 
 export default AdminManageProducts;
+
+
 
 
 
