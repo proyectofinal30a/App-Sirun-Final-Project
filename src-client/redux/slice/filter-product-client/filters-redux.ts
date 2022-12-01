@@ -47,10 +47,9 @@ export const reducerFilters = createSlice({
       const secondFilter = firstFilter.filter((produ) => produ.type === action.payload.type)
       state.productsToFilter = secondFilter
     },
-    cleanFilterAccion: (state) => {
-      state.productsToFilter = []
-      state.productPrevState = []
-
+    cleanFilterAccion: (state, action) => {
+      state.productsToFilter = action.payload
+      state.productPrevState = action.payload
     },
 
   }
@@ -93,8 +92,8 @@ export const filterDouble = (object) => (dispatch: Function) => {
   dispatch(reducerFilters.actions.filterDoubleAction(object));
 }
 
-export const cleanFilters = () => (dispatch: Function) => {
-  dispatch(reducerFilters.actions.cleanFilterAccion());
+export const cleanFilters = (products) => (dispatch: Function) => {
+  dispatch(reducerFilters.actions.cleanFilterAccion(products));
 }
 
 
