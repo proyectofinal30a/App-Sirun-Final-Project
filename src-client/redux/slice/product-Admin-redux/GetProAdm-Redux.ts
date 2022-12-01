@@ -211,7 +211,6 @@ const filteredByName = (objeto: any) => {
   return filteredSearchedProduct.filter((product: any) => product !== undefined);
 }
 
-
 export const getProducts: any = () => async (dispatch: Function) => {
   try {
     const myToken: any = await userVerification('client')

@@ -41,11 +41,13 @@ const AdminManageProducts = () => {
     }
   }, [dispatch]) 
 
-  let currentProducts: Iproduct[] = allProducts;
-  // let currentProduct: Iproduct;
+
+
+  let currentProducts: Iproduct[] = allProducts; 
+
 
   if (filteredProducts?.length >= 1) {
-    currentProducts = filteredProducts
+    currentProducts = filteredProducts 
   } else {
     currentProducts = allProducts
   }
@@ -132,14 +134,13 @@ const AdminManageProducts = () => {
     e.preventDefault()
     const { id } = product
     dispatch(changeAvailability(id))
-    //dispatch(getProducts())
     setActive(true)
   }
-  
-  const aplicarCambios = async () => {
+   
+  const applyChanges = async () => {
     if (!productsToUpdate.length) return swal('Oops', 'Please select product to change', 'warning')
     await requestUpdateStatusProducts(productsToUpdate)
-    dispatch(getProducts()) 
+    //dispatch(getProducts()) 
     swal('Done',` Products update: ${productsToUpdate.map((p) => p.name).reduce((e, acc) => e + " & " + acc)}`)
     dispatch(clean())
     setActive(!active)
@@ -275,7 +276,7 @@ const AdminManageProducts = () => {
               className={styles.visibility__btn}
               type="button"
               value="Apply visibility changes"
-              onClick={aplicarCambios}
+              onClick={applyChanges}
             />
           ) : null}
         </div>
@@ -316,7 +317,7 @@ const AdminManageProducts = () => {
                     className={styles.product__card__icon_edit}
                     onClick={(e: any) => handleVisibility(e, product)}
                   >
-                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />}  
+                    {product.available ? <AiFillEye /> : <AiFillEyeInvisible />} 
                   </button>
                 </div>
               </div>
