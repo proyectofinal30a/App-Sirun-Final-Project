@@ -98,7 +98,7 @@ export const changeOrderStatus = (orderInfo: Ipayload) => async (dispatch: Funct
         url: "/api/adminScope/post/send-email-status-in-proccess",
         data: { orderId: orderInfo.orderId }
       })
-      console.log(data);
+
     }
   } catch (error) {
     console.log(error);

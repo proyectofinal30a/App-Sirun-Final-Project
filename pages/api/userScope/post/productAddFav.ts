@@ -11,7 +11,7 @@ export default async function productAddFav(req: NextApiRequest, res: NextApiRes
 
     const { email, mypackIdFavo }: IidUserIdPro = req.body;
     const myCheck = mypackIdFavo ? mypackIdFavo : [];
-
+    if (!email || !mypackIdFavo) return res.status(200).json({})
     await prisma.user.update({
       where: { email },
       data: {

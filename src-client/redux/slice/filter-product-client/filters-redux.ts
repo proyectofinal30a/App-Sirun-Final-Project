@@ -36,9 +36,6 @@ export const reducerFilters = createSlice({
       const secondFilter = state.productPrevState.filter((produ) => produ.type === action.payload)
       state.productsToFilter = secondFilter;
     },
-    cleanFilters: (state) => {
-      state.productsToFilter = state.productPrevState;
-    },
     prevState: (state, action) => {
       state.productPrevState = action.payload;
     },
@@ -46,12 +43,16 @@ export const reducerFilters = createSlice({
       state.productsToFilter = action.payload;
     },
     filterDoubleAction: (state, action) => {
-      console.log(action);
-      
       const firstFilter = state.productPrevState.filter((produ) => produ.category === action.payload.category)
       const secondFilter = firstFilter.filter((produ) => produ.type === action.payload.type)
       state.productsToFilter = secondFilter
-    }
+    },
+    cleanFilterAccion: (state) => {
+      state.productsToFilter = []
+      state.productPrevState = []
+
+    },
+
   }
 });
 
@@ -93,7 +94,7 @@ export const filterDouble = (object) => (dispatch: Function) => {
 }
 
 export const cleanFilters = () => (dispatch: Function) => {
-  dispatch(reducerFilters.actions.cleanFilters());
+  dispatch(reducerFilters.actions.cleanFilterAccion());
 }
 
 
