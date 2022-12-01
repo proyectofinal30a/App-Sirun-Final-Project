@@ -5,7 +5,7 @@ import Nav from "../../src-client/components/NavBar/Nav";
 import AdminDashboard from "../../src-client/components/Administration/Dashboard";
 import styles from "../../src-client/styles/AdminSideBar.module.css";
 import React from "react";
-import { useSession, signIn } from "next-auth/react";
+import { useSession} from "next-auth/react";
 import {useRouter} from 'next/router'
 
 
@@ -30,10 +30,7 @@ export default function ProductsPage() {
       <Footer />
     </div>
   );
-  }  else if(session?.user.role === 'user') {
-    
+  }  else {
     router.push('https://sirunnpatisserie.vercel.app/')
-  } else {
-    signIn('auth0')
   }
 }
