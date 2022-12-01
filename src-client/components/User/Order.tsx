@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import { Ireducers } from "../../../lib/types";
+import { Ireducers, Iorder } from "../../../lib/types";
 import { getUserDetail } from "../../redux/slice/user-detail-redux/user-redux";
 import formatDate from "../../controllers/format-date";
 import styles from "../../styles/Order.module.css";
@@ -13,13 +13,15 @@ export default function Orders(): JSX.Element {
   const router = useRouter()
   const dispatch: Function = useDispatch();
   const orderAll = useSelector((state: Ireducers) => state.reducerUser.user.orders);
+  console.log(orderAll)
   const { data, status } = useSession()
-
-
+  
+  
   useEffect(() => {
     data?.user.email && dispatch(getUserDetail(data?.user.email));
   }, [dispatch, data?.user.email]);
-
+  
+  // const orderAll = orders?.[0].sort((a: Iorder, b: Iorder) => a.date < b.date ? 1 : a.date > b.date ? -1 : 0);
 
   if (status === 'unauthenticated') router.push('/');
 
@@ -77,7 +79,7 @@ export default function Orders(): JSX.Element {
                 {elem.status}
               </div>
               <div className={styles.order__status}>
-                <span className={styles.order__span}>Delivery Time: </span>
+                <span className={styles.order__span}>Delivery date: </span>
                 {elem.delivery_time}
               </div>
               <div className={styles.order__date}>

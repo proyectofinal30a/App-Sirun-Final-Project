@@ -47,7 +47,7 @@ export default function CreationInTransitEmail({idPurchase, user, addressOrder, 
               <br />
 
               <p>
-                Delivery time: ${delivery_time}
+                Delivery date: ${delivery_time}
               </p>
               <p>
                 Shipping address: ${addressOrder?.street_name + " " + addressOrder?.street_number + " - " + addressOrder?.zip_code}

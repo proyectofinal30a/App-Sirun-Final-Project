@@ -105,8 +105,8 @@ const FormCheckout = (): JSX.Element => {
           <div className={styles.input_calendar__container}>
             <label className={styles.input_calendar__label}>Choose the delivery date</label>
             <span className={styles.input_calendar__span}>
-              Delivery time can vary between 1 to 2 days according to distance. 
-              <br/>
+              {/* Delivery time can vary between 1 to 2 days according to distance. 
+              <br/> */}
               Production time can vary between 4 to 14 days according to amount of items in order.
             </span>
 
