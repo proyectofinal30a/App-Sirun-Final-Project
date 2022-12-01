@@ -10,11 +10,13 @@ import CardCart from "../cardCart/cardCart";
 import MyFormAdd from "../formAddress/formAddress";
 import { useRef } from "react";
 import ButtonConfirmInf from "../bottonSubmitForm/confirmInf";
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/router';
+
+
 const FormCheckout = (): JSX.Element => {
   const dispatch: Function = useDispatch();
   const [address, setAddress] = useState(1000);
-  const router = useRouter()
+  const router = useRouter();
   const [modalIsOpen, setIsOpen] = useState(false);
   const [buttonInput, setButtonInput] = useState(false);
   const { confirmed, payLink, products } = useSelector((state: Ireducers) => state.reducerCart);
@@ -57,12 +59,13 @@ const FormCheckout = (): JSX.Element => {
   const [inputAddres, setInputAddres] = useState(personInfo);
   const [errors, setErrors] = useState(personInfo);
   const [startNumber, setStartNumber] = useState(1000);
-  const [dateState, setDateState] = useState<string>('')
+  const [dateState, setDateState] = useState<string>('');
+
   if (!data?.user.email || !products) return <div className={styles.loading}>Loading...</div>
 
-  const isOpenModal = () => setIsOpen((current: Boolean) => !current)
-  const total = products[0] && products.map((elem) => elem.subTotal).reduce((elem, acc: number) => elem + acc)
-  const totalQuantity = products[0] && products.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc)
+  const isOpenModal = () => setIsOpen((current: Boolean) => !current);
+  const total = products[0] && products.map((elem) => elem.subTotal).reduce((elem, acc: number) => elem + acc);
+  const totalQuantity = products[0] && products.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc);
 
 
   const myDataUser = {
@@ -89,7 +92,7 @@ const FormCheckout = (): JSX.Element => {
   const maxDate = date2.toISOString().split('T')[0];
 
   const handleBlockedDates = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setDateState(e.target.value)
+    setDateState(e.target.value);
   }
 
 
