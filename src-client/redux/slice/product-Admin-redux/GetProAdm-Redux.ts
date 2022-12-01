@@ -222,8 +222,8 @@ export const getProducts: any = () => async (dispatch: Function) => {
       }
     });
     const allProducts = data
-
-    dispatch(reducerAdmin.actions.getAllProducts(allProducts));
+    
+    return dispatch(reducerAdmin.actions.getAllProducts(allProducts));
   } catch (error) {
     console.log(error)
   }
