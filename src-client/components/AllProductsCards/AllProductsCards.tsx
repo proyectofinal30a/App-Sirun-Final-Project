@@ -40,7 +40,7 @@ const AllProductsCards = () => {
 
   useEffect(() => {
     dispatch(getAllProducts())
-    !filterProducts[0] && dispatch(action.saveProductFilter(allProducts))
+    dispatch(action.saveProductFilter(allProducts))
   }, [dispatch])
 
 
