@@ -20,7 +20,7 @@ const ShoppingCart = () => {
   const allProducts = useSelector((state: Ireducers) => state.reducerAdmin.products);
 
   useEffect(()=>{
-    dispatch(getAllProducts())
+    if(allProducts.length)dispatch(getAllProducts())
     },[dispatch])
   
   const productsInCartID = cart.map((elem) => elem.id)
@@ -35,12 +35,11 @@ const ShoppingCart = () => {
   productsInCart.map((elem) => {
     return (total += elem.subTotal);
   });
-  ;
   
 
   return (
     <div className={styles.cart__container}>
-      {cart? <form className={styles.modal__container}>
+      {cart.length > 0 ? <form className={styles.modal__container}>
           <h2>Shopping Cart</h2>
 
           {productsInCart ? productsInCart?.map((elem, index: number) => {
