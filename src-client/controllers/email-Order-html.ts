@@ -51,13 +51,15 @@ export default function CreationOfHTML(myorder: data | any, email: string, name:
                 width: 500px;
               "
             >
+              
               <img
                 height="100"
                 width="100"
                 src=${e.picture_url}
                 alt="none"
-                style="margin-right: 2em"
+                style="margin-right: 2em; object-fit: cover;"
               />
+              
               <article
                 style="
                 text-align: left;
