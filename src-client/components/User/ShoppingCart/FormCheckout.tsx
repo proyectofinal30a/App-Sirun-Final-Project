@@ -75,17 +75,19 @@ const FormCheckout = (): JSX.Element => {
 
 
   // DELIVERY DATE CALCULATIONS
-  const daysTillDeliveryDate =
-    totalQuantity <= 4 ? 4
-      : totalQuantity > 4 && totalQuantity <= 8 ? 6
-        : totalQuantity > 8 && totalQuantity <= 12 ? 10
-          : 14;
-  const date1 = new Date()
-  date1.setDate(date1.getDate() + daysTillDeliveryDate)
+  const daysTillDeliveryDate = totalQuantity <= 4 ? 4
+    : totalQuantity > 4 && totalQuantity <= 8 ? 6
+    : totalQuantity > 8 && totalQuantity <= 12 ? 10
+    : 14;
+
+  const date1 = new Date();
+  date1.setDate(date1.getDate() + daysTillDeliveryDate);
   const minDate = date1.toISOString().split('T')[0];
-  const date2 = new Date()
-  date2.setDate(date2.getDate() + 21)
-  const maxDate = date2.toISOString().split('T')[0]
+
+  const date2 = new Date();
+  date2.setDate(date2.getDate() + 100);
+  const maxDate = date2.toISOString().split('T')[0];
+
   const handleBlockedDates = (e: React.ChangeEvent<HTMLInputElement>) => {
     setDateState(e.target.value)
   }
@@ -103,7 +105,9 @@ const FormCheckout = (): JSX.Element => {
           <div className={styles.input_calendar__container}>
             <label className={styles.input_calendar__label}>Choose the delivery date</label>
             <span className={styles.input_calendar__span}>
-              Delivery time can vary between 1 to 2 days according to distance.
+              Delivery time can vary between 1 to 2 days according to distance. 
+              <br/>
+              Production time can vary between 4 to 14 days according to amount of items in order.
             </span>
 
             <input

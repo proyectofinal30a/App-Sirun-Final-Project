@@ -56,10 +56,15 @@
   margin-bottom: 0.5em;
 }
 
+.creation_form__input:hover {
+  cursor: pointer;
+}
+
 .creation_form__textarea {
   height: 9em;
   margin-bottom: 1em;
   resize: none;
+  padding: .5em;
 }
 
 .creation_form__select {

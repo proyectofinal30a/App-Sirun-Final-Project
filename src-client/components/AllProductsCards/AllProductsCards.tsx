@@ -25,15 +25,17 @@ const AllProductsCards = () => {
   const { favoriteId } = useSelector((state: Ireducers) => state.reducerFavoriteUser);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [uploadFavo, setUploadFavo] = useState(false);
+
+
+
   // FILTERS
-
-
-
   const filterProducts = useSelector((state: Ireducers) => state.reducerFilters.productsToFilter);
   const allProducts = useSelector((state: Ireducers) => state.reducerProducts.products);
   const cart = useSelector((state: Ireducers) => state.reducerCart.products);
-  const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(9);
+  // PAGINATION
+  const [currentPage, setCurrentPage] = useState(1); 
+  const [productsPerPage] = useState(15); 
+
 
   useEffect(() => {
     dispatch(getAllProducts())
@@ -49,9 +51,11 @@ const AllProductsCards = () => {
     }
   }, [])
 
+
   useEffect(() => {
     data?.user.email && dispatch(actionFav.getfavoriteUser(data?.user.email))
   }, [data])
+
 
   useEffect(() => {
     favoriteId[0] && dispatch(actionFav.updateFavorite(favoriteId, data?.user.email || ""))
@@ -59,16 +63,14 @@ const AllProductsCards = () => {
 
 
   useEffect(() => {
-
   }, [dispatch, data]);
+
+
   useEffect(() => {
     if (filterProducts[0]) setCurrentPage(1);
     dispatch(getAllProducts());
 
   }, [filterProducts, dispatch]);
-
-
-
 
 
 
@@ -80,6 +82,7 @@ const AllProductsCards = () => {
 
   if (!allProducts?.[0]) return (<div className={styles.general__container}>
     <div className={styles.products__container}> <div className={styles.products__loader}><p>Loading...</p></div> </div></div>)
+
 
   // SHOPPING CART
   const totalQuantity = productsInCart[0] ? productsInCart?.map((elem) => elem.quantity).reduce((elem, acc: number) => elem + acc) : 0;
@@ -118,19 +121,14 @@ const AllProductsCards = () => {
 
 
   // PAGINATION
-
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const paginatedProducts = filterProducts.slice(
-    indexOfFirstProduct,
-    indexOfLastProduct
-  );
+  const paginatedProducts = filterProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
   let pageNumbers: number[] = [];
   for (let i = 1; i <= Math.ceil(filterProducts?.length / productsPerPage); i++) {
     pageNumbers.push(i);
   }
-
 
   const pagination = (pageNumber: number) => setCurrentPage(pageNumber);
 
@@ -158,12 +156,10 @@ const AllProductsCards = () => {
 
   //request para guardar los nuevos favs que estan en el redux del user
 
-
   //check de favs
   interface IproduId {
     id: string
   }
-
 
   const biblioteca = {}
 
@@ -173,14 +169,12 @@ const AllProductsCards = () => {
     })
   }
 
-
-
-
   const handleFavorite = (id: string) => {
     status === "unauthenticated" && signIn("auth0");
     setUploadFavo(!uploadFavo)
     dispatch(actionFav.addFavoriteRedux(id));
   }
+
 
 
   return (
@@ -332,8 +326,8 @@ const AllProductsCards = () => {
             </Modal>
           </>
         ) : (
-          <div className={styles.products__loader}>
-            <p>No product found with the applied filter</p>
+          <div className={styles.products__empty_message_container}>
+            <p>No product found with the applied filter.</p>
           </div>
         )}
       </div>
