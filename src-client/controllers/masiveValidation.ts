@@ -20,7 +20,7 @@ function masiveValidate (modalForm) {
         errors.type = "This field is required.";
         break;
         case modalForm.type === "percent" && modalForm.direction === "decrease" && Number(modalForm.quantity) >= 100:
-        errors.quantity = "You can't decrease the amount in 100% or more";
+        errors.quantity = "You can't decrease the price in 100% or more";
         break;
         default:
         break;
