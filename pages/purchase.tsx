@@ -13,20 +13,21 @@ export default function ApprovedPayment() {
   const { query } = useRouter();
   const { data } = useSession<boolean>();
 
-
-  if (!query.external_reference) router.push('/')
-
   const email: string = typeof data?.user?.email === "string" ? data?.user?.email : "";
   const name: string = typeof data?.user?.name === "string" ? data?.user?.name : "";
   const idReference: string = typeof query.external_reference === "string" ? query.external_reference : "";
   let idPurchase: string = typeof query.collection_id === "string" ? query.collection_id : "";
 
+  console.log(query)
 
-  useEffect(() => {
-    setTimeout(() => {
-      router.push('/')
-    }, 10000);
-  }, []);
+  setTimeout(() => {
+    if (!query.external_reference) router.push('/');  
+  }, 15000);
+
+
+  // useEffect(() => {
+  //   setTimeout(() => { router.push('/') }, 15000);
+  // }, []);
 
 
   return (
