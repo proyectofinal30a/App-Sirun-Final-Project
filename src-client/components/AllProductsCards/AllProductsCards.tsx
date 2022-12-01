@@ -45,10 +45,6 @@ const AllProductsCards = () => {
     !filterProducts[0] && dispatch(action.saveProductFilter(allProducts))
   }, [dispatch])
 
-
-
-
-
   useEffect(() => {
     data?.user.email && dispatch(actionFav.getfavoriteUser(data?.user.email))
   }, [data])

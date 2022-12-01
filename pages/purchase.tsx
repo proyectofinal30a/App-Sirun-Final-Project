@@ -1,11 +1,7 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { useSession } from "next-auth/react";
-import { getOrder } from "../src-client/redux/slice/payment/payment";
-import { Ireducers } from "../lib/types";
 import Image from "next/image";
-import emailjs from "@emailjs/browser";
 import HEAD from "../src-client/components/HEAD";
 import Nav from "../src-client/components/NavBar/Nav";
 import Footer from "../src-client/components/Footer/Footer";
@@ -14,9 +10,11 @@ import styles from "../src-client/styles/ApprovedPayment.module.css";
 
 export default function ApprovedPayment() {
   const router = useRouter();
-  const dispatch: Function = useDispatch();
   const { query } = useRouter();
-  const { data, status } = useSession<boolean>();
+  const { data } = useSession<boolean>();
+
+
+  if (!query.external_reference) router.push('/')
 
   const email: string = typeof data?.user?.email === "string" ? data?.user?.email : "";
   const name: string = typeof data?.user?.name === "string" ? data?.user?.name : "";
@@ -24,17 +22,12 @@ export default function ApprovedPayment() {
   let idPurchase: string = typeof query.collection_id === "string" ? query.collection_id : "";
 
 
-  console.log(email, name, idReference, idPurchase, 'data');
+  useEffect(() => {
+    setTimeout(() => {
+      router.push('/')
+    }, 7000);
 
-
-  // useEffect(() => {
-  //   if (email && name && idReference && idPurchase) {
-  //     dispatch(getOrder({ email, name, idReference, idPurchase }));
-  //     setTimeout(() => {
-  //       router.push('/')
-  //     }, 7000);
-  //   }
-  // }, [dispatch, email, name, idReference, idPurchase, router]);
+  }, []);
 
 
   return (

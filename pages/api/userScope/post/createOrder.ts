@@ -55,7 +55,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
                     idPurchase: "",
                     total: myTotal,
                     status: "pending",
-                    delivery_time: 'falta ver esto',
+                    delivery_time: myPreference.payer.delivery_time,
                     purchase_link: "",
                     purchasedProducts: {
                         createMany: {
@@ -124,7 +124,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
                 idPurchase: "",
                 total: myTotal,
                 status: "pending",
-                delivery_time: 'falta ver esto',
+                delivery_time: myPreference.payer.delivery_time,
                 purchase_link: "",
                 purchasedProducts: {
                     createMany: {

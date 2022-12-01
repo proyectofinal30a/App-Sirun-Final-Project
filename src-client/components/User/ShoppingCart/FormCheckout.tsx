@@ -26,7 +26,6 @@ const FormCheckout = (): JSX.Element => {
     if (payLink) dispatch(resetCart())
     return () => dispatch(resetCart());
   }, []);
-  console.log(payLink);
 
   if (!products[0]) router.push('/')
 
@@ -58,7 +57,7 @@ const FormCheckout = (): JSX.Element => {
   const [inputAddres, setInputAddres] = useState(personInfo);
   const [errors, setErrors] = useState(personInfo);
   const [startNumber, setStartNumber] = useState(1000);
-
+  const [dateState, setDateState] = useState<string>('')
   if (!data?.user.email || !products) return <div className={styles.loading}>Loading...</div>
 
   const isOpenModal = () => setIsOpen((current: Boolean) => !current)
@@ -76,27 +75,20 @@ const FormCheckout = (): JSX.Element => {
 
 
   // DELIVERY DATE CALCULATIONS
-  const daysTillDeliveryDate = 
-      totalQuantity <= 4 ? 4
-    : totalQuantity > 4 && totalQuantity <= 8 ? 6
-    : totalQuantity > 8 && totalQuantity <= 12 ? 10
-    : 14;
-
-  // console.log(daysTillDeliveryDate)
-
-  
-
-
-  let date = new Date()
-  date.setDate(date.getDate() + daysTillDeliveryDate)
-
-  const minDate = date.toISOString().split('T')[0];
-  console.log(minDate)
-
-
-  // const handleBlockedDates = (e) => {
-  //   console.log(e.target.value)
-  // }
+  const daysTillDeliveryDate =
+    totalQuantity <= 4 ? 4
+      : totalQuantity > 4 && totalQuantity <= 8 ? 6
+        : totalQuantity > 8 && totalQuantity <= 12 ? 10
+          : 14;
+  const date1 = new Date()
+  date1.setDate(date1.getDate() + daysTillDeliveryDate)
+  const minDate = date1.toISOString().split('T')[0];
+  const date2 = new Date()
+  date2.setDate(date2.getDate() + 21)
+  const maxDate = date2.toISOString().split('T')[0]
+  const handleBlockedDates = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setDateState(e.target.value)
+  }
 
 
   return (
@@ -114,11 +106,12 @@ const FormCheckout = (): JSX.Element => {
               Delivery time can vary between 1 to 2 days according to distance.
             </span>
 
-            <input 
+            <input
               type="date"
               className={styles.input_calendar}
-              min={minDate} 
-              // onChange={handleBlockedDates}
+              min={minDate}
+              onChange={handleBlockedDates}
+              max={maxDate}
             />
           </div>
 
@@ -153,6 +146,7 @@ const FormCheckout = (): JSX.Element => {
         />
 
         <ButtonConfirmInf
+          dateState={dateState}
           errors={errors}
           mySelect={mySelect}
           styles={styles}
@@ -164,6 +158,7 @@ const FormCheckout = (): JSX.Element => {
 
       <ModalConfirm
         user={myDataUser}
+        dateState={dateState}
         address={inputAddres}
         styles={styles}
         addressRef={mySelect}

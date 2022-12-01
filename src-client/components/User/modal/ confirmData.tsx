@@ -16,7 +16,7 @@ interface myInfoUser {
   addressRef: {
     current: Iaddresses;
   };
-
+  dateState: string
   isOpenModal: Function;
   modalIsOpen: boolean;
 
@@ -36,6 +36,7 @@ export default function ModalConfirm({
   modalIsOpen,
   address,
   styles,
+  dateState
 }: myInfoUser): JSX.Element {
   const { name, email } = user;
 
@@ -70,7 +71,10 @@ export default function ModalConfirm({
               <span className={styles.client_info_span}>E-mail: </span>
               {email}
             </p>
-
+            <p className={styles.modal__client_email}>
+              <span className={styles.client_info_span}>Delivery Time : </span>
+              {dateState}
+            </p>
             <p className={styles.modal__client_phone}>
               <span className={styles.client_info_span}>Phone number: </span>
               +{address.area_code
@@ -109,6 +113,7 @@ export default function ModalConfirm({
           </div>
 
           <ButtonSumbitMercadoPago
+            dateState={dateState}
             mySelect={addressRef}
             inputAddres={address}
             data={user}

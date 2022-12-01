@@ -91,7 +91,6 @@ export const changeOrderStatus = (orderInfo: Ipayload) => async (dispatch: Funct
     });
 
     dispatch(reducerAdminManagement.actions.changeOrderStatus(data));
-    console.log(orderInfo.orderStatus, 'staTUS');
 
     if (orderInfo.orderStatus === 'in_transit') {
       const { data } = await axios({

@@ -32,7 +32,7 @@ export default function Orders(): JSX.Element {
       {orderAll[0] ?
         orderAll?.map((elem) => {
           const { purchasedProducts } = elem;
-          
+
           const myProductOrder = purchasedProducts?.map((item) => {
             return (
               <div key={item.id} className={styles.order__product_container}>
@@ -76,7 +76,10 @@ export default function Orders(): JSX.Element {
                 <span className={styles.order__span}>Status: </span>
                 {elem.status}
               </div>
-
+              <div className={styles.order__status}>
+                <span className={styles.order__span}>Delivery Time: </span>
+                {elem.delivery_time}
+              </div>
               <div className={styles.order__date}>
                 <span className={styles.order__span}>Date: </span>
                 {mydate}

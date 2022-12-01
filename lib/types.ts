@@ -10,6 +10,7 @@ export interface Iimage {
 export interface IUserBuyer {
   email: string;
   name: string;
+  delivery_time: string
   address: {
     id?: string;
     street_name: string;
@@ -177,6 +178,7 @@ export interface Iaddresses {
     area_code: string;
     number: string;
   };
+  delivery_time?: string,
 }
 
 

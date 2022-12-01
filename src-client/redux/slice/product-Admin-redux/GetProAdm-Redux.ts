@@ -153,7 +153,6 @@ export const setProduct = (object: Iproduct) => (dispatch: Function) => {
 }
 export const updateProduct = (dataForm : IUpdateProduct) => async(dispatch:Function) => {
   try {
-    console.log(dataForm, "data que llega a redux");
     // const myToken: any = await userVerification('client')
     const productUpdated =  await axios({
       method: 'post',

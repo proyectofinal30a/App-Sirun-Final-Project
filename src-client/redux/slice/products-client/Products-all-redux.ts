@@ -35,18 +35,7 @@ export const getAllProducts: any = () => async (dispatch: Function) => {
         "Authorization": myToken
       }
     });
-
-    // data?.forEach(element => {
-    //   console.log(element.available);
-    // });
-    
     const allProducts = isAvailable(data)
-
-     
-    // allProducts?.forEach(element => {
-    //   console.log(element.available);
-    // });
-
     dispatch(reducerProducts.actions.getAllProducts(allProducts));
   } catch (error) {
     console.log(error)

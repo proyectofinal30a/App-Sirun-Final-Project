@@ -20,7 +20,7 @@ export default function Home() {
   useEffect(() => {
     dispatch(getAllProducts());
     status === "authenticated" && dispatch(getUserDetail(data?.user.email));
-  }, [dispatch, status, data]);
+  }, [dispatch]);
 
   return (
     <>
