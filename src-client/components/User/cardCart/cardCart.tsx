@@ -15,6 +15,9 @@ export default function CardCart({
   styles,
   totalQuantity,
 }: prop) {
+  const shippingCost = total * 0.1;
+  const totalBuy = total + shippingCost
+  console.log()
   return (
     <div className={styles.second__column}>
       <h2 className={styles.column__title}>Order Summary</h2>
@@ -53,11 +56,11 @@ export default function CardCart({
         </p>
         <div className={styles.__shipping_line}>
           <p className={styles.__shipping}>Shipping cost</p>
-          <p className={styles.__shipping}>$...</p>
+          <p className={styles.__shipping}>${shippingCost}</p>
         </div>
         <div className={styles.__total_line}>
           <h2 className={styles.__total}>TOTAL</h2>
-          <h2 className={styles.__total}>${total}</h2>
+          <h2 className={styles.__total}>${totalBuy}</h2>
         </div>
       </div>
     </div>
