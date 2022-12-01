@@ -8,7 +8,9 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
         const idAddress = nanoid()
         const idOrder = nanoid()
         const myPreference: Ipreference = req.body
-        const myTotal = myPreference.items.map(elem => elem.subTotal).reduce((e, acc) => e + acc)
+        const total = myPreference.items.map(elem => elem.subTotal).reduce((e, acc) => e + acc)
+        const myTotal = Math.round((total * 0.1) + total);
+        const shipmentCost = (total * 0.1);
         const idProduct = myPreference.items.map(elem => {
             return { id: elem.id }
         })
@@ -93,7 +95,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
 
                 }
             })
-            const preferenceAddReference = await { ...myPreference, external_reference: OrderUser.id }
+            const preferenceAddReference = await { ...myPreference, external_reference: OrderUser.id, shipments: { ...myPreference.shipments, cost: shipmentCost } }
 
             const response = await axios({
                 method: 'post',
@@ -163,7 +165,7 @@ export default async function CreateOrder(req: NextApiRequest, res: NextApiRespo
             }
         })
 
-        const preferenceAddReference = await { ...myPreference, external_reference: OrderUser.id }
+        const preferenceAddReference = await { ...myPreference, external_reference: OrderUser.id, shipments: { ...myPreference.shipments, cost: shipmentCost } }
 
         const response = await axios({
             method: 'post',

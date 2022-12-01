@@ -33,6 +33,9 @@ export interface Ipreference {
     failure: string;
     pending: string;
   };
+  shipments: {
+    cost: number
+  }
 }
 
 export interface IproductModelCart {
