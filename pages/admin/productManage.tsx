@@ -5,9 +5,13 @@ import AdminManageProducts from "../../src-client/components/Administration/Admi
 import AdminSideBar from "../../src-client/components/Administration/AdminSideBar";
 import styles from "../../src-client/styles/AdminSideBar.module.css";
 import React from "react"
+import { signIn, useSession } from "next-auth/react";
+import { useRouter } from "next/router";
 
 export default function ProductCreationFormPage() {
-  return (
+  const {data: session, status} = useSession()
+  if(session?.user.role === 'admin' || session?.user.role === 'super admin'){
+    return (
     <div>
       <HEAD />
       <Nav />
@@ -24,4 +28,11 @@ export default function ProductCreationFormPage() {
       <Footer />
     </div>
   );
+  } else if(session?.user.role === 'user') {
+    const router = useRouter()
+    router.push('https://sirunnpatisserie.vercel.app/')
+  } else {
+    signIn('auth0')
+  }
+  
 }
