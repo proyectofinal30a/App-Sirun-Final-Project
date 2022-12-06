@@ -1,4 +1,5 @@
-# Full Stack Development Final Project - E-Commerce Sirun Pâtisserie - Henry Bootcamp
+# Full Stack Development Final Project - Henry Bootcamp
+# E-Commerce Sirun Pâtisserie 
 
 ## Deployment link: [Sirun Pâtisserie](https://sirunnpatisserie.vercel.app/)
 
