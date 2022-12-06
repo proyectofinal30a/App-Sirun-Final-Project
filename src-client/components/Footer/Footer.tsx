@@ -139,30 +139,12 @@ function Footer() {
             </IconContext.Provider>
           </div>
 
-          {/* EXTRA SOLO RENDERIZADO DE MUESTRA/ FALTA IMPLEMENTACION*/}
-          {/* <div>
-            <span className={styles.footer__newsletter_title}>
-              Stay Connected
-            </span>
-            <form className={styles.footer__newsletter} >
-              <input
-                type="email"
-                className={styles.footer__newsletter_email}
-                placeholder="Enter Email Address"
-              />
-              <button type="submit" className={styles.footer__newsletter_btn}>
-                Subscribe
-              </button>
-            </form>
-          </div> */}
-
           <FloatingWhatsApp
             phoneNumber=""
             accountName="Sirun Pâtisserie"
             chatMessage="Hello, how can we help you?"
            // avatar= {Logo}
-           avatar = "https://scontent.fpmy1-2.fna.fbcdn.net/v/t39.30808-6/301489512_514135013952153_843317702517651050_n.jpg?_nc_cat=104&ccb=1-7&_nc_sid=09cbfe&_nc_ohc=GLM18tnNJ8wAX-T9YdU&_nc_ht=scontent.fpmy1-2.fna&oh=00_AfCpXenWoy7t9MGRHASAE5RwyfiR-Lo168s4jlmcjR95FQ&oe=63891937"
-            allowEsc
+            avatar = "https://res.cloudinary.com/dvopyvz7r/image/upload/v1669086063/logo/lfxxgs5kihpdq7026hdw.png"
             allowClickAway
             notification
             notificationSound
@@ -178,6 +160,6 @@ function Footer() {
 
 export default Footer;
 
-//PENDIENTE
-// agregar imagenes de medios de pago
+
+
 

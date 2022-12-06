@@ -10,7 +10,6 @@ import { signIn, useSession } from "next-auth/react";
 
 export default function WishlistPage() {
   const {data: user, status} = useSession()
-  console.log(user);
   if(user !== null){
     return (
     <div>

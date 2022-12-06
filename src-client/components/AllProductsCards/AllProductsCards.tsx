@@ -36,19 +36,18 @@ const AllProductsCards = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(14);
 
-  console.log(filterProducts)
+  
 
   useEffect(() => {
     dispatch(getAllProducts())
-    dispatch(action.saveProductFilter(allProducts))
+    !filterProducts[0] && dispatch(action.saveProductFilter(allProducts))
   }, [dispatch])
 
 
   useEffect(() => {
     return () => {
-      console.log('limpiando');
       dispatch(action.cleanFilters(allProducts))
-      dispatch(cleanProducts())
+      // dispatch(cleanProducts())
     }
   }, [])
 
@@ -265,8 +264,8 @@ const AllProductsCards = () => {
                         <div className={styles.modal__product_mobile_separator}>
                           <div className={styles.modal__product_info}>
                             <p className={styles.modal__product_data}>Quantity: {elem.quantity}</p>
-                            <p className={styles.modal__product_data}>Price: {elem.unit_price}</p>
-                            <p className={styles.modal__product_data}>Subtotal: {elem.subTotal}</p>
+                            <p className={styles.modal__product_data}>Price: ${elem.unit_price}</p>
+                            <p className={styles.modal__product_data}>Subtotal: ${elem.subTotal}</p>
                           </div>
 
                           <div className={styles.modal__product_btns_container}>

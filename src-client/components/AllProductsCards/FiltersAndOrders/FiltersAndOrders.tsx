@@ -87,7 +87,6 @@ const FilterAndOrder = () => {
     const { value }: any = e.target;
 
 
-    console.log(prev.category, '===', prev.type, '---', prev.category);
 
     if (prev.category) {
       const filterCategotyAndType: any = {

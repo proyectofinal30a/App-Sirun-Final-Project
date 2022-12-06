@@ -29,9 +29,7 @@ export default function AdminReviewsPage() {
       <Footer />
     </div>
   );
-}  else if(session?.user.role === 'user') {
+}  else{
   router.push('https://sirunnpatisserie.vercel.app/')
-} else {
-  signIn('auth0')
-}
+} 
 }
