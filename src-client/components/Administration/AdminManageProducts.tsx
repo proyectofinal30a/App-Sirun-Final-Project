@@ -245,7 +245,7 @@ const AdminManageProducts = () => {
 
 
 
-  if (!currentProducts[0]) return <div className={styles.products_manage__container}><h1 className={styles.products_manage__title}> Loading....</h1></div>
+  if (!currentProducts[0]) return <div className={styles.products_manage__container}><h1 className={styles.products_manage__title}>Loading...</h1></div>
 
   return (
     <div className={styles.products_manage__container}>
@@ -496,19 +496,21 @@ const AdminManageProducts = () => {
           </div>
           <h2>Edit All Products</h2>
           <div className={styles.modal__selects__container}>
-            <label className={styles.current__data}>
-              How much do yo want you update your price product?
-            </label>
-            <input
-              className={styles.search_bar__input}
-              name="quantity"
-              value={modalForm.quantity}
-              onChange={handlerInputQuantity}
-              placeholder="Add a quantity to update all products"
-            ></input>
-            {modalError.quantity && (
-              <p className={styles.modal__error}>{modalError.quantity}</p>
-            )}
+            <div className={styles.bottom_space}>
+              <label className={styles.current__data}>
+                How much do yo want you update your price product?
+              </label>
+              <input
+                className={styles.search_bar__input}
+                name="quantity"
+                value={modalForm.quantity}
+                onChange={handlerInputQuantity}
+                placeholder="Add an amount to update all products"
+              ></input>
+              {modalError.quantity && (
+                <p className={styles.modal__error}>{modalError.quantity}</p>
+              )}
+            </div>
             <label className={styles.current__data}>
               Do you want to make a discount or an increase?
             </label>
@@ -568,7 +570,7 @@ const AdminManageProducts = () => {
                 x
               </button>
             </div>
-            <p className={styles.current__data}>{backMessage}</p>
+            <p className={styles.current__data}>{backMessage ? backMessage : null}</p>
           </div>
         </Modal>
       )}

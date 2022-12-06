@@ -39,9 +39,10 @@ const ProductDetail = () => {
 
 
 
+
   useEffect(() => {
-    dispatch(cleanProductDetail());
     typeof id === 'string' && dispatch(getProductDetail(id));
+    //return dispatch(cleanProductDetail());
   }, [dispatch, id]);
 
 
@@ -81,7 +82,7 @@ const ProductDetail = () => {
 
 
 
-  if (id !== product.id || !product?.evaluation || !myNuEmail) return <div className={styles.loading}>Loading...</div>
+  if (id !== product.id || !product?.evaluation) return <div className={styles.loading}>Loading...</div>
   const { evaluation } = product;
 
 
@@ -121,7 +122,7 @@ const ProductDetail = () => {
 
   // IMAGES SWITCHER
 
-  if (!product?.image?.[0]?.image) return <div className={styles.loading}>Loading...</div>
+  if (!product?.image?.[0]?.image) return <div className={styles.loading}>Loading..</div>
 
   const detail = product.image[0].image
 
@@ -137,10 +138,12 @@ const ProductDetail = () => {
 
 
   const handleFavorite = (id: string) => {
-    status === "unauthenticated" && signIn("auth0");
+    if(myNuEmail !== undefined){
+      status === "unauthenticated" && signIn("auth0");
     favoriteId.includes(id) ?
       dispatch(action.deleteOneFavorite(myNuEmail, id)) :
       dispatch(action.addOneFavorite(myNuEmail, id))
+    }
   }
 
 
@@ -194,6 +197,7 @@ const ProductDetail = () => {
             <div className={styles.detail_info_description}>
               <p className={styles.detail_info_description_title}>Product description</p>
               <p>{product.description}</p>
+              <p>Dimention: {product.dimension} cm.</p>
             </div>
             <button
               className={styles.add_to_cart__btn}
@@ -261,8 +265,8 @@ const ProductDetail = () => {
                   <div className={styles.modal__product_mobile_separator}>
                     <div className={styles.modal__product_info}>
                       <p className={styles.modal__product_data}>Quantity: {elem.quantity}</p>
-                      <p className={styles.modal__product_data}>Price: {elem.unit_price}</p>
-                      <p className={styles.modal__product_data}>Subtotal: {elem.subTotal}</p>
+                      <p className={styles.modal__product_data}>Price: ${elem.unit_price}</p>
+                      <p className={styles.modal__product_data}>Subtotal: ${elem.subTotal}</p>
                     </div>
 
                     <div className={styles.modal__product_btns_container}>

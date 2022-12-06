@@ -11,7 +11,7 @@ function masiveValidate (modalForm) {
 
     switch(true){
         case !modalForm.quantity || !(/^\d+$/.test(modalForm.quantity)) || typeof Number(modalForm.quantity) !== 'number'  || Number(modalForm.quantity) < 0: 
-        errors.quantity ="Quantity is required and must be a positive number";
+        errors.quantity ="Amount is required and must be a positive number";
         break;
         case !modalForm.direction:
         errors.direction = "This field is required.";
@@ -20,7 +20,7 @@ function masiveValidate (modalForm) {
         errors.type = "This field is required.";
         break;
         case modalForm.type === "percent" && modalForm.direction === "decrease" && Number(modalForm.quantity) >= 100:
-        errors.quantity = "You can't decrease the quantity in percentage in 100% or more";
+        errors.quantity = "You can't decrease the price in 100% or more";
         break;
         default:
         break;

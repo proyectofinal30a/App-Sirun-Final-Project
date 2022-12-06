@@ -127,6 +127,10 @@
   margin: .4em;
 }
 
+.product__card__icon_edit:hover {
+  cursor: pointer;
+}
+
 
 .visibility__btn, .change__price__btn {
   /* width: 14em; */
@@ -213,6 +217,14 @@
   margin-bottom: 1em;
 }
 
+.bottom_space {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 2em;
+}
+
 .filter__select {
   padding: .3em .5em;
   width: 300px;
@@ -239,7 +251,13 @@
   border: 1px solid grey;
   border-radius: .2em;
   font-size: .9em;
+  color: white;
   background-color: rgb(10, 181, 10);
+}
+
+.modal__start_purchase_btn:hover {
+  cursor: pointer;
+  background-color: rgb(13, 201, 13);
 }
 
 
