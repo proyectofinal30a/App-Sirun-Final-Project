@@ -1,4 +1,6 @@
-# Full Stack Final Project - E-Commerce Sirun Pâtisserie
+# Full Stack Development Final Project - E-Commerce Sirun Pâtisserie - Henry Bootcamp
+
+## Deployment link: [Sirun Pâtisserie](https://sirunnpatisserie.vercel.app/)
 
 ## Home
 <img width="1440" alt="Screenshot 2022-12-05 at 19 27 35 (2)" src="https://user-images.githubusercontent.com/101998432/205916504-f0b836fd-04f4-4c36-81fe-320c11b27db1.png">
@@ -23,11 +25,15 @@
 - Learn and practice the GIT workflow.
 - Teamwork and soft skills development.
 
+
 ## Description
 With this app you can see all the products Sirun Pâtisserie is offering at the moment and make a purchase. Also you can check out the full information about every product. 
-As a **registered user** you can have an account, change your profile picture or your name, delete existing addresses associated with your account, request to change/reset your password, have your own wishlist, check your orders history and of course your own shopping cart. Also you can leave comments or reviews on every product and rate them! All your reviews will appear on your account.
-As an **administrator**
-As a **super administrator**
+
+- As a **registered user** you can have an account, change your profile picture or your name, delete existing addresses associated with your account, request to change/reset your password, have your own wishlist, check your orders history and of course your own shopping cart. Also you can leave comments or reviews on every product and rate them! All your reviews will appear on your account.
+
+- As an **administrator** you will also have access to the administration section of the app. Here you'll be able to manage the existing products, the existing users, manage orders and change their status and control the reviews every user has added. You will also be able to check out the sales metrics and upload new products to the e-commerce.
+
+- As a **super administrator** in the administration section of the app you will be able to manage the existing users by also being able to set the role of every user.
 
 
 ## Credits
