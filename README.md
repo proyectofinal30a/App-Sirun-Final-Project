@@ -68,7 +68,7 @@ With this app you can see all the products Sirun Pâtisserie is offering at the 
 <div>
  <img src="./public/image-collaborators/Fran.png" width='100' /> 
  <div>
- <a href='https://github.com/fspontono'><img src="./public/ico/GitHub.png" width='40'/></a>
+ <a href='https://github.com/fsponton'><img src="./public/ico/GitHub.png" width='40'/></a>
  <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
  <a href='https://www.linkedin.com/in/juan-francisco-sponton-moretti/'><img src="./public/ico/Linkedin.png" width='40' /> </a>
  <div>
