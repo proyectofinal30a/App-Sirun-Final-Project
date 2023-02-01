@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../../../lib/prisma'
 import { unstable_getServerSession } from "next-auth/next"
 import { authOptions } from '../../auth/[...nextauth]'
-import userVerification from '../../../../src-client/controllers/userVerification-controller'
+import userVerification from '../../../../src/client/controllers/userVerification-controller'
 const products: Function = async (req: NextApiRequest, res: NextApiResponse) => {
   try {
     const session: any = await unstable_getServerSession(req, res, authOptions)

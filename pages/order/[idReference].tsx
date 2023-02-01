@@ -1,10 +1,10 @@
 import React from "react";
-import HEAD from "../../src-client/components/HEAD";
-import Nav from "../../src-client/components/NavBar/Nav";
-import UserSideBar from "../../src-client/components/User/UserSideBar";
-import OrderDetail from "../../src-client/components/User/OrderDetail";
-import Footer from "../../src-client/components/Footer/Footer";
-import styles from "../../src-client/styles/AdminSideBar.module.css";
+import HEAD from "../../src/client/components/HEAD";
+import Nav from "../../src/client/components/NavBar/Nav";
+import UserSideBar from "../../src/client/components/User/UserSideBar";
+import OrderDetail from "../../src/client/components/User/OrderDetail";
+import Footer from "../../src/client/components/Footer/Footer";
+import styles from "../../src/styles/AdminSideBar.module.css";
 
 
 const OrderDetailPage = () => {

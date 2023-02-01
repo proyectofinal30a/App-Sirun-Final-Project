@@ -1,9 +1,6 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { createCipheriv } from 'crypto';
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del root 
-import { TypeDiet } from '@prisma/client'
-import { Iproduct } from '../../../../lib/types'
 
 const deleteProduct: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     // const { id } = req.body
@@ -24,7 +21,7 @@ export default deleteProduct
 // import type { NextApiRequest, NextApiResponse } from 'next'
 // import { unstable_getServerSession } from "next-auth/next"
 // import { authOptions } from '../../../auth/[...nextauth]'
-// import userVerification from '../../../../../src-client/controllers/userVerification-controller'
+// import userVerification from '../../../../../src/controllers/userVerification-controller'
 // const deleteImageAll = async (req: NextApiRequest, res: NextApiResponse) => {
 //     try {
 //         const session: any = await unstable_getServerSession(req, res, authOptions)

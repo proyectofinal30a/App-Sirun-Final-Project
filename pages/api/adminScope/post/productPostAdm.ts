@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del root 
 import { TypeDiet, CategoryPro } from '@prisma/client'
 import { unstable_getServerSession } from "next-auth/next"
-import userVerification from '../../../../src-client/controllers/userVerification-controller'
+import userVerification from '../../../../src/client/controllers/userVerification-controller'
 import { authOptions } from '../../auth/[...nextauth]'
 const createProduct: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     try {
@@ -17,8 +17,8 @@ const createProduct: Function = async (req: NextApiRequest, res: NextApiResponse
             const myDimension = N(dimension)
             const typeDiet: TypeDiet = type
             const typeCategory: CategoryPro = category
-        
-            
+
+
             await prisma.product.create({
                 data: {
                     name,

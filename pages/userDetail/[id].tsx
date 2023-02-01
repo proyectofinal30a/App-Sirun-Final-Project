@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../../src-client/components/NavBar/Nav";
+import Nav from "../../src/client/components/NavBar/Nav";
 const profile = () => {
   return <Nav />
 };

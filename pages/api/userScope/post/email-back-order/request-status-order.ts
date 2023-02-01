@@ -2,7 +2,7 @@ import type { NextApiRequest, NextApiResponse } from 'next'
 import { prisma } from '../../../../../lib/prisma'
 import axios from 'axios'
 import * as nodemailer from 'nodemailer'
-import CreationOfHTML from '../../../../../src-client/controllers/email-Order-html'
+import CreationOfHTML from '../../../../../src/client/controllers/email-Order-html'
 export default async function requestStatusOrder(req: NextApiRequest, res: NextApiResponse) {
     try {
         interface body {

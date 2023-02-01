@@ -1,37 +1,37 @@
-import HEAD from "../../src-client/components/HEAD";
-import Nav from "../../src-client/components/NavBar/Nav";
-import Footer from "../../src-client/components/Footer/Footer";
-import AdminManageProducts from "../../src-client/components/Administration/AdminManageProducts";
-import AdminSideBar from "../../src-client/components/Administration/AdminSideBar";
-import styles from "../../src-client/styles/AdminSideBar.module.css";
+import HEAD from "../../src/client/components/HEAD";
+import Nav from "../../src/client/components/NavBar/Nav";
+import Footer from "../../src/client/components/Footer/Footer";
+import AdminManageProducts from "../../src/client/components/Administration/AdminManageProducts";
+import AdminSideBar from "../../src/client/components/Administration/AdminSideBar";
+import styles from "../../src/styles/AdminSideBar.module.css";
 import React from "react"
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router";
 
 export default function ProductCreationFormPage() {
-  const {data: session, status} = useSession()
+  const { data: session, status } = useSession()
   const router = useRouter()
-  if(session?.user.role === 'admin' || session?.user.role === 'super admin'){
+  if (session?.user.role === 'admin' || session?.user.role === 'super admin') {
     return (
-    <div>
-      <HEAD />
-      <Nav />
+      <div>
+        <HEAD />
+        <Nav />
 
-      <main className={styles.general__container}>
-        <div className={styles.general__container_first_col}>
-          <AdminSideBar />
-        </div>
-        <div className={styles.general__container_second_col}>
-          <AdminManageProducts/>
-        </div>
-      </main>
+        <main className={styles.general__container}>
+          <div className={styles.general__container_first_col}>
+            <AdminSideBar />
+          </div>
+          <div className={styles.general__container_second_col}>
+            <AdminManageProducts />
+          </div>
+        </main>
 
-      <Footer />
-    </div>
-  );
+        <Footer />
+      </div>
+    );
   } else {
-    
+
     router.push('https://sirunnpatisserie.vercel.app/')
-  } 
-  
+  }
+
 }

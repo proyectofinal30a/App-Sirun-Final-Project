@@ -1,10 +1,10 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import HEAD from "../src-client/components/HEAD";
-import Nav from "../src-client/components/NavBar/Nav";
-import Footer from "../src-client/components/Footer/Footer";
-import styles from "../src-client/styles/ApprovedPayment.module.css";
+import HEAD from "../src/client/components/HEAD";
+import Nav from "../src/client/components/NavBar/Nav";
+import Footer from "../src/client/components/Footer/Footer";
+import styles from "../src/styles/ApprovedPayment.module.css";
 
 
 export default function ApprovedPayment() {

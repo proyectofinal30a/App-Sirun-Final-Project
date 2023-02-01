@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { v2 as cloudinary } from 'cloudinary'
-import cloudinaryOrUrl from '../../../../src-client/controllers/detectionOfImage'
+import cloudinaryOrUrl from '../../../../src/client/controllers/detectionOfImage'
 import { prisma } from '../../../../lib/prisma'  //importo prisma del lib del root 
 export default async function UpdateUser(req: NextApiRequest, res: NextApiResponse) {
     try {

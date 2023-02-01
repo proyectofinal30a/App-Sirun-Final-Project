@@ -1,9 +1,0 @@
-
-
-POST  http://localhost:3000/api/userScope/get/email/searchReferencia
-Content-Type: application/json
-
-{
-    "email":"ezequiel.ignacio.sosa@gmail.com",
-    "idReference":"W1AIEhMjfqat-zA3wQ9at"
-}

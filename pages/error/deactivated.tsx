@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import { signOut } from "next-auth/react";
-import styles from "../../src-client/styles/DeactivatedAccount.module.css";
+import styles from "../../src/styles/DeactivatedAccount.module.css";
 
 export default function DeactivatedAccount() {
   return (

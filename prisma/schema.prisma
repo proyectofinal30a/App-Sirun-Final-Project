@@ -7,74 +7,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Session {
-  id           String   @id @default(uuid())
-  sessionToken String   @unique
-  userId       String
-  expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-}
-
-model VerificationToken {
-  identifier String
-  token      String   @unique
-  expires    DateTime
-
-  @@unique([identifier, token])
-}
-
-model Account {
-  id                String  @id @unique @default(uuid())
-  userId            String
-  type              String
-  provider          String
-  providerAccountId String
-  refresh_token     String?
-  access_token      String?
-  expires_at        Int?
-  token_type        String?
-  scope             String?
-  id_token          String?
-  session_state     String?
-  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([provider, providerAccountId])
-}
-
 model User {
   id            String       @id @unique @default(uuid())
   name          String?
   email         String?      @unique
-  emailVerified DateTime?
+  emailVerified Boolean      @default(false)
   image         String?
   role          String       @default("user")
-  accounts      Account[]
   addresses     Address[]
   evaluations   Evaluation[]
   orders        Order[]
-  sessions      Session[]
   favorites     Product[]
 }
 
 model Subscriptors {
-  id            String  @id @default(uuid())
+  id            String     @id @default(uuid())
   email         String
   id_newsletter String
   newsletter    Newsletter @relation(fields: [id_newsletter], references: [id])
 }
 
 model Newsletter {
-  id            String  @id @default(uuid())
-  content       String
-  date          DateTime
-  image         String? 
-  subscriptors  Subscriptors[]
+  id           String         @id @default(uuid())
+  content      String
+  date         DateTime
+  image        String?
+  subscriptors Subscriptors[]
 }
 
 model Address {
   id            String  @id @unique @default(uuid())
-  id_user       String
   name_address  String  @default("my Address")
+  id_user       String
   zip_code      Int
   street_name   String
   available     Boolean @default(true)
@@ -144,18 +108,20 @@ model Evaluation {
 }
 
 model Product {
-  id          String       @id @unique @default(uuid())
-  name        String
-  price       Int
-  dimension   Int
-  available   Boolean
-  type        TypeDiet
-  category    CategoryPro
-  description String
-  evaluation  Evaluation[]
-  image       ImageProdu[]
-  order       Order[]
-  user        User[]
+  id            String       @id @unique @default(uuid())
+  name          String
+  price         Int
+  dimension     Int
+  available     Boolean
+  type          TypeDiet     @relation(fields: [typeDietId], references: [id])
+  category      CategoryPro  @relation(fields: [categoryProId], references: [id])
+  description   String
+  evaluation    Evaluation[]
+  image         ImageProdu[]
+  order         Order[]
+  user          User[]
+  typeDietId    String
+  categoryProId String
 }
 
 model ImageProdu {
@@ -174,19 +140,14 @@ enum StatusType {
   fulfilled
 }
 
-enum TypeDiet {
-  vegan
-  celiac
-  vegan_celiac
-  none
+model TypeDiet {
+  id      String    @id @default(uuid())
+  name    String
+  Product Product[]
 }
 
-enum CategoryPro {
-  cakes
-  muffins
-  cookies
-  bakery
-  desserts
-  pies
-  others
+model CategoryPro {
+  id      String    @id @default(uuid())
+  name    String
+  Product Product[]
 }

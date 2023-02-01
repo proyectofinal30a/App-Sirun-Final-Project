@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import * as nodemailer from "nodemailer";
 import { prisma } from "../../../../lib/prisma";
-import CreationInTransitEmail from "../../../../src-client/controllers/email-in-transit-order";
+import CreationInTransitEmail from "../../../../src/client/controllers/email-in-transit-order";
 
 const sendEmaiStatusInProccess: Function = async (req: NextApiRequest, res: NextApiResponse) => {
     const { orderId } = req.body;
