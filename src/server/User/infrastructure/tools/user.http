@@ -1,0 +1,10 @@
+
+POST http://localhost:3000/api/user/post/signUp
+Content-Type: application/json
+
+{
+  "name": "ezequiela",
+  "email": "ezequielas21@gmial.com",
+  "password": "12312312312Asd",
+  "photo": "ezequiel.jp"
+}

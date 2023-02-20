@@ -12,6 +12,7 @@ const nextConfig = {
     "EMAILJS_SERVICE_ID": "service_hys4ifl", // newsletter & contact form
     "EMAILJS_PUBLIC_KEY": "5FIkK-QM1cvwFbl44", // newsletter & contact form
     "STATUS": "dev",
+    "JWT":"105b9f93e50b2661428d02f63dae25aa"
   }
   ,
   images: {

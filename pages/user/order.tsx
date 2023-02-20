@@ -1,4 +1,4 @@
-import HEAD from "../../src-client/components/HEAD";
+import HEAD from "../../src-client/components/head";
 import Nav from "../../src-client/components/NavBar/Nav";
 import Footer from "../../src-client/components/Footer/Footer";
 import styles from "../../src-client/styles/AdminSideBar.module.css";

@@ -1,4 +1,4 @@
-import HEAD from "../src-client/components/HEAD";
+import HEAD from "../src-client/components/head";
 import Nav from "../src-client/components/NavBar/Nav";
 import Footer from "../src-client/components/Footer/Footer";
 import About from "../src-client/components/About/About";
@@ -12,7 +12,6 @@ export default function AboutPage() {
 
       <main>
         <About />
-
       </main>
 
       <Footer />

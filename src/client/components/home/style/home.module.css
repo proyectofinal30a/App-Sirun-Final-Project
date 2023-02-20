@@ -1,0 +1,19 @@
+.slider__container {
+    margin: auto;
+    width: 80vw;
+    display: flex;
+    justify-content: center;
+    padding-bottom: 2em;
+  }
+  
+  .admin__loader {
+    margin: auto;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--color-dark-blue);
+    font-family: var(--font-paragraph) !important;
+    font-size: 2em;
+  }
+  

@@ -1,16 +1,16 @@
 import React from "react";
 import { useRouter } from "next/router";
 import Image from "next/image";
-import HEAD from "../src-client/components/HEAD";
+import HEAD from "../src-client/components/head";
 import Nav from "../src-client/components/NavBar/Nav";
 import Footer from "../src-client/components/Footer/Footer";
 import styles from "../src-client/styles/ApprovedPayment.module.css";
 
-
 export default function ApprovedPayment() {
   const { query } = useRouter();
 
-  let idPurchase: string = typeof query.collection_id === "string" ? query.collection_id : "";
+  let idPurchase: string =
+    typeof query.collection_id === "string" ? query.collection_id : "";
 
   return (
     <div>
@@ -28,10 +28,16 @@ export default function ApprovedPayment() {
               className={styles.approved_payment__img}
             />
           </div>
-          <p className={styles.approved_payment__message}>Payment was approved.</p>
-          <p className={styles.approved_payment__sub_message}>Your order will be processed shortly.</p>
+          <p className={styles.approved_payment__message}>
+            Payment was approved.
+          </p>
+          <p className={styles.approved_payment__sub_message}>
+            Your order will be processed shortly.
+          </p>
           <br />
-          <p className={styles.approved_payment__sub_message}>Check your inbox to see the details of your order #{idPurchase}.</p>
+          <p className={styles.approved_payment__sub_message}>
+            Check your inbox to see the details of your order #{idPurchase}.
+          </p>
         </div>
       </main>
 

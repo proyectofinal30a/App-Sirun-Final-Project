@@ -1,10 +1,9 @@
 import React from "react";
 import Footer from "../../src-client/components/Footer/Footer";
-import HEAD from "../../src-client/components/HEAD";
+import HEAD from "../../src-client/components/head";
 import Nav from "../../src-client/components/NavBar/Nav";
 import UserSideBar from "../../src-client/components/User/UserSideBar";
 export default function ProductsPage() {
-
   return (
     <div>
       <HEAD />
@@ -16,4 +15,3 @@ export default function ProductsPage() {
     </div>
   );
 }
-
